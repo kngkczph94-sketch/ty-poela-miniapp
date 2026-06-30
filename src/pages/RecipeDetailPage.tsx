@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { RecipeShareCard, createRecipeDeepLink } from '../components/RecipeShareCard';
 import { menuDays, menuMealSlots, type MenuDay, type MenuMealSlot } from '../types/menu';
 import type { Recipe } from '../types/recipe';
 
@@ -31,6 +32,8 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
   const [selectedDay, setSelectedDay] = useState<MenuDay>('Понедельник');
   const [selectedSlot, setSelectedSlot] = useState<MenuMealSlot>('Завтрак');
   const [isMenuPickerOpen, setIsMenuPickerOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const deepLink = createRecipeDeepLink(recipe.id);
 
   const showActionFeedback = (action: keyof ActionState, message: string) => {
     setActionState((current) => ({ ...current, [action]: true }));
@@ -48,6 +51,33 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
     setIsMenuPickerOpen(false);
     showActionFeedback('menu', `Рецепт добавлен: ${selectedDay}, ${selectedSlot.toLowerCase()}`);
   };
+
+  const copyToClipboard = async (value: string, successMessage: string) => {
+    if (!navigator.clipboard) {
+      setToastMessage('Скопируй вручную: буфер обмена недоступен');
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(value);
+      setToastMessage(successMessage);
+    } catch {
+      setToastMessage('Скопируй вручную: буфер обмена недоступен');
+    }
+  };
+
+  const shareText = [
+    `Рецепт “${recipe.title}”`,
+    '',
+    'КБЖУ:',
+    `Калории: ${recipe.calories} ккал`,
+    `Белки: ${recipe.protein} г`,
+    `Жиры: ${recipe.fat} г`,
+    `Углеводы: ${recipe.carbs} г`,
+    '',
+    'Открыть рецепт:',
+    deepLink,
+  ].join('\n');
 
   return (
     <section className="flex flex-1 flex-col">
@@ -164,7 +194,11 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
             </button>
             <button
               className="rounded-2xl border border-orange-100 bg-white px-4 py-3 text-base font-black text-slate-700 transition hover:bg-slate-50"
-              onClick={() => showActionFeedback('shared', 'Ссылка на рецепт готова к отправке')}
+              onClick={() => {
+                setIsShareModalOpen(true);
+                setActionState((current) => ({ ...current, shared: true }));
+                setToastMessage('');
+              }}
               type="button"
             >
               {actionState.shared ? 'Поделиться ещё раз' : 'Поделиться'}
@@ -198,6 +232,52 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
           ))}
         </ol>
       </section>
+
+      {isShareModalOpen && (
+        <div className="fixed inset-0 z-40 flex items-end justify-center bg-slate-950/50 px-4 pb-4 pt-10 backdrop-blur-sm sm:items-center">
+          <div className="max-h-[92vh] w-full max-w-md overflow-y-auto rounded-[2rem] bg-white p-4 shadow-2xl">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Поделиться</p>
+                <h2 className="text-xl font-black text-slate-950">Шер-карточка рецепта</h2>
+              </div>
+              <button
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-lg font-black text-slate-500 transition hover:bg-slate-200"
+                onClick={() => setIsShareModalOpen(false)}
+                type="button"
+              >
+                ×
+              </button>
+            </div>
+
+            <RecipeShareCard deepLink={deepLink} recipe={recipe} />
+
+            <div className="mt-4 grid gap-2">
+              <button
+                className="rounded-2xl bg-orange-500 px-4 py-3 text-base font-black text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600"
+                onClick={() => copyToClipboard(deepLink, 'Ссылка скопирована')}
+                type="button"
+              >
+                Скопировать ссылку
+              </button>
+              <button
+                className="rounded-2xl bg-orange-50 px-4 py-3 text-base font-black text-orange-600 transition hover:bg-orange-100"
+                onClick={() => copyToClipboard(shareText, 'Текст скопирован')}
+                type="button"
+              >
+                Скопировать текст
+              </button>
+              <button
+                className="rounded-2xl border border-orange-100 bg-white px-4 py-3 text-base font-black text-slate-600 transition hover:bg-slate-50"
+                onClick={() => setIsShareModalOpen(false)}
+                type="button"
+              >
+                Закрыть
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {toastMessage && (
         <div className="fixed inset-x-4 bottom-28 z-30 mx-auto max-w-sm rounded-2xl bg-slate-950 px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">

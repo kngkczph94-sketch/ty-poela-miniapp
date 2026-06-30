@@ -3,6 +3,7 @@ import { CartPage } from './pages/CartPage';
 import { MenuPage } from './pages/MenuPage';
 import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
+import { recipes } from './data/recipes';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
 import type { Recipe } from './types/recipe';
 
@@ -59,6 +60,17 @@ const popularRecipes: PopularRecipe[] = [
     calories: '510 ккал',
   },
 ];
+
+
+const getStartAppRecipeId = (search: string) => {
+  const startApp = new URLSearchParams(search).get('startapp');
+
+  if (!startApp?.startsWith('recipe_')) {
+    return null;
+  }
+
+  return startApp.replace(/^recipe_/, '');
+};
 
 const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
   { id: 'home', label: 'Главная', icon: '🏠' },
@@ -146,8 +158,10 @@ function HomePage({ onOpenCart, onOpenRecipes }: { onOpenCart: () => void; onOpe
 }
 
 function App() {
-  const [activeTab, setActiveTab] = useState<NavigationTab>('home');
-  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const startAppRecipeId = getStartAppRecipeId(window.location.search);
+  const initialRecipe = startAppRecipeId ? recipes.find((recipe) => recipe.id === startAppRecipeId) ?? null : null;
+  const [activeTab, setActiveTab] = useState<NavigationTab>(startAppRecipeId ? 'recipes' : 'home');
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(initialRecipe);
   const [weeklyMenu, setWeeklyMenu] = useState(createEmptyWeeklyMenu);
 
   const openRecipes = () => {
