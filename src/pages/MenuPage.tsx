@@ -3,6 +3,7 @@ import type { Recipe } from '../types/recipe';
 
 type MenuPageProps = {
   weeklyMenu: WeeklyMenu;
+  onOpenCart: () => void;
   onOpenRecipes: () => void;
   onOpenRecipe: (recipe: Recipe) => void;
   onRemoveRecipe: (day: MenuDay, slot: MenuMealSlot) => void;
@@ -25,7 +26,7 @@ const getDayTotals = (recipes: (Recipe | null)[]) =>
     { calories: 0, protein: 0, fat: 0, carbs: 0 },
   );
 
-export function MenuPage({ weeklyMenu, onOpenRecipes, onOpenRecipe, onRemoveRecipe }: MenuPageProps) {
+export function MenuPage({ weeklyMenu, onOpenCart, onOpenRecipes, onOpenRecipe, onRemoveRecipe }: MenuPageProps) {
   const hasRecipesInMenu = menuDays.some((day) => menuMealSlots.some((slot) => Boolean(weeklyMenu[day][slot])));
 
   return (
@@ -36,6 +37,13 @@ export function MenuPage({ weeklyMenu, onOpenRecipes, onOpenRecipe, onRemoveReci
         <p className="mt-3 text-sm font-medium leading-6 text-white/90">
           Собирай завтраки, обеды, ужины и перекусы из рецептов — все КБЖУ считаются за день.
         </p>
+        <button
+          className="mt-5 rounded-2xl bg-white px-5 py-3 text-base font-black text-orange-600 shadow-lg shadow-orange-700/10 transition hover:-translate-y-0.5"
+          onClick={onOpenCart}
+          type="button"
+        >
+          Смотреть корзину
+        </button>
       </div>
 
       {!hasRecipesInMenu && (
