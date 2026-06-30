@@ -1,13 +1,17 @@
 import { useMemo, useState } from 'react';
 import { RecipeCard } from '../components/RecipeCard';
 import { recipes } from '../data/recipes';
-import type { MealType } from '../types/recipe';
+import type { MealType, Recipe } from '../types/recipe';
 
 const mealTypes: MealType[] = ['завтрак', 'обед', 'ужин', 'перекус', 'десерт'];
 
 type ActiveMealType = MealType | 'все';
 
-export function RecipesPage() {
+type RecipesPageProps = {
+  onOpenRecipe: (recipe: Recipe) => void;
+};
+
+export function RecipesPage({ onOpenRecipe }: RecipesPageProps) {
   const [search, setSearch] = useState('');
   const [activeMealType, setActiveMealType] = useState<ActiveMealType>('все');
 
@@ -69,7 +73,7 @@ export function RecipesPage() {
 
       <div className="mt-3 space-y-3">
         {filteredRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+          <RecipeCard key={recipe.id} recipe={recipe} onOpen={onOpenRecipe} />
         ))}
       </div>
 
