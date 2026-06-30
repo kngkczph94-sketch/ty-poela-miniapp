@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CartPage } from './pages/CartPage';
 import { MenuPage } from './pages/MenuPage';
 import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
@@ -18,7 +19,7 @@ type PopularRecipe = {
   calories: string;
 };
 
-type NavigationTab = 'home' | 'recipes' | 'menu' | 'progress';
+type NavigationTab = 'home' | 'recipes' | 'menu' | 'cart';
 
 const featureCards: FeatureCard[] = [
   {
@@ -63,10 +64,10 @@ const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
   { id: 'home', label: 'Главная', icon: '🏠' },
   { id: 'recipes', label: 'Рецепты', icon: '📖' },
   { id: 'menu', label: 'Меню', icon: '🍽️' },
-  { id: 'progress', label: 'Прогресс', icon: '📈' },
+  { id: 'cart', label: 'Корзина', icon: '🛒' },
 ];
 
-function HomePage({ onOpenRecipes }: { onOpenRecipes: () => void }) {
+function HomePage({ onOpenCart, onOpenRecipes }: { onOpenCart: () => void; onOpenRecipes: () => void }) {
   return (
     <>
       <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-orange-500 via-amber-400 to-yellow-300 p-6 text-white shadow-xl shadow-orange-200/70">
@@ -91,10 +92,14 @@ function HomePage({ onOpenRecipes }: { onOpenRecipes: () => void }) {
       </section>
 
       <section className="mt-6 grid gap-3">
-        {featureCards.map((card) => (
+        {featureCards.map((card) => {
+          const isCartCard = card.title === 'Корзина продуктов';
+
+          return (
           <article
-            className="rounded-3xl border border-orange-100 bg-white p-4 shadow-sm shadow-orange-100"
+            className={`rounded-3xl border border-orange-100 bg-white p-4 shadow-sm shadow-orange-100 ${isCartCard ? 'cursor-pointer transition hover:-translate-y-0.5 hover:shadow-md' : ''}`}
             key={card.title}
+            onClick={isCartCard ? onOpenCart : undefined}
           >
             <div className="flex items-start gap-4">
               <span
@@ -108,7 +113,8 @@ function HomePage({ onOpenRecipes }: { onOpenRecipes: () => void }) {
               </div>
             </div>
           </article>
-        ))}
+          );
+        })}
       </section>
 
       <section className="mt-7">
@@ -186,12 +192,15 @@ function App() {
         ) : activeTab === 'menu' ? (
           <MenuPage
             weeklyMenu={weeklyMenu}
+            onOpenCart={() => setActiveTab('cart')}
             onOpenRecipes={openRecipes}
             onOpenRecipe={openRecipe}
             onRemoveRecipe={removeRecipeFromMenu}
           />
+        ) : activeTab === 'cart' ? (
+          <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRecipes} />
         ) : (
-          <HomePage onOpenRecipes={openRecipes} />
+          <HomePage onOpenCart={() => setActiveTab('cart')} onOpenRecipes={openRecipes} />
         )}
       </div>
 

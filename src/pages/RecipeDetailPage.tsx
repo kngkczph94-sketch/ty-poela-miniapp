@@ -177,7 +177,10 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
         <h2 className="text-xl font-black text-slate-950">Ингредиенты</h2>
         <ul className="mt-3 space-y-2 text-sm font-semibold text-slate-600">
           {recipe.ingredients.map((ingredient) => (
-            <li className="flex gap-2" key={ingredient}><span>•</span>{ingredient}</li>
+            <li className="flex items-center justify-between gap-2" key={`${ingredient.name}-${ingredient.unit}`}>
+              <span><span className="mr-2">•</span>{ingredient.name}</span>
+              <span className="rounded-full bg-orange-50 px-3 py-1 text-xs font-black text-orange-600">{ingredient.amount} {ingredient.unit}</span>
+            </li>
           ))}
         </ul>
       </section>
