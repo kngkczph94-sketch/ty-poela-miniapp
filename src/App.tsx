@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
+import type { Recipe } from './types/recipe';
 
 type FeatureCard = {
   title: string;
@@ -137,11 +139,30 @@ function HomePage({ onOpenRecipes }: { onOpenRecipes: () => void }) {
 
 function App() {
   const [activeTab, setActiveTab] = useState<NavigationTab>('home');
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+
+  const openRecipes = () => {
+    setSelectedRecipe(null);
+    setActiveTab('recipes');
+  };
+
+  const openRecipe = (recipe: Recipe) => {
+    setSelectedRecipe(recipe);
+    setActiveTab('recipes');
+  };
 
   return (
     <main className="min-h-screen bg-cream text-slate-950">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
-        {activeTab === 'recipes' ? <RecipesPage /> : <HomePage onOpenRecipes={() => setActiveTab('recipes')} />}
+        {activeTab === 'recipes' ? (
+          selectedRecipe ? (
+            <RecipeDetailPage recipe={selectedRecipe} onBack={() => setSelectedRecipe(null)} />
+          ) : (
+            <RecipesPage onOpenRecipe={openRecipe} />
+          )
+        ) : (
+          <HomePage onOpenRecipes={openRecipes} />
+        )}
       </div>
 
       <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-orange-100 bg-white/95 px-4 pb-5 pt-3 shadow-2xl shadow-orange-100 backdrop-blur">
@@ -152,7 +173,10 @@ function App() {
                 activeTab === item.id ? 'bg-orange-50 text-orange-600' : 'text-slate-400 hover:text-slate-600'
               }`}
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => {
+                setActiveTab(item.id);
+                setSelectedRecipe(null);
+              }}
               type="button"
             >
               <span className="text-lg">{item.icon}</span>

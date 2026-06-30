@@ -1,0 +1,146 @@
+import { useState } from 'react';
+import type { Recipe } from '../types/recipe';
+
+type RecipeDetailPageProps = {
+  recipe: Recipe;
+  onBack: () => void;
+};
+
+type ActionState = {
+  menu: boolean;
+  cart: boolean;
+  shared: boolean;
+};
+
+const nutritionItems = [
+  { key: 'calories', label: 'ккал' },
+  { key: 'protein', label: 'белки', suffix: ' г' },
+  { key: 'fat', label: 'жиры', suffix: ' г' },
+  { key: 'carbs', label: 'углеводы', suffix: ' г' },
+] as const;
+
+export function RecipeDetailPage({ recipe, onBack }: RecipeDetailPageProps) {
+  const [actionState, setActionState] = useState<ActionState>({
+    menu: false,
+    cart: false,
+    shared: false,
+  });
+  const [toastMessage, setToastMessage] = useState('');
+
+  const showActionFeedback = (action: keyof ActionState, message: string) => {
+    setActionState((current) => ({ ...current, [action]: true }));
+    setToastMessage(message);
+  };
+
+  return (
+    <section className="flex flex-1 flex-col">
+      <button
+        className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-orange-600 shadow-sm shadow-orange-100 transition hover:-translate-x-0.5 hover:bg-orange-50"
+        onClick={onBack}
+        type="button"
+      >
+        ← Назад к рецептам
+      </button>
+
+      <article className="overflow-hidden rounded-[2rem] bg-white shadow-xl shadow-orange-100">
+        <div className="bg-gradient-to-br from-orange-500 via-amber-400 to-yellow-300 p-6 text-white">
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-extrabold uppercase tracking-wide backdrop-blur">
+              {recipe.mealType}
+            </span>
+            {recipe.isPremium && (
+              <span className="rounded-full bg-white px-3 py-1 text-xs font-extrabold text-amber-700">Premium</span>
+            )}
+          </div>
+          <h1 className="text-3xl font-black leading-tight tracking-tight">{recipe.title}</h1>
+          <p className="mt-3 text-sm font-medium leading-6 text-white/90">{recipe.description}</p>
+        </div>
+
+        <div className="p-5">
+          <div className="grid grid-cols-4 gap-2 rounded-3xl bg-orange-50 p-3 text-center">
+            {nutritionItems.map((item) => (
+              <div key={item.key}>
+                <p className="text-sm font-black text-slate-900">
+                  {recipe[item.key]}
+                  {'suffix' in item ? item.suffix : ''}
+                </p>
+                <p className="text-[11px] font-bold text-slate-400">{item.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm font-bold text-slate-600">
+            <div className="rounded-2xl bg-slate-50 p-3">⏱️<br />{recipe.cookingTime} мин</div>
+            <div className="rounded-2xl bg-slate-50 p-3">🍽️<br />{recipe.servings} порц.</div>
+            <div className="rounded-2xl bg-slate-50 p-3">🥗<br />{recipe.mealType}</div>
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            {recipe.tags.map((tag) => (
+              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold text-emerald-700" key={tag}>
+                #{tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-5 grid gap-2">
+            <button
+              className={`rounded-2xl px-4 py-3 text-base font-black text-white shadow-lg transition ${
+                actionState.menu ? 'bg-emerald-500 shadow-emerald-100' : 'bg-orange-500 shadow-orange-200 hover:bg-orange-600'
+              }`}
+              onClick={() => showActionFeedback('menu', 'Рецепт добавлен в меню')}
+              type="button"
+            >
+              {actionState.menu ? 'Добавлено в меню' : 'Добавить в меню'}
+            </button>
+            <button
+              className={`rounded-2xl px-4 py-3 text-base font-black transition ${
+                actionState.cart ? 'bg-emerald-50 text-emerald-700' : 'bg-orange-50 text-orange-600 hover:bg-orange-100'
+              }`}
+              onClick={() => showActionFeedback('cart', 'Ингредиенты добавлены в корзину')}
+              type="button"
+            >
+              {actionState.cart ? 'В корзине' : 'В корзину'}
+            </button>
+            <button
+              className="rounded-2xl border border-orange-100 bg-white px-4 py-3 text-base font-black text-slate-700 transition hover:bg-slate-50"
+              onClick={() => showActionFeedback('shared', 'Ссылка на рецепт готова к отправке')}
+              type="button"
+            >
+              {actionState.shared ? 'Поделиться ещё раз' : 'Поделиться'}
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <section className="mt-5 rounded-3xl bg-white p-5 shadow-sm shadow-orange-100">
+        <h2 className="text-xl font-black text-slate-950">Ингредиенты</h2>
+        <ul className="mt-3 space-y-2 text-sm font-semibold text-slate-600">
+          {recipe.ingredients.map((ingredient) => (
+            <li className="flex gap-2" key={ingredient}><span>•</span>{ingredient}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-4 rounded-3xl bg-white p-5 shadow-sm shadow-orange-100">
+        <h2 className="text-xl font-black text-slate-950">Шаги приготовления</h2>
+        <ol className="mt-3 space-y-3">
+          {recipe.steps.map((step, index) => (
+            <li className="flex gap-3 text-sm font-semibold leading-5 text-slate-600" key={step}>
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-black text-orange-600">
+                {index + 1}
+              </span>
+              {step}
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {toastMessage && (
+        <div className="fixed inset-x-4 bottom-28 z-30 mx-auto max-w-sm rounded-2xl bg-slate-950 px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">
+          {toastMessage}
+        </div>
+      )}
+    </section>
+  );
+}
