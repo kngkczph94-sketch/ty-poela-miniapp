@@ -9,6 +9,7 @@ type RecipeDetailPageProps = {
   onBack: () => void;
   onAddToMenu: (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => void;
   onOpenAccess: () => void;
+  onOpenMenu: () => void;
 };
 
 type ActionState = {
@@ -24,7 +25,7 @@ const nutritionItems = [
   { key: 'carbs', label: 'углеводы', suffix: ' г' },
 ] as const;
 
-export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddToMenu, onOpenAccess }: RecipeDetailPageProps) {
+export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddToMenu, onOpenAccess, onOpenMenu }: RecipeDetailPageProps) {
   const [actionState, setActionState] = useState<ActionState>({
     menu: false,
     cart: false,
@@ -52,7 +53,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
   const handleAddToMenu = () => {
     onAddToMenu(recipe, selectedDay, selectedSlot);
     setIsMenuPickerOpen(false);
-    showActionFeedback('menu', `Рецепт добавлен: ${selectedDay}, ${selectedSlot.toLowerCase()}`);
+    showActionFeedback('menu', `Готово: ${selectedDay}, ${selectedSlot.toLowerCase()}. Белок есть, паники нет.`);
   };
 
   const copyToClipboard = async (value: string, successMessage: string) => {
@@ -138,14 +139,14 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
               <p className="text-4xl">🔒</p>
               <h2 className="mt-3 text-xl font-black text-slate-950">Открой полный рецепт, меню и корзину</h2>
               <p className="mt-2 text-sm font-semibold leading-5 text-slate-600">
-                Ингредиенты, шаги приготовления, добавление в меню и автокорзина доступны после mock-подписки.
+                Ингредиенты, шаги приготовления, добавление в меню и автокорзина доступны после mock-подписки. Ты не слабая. Ты просто не планировала еду.
               </p>
               <button
                 className="mt-4 w-full rounded-2xl bg-orange-500 px-4 py-3 text-base font-black text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600"
                 onClick={onOpenAccess}
                 type="button"
               >
-                Оформить доступ
+                Открыть полный доступ
               </button>
             </div>
           ) : (
@@ -204,13 +205,14 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
               {actionState.menu ? 'Добавлено в меню' : isMenuPickerOpen ? 'Выбери день и прием пищи' : 'Добавить в меню'}
             </button>
             <button
-              className={`rounded-2xl px-4 py-3 text-base font-black transition ${
-                actionState.cart ? 'bg-emerald-50 text-emerald-700' : 'bg-orange-50 text-orange-600 hover:bg-orange-100'
-              }`}
-              onClick={() => showActionFeedback('cart', 'Ингредиенты добавлены в корзину')}
+              className="rounded-2xl bg-orange-50 px-4 py-3 text-base font-black text-orange-600 transition hover:bg-orange-100"
+              onClick={() => {
+                showActionFeedback('cart', 'Корзина собирается из меню. Сначала выбери слот — без Excel.');
+                setIsMenuPickerOpen(true);
+              }}
               type="button"
             >
-              {actionState.cart ? 'В корзине' : 'В корзину'}
+              Собрать корзину через меню
             </button>
             <button
               className="rounded-2xl border border-orange-100 bg-white px-4 py-3 text-base font-black text-slate-700 transition hover:bg-slate-50"
@@ -223,6 +225,15 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
             >
               {actionState.shared ? 'Поделиться ещё раз' : 'Поделиться'}
             </button>
+          {actionState.menu && (
+            <button
+              className="mt-2 rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-base font-black text-emerald-700 transition hover:bg-emerald-100"
+              onClick={onOpenMenu}
+              type="button"
+            >
+              Открыть меню
+            </button>
+          )}
           </div>
             </>
           )}
