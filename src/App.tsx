@@ -87,7 +87,6 @@ const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
   { id: 'menu', label: 'Меню', icon: '🍽️' },
   { id: 'cart', label: 'Корзина', icon: '🛒' },
   { id: 'progress', label: 'Прогресс', icon: '🌷' },
-  { id: 'access', label: 'Доступ', icon: '⭐' },
 ];
 
 function HomePage({
@@ -250,7 +249,7 @@ function AccessPage({
             'меню на неделю',
             'автокорзина продуктов',
             'шер-карточки',
-            'трекер прогресса в следующих версиях',
+            'трекер прогресса без давления',
           ].map((item) => (
             <p className="flex items-center gap-3 text-sm font-bold text-slate-700" key={item}>
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-orange-50 text-orange-600">✓</span>
@@ -264,7 +263,7 @@ function AccessPage({
           onClick={onActivate}
           type="button"
         >
-          {subscriptionStatus === 'active' ? 'Продлить mock-доступ' : 'Оформить через Telegram Stars'}
+          {subscriptionStatus === 'active' ? 'Продлить mock-доступ' : 'Открыть полный доступ'}
         </button>
         <p className="mt-3 text-center text-xs font-bold text-slate-400">Mock-режим: настоящие Telegram Stars пока не подключены.</p>
       </article>
@@ -285,6 +284,7 @@ function App() {
   const initialRecipe = startAppRecipeId ? recipes.find((recipe) => recipe.id === startAppRecipeId) ?? null : null;
   const [activeTab, setActiveTab] = useState<NavigationTab>(startAppRecipeId ? 'recipes' : 'home');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(initialRecipe);
+  const [recipeToOpenAfterAccess, setRecipeToOpenAfterAccess] = useState<Recipe | null>(initialRecipe);
   const [weeklyMenu, setWeeklyMenu] = useState(createEmptyWeeklyMenu);
   const [progressEntries, setProgressEntries] = useState<ProgressEntry[]>([]);
   const [userProfile, setUserProfile] = useState<UserProfile>({ subscriptionStatus: 'free' });
@@ -300,8 +300,8 @@ function App() {
     setActiveTab('recipes');
   };
 
-  const openAccess = () => {
-    setSelectedRecipe(null);
+  const openAccess = (recipe?: Recipe) => {
+    setRecipeToOpenAfterAccess(recipe ?? selectedRecipe);
     setActiveTab('access');
   };
 
@@ -309,6 +309,12 @@ function App() {
     const until = new Date();
     until.setDate(until.getDate() + 7);
     setUserProfile({ subscriptionStatus: 'active', subscriptionUntil: until.toISOString() });
+
+    if (recipeToOpenAfterAccess) {
+      setSelectedRecipe(recipeToOpenAfterAccess);
+      setRecipeToOpenAfterAccess(null);
+      setActiveTab('recipes');
+    }
   };
 
   const addRecipeToMenu = (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => {
@@ -349,10 +355,11 @@ function App() {
               recipe={selectedRecipe}
               onAddToMenu={addRecipeToMenu}
               onBack={() => setSelectedRecipe(null)}
-              onOpenAccess={openAccess}
+              onOpenAccess={() => openAccess(selectedRecipe)}
+              onOpenMenu={() => setActiveTab('menu')}
             />
           ) : (
-            <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={openAccess} onOpenRecipe={openRecipe} />
+            <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />
           )
         ) : activeTab === 'menu' ? (
           <MenuPage
@@ -376,7 +383,7 @@ function App() {
         ) : (
           <HomePage
             subscriptionStatus={userProfile.subscriptionStatus}
-            onOpenAccess={openAccess}
+            onOpenAccess={() => openAccess()}
             onOpenCart={() => setActiveTab('cart')}
             onOpenRecipes={openRecipes}
           />
@@ -384,7 +391,7 @@ function App() {
       </div>
 
       <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-orange-100 bg-white/95 px-4 pb-5 pt-3 shadow-2xl shadow-orange-100 backdrop-blur">
-        <div className="grid grid-cols-6 gap-1">
+        <div className="grid grid-cols-5 gap-1">
           {navigationItems.map((item) => (
             <button
               className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${

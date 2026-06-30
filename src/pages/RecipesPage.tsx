@@ -28,6 +28,11 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
     });
   }, [activeMealType, search]);
 
+  const resetFilters = () => {
+    setSearch('');
+    setActiveMealType('все');
+  };
+
   return (
     <section className="flex flex-1 flex-col">
       <div className="rounded-[2rem] bg-gradient-to-br from-orange-500 to-amber-300 p-6 text-white shadow-xl shadow-orange-200/70">
@@ -82,8 +87,11 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
       {filteredRecipes.length === 0 && (
         <div className="mt-8 rounded-3xl bg-white p-6 text-center shadow-sm shadow-orange-100">
           <p className="text-4xl">🔎</p>
-          <h3 className="mt-3 text-lg font-black text-slate-950">Ничего не нашли</h3>
-          <p className="mt-1 text-sm text-slate-500">Попробуй изменить запрос или фильтр.</p>
+          <h3 className="mt-3 text-lg font-black text-slate-950">По такому фильтру рецептов пока нет</h3>
+          <p className="mt-1 text-sm font-semibold leading-5 text-slate-500">Сбросим фильтры и найдём что-то спокойное. Меню без Excel — это сюда.</p>
+          <button className="mt-5 rounded-2xl bg-orange-500 px-5 py-3 text-base font-black text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600" onClick={resetFilters} type="button">
+            Сбросить фильтры
+          </button>
         </div>
       )}
     </section>

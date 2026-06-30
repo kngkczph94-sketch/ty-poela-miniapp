@@ -116,7 +116,7 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
 
         <div className="mt-5 rounded-[2rem] bg-white p-6 text-center shadow-sm shadow-orange-100">
           <p className="text-5xl">🛒</p>
-          <h2 className="mt-3 text-xl font-black text-slate-950">Сначала собери меню на неделю</h2>
+          <h2 className="mt-3 text-xl font-black text-slate-950">Сначала добавь рецепты в меню</h2>
           <p className="mt-2 text-sm font-semibold leading-5 text-slate-500">Выбери рецепты, а мы автоматически сложим продукты по категориям.</p>
           <button className="mt-5 rounded-2xl bg-orange-500 px-5 py-3 text-base font-black text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600" onClick={onOpenRecipes} type="button">
             Перейти к рецептам

@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import { useMemo, useRef, useState, type FormEvent } from 'react';
 import type { ProgressEntry } from '../types/progress';
 
 type ProgressPageProps = {
@@ -81,6 +81,7 @@ function ProgressInput({
 export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPageProps) {
   const [formState, setFormState] = useState(createInitialFormState);
   const [notice, setNotice] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
   const sortedEntries = useMemo(
     () => [...entries].sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime()),
     [entries],
@@ -123,7 +124,7 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
 
       <article className="mt-5 rounded-[2rem] bg-white p-5 shadow-sm shadow-orange-100">
         <h2 className="text-xl font-black text-slate-950">Новый замер</h2>
-        <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
+        <form className="mt-4 space-y-4" onSubmit={handleSubmit} ref={formRef}>
           <ProgressInput label="Дата" onChange={(value) => updateForm('date', value)} type="date" value={formState.date} />
           <div className="grid grid-cols-2 gap-3">
             <ProgressInput label="Вес" onChange={(value) => updateForm('weight', value)} placeholder="кг" value={formState.weight} />
@@ -166,6 +167,14 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
           <div className="mt-3 rounded-[2rem] bg-white p-6 text-center shadow-sm shadow-orange-100">
             <p className="text-5xl">🌷</p>
             <p className="mt-3 text-lg font-black text-slate-950">Добавь первый замер, чтобы видеть динамику</p>
+            <p className="mt-2 text-sm font-semibold leading-5 text-slate-500">Можно указать только то, что хочется. Остальное подождёт.</p>
+            <button
+              className="mt-5 rounded-2xl bg-orange-500 px-5 py-3 text-base font-black text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600"
+              onClick={() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              type="button"
+            >
+              Добавить замер
+            </button>
           </div>
         ) : (
           <div className="mt-3 space-y-3">
