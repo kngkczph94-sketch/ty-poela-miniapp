@@ -109,6 +109,7 @@ export function MenuPage({ weeklyMenu, onOpenRecipes, onOpenRecipe, onRemoveReci
                             <span className="rounded-full bg-white px-2 py-1">Б {recipe.protein} г</span>
                             <span className="rounded-full bg-white px-2 py-1">Ж {recipe.fat} г</span>
                             <span className="rounded-full bg-white px-2 py-1">У {recipe.carbs} г</span>
+                            <span className="rounded-full bg-white px-2 py-1">⏱️ {recipe.cookingTime} мин</span>
                           </div>
                           <button
                             className="mt-3 rounded-full bg-white px-3 py-2 text-xs font-black text-rose-500 shadow-sm transition hover:bg-rose-50"
@@ -119,7 +120,13 @@ export function MenuPage({ weeklyMenu, onOpenRecipes, onOpenRecipe, onRemoveReci
                           </button>
                         </div>
                       ) : (
-                        <p className="mt-2 text-sm font-semibold text-slate-400">Слот свободен</p>
+                        <button
+                          className="mt-2 text-left text-sm font-extrabold text-orange-400"
+                          onClick={onOpenRecipes}
+                          type="button"
+                        >
+                          Добавь рецепт
+                        </button>
                       )}
                     </div>
                   );
