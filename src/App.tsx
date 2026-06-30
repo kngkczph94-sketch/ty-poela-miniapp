@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { MenuPage } from './pages/MenuPage';
 import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
+import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
 import type { Recipe } from './types/recipe';
 
 type FeatureCard = {
@@ -140,6 +142,7 @@ function HomePage({ onOpenRecipes }: { onOpenRecipes: () => void }) {
 function App() {
   const [activeTab, setActiveTab] = useState<NavigationTab>('home');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [weeklyMenu, setWeeklyMenu] = useState(createEmptyWeeklyMenu);
 
   const openRecipes = () => {
     setSelectedRecipe(null);
@@ -151,15 +154,42 @@ function App() {
     setActiveTab('recipes');
   };
 
+  const addRecipeToMenu = (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => {
+    setWeeklyMenu((currentMenu) => ({
+      ...currentMenu,
+      [day]: {
+        ...currentMenu[day],
+        [slot]: recipe,
+      },
+    }));
+  };
+
+  const removeRecipeFromMenu = (day: MenuDay, slot: MenuMealSlot) => {
+    setWeeklyMenu((currentMenu) => ({
+      ...currentMenu,
+      [day]: {
+        ...currentMenu[day],
+        [slot]: null,
+      },
+    }));
+  };
+
   return (
     <main className="min-h-screen bg-cream text-slate-950">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
         {activeTab === 'recipes' ? (
           selectedRecipe ? (
-            <RecipeDetailPage recipe={selectedRecipe} onBack={() => setSelectedRecipe(null)} />
+            <RecipeDetailPage recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={() => setSelectedRecipe(null)} />
           ) : (
             <RecipesPage onOpenRecipe={openRecipe} />
           )
+        ) : activeTab === 'menu' ? (
+          <MenuPage
+            weeklyMenu={weeklyMenu}
+            onOpenRecipes={openRecipes}
+            onOpenRecipe={openRecipe}
+            onRemoveRecipe={removeRecipeFromMenu}
+          />
         ) : (
           <HomePage onOpenRecipes={openRecipes} />
         )}

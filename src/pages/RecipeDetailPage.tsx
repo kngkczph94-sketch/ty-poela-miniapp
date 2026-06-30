@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { menuDays, menuMealSlots, type MenuDay, type MenuMealSlot } from '../types/menu';
 import type { Recipe } from '../types/recipe';
 
 type RecipeDetailPageProps = {
   recipe: Recipe;
   onBack: () => void;
+  onAddToMenu: (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => void;
 };
 
 type ActionState = {
@@ -19,17 +21,24 @@ const nutritionItems = [
   { key: 'carbs', label: 'углеводы', suffix: ' г' },
 ] as const;
 
-export function RecipeDetailPage({ recipe, onBack }: RecipeDetailPageProps) {
+export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPageProps) {
   const [actionState, setActionState] = useState<ActionState>({
     menu: false,
     cart: false,
     shared: false,
   });
   const [toastMessage, setToastMessage] = useState('');
+  const [selectedDay, setSelectedDay] = useState<MenuDay>('Понедельник');
+  const [selectedSlot, setSelectedSlot] = useState<MenuMealSlot>('Завтрак');
 
   const showActionFeedback = (action: keyof ActionState, message: string) => {
     setActionState((current) => ({ ...current, [action]: true }));
     setToastMessage(message);
+  };
+
+  const handleAddToMenu = () => {
+    onAddToMenu(recipe, selectedDay, selectedSlot);
+    showActionFeedback('menu', `Рецепт добавлен: ${selectedDay}, ${selectedSlot.toLowerCase()}`);
   };
 
   return (
@@ -83,12 +92,46 @@ export function RecipeDetailPage({ recipe, onBack }: RecipeDetailPageProps) {
             ))}
           </div>
 
-          <div className="mt-5 grid gap-2">
+          <div className="mt-5 rounded-3xl bg-orange-50 p-3">
+            <p className="text-sm font-black text-slate-950">Куда добавить рецепт?</p>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <label className="block">
+                <span className="mb-1 block text-xs font-extrabold text-slate-500">День</span>
+                <select
+                  className="w-full rounded-2xl border border-orange-100 bg-white px-3 py-3 text-sm font-bold text-slate-900 outline-none focus:border-orange-300 focus:ring-4 focus:ring-orange-100"
+                  onChange={(event) => setSelectedDay(event.target.value as MenuDay)}
+                  value={selectedDay}
+                >
+                  {menuDays.map((day) => (
+                    <option key={day} value={day}>
+                      {day}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="block">
+                <span className="mb-1 block text-xs font-extrabold text-slate-500">Прием пищи</span>
+                <select
+                  className="w-full rounded-2xl border border-orange-100 bg-white px-3 py-3 text-sm font-bold text-slate-900 outline-none focus:border-orange-300 focus:ring-4 focus:ring-orange-100"
+                  onChange={(event) => setSelectedSlot(event.target.value as MenuMealSlot)}
+                  value={selectedSlot}
+                >
+                  {menuMealSlots.map((slot) => (
+                    <option key={slot} value={slot}>
+                      {slot}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div className="mt-3 grid gap-2">
             <button
               className={`rounded-2xl px-4 py-3 text-base font-black text-white shadow-lg transition ${
                 actionState.menu ? 'bg-emerald-500 shadow-emerald-100' : 'bg-orange-500 shadow-orange-200 hover:bg-orange-600'
               }`}
-              onClick={() => showActionFeedback('menu', 'Рецепт добавлен в меню')}
+              onClick={handleAddToMenu}
               type="button"
             >
               {actionState.menu ? 'Добавлено в меню' : 'Добавить в меню'}
