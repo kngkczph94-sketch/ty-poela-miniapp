@@ -21,6 +21,7 @@ export type Recipe = {
   id: string;
   title: string;
   description: string;
+  imageUrl?: string;
   calories: number;
   protein: number;
   fat: number;
