@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { CartPage } from './pages/CartPage';
 import { MenuPage } from './pages/MenuPage';
+import { ProgressPage } from './pages/ProgressPage';
 import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
 import { recipes } from './data/recipes';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
+import type { ProgressEntry } from './types/progress';
 import type { Recipe } from './types/recipe';
 
 type FeatureCard = {
@@ -20,7 +22,7 @@ type PopularRecipe = {
   calories: string;
 };
 
-type NavigationTab = 'home' | 'recipes' | 'menu' | 'cart' | 'access';
+type NavigationTab = 'home' | 'recipes' | 'menu' | 'cart' | 'progress' | 'access';
 
 type SubscriptionStatus = 'free' | 'active';
 
@@ -84,6 +86,7 @@ const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
   { id: 'recipes', label: 'Рецепты', icon: '📖' },
   { id: 'menu', label: 'Меню', icon: '🍽️' },
   { id: 'cart', label: 'Корзина', icon: '🛒' },
+  { id: 'progress', label: 'Прогресс', icon: '🌷' },
   { id: 'access', label: 'Доступ', icon: '⭐' },
 ];
 
@@ -283,6 +286,7 @@ function App() {
   const [activeTab, setActiveTab] = useState<NavigationTab>(startAppRecipeId ? 'recipes' : 'home');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(initialRecipe);
   const [weeklyMenu, setWeeklyMenu] = useState(createEmptyWeeklyMenu);
+  const [progressEntries, setProgressEntries] = useState<ProgressEntry[]>([]);
   const [userProfile, setUserProfile] = useState<UserProfile>({ subscriptionStatus: 'free' });
   const hasActiveSubscription = userProfile.subscriptionStatus === 'active';
 
@@ -327,6 +331,14 @@ function App() {
     }));
   };
 
+  const addProgressEntry = (entry: ProgressEntry) => {
+    setProgressEntries((currentEntries) => [...currentEntries, entry]);
+  };
+
+  const deleteProgressEntry = (entryId: string) => {
+    setProgressEntries((currentEntries) => currentEntries.filter((entry) => entry.id !== entryId));
+  };
+
   return (
     <main className="min-h-screen bg-cream text-slate-950">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
@@ -352,6 +364,8 @@ function App() {
           />
         ) : activeTab === 'cart' ? (
           <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRecipes} />
+        ) : activeTab === 'progress' ? (
+          <ProgressPage entries={progressEntries} onAddEntry={addProgressEntry} onDeleteEntry={deleteProgressEntry} />
         ) : activeTab === 'access' ? (
           <AccessPage
             subscriptionUntil={userProfile.subscriptionUntil}
@@ -370,10 +384,10 @@ function App() {
       </div>
 
       <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-orange-100 bg-white/95 px-4 pb-5 pt-3 shadow-2xl shadow-orange-100 backdrop-blur">
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-6 gap-1">
           {navigationItems.map((item) => (
             <button
-              className={`flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-xs font-bold transition ${
+              className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${
                 activeTab === item.id ? 'bg-orange-50 text-orange-600' : 'text-slate-400 hover:text-slate-600'
               }`}
               key={item.id}
