@@ -30,14 +30,22 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
   const [toastMessage, setToastMessage] = useState('');
   const [selectedDay, setSelectedDay] = useState<MenuDay>('Понедельник');
   const [selectedSlot, setSelectedSlot] = useState<MenuMealSlot>('Завтрак');
+  const [isMenuPickerOpen, setIsMenuPickerOpen] = useState(false);
 
   const showActionFeedback = (action: keyof ActionState, message: string) => {
     setActionState((current) => ({ ...current, [action]: true }));
     setToastMessage(message);
   };
 
+  const handleOpenMenuPicker = () => {
+    setIsMenuPickerOpen(true);
+    setActionState((current) => ({ ...current, menu: false }));
+    setToastMessage('');
+  };
+
   const handleAddToMenu = () => {
     onAddToMenu(recipe, selectedDay, selectedSlot);
+    setIsMenuPickerOpen(false);
     showActionFeedback('menu', `Рецепт добавлен: ${selectedDay}, ${selectedSlot.toLowerCase()}`);
   };
 
@@ -92,49 +100,58 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
             ))}
           </div>
 
-          <div className="mt-5 rounded-3xl bg-orange-50 p-3">
-            <p className="text-sm font-black text-slate-950">Куда добавить рецепт?</p>
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <label className="block">
-                <span className="mb-1 block text-xs font-extrabold text-slate-500">День</span>
-                <select
-                  className="w-full rounded-2xl border border-orange-100 bg-white px-3 py-3 text-sm font-bold text-slate-900 outline-none focus:border-orange-300 focus:ring-4 focus:ring-orange-100"
-                  onChange={(event) => setSelectedDay(event.target.value as MenuDay)}
-                  value={selectedDay}
-                >
-                  {menuDays.map((day) => (
-                    <option key={day} value={day}>
-                      {day}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="block">
-                <span className="mb-1 block text-xs font-extrabold text-slate-500">Прием пищи</span>
-                <select
-                  className="w-full rounded-2xl border border-orange-100 bg-white px-3 py-3 text-sm font-bold text-slate-900 outline-none focus:border-orange-300 focus:ring-4 focus:ring-orange-100"
-                  onChange={(event) => setSelectedSlot(event.target.value as MenuMealSlot)}
-                  value={selectedSlot}
-                >
-                  {menuMealSlots.map((slot) => (
-                    <option key={slot} value={slot}>
-                      {slot}
-                    </option>
-                  ))}
-                </select>
-              </label>
+          {isMenuPickerOpen && (
+            <div className="mt-5 rounded-3xl bg-orange-50 p-3">
+              <p className="text-sm font-black text-slate-950">Куда добавить рецепт?</p>
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <label className="block">
+                  <span className="mb-1 block text-xs font-extrabold text-slate-500">День</span>
+                  <select
+                    className="w-full rounded-2xl border border-orange-100 bg-white px-3 py-3 text-sm font-bold text-slate-900 outline-none focus:border-orange-300 focus:ring-4 focus:ring-orange-100"
+                    onChange={(event) => setSelectedDay(event.target.value as MenuDay)}
+                    value={selectedDay}
+                  >
+                    {menuDays.map((day) => (
+                      <option key={day} value={day}>
+                        {day}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="block">
+                  <span className="mb-1 block text-xs font-extrabold text-slate-500">Прием пищи</span>
+                  <select
+                    className="w-full rounded-2xl border border-orange-100 bg-white px-3 py-3 text-sm font-bold text-slate-900 outline-none focus:border-orange-300 focus:ring-4 focus:ring-orange-100"
+                    onChange={(event) => setSelectedSlot(event.target.value as MenuMealSlot)}
+                    value={selectedSlot}
+                  >
+                    {menuMealSlots.map((slot) => (
+                      <option key={slot} value={slot}>
+                        {slot}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <button
+                className="mt-3 w-full rounded-2xl bg-orange-500 px-4 py-3 text-base font-black text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600"
+                onClick={handleAddToMenu}
+                type="button"
+              >
+                Добавить в выбранный слот
+              </button>
             </div>
-          </div>
+          )}
 
           <div className="mt-3 grid gap-2">
             <button
               className={`rounded-2xl px-4 py-3 text-base font-black text-white shadow-lg transition ${
                 actionState.menu ? 'bg-emerald-500 shadow-emerald-100' : 'bg-orange-500 shadow-orange-200 hover:bg-orange-600'
               }`}
-              onClick={handleAddToMenu}
+              onClick={handleOpenMenuPicker}
               type="button"
             >
-              {actionState.menu ? 'Добавлено в меню' : 'Добавить в меню'}
+              {actionState.menu ? 'Добавлено в меню' : isMenuPickerOpen ? 'Выбери день и прием пищи' : 'Добавить в меню'}
             </button>
             <button
               className={`rounded-2xl px-4 py-3 text-base font-black transition ${
