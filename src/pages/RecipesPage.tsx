@@ -8,10 +8,12 @@ const mealTypes: MealType[] = ['завтрак', 'обед', 'ужин', 'пер
 type ActiveMealType = MealType | 'все';
 
 type RecipesPageProps = {
+  hasActiveSubscription: boolean;
+  onOpenAccess: () => void;
   onOpenRecipe: (recipe: Recipe) => void;
 };
 
-export function RecipesPage({ onOpenRecipe }: RecipesPageProps) {
+export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe }: RecipesPageProps) {
   const [search, setSearch] = useState('');
   const [activeMealType, setActiveMealType] = useState<ActiveMealType>('все');
 
@@ -32,7 +34,7 @@ export function RecipesPage({ onOpenRecipe }: RecipesPageProps) {
         <p className="text-sm font-bold uppercase tracking-wide text-white/80">Каталог</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Рецепты</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-white/90">
-          8 идей с КБЖУ для завтрака, обеда, ужина и десерта — пока без backend и оплаты.
+          8 идей с КБЖУ: бесплатные рецепты и premium-доступ к расширенному каталогу.
         </p>
       </div>
 
@@ -68,12 +70,12 @@ export function RecipesPage({ onOpenRecipe }: RecipesPageProps) {
 
       <div className="mt-2 flex items-center justify-between">
         <h2 className="text-xl font-black text-slate-950">Найдено: {filteredRecipes.length}</h2>
-        <span className="text-sm font-bold text-slate-400">mock-база</span>
+        <button className="text-sm font-bold text-orange-600" onClick={onOpenAccess} type="button">Доступ</button>
       </div>
 
       <div className="mt-3 space-y-3">
         {filteredRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} onOpen={onOpenRecipe} />
+          <RecipeCard key={recipe.id} hasActiveSubscription={hasActiveSubscription} recipe={recipe} onOpen={onOpenRecipe} />
         ))}
       </div>
 

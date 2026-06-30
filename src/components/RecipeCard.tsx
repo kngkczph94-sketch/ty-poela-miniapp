@@ -2,12 +2,14 @@ import type { Recipe } from '../types/recipe';
 
 type RecipeCardProps = {
   recipe: Recipe;
+  hasActiveSubscription: boolean;
   onOpen: (recipe: Recipe) => void;
 };
 
-export function RecipeCard({ recipe, onOpen }: RecipeCardProps) {
+export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCardProps) {
+  const isLocked = recipe.isPremium && !hasActiveSubscription;
   return (
-    <article className="rounded-3xl border border-orange-100 bg-white p-4 shadow-sm shadow-orange-100 transition hover:-translate-y-0.5 hover:shadow-lg">
+    <article className={`relative overflow-hidden rounded-3xl border p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${isLocked ? 'border-amber-200 bg-amber-50/80 shadow-amber-100' : 'border-orange-100 bg-white shadow-orange-100'}`}>
       <button
         aria-label={`Открыть рецепт ${recipe.title}`}
         className="block w-full text-left"
@@ -23,6 +25,11 @@ export function RecipeCard({ recipe, onOpen }: RecipeCardProps) {
               {recipe.isPremium && (
                 <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-extrabold text-amber-700">
                   Premium
+                </span>
+              )}
+              {isLocked && (
+                <span className="rounded-full bg-slate-900 px-3 py-1 text-xs font-extrabold text-white">
+                  🔒 Закрыто
                 </span>
               )}
             </div>
@@ -55,6 +62,11 @@ export function RecipeCard({ recipe, onOpen }: RecipeCardProps) {
           <span>🍽️ {recipe.servings} порц.</span>
         </div>
       </button>
+      {isLocked && (
+        <div className="pointer-events-none absolute inset-x-4 bottom-4 rounded-2xl bg-white/85 px-3 py-2 text-center text-xs font-black text-slate-700 backdrop-blur">
+          Нажми, чтобы посмотреть preview и оформить доступ
+        </div>
+      )}
     </article>
   );
 }

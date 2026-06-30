@@ -4,9 +4,11 @@ import { menuDays, menuMealSlots, type MenuDay, type MenuMealSlot } from '../typ
 import type { Recipe } from '../types/recipe';
 
 type RecipeDetailPageProps = {
+  hasActiveSubscription: boolean;
   recipe: Recipe;
   onBack: () => void;
   onAddToMenu: (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => void;
+  onOpenAccess: () => void;
 };
 
 type ActionState = {
@@ -22,7 +24,7 @@ const nutritionItems = [
   { key: 'carbs', label: 'углеводы', suffix: ' г' },
 ] as const;
 
-export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPageProps) {
+export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddToMenu, onOpenAccess }: RecipeDetailPageProps) {
   const [actionState, setActionState] = useState<ActionState>({
     menu: false,
     cart: false,
@@ -34,6 +36,7 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
   const [isMenuPickerOpen, setIsMenuPickerOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const deepLink = createRecipeDeepLink(recipe.id);
+  const isPremiumPreview = recipe.isPremium && !hasActiveSubscription;
 
   const showActionFeedback = (action: keyof ActionState, message: string) => {
     setActionState((current) => ({ ...current, [action]: true }));
@@ -130,6 +133,23 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
             ))}
           </div>
 
+          {isPremiumPreview ? (
+            <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-5 text-center">
+              <p className="text-4xl">🔒</p>
+              <h2 className="mt-3 text-xl font-black text-slate-950">Открой полный рецепт, меню и корзину</h2>
+              <p className="mt-2 text-sm font-semibold leading-5 text-slate-600">
+                Ингредиенты, шаги приготовления, добавление в меню и автокорзина доступны после mock-подписки.
+              </p>
+              <button
+                className="mt-4 w-full rounded-2xl bg-orange-500 px-4 py-3 text-base font-black text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600"
+                onClick={onOpenAccess}
+                type="button"
+              >
+                Оформить доступ
+              </button>
+            </div>
+          ) : (
+            <>
           {isMenuPickerOpen && (
             <div className="mt-5 rounded-3xl bg-orange-50 p-3">
               <p className="text-sm font-black text-slate-950">Куда добавить рецепт?</p>
@@ -204,9 +224,13 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
               {actionState.shared ? 'Поделиться ещё раз' : 'Поделиться'}
             </button>
           </div>
+            </>
+          )}
         </div>
       </article>
 
+      {!isPremiumPreview && (
+        <>
       <section className="mt-5 rounded-3xl bg-white p-5 shadow-sm shadow-orange-100">
         <h2 className="text-xl font-black text-slate-950">Ингредиенты</h2>
         <ul className="mt-3 space-y-2 text-sm font-semibold text-slate-600">
@@ -232,6 +256,9 @@ export function RecipeDetailPage({ recipe, onBack, onAddToMenu }: RecipeDetailPa
           ))}
         </ol>
       </section>
+
+        </>
+      )}
 
       {isShareModalOpen && (
         <div className="fixed inset-0 z-40 flex items-end justify-center bg-slate-950/50 px-4 pb-4 pt-10 backdrop-blur-sm sm:items-center">
