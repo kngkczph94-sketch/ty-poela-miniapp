@@ -87,7 +87,7 @@ export const recipes: Recipe[] = [
     ],
     steps: ['Отвари пасту до al dente.', 'Прогрей томаты с чесноком и тунцом.', 'Смешай соус с пастой и зеленью.'],
     tags: ['паста', 'рыба', 'ужин'],
-    isPremium: false,
+    isPremium: true,
   },
   {
     id: 'cheese-omelette',
@@ -109,7 +109,7 @@ export const recipes: Recipe[] = [
     ],
     steps: ['Взбей яйца с молоком.', 'Добавь сыр и зелень.', 'Готовь под крышкой на слабом огне.'],
     tags: ['завтрак', 'омлет', 'низкоуглеводно'],
-    isPremium: false,
+    isPremium: true,
   },
   {
     id: 'shrimp-salad',
@@ -153,7 +153,7 @@ export const recipes: Recipe[] = [
     ],
     steps: ['Разогрей готовую гречку и индейку.', 'Нарежь овощи.', 'Собери боул и добавь соус.'],
     tags: ['боул', 'ленивый рецепт', 'meal prep'],
-    isPremium: false,
+    isPremium: true,
   },
   {
     id: 'chocolate-pp-dessert',
