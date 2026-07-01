@@ -15,6 +15,12 @@ export type DailyRation = {
   };
   publishedAt: string;
   sortOrder: number;
+  adaptedFrom?: {
+    originalCalories: number;
+    targetCalories: number;
+    scaleFactor: number;
+    originalMeals: DailyRation['meals'];
+  };
 };
 
 export const calculateMealsNutrition = (meals: Partial<Record<keyof DailyRation['meals'], Meal | null>>) =>
@@ -27,3 +33,37 @@ export const calculateMealsNutrition = (meals: Partial<Record<keyof DailyRation[
     }),
     { calories: 0, protein: 0, fat: 0, carbs: 0 },
   );
+
+
+export const adaptRationToCalories = (ration: DailyRation, targetCalories: number): DailyRation => {
+  const originalCalories = calculateMealsNutrition(ration.meals).calories;
+  const scaleFactor = targetCalories / originalCalories;
+  const scaleNumber = (value: number) => Math.round(value * scaleFactor);
+  const meals = Object.fromEntries(
+    Object.entries(ration.meals).map(([slot, meal]) => [
+      slot,
+      {
+        ...meal,
+        calories: scaleNumber(meal.calories),
+        protein: scaleNumber(meal.protein),
+        fat: scaleNumber(meal.fat),
+        carbs: scaleNumber(meal.carbs),
+        ingredients: meal.ingredients.map((ingredient) => ({
+          ...ingredient,
+          amount: scaleNumber(ingredient.amount),
+        })),
+      },
+    ]),
+  ) as DailyRation['meals'];
+
+  return {
+    ...ration,
+    meals,
+    adaptedFrom: {
+      originalCalories,
+      targetCalories,
+      scaleFactor,
+      originalMeals: ration.meals,
+    },
+  };
+};
