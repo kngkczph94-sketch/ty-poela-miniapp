@@ -86,21 +86,21 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
   return (
     <section className="flex flex-1 flex-col">
       <button
-        className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-[#5E6738] shadow-sm shadow-[#E9D7A5] transition hover:-translate-x-0.5 hover:bg-[#F4E8BE]"
+        className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-[#30360E] shadow-sm shadow-[#E2D4B9] transition hover:-translate-x-0.5 hover:bg-[#E2D4B9]"
         onClick={onBack}
         type="button"
       >
         ← Назад к рецептам
       </button>
 
-      <article className="overflow-hidden rounded-[2rem] bg-white shadow-xl shadow-[#E9D7A5]">
-        <div className="bg-gradient-to-br from-[#7A8450] via-[#E9D7A5] to-[#F4E8BE] p-6 text-white">
+      <article className="overflow-hidden rounded-[2rem] bg-[#FAF7EF] shadow-xl shadow-[#E2D4B9]">
+        <div className="bg-gradient-to-br from-[#686F12] via-[#E2D4B9] to-[#E2D4B9] p-6 text-white">
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-extrabold uppercase tracking-wide backdrop-blur">
               {mealTypeLabels[recipe.mealType]}
             </span>
             {recipe.isPremium && (
-              <span className="rounded-full bg-white px-3 py-1 text-xs font-extrabold text-[#5E6738]">Premium</span>
+              <span className="rounded-full bg-white px-3 py-1 text-xs font-extrabold text-[#30360E]">Premium</span>
             )}
           </div>
           <h1 className="text-3xl font-black leading-tight tracking-tight">{recipe.title}</h1>
@@ -108,41 +108,41 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
         </div>
 
         <div className="p-5">
-          <div className="grid grid-cols-4 gap-2 rounded-3xl bg-[#F4E8BE] p-3 text-center">
+          <div className="grid grid-cols-4 gap-2 rounded-3xl bg-[#E2D4B9] p-3 text-center">
             {nutritionItems.map((item) => (
               <div key={item.key}>
-                <p className="text-sm font-black text-[#4B4636]">
+                <p className="text-sm font-black text-[#30360E]">
                   {recipe[item.key]}
                   {'suffix' in item ? item.suffix : ''}
                 </p>
-                <p className="text-[11px] font-bold text-[#4B4636]/45">{item.label}</p>
+                <p className="text-[11px] font-bold text-[#92735C]">{item.label}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm font-bold text-[#4B4636]/80">
-            <div className="rounded-2xl bg-[#F8F4EA] p-3">⏱️<br />{recipe.cookingTime} мин</div>
-            <div className="rounded-2xl bg-[#F8F4EA] p-3">🍽️<br />{recipe.servings} порц.</div>
-            <div className="rounded-2xl bg-[#F8F4EA] p-3">🥗<br />{mealTypeLabels[recipe.mealType]}</div>
+          <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm font-bold text-[#92735C]">
+            <div className="rounded-2xl bg-[#F7F3E8] p-3">⏱️<br />{recipe.cookingTime} мин</div>
+            <div className="rounded-2xl bg-[#F7F3E8] p-3">🍽️<br />{recipe.servings} порц.</div>
+            <div className="rounded-2xl bg-[#F7F3E8] p-3">🥗<br />{mealTypeLabels[recipe.mealType]}</div>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2">
             {recipe.tags.map((tag) => (
-              <span className="rounded-full bg-[#F4E8BE] px-3 py-1 text-xs font-extrabold text-[#5E6738]" key={tag}>
+              <span className="rounded-full bg-[#E2D4B9] px-3 py-1 text-xs font-extrabold text-[#30360E]" key={tag}>
                 #{tag}
               </span>
             ))}
           </div>
 
           {isPremiumPreview ? (
-            <div className="mt-5 rounded-3xl border border-[#E9D7A5] bg-[#F4E8BE] p-5 text-center">
+            <div className="mt-5 rounded-3xl border border-[#92735C]/35 bg-[#E2D4B9] p-5 text-center">
               <p className="text-4xl">🔒</p>
-              <h2 className="mt-3 text-xl font-black text-[#4B4636]">Открой полный рецепт, меню и корзину</h2>
-              <p className="mt-2 text-sm font-semibold leading-5 text-[#4B4636]/80">
+              <h2 className="mt-3 text-xl font-black text-[#30360E]">Открой полный рецепт, меню и корзину</h2>
+              <p className="mt-2 text-sm font-semibold leading-5 text-[#92735C]">
                 Ингредиенты, шаги приготовления, добавление в меню и автокорзина доступны после mock-подписки. Ты не слабая. Ты просто не планировала еду.
               </p>
               <button
-                className="mt-4 w-full rounded-2xl bg-[#7A8450] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E9D7A5] transition hover:bg-[#5E6738]"
+                className="mt-4 w-full rounded-2xl bg-[#686F12] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]"
                 onClick={onOpenAccess}
                 type="button"
               >
@@ -152,13 +152,13 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
           ) : (
             <>
           {isMenuPickerOpen && (
-            <div className="mt-5 rounded-3xl bg-[#F4E8BE] p-3">
-              <p className="text-sm font-black text-[#4B4636]">Куда добавить рецепт?</p>
+            <div className="mt-5 rounded-3xl bg-[#E2D4B9] p-3">
+              <p className="text-sm font-black text-[#30360E]">Куда добавить рецепт?</p>
               <div className="mt-3 grid grid-cols-2 gap-2">
                 <label className="block">
-                  <span className="mb-1 block text-xs font-extrabold text-[#4B4636]/65">День</span>
+                  <span className="mb-1 block text-xs font-extrabold text-[#92735C]">День</span>
                   <select
-                    className="w-full rounded-2xl border border-[#E9D7A5] bg-white px-3 py-3 text-sm font-bold text-[#4B4636] outline-none focus:border-[#E9D7A5] focus:ring-4 focus:ring-[#F4E8BE]"
+                    className="w-full rounded-2xl border border-[#92735C]/35 bg-white px-3 py-3 text-sm font-bold text-[#30360E] outline-none focus:border-[#92735C]/35 focus:ring-4 focus:ring-[#E2D4B9]"
                     onChange={(event) => setSelectedDay(event.target.value as MenuDay)}
                     value={selectedDay}
                   >
@@ -170,9 +170,9 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
                   </select>
                 </label>
                 <label className="block">
-                  <span className="mb-1 block text-xs font-extrabold text-[#4B4636]/65">Прием пищи</span>
+                  <span className="mb-1 block text-xs font-extrabold text-[#92735C]">Прием пищи</span>
                   <select
-                    className="w-full rounded-2xl border border-[#E9D7A5] bg-white px-3 py-3 text-sm font-bold text-[#4B4636] outline-none focus:border-[#E9D7A5] focus:ring-4 focus:ring-[#F4E8BE]"
+                    className="w-full rounded-2xl border border-[#92735C]/35 bg-white px-3 py-3 text-sm font-bold text-[#30360E] outline-none focus:border-[#92735C]/35 focus:ring-4 focus:ring-[#E2D4B9]"
                     onChange={(event) => setSelectedSlot(event.target.value as MenuMealSlot)}
                     value={selectedSlot}
                   >
@@ -185,7 +185,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
                 </label>
               </div>
               <button
-                className="mt-3 w-full rounded-2xl bg-[#7A8450] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E9D7A5] transition hover:bg-[#5E6738]"
+                className="mt-3 w-full rounded-2xl bg-[#686F12] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]"
                 onClick={handleAddToMenu}
                 type="button"
               >
@@ -197,7 +197,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
           <div className="mt-3 grid gap-2">
             <button
               className={`rounded-2xl px-4 py-3 text-base font-black text-white shadow-lg transition ${
-                actionState.menu ? 'bg-[#5E6738] shadow-[#E9D7A5]' : 'bg-[#7A8450] shadow-[#E9D7A5] hover:bg-[#5E6738]'
+                actionState.menu ? 'bg-[#30360E] shadow-[#E2D4B9]' : 'bg-[#686F12] shadow-[#E2D4B9] hover:bg-[#30360E]'
               }`}
               onClick={handleOpenMenuPicker}
               type="button"
@@ -205,7 +205,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
               {actionState.menu ? 'Добавлено в План' : isMenuPickerOpen ? 'Выбери день и прием пищи' : 'Добавить в План'}
             </button>
             <button
-              className="rounded-2xl bg-[#F4E8BE] px-4 py-3 text-base font-black text-[#5E6738] transition hover:bg-[#F4E8BE]"
+              className="rounded-2xl bg-[#E2D4B9] px-4 py-3 text-base font-black text-[#30360E] transition hover:bg-[#E2D4B9]"
               onClick={() => {
                 showActionFeedback('cart', 'Корзина собирается из Плана. Сначала выбери слот — без Excel.');
                 setIsMenuPickerOpen(true);
@@ -215,7 +215,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
               Собрать корзину через План
             </button>
             <button
-              className="rounded-2xl border border-[#E9D7A5] bg-white px-4 py-3 text-base font-black text-[#4B4636] transition hover:bg-[#F8F4EA]"
+              className="rounded-2xl border border-[#92735C]/35 bg-white px-4 py-3 text-base font-black text-[#30360E] transition hover:bg-[#F7F3E8]"
               onClick={() => {
                 setIsShareModalOpen(true);
                 setActionState((current) => ({ ...current, shared: true }));
@@ -227,7 +227,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
             </button>
           {actionState.menu && (
             <button
-              className="mt-2 rounded-2xl border border-[#E9D7A5] bg-[#F4E8BE] px-4 py-3 text-base font-black text-[#5E6738] transition hover:bg-[#F4E8BE]"
+              className="mt-2 rounded-2xl border border-[#92735C]/35 bg-[#E2D4B9] px-4 py-3 text-base font-black text-[#30360E] transition hover:bg-[#E2D4B9]"
               onClick={onOpenMenu}
               type="button"
             >
@@ -242,24 +242,24 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
 
       {!isPremiumPreview && (
         <>
-      <section className="mt-5 rounded-3xl bg-white p-5 shadow-sm shadow-[#E9D7A5]">
-        <h2 className="text-xl font-black text-[#4B4636]">Ингредиенты</h2>
-        <ul className="mt-3 space-y-2 text-sm font-semibold text-[#4B4636]/80">
+      <section className="mt-5 rounded-3xl bg-[#FAF7EF] p-5 shadow-sm shadow-[#E2D4B9]">
+        <h2 className="text-xl font-black text-[#30360E]">Ингредиенты</h2>
+        <ul className="mt-3 space-y-2 text-sm font-semibold text-[#92735C]">
           {recipe.ingredients.map((ingredient) => (
             <li className="flex items-center justify-between gap-2" key={`${ingredient.name}-${ingredient.unit}`}>
               <span><span className="mr-2">•</span>{ingredient.name}</span>
-              <span className="rounded-full bg-[#F4E8BE] px-3 py-1 text-xs font-black text-[#5E6738]">{ingredient.amount} {ingredient.unit}</span>
+              <span className="rounded-full bg-[#E2D4B9] px-3 py-1 text-xs font-black text-[#30360E]">{ingredient.amount} {ingredient.unit}</span>
             </li>
           ))}
         </ul>
       </section>
 
-      <section className="mt-4 rounded-3xl bg-white p-5 shadow-sm shadow-[#E9D7A5]">
-        <h2 className="text-xl font-black text-[#4B4636]">Шаги приготовления</h2>
+      <section className="mt-4 rounded-3xl bg-[#FAF7EF] p-5 shadow-sm shadow-[#E2D4B9]">
+        <h2 className="text-xl font-black text-[#30360E]">Шаги приготовления</h2>
         <ol className="mt-3 space-y-3">
           {recipe.steps.map((step, index) => (
-            <li className="flex gap-3 text-sm font-semibold leading-5 text-[#4B4636]/80" key={step}>
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F4E8BE] text-xs font-black text-[#5E6738]">
+            <li className="flex gap-3 text-sm font-semibold leading-5 text-[#92735C]" key={step}>
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#E2D4B9] text-xs font-black text-[#30360E]">
                 {index + 1}
               </span>
               {step}
@@ -272,15 +272,15 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
       )}
 
       {isShareModalOpen && (
-        <div className="fixed inset-0 z-40 flex items-end justify-center bg-[#4B4636]/50 px-4 pb-4 pt-10 backdrop-blur-sm sm:items-center">
-          <div className="max-h-[92vh] w-full max-w-md overflow-y-auto rounded-[2rem] bg-white p-4 shadow-2xl">
+        <div className="fixed inset-0 z-40 flex items-end justify-center bg-[#30360E]/50 px-4 pb-4 pt-10 backdrop-blur-sm sm:items-center">
+          <div className="max-h-[92vh] w-full max-w-md overflow-y-auto rounded-[2rem] bg-[#FAF7EF] p-4 shadow-2xl">
             <div className="mb-3 flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#7A8450]">Поделиться</p>
-                <h2 className="text-xl font-black text-[#4B4636]">Шер-карточка рецепта</h2>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#686F12]">Поделиться</p>
+                <h2 className="text-xl font-black text-[#30360E]">Шер-карточка рецепта</h2>
               </div>
               <button
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F8F4EA] text-lg font-black text-[#4B4636]/65 transition hover:bg-[#F4E8BE]"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F7F3E8] text-lg font-black text-[#92735C] transition hover:bg-[#E2D4B9]"
                 onClick={() => setIsShareModalOpen(false)}
                 type="button"
               >
@@ -292,21 +292,21 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
 
             <div className="mt-4 grid gap-2">
               <button
-                className="rounded-2xl bg-[#7A8450] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E9D7A5] transition hover:bg-[#5E6738]"
+                className="rounded-2xl bg-[#686F12] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]"
                 onClick={() => copyToClipboard(deepLink, 'Ссылка скопирована')}
                 type="button"
               >
                 Скопировать ссылку
               </button>
               <button
-                className="rounded-2xl bg-[#F4E8BE] px-4 py-3 text-base font-black text-[#5E6738] transition hover:bg-[#F4E8BE]"
+                className="rounded-2xl bg-[#E2D4B9] px-4 py-3 text-base font-black text-[#30360E] transition hover:bg-[#E2D4B9]"
                 onClick={() => copyToClipboard(shareText, 'Текст скопирован')}
                 type="button"
               >
                 Скопировать текст
               </button>
               <button
-                className="rounded-2xl border border-[#E9D7A5] bg-white px-4 py-3 text-base font-black text-[#4B4636]/80 transition hover:bg-[#F8F4EA]"
+                className="rounded-2xl border border-[#92735C]/35 bg-white px-4 py-3 text-base font-black text-[#92735C] transition hover:bg-[#F7F3E8]"
                 onClick={() => setIsShareModalOpen(false)}
                 type="button"
               >
@@ -318,7 +318,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
       )}
 
       {toastMessage && (
-        <div className="fixed inset-x-4 bottom-28 z-30 mx-auto max-w-sm rounded-2xl bg-[#4B4636] px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">
+        <div className="fixed inset-x-4 bottom-28 z-30 mx-auto max-w-sm rounded-2xl bg-[#30360E] px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">
           {toastMessage}
         </div>
       )}

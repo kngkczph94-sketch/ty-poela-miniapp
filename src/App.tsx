@@ -39,24 +39,24 @@ const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
 
 function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecipes, onOpenCart, onOpenProgress, onOpenMacros }: { subscriptionStatus: SubscriptionStatus; onOpenAccess: () => void; onOpenRations: () => void; onOpenRecipes: () => void; onOpenCart: () => void; onOpenProgress: () => void; onOpenMacros: () => void }) {
   const cards = [
-    { title: 'Рационы дня', description: 'Готовый день питания из 4 приёмов пищи', icon: '🥣', onClick: onOpenRations, tone: 'bg-[#F4E8BE] text-[#5E6738]' },
-    { title: 'Рассчитать БЖУ', description: 'Калории, БЖУ и подгонка рациона', icon: '🧮', onClick: onOpenMacros, tone: 'bg-[#F4E8BE] text-[#5E6738]' },
-    { title: 'Рецепты', description: 'Тёплые блюда на каждый день', icon: '📖', onClick: onOpenRecipes, tone: 'bg-[#E9D7A5] text-[#4B4636]' },
-    { title: 'База знаний', description: 'Мягкие подсказки о питании', icon: '📚', soon: true, tone: 'bg-[#E9D7A5] text-[#5E6738]' },
-    { title: 'ИИ-подбор', description: 'Персональный подбор рецептов', icon: '✨', soon: true, tone: 'bg-[#F4E8BE] text-[#4B4636]' },
-    { title: 'Прогресс', description: 'Мягкий трекер без давления', icon: '🌷', onClick: onOpenProgress, tone: 'bg-[#E9D7A5] text-[#5E6738]' },
+    { title: 'Рационы дня', description: 'Готовый день питания из 4 приёмов пищи', icon: '🥣', onClick: onOpenRations, tone: 'bg-[#E2D4B9] text-[#30360E]' },
+    { title: 'Рассчитать БЖУ', description: 'Калории, БЖУ и подгонка рациона', icon: '🧮', onClick: onOpenMacros, tone: 'bg-[#E2D4B9] text-[#30360E]' },
+    { title: 'Рецепты', description: 'Тёплые блюда на каждый день', icon: '📖', onClick: onOpenRecipes, tone: 'bg-[#E2D4B9] text-[#30360E]' },
+    { title: 'База знаний', description: 'Мягкие подсказки о питании', icon: '📚', soon: true, tone: 'bg-[#E2D4B9] text-[#30360E]' },
+    { title: 'ИИ-подбор', description: 'Персональный подбор рецептов', icon: '✨', soon: true, tone: 'bg-[#E2D4B9] text-[#30360E]' },
+    { title: 'Прогресс', description: 'Мягкий трекер без давления', icon: '🌷', onClick: onOpenProgress, tone: 'bg-[#E2D4B9] text-[#30360E]' },
   ];
   return <>
-    <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#7A8450] via-[#5E6738] to-[#E9D7A5] p-6 text-white shadow-soft"><div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-white/15" /><div className="absolute -bottom-14 left-12 h-40 w-40 rounded-full bg-[#F4E8BE]/30" /><div className="relative z-10"><p className="mb-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-sm font-semibold backdrop-blur">Telegram Mini App</p><h1 className="max-w-xs text-4xl font-black leading-tight tracking-tight">Ты поела?</h1><p className="mt-4 max-w-sm text-base font-medium leading-6 text-white/90">Рационы, рецепты и план питания внутри Telegram</p><button className="mt-6 rounded-2xl bg-white px-5 py-3 text-base font-bold text-[#5E6738] shadow-lg" onClick={onOpenRations} type="button">Выбрать рацион дня</button></div></section>
-    <section className="mt-5 rounded-[2rem] border border-[#E9D7A5] bg-[#F4E8BE] p-5 shadow-sm shadow-[#E9D7A5]"><p className="text-xs font-black uppercase tracking-[0.18em] text-[#5E6738]">Главное</p><h2 className="mt-2 text-2xl font-black leading-tight text-[#4B4636]">Рацион — это план, а не интуиция</h2><p className="mt-2 text-sm font-semibold leading-5 text-[#4B4636]/70">Собери день питания, добавь его в План — и получи понятную корзину без лишней суеты.</p></section>
-    <section className="mt-5 rounded-3xl border border-[#E9D7A5] bg-white p-4 shadow-sm shadow-[#E9D7A5]"><div className="flex items-center justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A8450]">Статус доступа</p><h2 className="mt-1 text-lg font-black text-[#4B4636]">{subscriptionStatus === 'active' ? 'Доступ активен' : 'Бесплатный доступ'}</h2><p className="mt-1 text-sm font-semibold text-[#4B4636]/65">{subscriptionStatus === 'active' ? 'Premium-рационы открыты' : 'Открой premium-рационы и рецепты'}</p></div>{subscriptionStatus === 'free' && <button className="shrink-0 rounded-2xl bg-[#4B4636] px-4 py-3 text-sm font-black text-white" onClick={onOpenAccess} type="button">Открыть доступ</button>}</div></section>
+    <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#686F12] via-[#30360E] to-[#E2D4B9] p-6 text-white shadow-soft"><div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-white/15" /><div className="absolute -bottom-14 left-12 h-40 w-40 rounded-full bg-[#E2D4B9]/30" /><div className="relative z-10"><p className="mb-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-sm font-semibold backdrop-blur">Telegram Mini App</p><h1 className="max-w-xs text-4xl font-black leading-tight tracking-tight">Ты поела?</h1><p className="mt-4 max-w-sm text-base font-medium leading-6 text-white/90">Рационы, рецепты и план питания внутри Telegram</p><button className="mt-6 rounded-2xl bg-white px-5 py-3 text-base font-bold text-[#30360E] shadow-lg" onClick={onOpenRations} type="button">Выбрать рацион дня</button></div></section>
+    <section className="mt-5 rounded-[2rem] border border-[#92735C]/35 bg-[#E2D4B9] p-5 shadow-sm shadow-[#E2D4B9]"><p className="text-xs font-black uppercase tracking-[0.18em] text-[#30360E]">Главное</p><h2 className="mt-2 text-2xl font-black leading-tight text-[#30360E]">Рацион — это план, а не интуиция</h2><p className="mt-2 text-sm font-semibold leading-5 text-[#92735C]">Собери день питания, добавь его в План — и получи понятную корзину без лишней суеты.</p></section>
+    <section className="mt-5 rounded-3xl border border-[#92735C]/35 bg-[#FAF7EF] p-4 shadow-sm shadow-[#E2D4B9]"><div className="flex items-center justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-[#686F12]">Статус доступа</p><h2 className="mt-1 text-lg font-black text-[#30360E]">{subscriptionStatus === 'active' ? 'Доступ активен' : 'Бесплатный доступ'}</h2><p className="mt-1 text-sm font-semibold text-[#92735C]">{subscriptionStatus === 'active' ? 'Premium-рационы открыты' : 'Открой premium-рационы и рецепты'}</p></div>{subscriptionStatus === 'free' && <button className="shrink-0 rounded-2xl bg-[#30360E] px-4 py-3 text-sm font-black text-white" onClick={onOpenAccess} type="button">Открыть доступ</button>}</div></section>
     <section className="mt-6 grid gap-3">{cards.map((card) => {
-      const content = <div className="flex items-start gap-4"><span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl ${card.tone}`}>{card.icon}</span><div className="min-w-0 flex-1"><div className="flex items-center gap-2"><h2 className="text-lg font-extrabold text-[#4B4636]">{card.title}</h2>{card.soon && <span className="rounded-full bg-[#F4E8BE] px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#5E6738]">скоро</span>}</div><p className="mt-1 text-sm leading-5 text-[#4B4636]/65">{card.description}</p></div></div>;
-      const className = `rounded-3xl border border-[#E9D7A5] bg-white p-4 text-left shadow-sm shadow-[#E9D7A5] ${card.onClick ? 'cursor-pointer transition hover:-translate-y-0.5 hover:shadow-md' : ''}`;
+      const content = <div className="flex items-start gap-4"><span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl ${card.tone}`}>{card.icon}</span><div className="min-w-0 flex-1"><div className="flex items-center gap-2"><h2 className="text-lg font-extrabold text-[#30360E]">{card.title}</h2>{card.soon && <span className="rounded-full bg-[#E2D4B9] px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#30360E]">скоро</span>}</div><p className="mt-1 text-sm leading-5 text-[#92735C]">{card.description}</p></div></div>;
+      const className = `rounded-3xl border border-[#92735C]/35 bg-[#FAF7EF] p-4 text-left shadow-sm shadow-[#E2D4B9] ${card.onClick ? 'cursor-pointer transition hover:-translate-y-0.5 hover:shadow-md' : ''}`;
 
       return card.onClick ? <button className={className} key={card.title} onClick={card.onClick} type="button">{content}</button> : <article className={className} key={card.title}>{content}</article>;
     })}</section>
-    <section className="mt-7 grid grid-cols-2 gap-3"><button className="rounded-3xl bg-white p-4 text-left font-black text-[#5E6738] shadow-sm shadow-[#E9D7A5]" onClick={onOpenRecipes} type="button">Открыть рецепты</button><button className="rounded-3xl bg-white p-4 text-left font-black text-[#5E6738] shadow-sm shadow-[#E9D7A5]" onClick={onOpenCart} type="button">Корзина</button></section>
+    <section className="mt-7 grid grid-cols-2 gap-3"><button className="rounded-3xl bg-[#FAF7EF] p-4 text-left font-black text-[#30360E] shadow-sm shadow-[#E2D4B9]" onClick={onOpenRecipes} type="button">Открыть рецепты</button><button className="rounded-3xl bg-[#FAF7EF] p-4 text-left font-black text-[#30360E] shadow-sm shadow-[#E2D4B9]" onClick={onOpenCart} type="button">Корзина</button></section>
   </>;
 }
 function AccessPage({
@@ -76,27 +76,27 @@ function AccessPage({
 
   return (
     <section className="flex flex-1 flex-col">
-      <div className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#4B4636] via-[#5E6738] to-[#E9D7A5] p-6 text-white shadow-xl shadow-[#E9D7A5]/70">
+      <div className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#30360E] via-[#30360E] to-[#E2D4B9] p-6 text-white shadow-xl shadow-[#E2D4B9]/70">
         <p className="text-sm font-bold uppercase tracking-wide text-white/75">Подписка</p>
         <h1 className="mt-2 text-3xl font-black leading-tight tracking-tight">Открой рецепты, меню и корзину</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-white/90">Готовые решения по питанию внутри Telegram</p>
       </div>
 
       {subscriptionStatus === 'active' && (
-        <div className="mt-5 rounded-3xl border border-[#7A8450]/20 bg-[#F4E8BE] p-5 text-[#5E6738] shadow-sm shadow-[#E9D7A5]">
+        <div className="mt-5 rounded-3xl border border-[#92735C]/35 bg-[#E2D4B9] p-5 text-[#30360E] shadow-sm shadow-[#E2D4B9]">
           <p className="text-3xl">✅</p>
           <h2 className="mt-2 text-xl font-black">Доступ открыт</h2>
           <p className="mt-1 text-sm font-bold">Premium-рецепты, меню и корзина доступны{formattedUntil ? ` до ${formattedUntil}` : ''}.</p>
         </div>
       )}
 
-      <article className="mt-5 rounded-[2rem] bg-white p-5 shadow-xl shadow-[#E9D7A5]">
+      <article className="mt-5 rounded-[2rem] bg-[#FAF7EF] p-5 shadow-xl shadow-[#E2D4B9]">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A8450]">Тариф</p>
-            <h2 className="mt-1 text-2xl font-black text-[#4B4636]">Неделя доступа</h2>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#686F12]">Тариф</p>
+            <h2 className="mt-1 text-2xl font-black text-[#30360E]">Неделя доступа</h2>
           </div>
-          <span className="rounded-full bg-[#E9D7A5] px-3 py-1 text-xs font-extrabold text-[#5E6738]">Premium</span>
+          <span className="rounded-full bg-[#E2D4B9] px-3 py-1 text-xs font-extrabold text-[#30360E]">Premium</span>
         </div>
 
         <div className="mt-5 space-y-3">
@@ -108,25 +108,25 @@ function AccessPage({
             'шер-карточки',
             'трекер прогресса без давления',
           ].map((item) => (
-            <p className="flex items-center gap-3 text-sm font-bold text-[#4B4636]" key={item}>
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#F4E8BE] text-[#5E6738]">✓</span>
+            <p className="flex items-center gap-3 text-sm font-bold text-[#30360E]" key={item}>
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#E2D4B9] text-[#30360E]">✓</span>
               {item}
             </p>
           ))}
         </div>
 
         <button
-          className="mt-6 w-full rounded-2xl bg-[#7A8450] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E9D7A5] transition hover:bg-[#5E6738]"
+          className="mt-6 w-full rounded-2xl bg-[#686F12] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]"
           onClick={onActivate}
           type="button"
         >
           {subscriptionStatus === 'active' ? 'Продлить mock-доступ' : 'Открыть полный доступ'}
         </button>
-        <p className="mt-3 text-center text-xs font-bold text-[#4B4636]/45">Mock-режим: настоящие Telegram Stars пока не подключены.</p>
+        <p className="mt-3 text-center text-xs font-bold text-[#92735C]">Mock-режим: настоящие Telegram Stars пока не подключены.</p>
       </article>
 
       <button
-        className="mt-4 rounded-2xl bg-white px-4 py-3 text-base font-black text-[#5E6738] shadow-sm shadow-[#E9D7A5] transition hover:bg-[#F4E8BE]"
+        className="mt-4 rounded-2xl bg-white px-4 py-3 text-base font-black text-[#30360E] shadow-sm shadow-[#E2D4B9] transition hover:bg-[#E2D4B9]"
         onClick={onOpenRecipes}
         type="button"
       >
@@ -167,9 +167,9 @@ function App() {
   const addProgressEntry = (entry: ProgressEntry) => setProgressEntries((currentEntries) => [...currentEntries, entry]);
   const deleteProgressEntry = (entryId: string) => setProgressEntries((currentEntries) => currentEntries.filter((entry) => entry.id !== entryId));
 
-  return <main className="min-h-screen bg-[#F8F4EA] text-[#4B4636]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
+  return <main className="min-h-screen bg-[#F7F3E8] text-[#30360E]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
     {showProgressCard ? <ProgressPage entries={progressEntries} onAddEntry={addProgressEntry} onDeleteEntry={deleteProgressEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={() => setSelectedRecipe(null)} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={() => setSelectedRation(null)} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={() => setActiveTab('home')} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} /> : activeTab === 'cart' ? <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage subscriptionStatus={userProfile.subscriptionStatus} onOpenAccess={() => openAccess()} onOpenRations={openRations} onOpenCart={() => setActiveTab('cart')} onOpenRecipes={openRecipes} onOpenProgress={() => setShowProgressCard(true)} onOpenMacros={openMacros} />}
-  </div><nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#E9D7A5] bg-white/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#E9D7A5] backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id && !showProgressCard ? 'bg-[#7A8450] text-white' : 'text-[#4B4636]/45 hover:text-[#5E6738]'}`} key={item.id} onClick={()=>{ setShowProgressCard(false); setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
+  </div><nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#92735C]/35 bg-white/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#E2D4B9] backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id && !showProgressCard ? 'bg-[#686F12] text-white' : 'text-[#92735C] hover:text-[#30360E]'}`} key={item.id} onClick={()=>{ setShowProgressCard(false); setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }
 
 export default App;
