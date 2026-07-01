@@ -108,10 +108,10 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
   if (cartIngredients.length === 0) {
     return (
       <section className="flex flex-1 flex-col">
-        <div className="rounded-[2rem] bg-gradient-to-br from-[#686F12] via-[#30360E] to-[#E2D4B9] p-6 text-white shadow-xl shadow-[#E2D4B9]/70">
-          <p className="text-sm font-bold uppercase tracking-wide text-white/80">5 этап</p>
+        <div className="rounded-[2rem] bg-[#E2D4B9] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
+          <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">5 этап</p>
           <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
-          <p className="mt-3 text-sm font-medium leading-6 text-white/90">Список покупок появится сам, когда ты добавишь рационы или рецепты в План.</p>
+          <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">Список покупок появится сам, когда ты добавишь рационы или рецепты в План.</p>
         </div>
 
         <div className="mt-5 rounded-[2rem] bg-[#FAF7EF] p-6 text-center shadow-sm shadow-[#E2D4B9]">
@@ -128,10 +128,10 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
 
   return (
     <section className="flex flex-1 flex-col">
-      <div className="rounded-[2rem] bg-gradient-to-br from-[#686F12] via-[#30360E] to-[#E2D4B9] p-6 text-white shadow-xl shadow-[#E2D4B9]/70">
-        <p className="text-sm font-bold uppercase tracking-wide text-white/80">5 этап</p>
+      <div className="rounded-[2rem] bg-[#E2D4B9] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
+        <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">5 этап</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-white/90">Все ингредиенты из Плана уже собраны и объединены.</p>
+        <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">Все ингредиенты из Плана уже собраны и объединены.</p>
         <button className="mt-5 rounded-2xl bg-white px-5 py-3 text-base font-black text-[#30360E] shadow-lg shadow-[#30360E]/10 transition hover:-translate-y-0.5" onClick={handleCopyList} type="button">
           Скопировать список
         </button>

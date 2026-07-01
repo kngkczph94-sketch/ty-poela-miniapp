@@ -16,10 +16,10 @@ export function RationsPage({ hasActiveSubscription, onOpenAccess, onOpenRation 
   }), [filter, search]);
 
   return <section className="flex flex-1 flex-col">
-    <div className="rounded-[2rem] bg-gradient-to-br from-[#686F12] to-[#E2D4B9] p-6 text-white shadow-xl shadow-[#E2D4B9]/70">
-      <p className="text-sm font-bold uppercase tracking-wide text-white/80">Рационы дня</p>
+    <div className="rounded-[2rem] bg-[#E2D4B9] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
+      <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">Рационы дня</p>
       <h1 className="mt-2 text-3xl font-black tracking-tight">Рационы</h1>
-      <p className="mt-3 text-sm font-medium leading-6 text-white/90">Готовый 1 день питания из 4 приёмов пищи. КБЖУ считаются автоматически.</p>
+      <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">Готовый 1 день питания из 4 приёмов пищи. КБЖУ считаются автоматически.</p>
     </div>
     <div className="sticky top-0 z-10 -mx-4 mt-5 bg-[#F7F3E8] px-4 pb-3 pt-1">
       <input className="w-full rounded-2xl border border-[#92735C]/35 bg-white px-4 py-3 text-base font-semibold text-[#30360E] shadow-sm outline-none focus:border-[#92735C]/35 focus:ring-4 focus:ring-[#E2D4B9]" placeholder="Найти Рацион №" value={search} onChange={(e)=>setSearch(e.target.value)} />

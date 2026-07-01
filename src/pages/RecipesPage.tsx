@@ -35,10 +35,10 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
 
   return (
     <section className="flex flex-1 flex-col">
-      <div className="rounded-[2rem] bg-gradient-to-br from-[#686F12] to-[#E2D4B9] p-6 text-white shadow-xl shadow-[#E2D4B9]/70">
-        <p className="text-sm font-bold uppercase tracking-wide text-white/80">Каталог</p>
+      <div className="rounded-[2rem] bg-[#E2D4B9] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
+        <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">Каталог</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Рецепты</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-white/90">
+        <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">
           20 идей с КБЖУ: блюда можно добавлять в План и использовать для замен в рационах.
         </p>
       </div>

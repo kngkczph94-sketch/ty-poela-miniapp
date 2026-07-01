@@ -116,10 +116,10 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
 
   return (
     <section className="flex flex-1 flex-col">
-      <div className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#686F12] via-[#30360E] to-[#E2D4B9] p-6 text-white shadow-xl shadow-[#E2D4B9]/70">
-        <p className="text-sm font-bold uppercase tracking-wide text-white/80">8 этап</p>
+      <div className="overflow-hidden rounded-[2rem] bg-[#E2D4B9] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
+        <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">8 этап</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Прогресс</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-white/90">Спокойная динамика без оценок</p>
+        <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">Спокойная динамика без оценок</p>
       </div>
 
       <article className="mt-5 rounded-[2rem] bg-[#FAF7EF] p-5 shadow-sm shadow-[#E2D4B9]">
