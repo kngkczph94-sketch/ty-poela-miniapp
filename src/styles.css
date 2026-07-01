@@ -4,8 +4,8 @@
 
 :root {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  color: #0f172a;
-  background: #fff7ed;
+  color: #4B4636;
+  background: #F8F4EA;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -24,4 +24,13 @@ body {
 
 button {
   font: inherit;
+}
+
+body {
+  background: radial-gradient(circle at top, #F4E8BE 0, #F8F4EA 34%, #F8F4EA 100%);
+}
+
+::selection {
+  background: #E9D7A5;
+  color: #4B4636;
 }
