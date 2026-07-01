@@ -116,13 +116,13 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
 
   return (
     <section className="flex flex-1 flex-col">
-      <div className="overflow-hidden rounded-[2rem] bg-[#E2D4B9] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
+      <div className="overflow-hidden rounded-[2rem] bg-[#EEF1D8] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
         <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">8 этап</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Прогресс</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">Спокойная динамика без оценок</p>
       </div>
 
-      <article className="mt-5 rounded-[2rem] bg-[#FAF7EF] p-5 shadow-sm shadow-[#E2D4B9]">
+      <article className="mt-5 rounded-[2rem] bg-[#FFFDF8] p-5 shadow-sm shadow-[#E2D4B9]/70">
         <h2 className="text-xl font-black text-[#30360E]">Новый замер</h2>
         <form className="mt-4 space-y-4" onSubmit={handleSubmit} ref={formRef}>
           <ProgressInput label="Дата" onChange={(value) => updateForm('date', value)} type="date" value={formState.date} />
@@ -141,14 +141,14 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
               value={formState.comment}
             />
           </label>
-          <button className="w-full rounded-2xl bg-[#686F12] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]" type="submit">
+          <button className="w-full rounded-2xl bg-[#686F12] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9]/70 transition hover:bg-[#30360E]" type="submit">
             Добавить замер
           </button>
         </form>
         {notice && <p className="mt-3 rounded-2xl bg-[#E2D4B9] px-4 py-3 text-center text-sm font-black text-[#30360E]">{notice}</p>}
       </article>
 
-      <article className="mt-5 rounded-[2rem] bg-[#FAF7EF] p-5 shadow-sm shadow-[#E2D4B9]">
+      <article className="mt-5 rounded-[2rem] bg-[#FFFDF8] p-5 shadow-sm shadow-[#E2D4B9]/70">
         <h2 className="text-xl font-black text-[#30360E]">Динамика веса</h2>
         {weightedEntries.length >= 2 && firstWeightedEntry.weight !== undefined && lastWeightedEntry.weight !== undefined ? (
           <div className="mt-4 grid grid-cols-3 gap-2 text-center">
@@ -164,12 +164,12 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
       <section className="mt-5">
         <h2 className="text-xl font-black text-[#30360E]">История замеров</h2>
         {sortedEntries.length === 0 ? (
-          <div className="mt-3 rounded-[2rem] bg-[#FAF7EF] p-6 text-center shadow-sm shadow-[#E2D4B9]">
+          <div className="mt-3 rounded-[2rem] bg-[#FFFDF8] p-6 text-center shadow-sm shadow-[#E2D4B9]/70">
             <p className="text-5xl">🌷</p>
             <p className="mt-3 text-lg font-black text-[#30360E]">Добавь первый замер, чтобы видеть динамику</p>
             <p className="mt-2 text-sm font-semibold leading-5 text-[#92735C]">Можно указать только то, что хочется. Остальное подождёт.</p>
             <button
-              className="mt-5 rounded-2xl bg-[#686F12] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]"
+              className="mt-5 rounded-2xl bg-[#686F12] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9]/70 transition hover:bg-[#30360E]"
               onClick={() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               type="button"
             >
@@ -179,7 +179,7 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
         ) : (
           <div className="mt-3 space-y-3">
             {sortedEntries.map((entry) => (
-              <article className="rounded-[2rem] bg-[#FAF7EF] p-4 shadow-sm shadow-[#E2D4B9]" key={entry.id}>
+              <article className="rounded-[2rem] bg-[#FFFDF8] p-4 shadow-sm shadow-[#E2D4B9]/70" key={entry.id}>
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-lg font-black text-[#30360E]">{formatDate(entry.date)}</h3>
                   <button className="rounded-full bg-[#E2D4B9] px-3 py-2 text-xs font-black text-[#30360E] transition hover:bg-[#E2D4B9]" onClick={() => onDeleteEntry(entry.id)} type="button">Удалить</button>
@@ -190,7 +190,7 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
                   {entry.hips !== undefined && <span className="rounded-full bg-[#E2D4B9] px-3 py-2">Бедра {entry.hips} см</span>}
                   {entry.chest !== undefined && <span className="rounded-full bg-[#E2D4B9] px-3 py-2">Грудь {entry.chest} см</span>}
                 </div>
-                {entry.comment && <p className="mt-3 rounded-3xl bg-[#F7F3E8] p-3 text-sm font-semibold leading-5 text-[#92735C]">{entry.comment}</p>}
+                {entry.comment && <p className="mt-3 rounded-3xl bg-[#FFFDF8] p-3 text-sm font-semibold leading-5 text-[#92735C]">{entry.comment}</p>}
               </article>
             ))}
           </div>

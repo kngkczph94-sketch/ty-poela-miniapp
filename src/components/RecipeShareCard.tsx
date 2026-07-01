@@ -21,7 +21,7 @@ export function RecipeShareCard({ recipe, deepLink }: RecipeShareCardProps) {
       <div className="absolute -right-10 top-20 h-32 w-32 rounded-full bg-[#E2D4B9]/50 blur-2xl" />
       <div className="absolute -left-12 -top-12 h-40 w-40 rounded-full bg-[#E2D4B9]/70 blur-2xl" />
 
-      <div className="relative min-h-48 bg-[#E2D4B9] p-5 text-[#30360E]">
+      <div className="relative min-h-48 bg-[#F3F5E6] p-5 text-[#30360E]">
         {recipe.imageUrl ? (
           <img
             alt={recipe.title}
@@ -76,7 +76,7 @@ export function RecipeShareCard({ recipe, deepLink }: RecipeShareCardProps) {
         </div>
 
         <a
-          className="mt-4 flex items-center justify-center rounded-2xl bg-[#686F12] px-4 py-3 text-center text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]"
+          className="mt-4 flex items-center justify-center rounded-2xl bg-[#686F12] px-4 py-3 text-center text-base font-black text-white shadow-lg shadow-[#E2D4B9]/70 transition hover:bg-[#30360E]"
           href={deepLink}
         >
           Открыть рецепт в Telegram

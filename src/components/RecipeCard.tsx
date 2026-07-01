@@ -9,7 +9,7 @@ type RecipeCardProps = {
 export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCardProps) {
   const isLocked = recipe.isPremium && !hasActiveSubscription;
   return (
-    <article className={`relative overflow-hidden rounded-3xl border p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${isLocked ? 'border-[#92735C]/35 bg-[#E2D4B9]/80 shadow-[#E2D4B9]' : 'border-[#92735C]/35 bg-[#FAF7EF] shadow-[#E2D4B9]'}`}>
+    <article className={`relative overflow-hidden rounded-3xl border p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${isLocked ? 'border-[#92735C]/35 bg-[#E2D4B9]/80 shadow-[#E2D4B9]/70' : 'border-[#92735C]/35 bg-[#FFFDF8] shadow-[#E2D4B9]/70'}`}>
       <button
         aria-label={`Открыть рецепт ${recipe.title}`}
         className="block w-full text-left"

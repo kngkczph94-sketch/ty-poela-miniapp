@@ -108,17 +108,17 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
   if (cartIngredients.length === 0) {
     return (
       <section className="flex flex-1 flex-col">
-        <div className="rounded-[2rem] bg-[#E2D4B9] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
+        <div className="rounded-[2rem] bg-[#EEF1D8] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
           <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">5 этап</p>
           <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
           <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">Список покупок появится сам, когда ты добавишь рационы или рецепты в План.</p>
         </div>
 
-        <div className="mt-5 rounded-[2rem] bg-[#FAF7EF] p-6 text-center shadow-sm shadow-[#E2D4B9]">
+        <div className="mt-5 rounded-[2rem] bg-[#FFFDF8] p-6 text-center shadow-sm shadow-[#E2D4B9]/70">
           <p className="text-5xl">🛒</p>
           <h2 className="mt-3 text-xl font-black text-[#30360E]">Сначала добавь рацион в План</h2>
           <p className="mt-2 text-sm font-semibold leading-5 text-[#92735C]">Выбери рацион дня, а мы автоматически сложим продукты по категориям.</p>
-          <button className="mt-5 rounded-2xl bg-[#686F12] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]" onClick={onOpenRecipes} type="button">
+          <button className="mt-5 rounded-2xl bg-[#686F12] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9]/70 transition hover:bg-[#30360E]" onClick={onOpenRecipes} type="button">
             Выбрать рацион
           </button>
         </div>
@@ -128,11 +128,11 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
 
   return (
     <section className="flex flex-1 flex-col">
-      <div className="rounded-[2rem] bg-[#E2D4B9] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
+      <div className="rounded-[2rem] bg-[#EEF1D8] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
         <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">5 этап</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">Все ингредиенты из Плана уже собраны и объединены.</p>
-        <button className="mt-5 rounded-2xl bg-[#686F12] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]" onClick={handleCopyList} type="button">
+        <button className="mt-5 rounded-2xl bg-[#686F12] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9]/70 transition hover:bg-[#30360E]" onClick={handleCopyList} type="button">
           Скопировать список
         </button>
       </div>
@@ -146,14 +146,14 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
           }
 
           return (
-            <article className="rounded-[2rem] bg-[#FAF7EF] p-4 shadow-sm shadow-[#E2D4B9]" key={category}>
+            <article className="rounded-[2rem] bg-[#FFFDF8] p-4 shadow-sm shadow-[#E2D4B9]/70" key={category}>
               <h2 className="text-xl font-black text-[#30360E]">{categoryLabels[category]}</h2>
               <div className="mt-3 space-y-2">
                 {categoryIngredients.map((ingredient) => {
                   const isChecked = checkedIngredientIds.includes(ingredient.id);
 
                   return (
-                    <label className={`flex items-center gap-3 rounded-3xl border p-3 transition ${isChecked ? 'border-[#F7F3E8] bg-[#F7F3E8] text-[#92735C]' : 'border-[#92735C]/35 bg-[#E2D4B9]/50 text-[#30360E]'}`} key={ingredient.id}>
+                    <label className={`flex items-center gap-3 rounded-3xl border p-3 transition ${isChecked ? 'border-[#FAF7EF] bg-[#FAF7EF] text-[#92735C]' : 'border-[#92735C]/35 bg-[#E2D4B9]/50 text-[#30360E]'}`} key={ingredient.id}>
                       <input checked={isChecked} className="h-5 w-5 rounded border-[#92735C]/35 accent-[#686F12]" onChange={() => toggleIngredient(ingredient.id)} type="checkbox" />
                       <span className={`flex-1 text-sm font-extrabold ${isChecked ? 'line-through' : ''}`}>{ingredient.name}</span>
                       <span className={`rounded-full px-3 py-1 text-xs font-black ${isChecked ? 'bg-white text-[#92735C]' : 'bg-white text-[#30360E]'}`}>{formatAmount(ingredient.amount)} {ingredient.unit}</span>
