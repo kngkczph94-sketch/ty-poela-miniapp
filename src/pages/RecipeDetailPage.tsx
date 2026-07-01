@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { RecipeShareCard, createRecipeDeepLink } from '../components/RecipeShareCard';
-import { menuDays, menuMealSlots, type MenuDay, type MenuMealSlot } from '../types/menu';
-import type { Recipe } from '../types/recipe';
+import { menuDays, menuMealSlots, menuSlotLabels, type MenuDay, type MenuMealSlot } from '../types/menu';
+import { mealTypeLabels, type Recipe } from '../types/recipe';
 
 type RecipeDetailPageProps = {
   hasActiveSubscription: boolean;
@@ -32,8 +32,8 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
     shared: false,
   });
   const [toastMessage, setToastMessage] = useState('');
-  const [selectedDay, setSelectedDay] = useState<MenuDay>('Понедельник');
-  const [selectedSlot, setSelectedSlot] = useState<MenuMealSlot>('Завтрак');
+  const [selectedDay, setSelectedDay] = useState<MenuDay>('Сегодня');
+  const [selectedSlot, setSelectedSlot] = useState<MenuMealSlot>('breakfast');
   const [isMenuPickerOpen, setIsMenuPickerOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const deepLink = createRecipeDeepLink(recipe.id);
@@ -53,7 +53,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
   const handleAddToMenu = () => {
     onAddToMenu(recipe, selectedDay, selectedSlot);
     setIsMenuPickerOpen(false);
-    showActionFeedback('menu', `Готово: ${selectedDay}, ${selectedSlot.toLowerCase()}. Белок есть, паники нет.`);
+    showActionFeedback('menu', `Готово: ${selectedDay}, ${menuSlotLabels[selectedSlot].toLowerCase()}. Белок есть, паники нет.`);
   };
 
   const copyToClipboard = async (value: string, successMessage: string) => {
@@ -97,7 +97,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
         <div className="bg-gradient-to-br from-orange-500 via-amber-400 to-yellow-300 p-6 text-white">
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-extrabold uppercase tracking-wide backdrop-blur">
-              {recipe.mealType}
+              {mealTypeLabels[recipe.mealType]}
             </span>
             {recipe.isPremium && (
               <span className="rounded-full bg-white px-3 py-1 text-xs font-extrabold text-amber-700">Premium</span>
@@ -123,7 +123,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
           <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm font-bold text-slate-600">
             <div className="rounded-2xl bg-slate-50 p-3">⏱️<br />{recipe.cookingTime} мин</div>
             <div className="rounded-2xl bg-slate-50 p-3">🍽️<br />{recipe.servings} порц.</div>
-            <div className="rounded-2xl bg-slate-50 p-3">🥗<br />{recipe.mealType}</div>
+            <div className="rounded-2xl bg-slate-50 p-3">🥗<br />{mealTypeLabels[recipe.mealType]}</div>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -178,7 +178,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
                   >
                     {menuMealSlots.map((slot) => (
                       <option key={slot} value={slot}>
-                        {slot}
+                        {menuSlotLabels[slot]}
                       </option>
                     ))}
                   </select>
@@ -202,17 +202,17 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
               onClick={handleOpenMenuPicker}
               type="button"
             >
-              {actionState.menu ? 'Добавлено в меню' : isMenuPickerOpen ? 'Выбери день и прием пищи' : 'Добавить в меню'}
+              {actionState.menu ? 'Добавлено в План' : isMenuPickerOpen ? 'Выбери день и прием пищи' : 'Добавить в План'}
             </button>
             <button
               className="rounded-2xl bg-orange-50 px-4 py-3 text-base font-black text-orange-600 transition hover:bg-orange-100"
               onClick={() => {
-                showActionFeedback('cart', 'Корзина собирается из меню. Сначала выбери слот — без Excel.');
+                showActionFeedback('cart', 'Корзина собирается из Плана. Сначала выбери слот — без Excel.');
                 setIsMenuPickerOpen(true);
               }}
               type="button"
             >
-              Собрать корзину через меню
+              Собрать корзину через План
             </button>
             <button
               className="rounded-2xl border border-orange-100 bg-white px-4 py-3 text-base font-black text-slate-700 transition hover:bg-slate-50"
@@ -231,7 +231,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
               onClick={onOpenMenu}
               type="button"
             >
-              Открыть меню
+              Открыть План
             </button>
           )}
           </div>

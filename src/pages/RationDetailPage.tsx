@@ -1,0 +1,38 @@
+import { useMemo, useState } from 'react';
+import { recipes } from '../data/recipes';
+import { calculateMealsNutrition } from '../types/ration';
+import { menuDays, menuSlotLabels, type MenuDay, type MenuMealSlot } from '../types/menu';
+import type { DailyRation } from '../types/ration';
+import type { Meal } from '../types/recipe';
+
+type AddMode = 'today' | 'tomorrow' | '2days' | '3days' | 'custom';
+
+export function RationDetailPage({ ration, onBack, onOpenAccess, onOpenRecipe, onAddRationToPlan, hasActiveSubscription }: { ration: DailyRation; hasActiveSubscription: boolean; onBack: () => void; onOpenAccess: () => void; onOpenRecipe: (meal: Meal) => void; onAddRationToPlan: (ration: DailyRation, meals: DailyRation['meals'], days: MenuDay[]) => void }) {
+  const [meals, setMeals] = useState(ration.meals);
+  const [replaceSlot, setReplaceSlot] = useState<MenuMealSlot | null>(null);
+  const [showAllMeals, setShowAllMeals] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [customDays, setCustomDays] = useState<MenuDay[]>(['Сегодня']);
+  const [toast, setToast] = useState('');
+  const totals = calculateMealsNutrition(meals);
+  const locked = ration.isPremium && !hasActiveSubscription;
+  const replacementMeals = useMemo(() => recipes.filter((meal) => showAllMeals || meal.mealType === replaceSlot), [replaceSlot, showAllMeals]);
+  const add = (mode: AddMode) => {
+    const days: MenuDay[] = mode === 'today' ? ['Сегодня'] : mode === 'tomorrow' ? ['Завтра'] : mode === '2days' ? ['Сегодня','Завтра'] : mode === '3days' ? ['Сегодня','Завтра','Среда'] : customDays;
+    onAddRationToPlan(ration, meals, days);
+    setPickerOpen(false); setToast(`Рацион №${ration.rationNumber} добавлен в План: ${days.join(', ')}`);
+  };
+
+  return <section className="flex flex-1 flex-col">
+    <button className="mb-4 inline-flex w-fit rounded-full bg-white px-4 py-2 text-sm font-extrabold text-orange-600 shadow-sm" onClick={onBack} type="button">← Назад к рационам</button>
+    <article className="overflow-hidden rounded-[2rem] bg-white shadow-xl shadow-orange-100"><div className="bg-gradient-to-br from-orange-500 via-amber-400 to-yellow-300 p-6 text-white"><div className="flex gap-2"><span className="rounded-full bg-white/25 px-3 py-1 text-xs font-extrabold">Рацион №{ration.rationNumber}</span>{ration.isPremium&&<span className="rounded-full bg-white px-3 py-1 text-xs font-extrabold text-amber-700">Premium</span>}</div><h1 className="mt-3 text-3xl font-black">{ration.title}</h1><p className="mt-3 text-sm font-medium leading-6 text-white/90">{ration.description}</p></div>
+    <div className="p-5"><div className="grid grid-cols-4 gap-2 rounded-3xl bg-orange-50 p-3 text-center"><div><p className="text-sm font-black">{totals.calories}</p><p className="text-[11px] font-bold text-slate-400">ккал</p></div><div><p className="text-sm font-black">{totals.protein} г</p><p className="text-[11px] font-bold text-slate-400">белки</p></div><div><p className="text-sm font-black">{totals.fat} г</p><p className="text-[11px] font-bold text-slate-400">жиры</p></div><div><p className="text-sm font-black">{totals.carbs} г</p><p className="text-[11px] font-bold text-slate-400">углеводы</p></div></div>
+    {locked ? <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-5 text-center"><p className="text-4xl">🔒</p><h2 className="mt-3 text-xl font-black">Preview premium-рациона</h2><p className="mt-2 text-sm font-semibold text-slate-600">Детали блюд, замены и добавление в План доступны после mock-подписки.</p><button className="mt-4 w-full rounded-2xl bg-orange-500 px-4 py-3 text-base font-black text-white" onClick={onOpenAccess} type="button">Оформить доступ</button></div> : <>
+    <div className="mt-4 space-y-3">{Object.entries(meals).map(([slot, meal]) => <div className="rounded-3xl border border-orange-50 bg-orange-50/50 p-3" key={slot}><p className="text-xs font-black uppercase tracking-wide text-orange-500">{menuSlotLabels[slot as MenuMealSlot]}</p><h3 className="mt-2 text-base font-black text-slate-950">{meal.title}</h3><p className="mt-1 text-sm text-slate-500">{meal.description}</p><div className="mt-2 flex flex-wrap gap-2 text-[11px] font-extrabold text-slate-500"><span className="rounded-full bg-white px-2 py-1">{meal.calories} ккал</span><span className="rounded-full bg-white px-2 py-1">Б {meal.protein} г</span><span className="rounded-full bg-white px-2 py-1">Ж {meal.fat} г</span><span className="rounded-full bg-white px-2 py-1">У {meal.carbs} г</span></div><div className="mt-3 flex gap-2"><button className="rounded-full bg-white px-3 py-2 text-xs font-black text-orange-600" onClick={()=>onOpenRecipe(meal)} type="button">Открыть</button><button className="rounded-full bg-slate-950 px-3 py-2 text-xs font-black text-white" onClick={()=>{setReplaceSlot(slot as MenuMealSlot); setShowAllMeals(false)}} type="button">Заменить</button></div></div>)}</div>
+    <button className="mt-4 w-full rounded-2xl bg-orange-500 px-4 py-3 text-base font-black text-white shadow-lg shadow-orange-200" onClick={()=>setPickerOpen(!pickerOpen)} type="button">Добавить в план</button>
+    {pickerOpen && <div className="mt-3 rounded-3xl bg-orange-50 p-3"><div className="grid grid-cols-2 gap-2">{(['today','tomorrow','2days','3days'] as AddMode[]).map(m=><button className="rounded-2xl bg-white px-3 py-3 text-sm font-black text-orange-600" key={m} onClick={()=>add(m)} type="button">{m==='today'?'Сегодня':m==='tomorrow'?'Завтра':m==='2days'?'На 2 дня':'На 3 дня'}</button>)}</div><p className="mt-3 text-sm font-black">Выбрать дни недели</p><div className="mt-2 flex flex-wrap gap-2">{menuDays.map(day=><button className={`rounded-full px-3 py-2 text-xs font-black ${customDays.includes(day)?'bg-orange-500 text-white':'bg-white text-slate-500'}`} key={day} onClick={()=>setCustomDays(d=>d.includes(day)?d.filter(x=>x!==day):[...d, day])} type="button">{day}</button>)}</div><button className="mt-3 w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-black text-white" onClick={()=>add('custom')} type="button">Добавить в выбранные дни</button></div>}
+    </>}</div></article>
+    {replaceSlot && <div className="fixed inset-0 z-40 flex items-end justify-center bg-slate-950/50 px-4 pb-4 backdrop-blur-sm"><div className="max-h-[85vh] w-full max-w-md overflow-y-auto rounded-[2rem] bg-white p-4"><div className="flex items-center justify-between"><h2 className="text-xl font-black">Заменить: {menuSlotLabels[replaceSlot]}</h2><button className="text-2xl font-black" onClick={()=>setReplaceSlot(null)} type="button">×</button></div><div className="mt-3 flex gap-2"><button className={`rounded-full px-4 py-2 text-sm font-black ${!showAllMeals?'bg-orange-500 text-white':'bg-orange-50 text-orange-600'}`} onClick={()=>setShowAllMeals(false)} type="button">{menuSlotLabels[replaceSlot]}</button><button className={`rounded-full px-4 py-2 text-sm font-black ${showAllMeals?'bg-orange-500 text-white':'bg-orange-50 text-orange-600'}`} onClick={()=>setShowAllMeals(true)} type="button">Все блюда</button></div><div className="mt-3 space-y-2">{replacementMeals.map(meal=><button className="w-full rounded-3xl border border-orange-100 p-3 text-left" key={meal.id} onClick={()=>{setMeals(cur=>({...cur,[replaceSlot]: meal})); setReplaceSlot(null)}} type="button"><b>{meal.title}</b><p className="text-sm text-slate-500">{meal.calories} ккал · Б {meal.protein} · Ж {meal.fat} · У {meal.carbs}</p></button>)}</div></div></div>}
+    {toast && <div className="fixed inset-x-4 bottom-28 z-30 mx-auto max-w-sm rounded-2xl bg-slate-950 px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">{toast}</div>}
+  </section>;
+}

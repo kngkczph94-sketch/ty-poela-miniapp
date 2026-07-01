@@ -31,7 +31,7 @@ const buildCartIngredients = (weeklyMenu: WeeklyMenu): CartIngredient[] => {
 
   menuDays.forEach((day) => {
     menuMealSlots.forEach((slot) => {
-      const recipe = weeklyMenu[day][slot];
+      const recipe = weeklyMenu[day].meals[slot];
 
       recipe?.ingredients.forEach((ingredient) => {
         const normalizedName = ingredient.name.trim().toLowerCase();
@@ -111,15 +111,15 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
         <div className="rounded-[2rem] bg-gradient-to-br from-rose-400 via-orange-400 to-amber-300 p-6 text-white shadow-xl shadow-orange-200/70">
           <p className="text-sm font-bold uppercase tracking-wide text-white/80">5 этап</p>
           <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
-          <p className="mt-3 text-sm font-medium leading-6 text-white/90">Список покупок появится сам, когда ты добавишь рецепты в меню.</p>
+          <p className="mt-3 text-sm font-medium leading-6 text-white/90">Список покупок появится сам, когда ты добавишь рационы или рецепты в План.</p>
         </div>
 
         <div className="mt-5 rounded-[2rem] bg-white p-6 text-center shadow-sm shadow-orange-100">
           <p className="text-5xl">🛒</p>
-          <h2 className="mt-3 text-xl font-black text-slate-950">Сначала добавь рецепты в меню</h2>
-          <p className="mt-2 text-sm font-semibold leading-5 text-slate-500">Выбери рецепты, а мы автоматически сложим продукты по категориям.</p>
+          <h2 className="mt-3 text-xl font-black text-slate-950">Сначала добавь рацион в План</h2>
+          <p className="mt-2 text-sm font-semibold leading-5 text-slate-500">Выбери рацион дня, а мы автоматически сложим продукты по категориям.</p>
           <button className="mt-5 rounded-2xl bg-orange-500 px-5 py-3 text-base font-black text-white shadow-lg shadow-orange-200 transition hover:bg-orange-600" onClick={onOpenRecipes} type="button">
-            Перейти к рецептам
+            Выбрать рацион
           </button>
         </div>
       </section>
@@ -131,7 +131,7 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
       <div className="rounded-[2rem] bg-gradient-to-br from-rose-400 via-orange-400 to-amber-300 p-6 text-white shadow-xl shadow-orange-200/70">
         <p className="text-sm font-bold uppercase tracking-wide text-white/80">5 этап</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-white/90">Все ингредиенты из недельного меню уже собраны и объединены.</p>
+        <p className="mt-3 text-sm font-medium leading-6 text-white/90">Все ингредиенты из Плана уже собраны и объединены.</p>
         <button className="mt-5 rounded-2xl bg-white px-5 py-3 text-base font-black text-orange-600 shadow-lg shadow-orange-700/10 transition hover:-translate-y-0.5" onClick={handleCopyList} type="button">
           Скопировать список
         </button>

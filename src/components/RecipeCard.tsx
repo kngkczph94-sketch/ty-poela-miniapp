@@ -1,4 +1,4 @@
-import type { Recipe } from '../types/recipe';
+import { mealTypeLabels, type Recipe } from '../types/recipe';
 
 type RecipeCardProps = {
   recipe: Recipe;
@@ -20,7 +20,7 @@ export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCard
           <div>
             <div className="mb-2 flex flex-wrap items-center gap-2">
               <span className="rounded-full bg-orange-50 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-orange-600">
-                {recipe.mealType}
+                {mealTypeLabels[recipe.mealType]}
               </span>
               {recipe.isPremium && (
                 <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-extrabold text-amber-700">

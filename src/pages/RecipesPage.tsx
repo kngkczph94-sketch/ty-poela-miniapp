@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { RecipeCard } from '../components/RecipeCard';
 import { recipes } from '../data/recipes';
-import type { MealType, Recipe } from '../types/recipe';
+import { mealTypeLabels, type MealType, type Recipe } from '../types/recipe';
 
-const mealTypes: MealType[] = ['завтрак', 'обед', 'ужин', 'перекус', 'десерт'];
+const mealTypes: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack'];
 
 type ActiveMealType = MealType | 'все';
 
@@ -39,7 +39,7 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
         <p className="text-sm font-bold uppercase tracking-wide text-white/80">Каталог</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Рецепты</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-white/90">
-          8 идей с КБЖУ: бесплатные рецепты и premium-доступ к расширенному каталогу.
+          20 идей с КБЖУ: блюда можно добавлять в План и использовать для замен в рационах.
         </p>
       </div>
 
@@ -63,11 +63,11 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
                   ? 'bg-orange-500 text-white shadow-lg shadow-orange-200'
                   : 'bg-white text-slate-500 shadow-sm shadow-orange-100 hover:text-orange-600'
               }`}
-              key={mealType}
+              key={mealType === 'все' ? 'все' : mealTypeLabels[mealType]}
               onClick={() => setActiveMealType(mealType)}
               type="button"
             >
-              {mealType}
+              {mealType === 'все' ? 'все' : mealTypeLabels[mealType]}
             </button>
           ))}
         </div>
