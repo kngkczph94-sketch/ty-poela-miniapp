@@ -12,7 +12,7 @@ export default {
         'olive-dark': '#5E6738',
         ghee: '#E9D7A5',
         butter: '#F4E8BE',
-        'butter-soft': '#FBF3D8',
+        'butter-soft': '#F4E8BE',
         'warm-dark': '#4B4636',
       },
       boxShadow: {
