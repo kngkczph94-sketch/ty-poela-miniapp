@@ -44,7 +44,7 @@ const formatDifference = (targetCalories: number, rationCalories: number) => {
 const calculateMacros = (gender: Gender, age: number, height: number, weight: number, activity: Activity, goal: Goal): MacroResult => {
   const bmr = 10 * weight + 6.25 * height - 5 * age + (gender === 'female' ? -161 : 5);
   const calories = Math.round(bmr * activityFactors[activity] * goalFactors[goal]);
-  const protein = Math.round(1.6 * weight);
+  const protein = Math.round(1.8 * weight);
   const fat = Math.round(0.9 * weight);
   const remainingCalories = calories - protein * 4 - fat * 9;
   const carbs = Math.max(0, Math.round(remainingCalories / 4));
@@ -134,7 +134,7 @@ export function MacroCalculatorPage({ onBack, onOpenRation }: MacroCalculatorPag
         <article className="mt-5 rounded-[2rem] bg-white p-5 shadow-sm shadow-orange-100">
           <p className="text-xs font-black uppercase tracking-[0.18em] text-orange-500">Ваша ориентировочная норма</p>
           <div className="mt-3 grid grid-cols-4 gap-2 rounded-3xl bg-orange-50 p-3 text-center"><div><p className="text-sm font-black">{result.calories}</p><p className="text-[11px] font-bold text-slate-400">ккал</p></div><div><p className="text-sm font-black">{result.protein} г</p><p className="text-[11px] font-bold text-slate-400">белки</p></div><div><p className="text-sm font-black">{result.fat} г</p><p className="text-[11px] font-bold text-slate-400">жиры</p></div><div><p className="text-sm font-black">{result.carbs} г</p><p className="text-[11px] font-bold text-slate-400">углеводы</p></div></div>
-          <p className="mt-3 text-xs font-semibold leading-5 text-slate-400">Расчёт ориентировочный. Для точности учитывайте самочувствие, активность и динамику.</p>
+          <p className="mt-3 text-xs font-semibold leading-5 text-slate-400">Белок рассчитан ориентировочно: 1.8 г на кг веса.</p>
         </article>
 
         <section className="mt-5">
