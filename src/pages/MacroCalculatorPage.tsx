@@ -15,6 +15,7 @@ type MacroResult = {
 };
 
 type MacroCalculatorPageProps = {
+  onBack: () => void;
   onOpenRation: (ration: DailyRation) => void;
 };
 
@@ -51,7 +52,7 @@ const calculateMacros = (gender: Gender, age: number, height: number, weight: nu
   return { calories, protein, fat, carbs };
 };
 
-export function MacroCalculatorPage({ onOpenRation }: MacroCalculatorPageProps) {
+export function MacroCalculatorPage({ onBack, onOpenRation }: MacroCalculatorPageProps) {
   const [gender, setGender] = useState<Gender>('female');
   const [age, setAge] = useState('32');
   const [height, setHeight] = useState('168');
@@ -97,6 +98,7 @@ export function MacroCalculatorPage({ onOpenRation }: MacroCalculatorPageProps) 
 
   return (
     <section className="flex flex-1 flex-col">
+      <button className="mb-4 self-start rounded-2xl bg-white px-4 py-3 text-sm font-black text-orange-600 shadow-sm shadow-orange-100 transition hover:bg-orange-50" onClick={onBack} type="button">← Назад</button>
       <div className="rounded-[2rem] bg-gradient-to-br from-orange-500 via-amber-400 to-yellow-300 p-6 text-white shadow-xl shadow-orange-200/70">
         <p className="text-sm font-bold uppercase tracking-wide text-white/80">Калькулятор</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Расчёт БЖУ</h1>
