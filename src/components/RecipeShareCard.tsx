@@ -1,4 +1,4 @@
-import type { Recipe } from '../types/recipe';
+import { mealTypeLabels, type Recipe } from '../types/recipe';
 
 export const createRecipeDeepLink = (recipeId: string) =>
   `https://t.me/typoela_bot/app?startapp=recipe_${encodeURIComponent(recipeId)}`;
@@ -42,7 +42,7 @@ export function RecipeShareCard({ recipe, deepLink }: RecipeShareCardProps) {
               Ты поела
             </span>
             <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-extrabold uppercase tracking-wide backdrop-blur">
-              {recipe.mealType}
+              {mealTypeLabels[recipe.mealType]}
             </span>
           </div>
           <div>
@@ -71,7 +71,7 @@ export function RecipeShareCard({ recipe, deepLink }: RecipeShareCardProps) {
             <p className="text-xl font-black">{recipe.cookingTime} минут</p>
           </div>
           <div className="rounded-2xl bg-white/10 px-3 py-2 text-right text-sm font-extrabold">
-            🍽️ {recipe.mealType}
+            🍽️ {mealTypeLabels[recipe.mealType]}
           </div>
         </div>
 

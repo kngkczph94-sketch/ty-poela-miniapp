@@ -2,74 +2,15 @@ import { useState } from 'react';
 import { CartPage } from './pages/CartPage';
 import { MenuPage } from './pages/MenuPage';
 import { ProgressPage } from './pages/ProgressPage';
+import { RationDetailPage } from './pages/RationDetailPage';
+import { RationsPage } from './pages/RationsPage';
 import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
 import { recipes } from './data/recipes';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
+import type { DailyRation } from './types/ration';
 import type { ProgressEntry } from './types/progress';
 import type { Recipe } from './types/recipe';
-
-type FeatureCard = {
-  title: string;
-  description: string;
-  icon: string;
-  tone: string;
-};
-
-type PopularRecipe = {
-  title: string;
-  meta: string;
-  calories: string;
-};
-
-type NavigationTab = 'home' | 'recipes' | 'menu' | 'cart' | 'progress' | 'access';
-
-type SubscriptionStatus = 'free' | 'active';
-
-type UserProfile = {
-  subscriptionStatus: SubscriptionStatus;
-  subscriptionUntil?: string;
-};
-
-const featureCards: FeatureCard[] = [
-  {
-    title: 'Меню на неделю',
-    description: 'Готовый план питания без лишних решений каждый день.',
-    icon: '🗓️',
-    tone: 'bg-orange-100 text-orange-700',
-  },
-  {
-    title: 'Рецепты с КБЖУ',
-    description: 'Простые блюда с белками, жирами, углеводами и калориями.',
-    icon: '🥗',
-    tone: 'bg-emerald-100 text-emerald-700',
-  },
-  {
-    title: 'Корзина продуктов',
-    description: 'Список ингредиентов для меню и любимых рецептов.',
-    icon: '🛒',
-    tone: 'bg-rose-100 text-rose-700',
-  },
-];
-
-const popularRecipes: PopularRecipe[] = [
-  {
-    title: 'Боул с курицей и киноа',
-    meta: '25 минут · много белка',
-    calories: '420 ккал',
-  },
-  {
-    title: 'Творожные сырники без сахара',
-    meta: '20 минут · завтрак',
-    calories: '310 ккал',
-  },
-  {
-    title: 'Паста с индейкой и томатами',
-    meta: '30 минут · ужин',
-    calories: '510 ккал',
-  },
-];
-
 
 const getStartAppRecipeId = (search: string) => {
   const startApp = new URLSearchParams(search).get('startapp');
@@ -81,127 +22,35 @@ const getStartAppRecipeId = (search: string) => {
   return startApp.replace(/^recipe_/, '');
 };
 
+type NavigationTab = 'home' | 'rations' | 'recipes' | 'menu' | 'cart' | 'access';
+
+type SubscriptionStatus = 'free' | 'active';
+
+type UserProfile = { subscriptionStatus: SubscriptionStatus; subscriptionUntil?: string };
+
 const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
   { id: 'home', label: 'Главная', icon: '🏠' },
+  { id: 'rations', label: 'Рационы', icon: '🥣' },
   { id: 'recipes', label: 'Рецепты', icon: '📖' },
-  { id: 'menu', label: 'Меню', icon: '🍽️' },
+  { id: 'menu', label: 'План', icon: '🍽️' },
   { id: 'cart', label: 'Корзина', icon: '🛒' },
-  { id: 'progress', label: 'Прогресс', icon: '🌷' },
 ];
 
-function HomePage({
-  subscriptionStatus,
-  onOpenAccess,
-  onOpenCart,
-  onOpenRecipes,
-}: {
-  subscriptionStatus: SubscriptionStatus;
-  onOpenAccess: () => void;
-  onOpenCart: () => void;
-  onOpenRecipes: () => void;
-}) {
-  return (
-    <>
-      <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-orange-500 via-amber-400 to-yellow-300 p-6 text-white shadow-xl shadow-orange-200/70">
-        <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-white/20" />
-        <div className="absolute -bottom-16 right-12 h-32 w-32 rounded-full bg-white/15" />
-        <div className="relative z-10">
-          <p className="mb-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-sm font-semibold backdrop-blur">
-            Telegram Mini App
-          </p>
-          <h1 className="max-w-xs text-4xl font-black leading-tight tracking-tight">Ты поела?</h1>
-          <p className="mt-4 max-w-sm text-base font-medium leading-6 text-white/90">
-            Рационы, рецепты и корзина продуктов внутри Telegram
-          </p>
-          <button
-            className="mt-6 rounded-2xl bg-white px-5 py-3 text-base font-bold text-orange-600 shadow-lg shadow-orange-700/20 transition hover:-translate-y-0.5 hover:shadow-xl"
-            onClick={onOpenRecipes}
-            type="button"
-          >
-            Что приготовить?
-          </button>
-        </div>
-      </section>
-
-
-      <section className="mt-5 rounded-3xl border border-orange-100 bg-white p-4 shadow-sm shadow-orange-100">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-orange-500">Статус доступа</p>
-            <h2 className="mt-1 text-lg font-black text-slate-950">
-              {subscriptionStatus === 'active' ? 'Доступ активен' : 'Бесплатный доступ'}
-            </h2>
-            <p className="mt-1 text-sm font-semibold text-slate-500">
-              {subscriptionStatus === 'active' ? 'Рецепты и меню открыты' : 'Открой premium-рецепты, меню и корзину'}
-            </p>
-          </div>
-          {subscriptionStatus === 'free' && (
-            <button
-              className="shrink-0 rounded-2xl bg-slate-950 px-4 py-3 text-sm font-black text-white transition hover:bg-slate-800"
-              onClick={onOpenAccess}
-              type="button"
-            >
-              Открыть полный доступ
-            </button>
-          )}
-        </div>
-      </section>
-
-      <section className="mt-6 grid gap-3">
-        {featureCards.map((card) => {
-          const isCartCard = card.title === 'Корзина продуктов';
-
-          return (
-          <article
-            className={`rounded-3xl border border-orange-100 bg-white p-4 shadow-sm shadow-orange-100 ${isCartCard ? 'cursor-pointer transition hover:-translate-y-0.5 hover:shadow-md' : ''}`}
-            key={card.title}
-            onClick={isCartCard ? onOpenCart : undefined}
-          >
-            <div className="flex items-start gap-4">
-              <span
-                className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl ${card.tone}`}
-              >
-                {card.icon}
-              </span>
-              <div>
-                <h2 className="text-lg font-extrabold text-slate-950">{card.title}</h2>
-                <p className="mt-1 text-sm leading-5 text-slate-500">{card.description}</p>
-              </div>
-            </div>
-          </article>
-          );
-        })}
-      </section>
-
-      <section className="mt-7">
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-xl font-black text-slate-950">Популярные рецепты</h2>
-          <button className="text-sm font-bold text-orange-600" onClick={onOpenRecipes} type="button">
-            Все
-          </button>
-        </div>
-        <div className="space-y-3">
-          {popularRecipes.map((recipe) => (
-            <article
-              className="flex items-center justify-between rounded-3xl bg-white p-4 shadow-sm shadow-orange-100"
-              key={recipe.title}
-            >
-              <div>
-                <h3 className="font-bold text-slate-900">{recipe.title}</h3>
-                <p className="mt-1 text-sm text-slate-500">{recipe.meta}</p>
-              </div>
-              <span className="ml-3 shrink-0 rounded-2xl bg-orange-50 px-3 py-2 text-sm font-extrabold text-orange-600">
-                {recipe.calories}
-              </span>
-            </article>
-          ))}
-        </div>
-      </section>
-    </>
-  );
+function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecipes, onOpenCart, onOpenProgress }: { subscriptionStatus: SubscriptionStatus; onOpenAccess: () => void; onOpenRations: () => void; onOpenRecipes: () => void; onOpenCart: () => void; onOpenProgress: () => void }) {
+  const cards = [
+    { title: 'Рационы дня', description: 'Готовый день питания из 4 приёмов пищи', icon: '🥣', onClick: onOpenRations, tone: 'bg-orange-100 text-orange-700' },
+    { title: 'Рассчитать БЖУ', description: 'Скоро', icon: '🧮', tone: 'bg-slate-100 text-slate-600' },
+    { title: 'База знаний', description: 'Скоро', icon: '📚', tone: 'bg-emerald-100 text-emerald-700' },
+    { title: 'ИИ-подбор рецепта', description: 'Скоро', icon: '✨', tone: 'bg-violet-100 text-violet-700' },
+    { title: 'Прогресс', description: 'Мягкий трекер без давления', icon: '🌷', onClick: onOpenProgress, tone: 'bg-rose-100 text-rose-700' },
+  ];
+  return <>
+    <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-orange-500 via-amber-400 to-yellow-300 p-6 text-white shadow-xl shadow-orange-200/70"><div className="relative z-10"><p className="mb-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-sm font-semibold backdrop-blur">Telegram Mini App</p><h1 className="max-w-xs text-4xl font-black leading-tight tracking-tight">Ты поела?</h1><p className="mt-4 max-w-sm text-base font-medium leading-6 text-white/90">Рационы дня, План питания, рецепты и корзина продуктов внутри Telegram</p><button className="mt-6 rounded-2xl bg-white px-5 py-3 text-base font-bold text-orange-600 shadow-lg" onClick={onOpenRations} type="button">Выбрать рацион дня</button></div></section>
+    <section className="mt-5 rounded-3xl border border-orange-100 bg-white p-4 shadow-sm shadow-orange-100"><div className="flex items-center justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-orange-500">Статус доступа</p><h2 className="mt-1 text-lg font-black text-slate-950">{subscriptionStatus === 'active' ? 'Доступ активен' : 'Бесплатный доступ'}</h2><p className="mt-1 text-sm font-semibold text-slate-500">{subscriptionStatus === 'active' ? 'Premium-рационы открыты' : 'Открой premium-рационы и рецепты'}</p></div>{subscriptionStatus === 'free' && <button className="shrink-0 rounded-2xl bg-slate-950 px-4 py-3 text-sm font-black text-white" onClick={onOpenAccess} type="button">Открыть доступ</button>}</div></section>
+    <section className="mt-6 grid gap-3">{cards.map((card)=><article className={`rounded-3xl border border-orange-100 bg-white p-4 shadow-sm shadow-orange-100 ${card.onClick ? 'cursor-pointer transition hover:-translate-y-0.5 hover:shadow-md' : ''}`} key={card.title} onClick={card.onClick}><div className="flex items-start gap-4"><span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl ${card.tone}`}>{card.icon}</span><div><h2 className="text-lg font-extrabold text-slate-950">{card.title}</h2><p className="mt-1 text-sm leading-5 text-slate-500">{card.description}</p></div></div></article>)}</section>
+    <section className="mt-7 grid grid-cols-2 gap-3"><button className="rounded-3xl bg-white p-4 text-left font-black text-orange-600 shadow-sm shadow-orange-100" onClick={onOpenRecipes} type="button">Открыть рецепты</button><button className="rounded-3xl bg-white p-4 text-left font-black text-orange-600 shadow-sm shadow-orange-100" onClick={onOpenCart} type="button">Корзина</button></section>
+  </>;
 }
-
-
 function AccessPage({
   subscriptionStatus,
   subscriptionUntil,
@@ -284,134 +133,33 @@ function App() {
   const initialRecipe = startAppRecipeId ? recipes.find((recipe) => recipe.id === startAppRecipeId) ?? null : null;
   const [activeTab, setActiveTab] = useState<NavigationTab>(startAppRecipeId ? 'recipes' : 'home');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(initialRecipe);
+  const [selectedRation, setSelectedRation] = useState<DailyRation | null>(null);
   const [recipeToOpenAfterAccess, setRecipeToOpenAfterAccess] = useState<Recipe | null>(initialRecipe);
   const [weeklyMenu, setWeeklyMenu] = useState(createEmptyWeeklyMenu);
   const [progressEntries, setProgressEntries] = useState<ProgressEntry[]>([]);
+  const [showProgressCard, setShowProgressCard] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile>({ subscriptionStatus: 'free' });
   const hasActiveSubscription = userProfile.subscriptionStatus === 'active';
 
-  const openRecipes = () => {
-    setSelectedRecipe(null);
-    setActiveTab('recipes');
-  };
-
-  const openRecipe = (recipe: Recipe) => {
-    setSelectedRecipe(recipe);
-    setActiveTab('recipes');
-  };
-
-  const openAccess = (recipe?: Recipe) => {
-    setRecipeToOpenAfterAccess(recipe ?? selectedRecipe);
-    setActiveTab('access');
-  };
-
-  const activateSubscription = () => {
-    const until = new Date();
-    until.setDate(until.getDate() + 7);
-    setUserProfile({ subscriptionStatus: 'active', subscriptionUntil: until.toISOString() });
-
-    if (recipeToOpenAfterAccess) {
-      setSelectedRecipe(recipeToOpenAfterAccess);
-      setRecipeToOpenAfterAccess(null);
-      setActiveTab('recipes');
-    }
-  };
+  const openRecipes = () => { setSelectedRecipe(null); setSelectedRation(null); setActiveTab('recipes'); };
+  const openRecipe = (recipe: Recipe) => { setSelectedRecipe(recipe); setSelectedRation(null); setActiveTab('recipes'); };
+  const openRations = () => { setSelectedRation(null); setSelectedRecipe(null); setActiveTab('rations'); };
+  const openAccess = (recipe?: Recipe) => { setRecipeToOpenAfterAccess(recipe ?? selectedRecipe); setActiveTab('access'); };
+  const activateSubscription = () => { const until = new Date(); until.setDate(until.getDate() + 7); setUserProfile({ subscriptionStatus: 'active', subscriptionUntil: until.toISOString() }); if (recipeToOpenAfterAccess) { setSelectedRecipe(recipeToOpenAfterAccess); setRecipeToOpenAfterAccess(null); setActiveTab('recipes'); } };
 
   const addRecipeToMenu = (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => {
-    setWeeklyMenu((currentMenu) => ({
-      ...currentMenu,
-      [day]: {
-        ...currentMenu[day],
-        [slot]: recipe,
-      },
-    }));
+    setWeeklyMenu((currentMenu) => ({ ...currentMenu, [day]: { ...currentMenu[day], meals: { ...currentMenu[day].meals, [slot]: recipe } } }));
   };
-
-  const removeRecipeFromMenu = (day: MenuDay, slot: MenuMealSlot) => {
-    setWeeklyMenu((currentMenu) => ({
-      ...currentMenu,
-      [day]: {
-        ...currentMenu[day],
-        [slot]: null,
-      },
-    }));
+  const addRationToPlan = (ration: DailyRation, meals: DailyRation['meals'], days: MenuDay[]) => {
+    setWeeklyMenu((currentMenu) => days.reduce((nextMenu, day) => ({ ...nextMenu, [day]: { rationId: ration.id, rationNumber: ration.rationNumber, meals: { ...meals } } }), currentMenu));
   };
+  const removeRecipeFromMenu = (day: MenuDay, slot: MenuMealSlot) => setWeeklyMenu((currentMenu) => ({ ...currentMenu, [day]: { ...currentMenu[day], meals: { ...currentMenu[day].meals, [slot]: null } } }));
+  const addProgressEntry = (entry: ProgressEntry) => setProgressEntries((currentEntries) => [...currentEntries, entry]);
+  const deleteProgressEntry = (entryId: string) => setProgressEntries((currentEntries) => currentEntries.filter((entry) => entry.id !== entryId));
 
-  const addProgressEntry = (entry: ProgressEntry) => {
-    setProgressEntries((currentEntries) => [...currentEntries, entry]);
-  };
-
-  const deleteProgressEntry = (entryId: string) => {
-    setProgressEntries((currentEntries) => currentEntries.filter((entry) => entry.id !== entryId));
-  };
-
-  return (
-    <main className="min-h-screen bg-cream text-slate-950">
-      <div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
-        {activeTab === 'recipes' ? (
-          selectedRecipe ? (
-            <RecipeDetailPage
-              hasActiveSubscription={hasActiveSubscription}
-              recipe={selectedRecipe}
-              onAddToMenu={addRecipeToMenu}
-              onBack={() => setSelectedRecipe(null)}
-              onOpenAccess={() => openAccess(selectedRecipe)}
-              onOpenMenu={() => setActiveTab('menu')}
-            />
-          ) : (
-            <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />
-          )
-        ) : activeTab === 'menu' ? (
-          <MenuPage
-            weeklyMenu={weeklyMenu}
-            onOpenCart={() => setActiveTab('cart')}
-            onOpenRecipes={openRecipes}
-            onOpenRecipe={openRecipe}
-            onRemoveRecipe={removeRecipeFromMenu}
-          />
-        ) : activeTab === 'cart' ? (
-          <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRecipes} />
-        ) : activeTab === 'progress' ? (
-          <ProgressPage entries={progressEntries} onAddEntry={addProgressEntry} onDeleteEntry={deleteProgressEntry} />
-        ) : activeTab === 'access' ? (
-          <AccessPage
-            subscriptionUntil={userProfile.subscriptionUntil}
-            subscriptionStatus={userProfile.subscriptionStatus}
-            onActivate={activateSubscription}
-            onOpenRecipes={openRecipes}
-          />
-        ) : (
-          <HomePage
-            subscriptionStatus={userProfile.subscriptionStatus}
-            onOpenAccess={() => openAccess()}
-            onOpenCart={() => setActiveTab('cart')}
-            onOpenRecipes={openRecipes}
-          />
-        )}
-      </div>
-
-      <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-orange-100 bg-white/95 px-4 pb-5 pt-3 shadow-2xl shadow-orange-100 backdrop-blur">
-        <div className="grid grid-cols-5 gap-1">
-          {navigationItems.map((item) => (
-            <button
-              className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${
-                activeTab === item.id ? 'bg-orange-50 text-orange-600' : 'text-slate-400 hover:text-slate-600'
-              }`}
-              key={item.id}
-              onClick={() => {
-                setActiveTab(item.id);
-                setSelectedRecipe(null);
-              }}
-              type="button"
-            >
-              <span className="text-lg">{item.icon}</span>
-              {item.label}
-            </button>
-          ))}
-        </div>
-      </nav>
-    </main>
-  );
+  return <main className="min-h-screen bg-cream text-slate-950"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
+    {showProgressCard ? <ProgressPage entries={progressEntries} onAddEntry={addProgressEntry} onDeleteEntry={deleteProgressEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={() => setSelectedRecipe(null)} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={() => setSelectedRation(null)} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={setSelectedRation} />) : activeTab === 'menu' ? <MenuPage weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} /> : activeTab === 'cart' ? <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage subscriptionStatus={userProfile.subscriptionStatus} onOpenAccess={() => openAccess()} onOpenRations={openRations} onOpenCart={() => setActiveTab('cart')} onOpenRecipes={openRecipes} onOpenProgress={() => setShowProgressCard(true)} />}
+  </div><nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-orange-100 bg-white/95 px-4 pb-5 pt-3 shadow-2xl shadow-orange-100 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id && !showProgressCard ? 'bg-orange-50 text-orange-600' : 'text-slate-400 hover:text-slate-600'}`} key={item.id} onClick={()=>{ setShowProgressCard(false); setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }
 
 export default App;
