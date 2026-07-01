@@ -102,10 +102,10 @@ export function MacroCalculatorPage({ onBack, onOpenRation }: MacroCalculatorPag
   return (
     <section className="flex flex-1 flex-col">
       <button className="mb-4 self-start rounded-2xl bg-white px-4 py-3 text-sm font-black text-[#30360E] shadow-sm shadow-[#E2D4B9] transition hover:bg-[#E2D4B9]" onClick={onBack} type="button">← Назад</button>
-      <div className="rounded-[2rem] bg-gradient-to-br from-[#686F12] via-[#E2D4B9] to-[#E2D4B9] p-6 text-white shadow-xl shadow-[#E2D4B9]/70">
-        <p className="text-sm font-bold uppercase tracking-wide text-white/80">Калькулятор</p>
+      <div className="rounded-[2rem] bg-[#E2D4B9] p-6 text-[#30360E] shadow-xl shadow-[#E2D4B9]/70">
+        <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">Калькулятор</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Расчёт БЖУ</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-white/90">Рассчитай ориентир и подгони ближайший рацион под свою норму.</p>
+        <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">Рассчитай ориентир и подгони ближайший рацион под свою норму.</p>
       </div>
 
       <article className="mt-5 rounded-[2rem] bg-[#FAF7EF] p-5 shadow-sm shadow-[#E2D4B9]">

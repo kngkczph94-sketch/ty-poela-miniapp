@@ -94,9 +94,9 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
       </button>
 
       <article className="overflow-hidden rounded-[2rem] bg-[#FAF7EF] shadow-xl shadow-[#E2D4B9]">
-        <div className="bg-gradient-to-br from-[#686F12] via-[#E2D4B9] to-[#E2D4B9] p-6 text-white">
+        <div className="bg-[#E2D4B9] p-6 text-[#30360E]">
           <div className="mb-3 flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-extrabold uppercase tracking-wide backdrop-blur">
+            <span className="rounded-full bg-[#FAF7EF]/70 px-3 py-1 text-xs font-extrabold uppercase tracking-wide backdrop-blur">
               {mealTypeLabels[recipe.mealType]}
             </span>
             {recipe.isPremium && (
@@ -104,7 +104,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
             )}
           </div>
           <h1 className="text-3xl font-black leading-tight tracking-tight">{recipe.title}</h1>
-          <p className="mt-3 text-sm font-medium leading-6 text-white/90">{recipe.description}</p>
+          <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">{recipe.description}</p>
         </div>
 
         <div className="p-5">
