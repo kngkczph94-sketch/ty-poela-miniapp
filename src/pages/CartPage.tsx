@@ -108,7 +108,7 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
   if (cartIngredients.length === 0) {
     return (
       <section className="flex flex-1 flex-col">
-        <div className="rounded-[2rem] bg-gradient-to-br from-rose-400 via-olive to-butter p-6 text-white shadow-xl shadow-ghee/70">
+        <div className="rounded-[2rem] bg-gradient-to-br from-olive via-olive-dark to-butter p-6 text-white shadow-xl shadow-ghee/70">
           <p className="text-sm font-bold uppercase tracking-wide text-white/80">5 этап</p>
           <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
           <p className="mt-3 text-sm font-medium leading-6 text-white/90">Список покупок появится сам, когда ты добавишь рационы или рецепты в План.</p>
@@ -128,7 +128,7 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
 
   return (
     <section className="flex flex-1 flex-col">
-      <div className="rounded-[2rem] bg-gradient-to-br from-rose-400 via-olive to-butter p-6 text-white shadow-xl shadow-ghee/70">
+      <div className="rounded-[2rem] bg-gradient-to-br from-olive via-olive-dark to-butter p-6 text-white shadow-xl shadow-ghee/70">
         <p className="text-sm font-bold uppercase tracking-wide text-white/80">5 этап</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-white/90">Все ингредиенты из Плана уже собраны и объединены.</p>

@@ -40,11 +40,11 @@ const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
 function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecipes, onOpenCart, onOpenProgress, onOpenMacros }: { subscriptionStatus: SubscriptionStatus; onOpenAccess: () => void; onOpenRations: () => void; onOpenRecipes: () => void; onOpenCart: () => void; onOpenProgress: () => void; onOpenMacros: () => void }) {
   const cards = [
     { title: 'Рационы дня', description: 'Готовый день питания из 4 приёмов пищи', icon: '🥣', onClick: onOpenRations, tone: 'bg-butter text-olive-dark' },
-    { title: 'Рассчитать БЖУ', description: 'Калории, БЖУ и подгонка рациона', icon: '🧮', onClick: onOpenMacros, tone: 'bg-sky-100 text-sky-700' },
+    { title: 'Рассчитать БЖУ', description: 'Калории, БЖУ и подгонка рациона', icon: '🧮', onClick: onOpenMacros, tone: 'bg-butter-soft text-olive-dark' },
     { title: 'Рецепты', description: 'Тёплые блюда на каждый день', icon: '📖', onClick: onOpenRecipes, tone: 'bg-ghee text-warm-dark' },
-    { title: 'База знаний', description: 'Мягкие подсказки о питании', icon: '📚', soon: true, tone: 'bg-emerald-100 text-emerald-700' },
-    { title: 'ИИ-подбор', description: 'Персональный подбор рецептов', icon: '✨', soon: true, tone: 'bg-violet-100 text-violet-700' },
-    { title: 'Прогресс', description: 'Мягкий трекер без давления', icon: '🌷', onClick: onOpenProgress, tone: 'bg-rose-100 text-rose-700' },
+    { title: 'База знаний', description: 'Мягкие подсказки о питании', icon: '📚', soon: true, tone: 'bg-ghee text-olive-dark' },
+    { title: 'ИИ-подбор', description: 'Персональный подбор рецептов', icon: '✨', soon: true, tone: 'bg-butter text-warm-dark' },
+    { title: 'Прогресс', description: 'Мягкий трекер без давления', icon: '🌷', onClick: onOpenProgress, tone: 'bg-ghee text-olive-dark' },
   ];
   return <>
     <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-olive via-olive-dark to-ghee p-6 text-white shadow-soft"><div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-white/15" /><div className="absolute -bottom-14 left-12 h-40 w-40 rounded-full bg-butter/30" /><div className="relative z-10"><p className="mb-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-sm font-semibold backdrop-blur">Telegram Mini App</p><h1 className="max-w-xs text-4xl font-black leading-tight tracking-tight">Ты поела?</h1><p className="mt-4 max-w-sm text-base font-medium leading-6 text-white/90">Рационы, рецепты и план питания внутри Telegram</p><button className="mt-6 rounded-2xl bg-white px-5 py-3 text-base font-bold text-olive-dark shadow-lg" onClick={onOpenRations} type="button">Выбрать рацион дня</button></div></section>
@@ -83,7 +83,7 @@ function AccessPage({
       </div>
 
       {subscriptionStatus === 'active' && (
-        <div className="mt-5 rounded-3xl border border-emerald-100 bg-emerald-50 p-5 text-emerald-800 shadow-sm shadow-emerald-100">
+        <div className="mt-5 rounded-3xl border border-olive/20 bg-butter-soft p-5 text-olive-dark shadow-sm shadow-butter">
           <p className="text-3xl">✅</p>
           <h2 className="mt-2 text-xl font-black">Доступ открыт</h2>
           <p className="mt-1 text-sm font-bold">Premium-рецепты, меню и корзина доступны{formattedUntil ? ` до ${formattedUntil}` : ''}.</p>
@@ -96,7 +96,7 @@ function AccessPage({
             <p className="text-xs font-black uppercase tracking-[0.18em] text-olive">Тариф</p>
             <h2 className="mt-1 text-2xl font-black text-warm-dark">Неделя доступа</h2>
           </div>
-          <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-extrabold text-amber-700">Premium</span>
+          <span className="rounded-full bg-ghee px-3 py-1 text-xs font-extrabold text-olive-dark">Premium</span>
         </div>
 
         <div className="mt-5 space-y-3">
@@ -169,7 +169,7 @@ function App() {
 
   return <main className="min-h-screen bg-cream text-warm-dark"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
     {showProgressCard ? <ProgressPage entries={progressEntries} onAddEntry={addProgressEntry} onDeleteEntry={deleteProgressEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={() => setSelectedRecipe(null)} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={() => setSelectedRation(null)} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={() => setActiveTab('home')} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} /> : activeTab === 'cart' ? <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage subscriptionStatus={userProfile.subscriptionStatus} onOpenAccess={() => openAccess()} onOpenRations={openRations} onOpenCart={() => setActiveTab('cart')} onOpenRecipes={openRecipes} onOpenProgress={() => setShowProgressCard(true)} onOpenMacros={openMacros} />}
-  </div><nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-butter bg-white/95 px-4 pb-5 pt-3 shadow-2xl shadow-butter backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id && !showProgressCard ? 'bg-butter-soft text-olive-dark' : 'text-warm-dark/45 hover:text-warm-dark/80'}`} key={item.id} onClick={()=>{ setShowProgressCard(false); setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
+  </div><nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-butter bg-white/95 px-4 pb-5 pt-3 shadow-2xl shadow-butter backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id && !showProgressCard ? 'bg-olive text-white' : 'text-warm-dark/45 hover:text-olive-dark'}`} key={item.id} onClick={()=>{ setShowProgressCard(false); setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }
 
 export default App;

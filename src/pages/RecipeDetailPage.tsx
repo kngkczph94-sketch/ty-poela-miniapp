@@ -100,7 +100,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
               {mealTypeLabels[recipe.mealType]}
             </span>
             {recipe.isPremium && (
-              <span className="rounded-full bg-white px-3 py-1 text-xs font-extrabold text-amber-700">Premium</span>
+              <span className="rounded-full bg-white px-3 py-1 text-xs font-extrabold text-olive-dark">Premium</span>
             )}
           </div>
           <h1 className="text-3xl font-black leading-tight tracking-tight">{recipe.title}</h1>
@@ -128,14 +128,14 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
 
           <div className="mt-4 flex flex-wrap gap-2">
             {recipe.tags.map((tag) => (
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold text-emerald-700" key={tag}>
+              <span className="rounded-full bg-butter-soft px-3 py-1 text-xs font-extrabold text-olive-dark" key={tag}>
                 #{tag}
               </span>
             ))}
           </div>
 
           {isPremiumPreview ? (
-            <div className="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-5 text-center">
+            <div className="mt-5 rounded-3xl border border-ghee bg-butter-soft p-5 text-center">
               <p className="text-4xl">🔒</p>
               <h2 className="mt-3 text-xl font-black text-warm-dark">Открой полный рецепт, меню и корзину</h2>
               <p className="mt-2 text-sm font-semibold leading-5 text-warm-dark/80">
@@ -197,7 +197,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
           <div className="mt-3 grid gap-2">
             <button
               className={`rounded-2xl px-4 py-3 text-base font-black text-white shadow-lg transition ${
-                actionState.menu ? 'bg-emerald-500 shadow-emerald-100' : 'bg-olive shadow-ghee hover:bg-olive-dark'
+                actionState.menu ? 'bg-olive-dark shadow-ghee' : 'bg-olive shadow-ghee hover:bg-olive-dark'
               }`}
               onClick={handleOpenMenuPicker}
               type="button"
@@ -227,7 +227,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
             </button>
           {actionState.menu && (
             <button
-              className="mt-2 rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-base font-black text-emerald-700 transition hover:bg-emerald-100"
+              className="mt-2 rounded-2xl border border-ghee bg-butter-soft px-4 py-3 text-base font-black text-olive-dark transition hover:bg-butter"
               onClick={onOpenMenu}
               type="button"
             >
@@ -280,7 +280,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
                 <h2 className="text-xl font-black text-warm-dark">Шер-карточка рецепта</h2>
               </div>
               <button
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-cream text-lg font-black text-warm-dark/65 transition hover:bg-slate-200"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-cream text-lg font-black text-warm-dark/65 transition hover:bg-butter-soft"
                 onClick={() => setIsShareModalOpen(false)}
                 type="button"
               >

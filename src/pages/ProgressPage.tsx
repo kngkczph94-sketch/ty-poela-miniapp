@@ -66,7 +66,7 @@ function ProgressInput({
     <label className="block">
       <span className="text-xs font-black uppercase tracking-[0.16em] text-olive">{label}</span>
       <input
-        className="mt-2 w-full rounded-2xl border border-butter bg-butter-soft/40 px-4 py-3 text-sm font-bold text-warm-dark outline-none transition placeholder:text-slate-300 focus:border-ghee focus:bg-white"
+        className="mt-2 w-full rounded-2xl border border-butter bg-butter-soft/40 px-4 py-3 text-sm font-bold text-warm-dark outline-none transition placeholder:text-warm-dark/35 focus:border-ghee focus:bg-white"
         min={min}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
@@ -116,7 +116,7 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
 
   return (
     <section className="flex flex-1 flex-col">
-      <div className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-rose-400 via-olive to-butter p-6 text-white shadow-xl shadow-ghee/70">
+      <div className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-olive via-olive-dark to-butter p-6 text-white shadow-xl shadow-ghee/70">
         <p className="text-sm font-bold uppercase tracking-wide text-white/80">8 этап</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Прогресс</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-white/90">Спокойная динамика без оценок</p>
@@ -135,7 +135,7 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
           <label className="block">
             <span className="text-xs font-black uppercase tracking-[0.16em] text-olive">Комментарий</span>
             <textarea
-              className="mt-2 min-h-24 w-full resize-none rounded-2xl border border-butter bg-butter-soft/40 px-4 py-3 text-sm font-bold text-warm-dark outline-none transition placeholder:text-slate-300 focus:border-ghee focus:bg-white"
+              className="mt-2 min-h-24 w-full resize-none rounded-2xl border border-butter bg-butter-soft/40 px-4 py-3 text-sm font-bold text-warm-dark outline-none transition placeholder:text-warm-dark/35 focus:border-ghee focus:bg-white"
               onChange={(event) => updateForm('comment', event.target.value)}
               placeholder="Любая спокойная заметка"
               value={formState.comment}
@@ -145,7 +145,7 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
             Добавить замер
           </button>
         </form>
-        {notice && <p className="mt-3 rounded-2xl bg-emerald-50 px-4 py-3 text-center text-sm font-black text-emerald-700">{notice}</p>}
+        {notice && <p className="mt-3 rounded-2xl bg-butter-soft px-4 py-3 text-center text-sm font-black text-olive-dark">{notice}</p>}
       </article>
 
       <article className="mt-5 rounded-[2rem] bg-white p-5 shadow-sm shadow-butter">
@@ -153,8 +153,8 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
         {weightedEntries.length >= 2 && firstWeightedEntry.weight !== undefined && lastWeightedEntry.weight !== undefined ? (
           <div className="mt-4 grid grid-cols-3 gap-2 text-center">
             <div className="rounded-3xl bg-butter-soft p-3"><p className="text-[11px] font-black uppercase text-olive">Первый замер</p><p className="mt-1 text-lg font-black text-warm-dark">{firstWeightedEntry.weight} кг</p></div>
-            <div className="rounded-3xl bg-amber-50 p-3"><p className="text-[11px] font-black uppercase text-amber-600">Последний замер</p><p className="mt-1 text-lg font-black text-warm-dark">{lastWeightedEntry.weight} кг</p></div>
-            <div className="rounded-3xl bg-rose-50 p-3"><p className="text-[11px] font-black uppercase text-rose-500">Разница</p><p className="mt-1 text-lg font-black text-warm-dark">{formatDifference(lastWeightedEntry.weight - firstWeightedEntry.weight)}</p></div>
+            <div className="rounded-3xl bg-ghee p-3"><p className="text-[11px] font-black uppercase text-olive-dark">Последний замер</p><p className="mt-1 text-lg font-black text-warm-dark">{lastWeightedEntry.weight} кг</p></div>
+            <div className="rounded-3xl bg-butter-soft p-3"><p className="text-[11px] font-black uppercase text-olive-dark">Разница</p><p className="mt-1 text-lg font-black text-warm-dark">{formatDifference(lastWeightedEntry.weight - firstWeightedEntry.weight)}</p></div>
           </div>
         ) : (
           <p className="mt-3 rounded-3xl bg-butter-soft p-4 text-sm font-bold leading-5 text-warm-dark/65">Добавь несколько замеров, чтобы увидеть динамику</p>
@@ -182,7 +182,7 @@ export function ProgressPage({ entries, onAddEntry, onDeleteEntry }: ProgressPag
               <article className="rounded-[2rem] bg-white p-4 shadow-sm shadow-butter" key={entry.id}>
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-lg font-black text-warm-dark">{formatDate(entry.date)}</h3>
-                  <button className="rounded-full bg-rose-50 px-3 py-2 text-xs font-black text-rose-500 transition hover:bg-rose-100" onClick={() => onDeleteEntry(entry.id)} type="button">Удалить</button>
+                  <button className="rounded-full bg-butter-soft px-3 py-2 text-xs font-black text-olive-dark transition hover:bg-butter" onClick={() => onDeleteEntry(entry.id)} type="button">Удалить</button>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2 text-xs font-black text-warm-dark/80">
                   {entry.weight !== undefined && <span className="rounded-full bg-butter-soft px-3 py-2">Вес {entry.weight} кг</span>}
