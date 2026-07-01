@@ -9,7 +9,7 @@ type RecipeCardProps = {
 export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCardProps) {
   const isLocked = recipe.isPremium && !hasActiveSubscription;
   return (
-    <article className={`relative overflow-hidden rounded-3xl border p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${isLocked ? 'border-amber-200 bg-amber-50/80 shadow-amber-100' : 'border-butter bg-white shadow-butter'}`}>
+    <article className={`relative overflow-hidden rounded-3xl border p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${isLocked ? 'border-ghee bg-butter-soft/80 shadow-butter' : 'border-butter bg-white shadow-butter'}`}>
       <button
         aria-label={`Открыть рецепт ${recipe.title}`}
         className="block w-full text-left"
@@ -23,7 +23,7 @@ export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCard
                 {mealTypeLabels[recipe.mealType]}
               </span>
               {recipe.isPremium && (
-                <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-extrabold text-amber-700">
+                <span className="rounded-full bg-ghee px-3 py-1 text-xs font-extrabold text-olive-dark">
                   Premium
                 </span>
               )}
@@ -44,15 +44,15 @@ export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCard
             <p className="text-[11px] font-bold text-warm-dark/45">ккал</p>
           </div>
           <div>
-            <p className="text-sm font-black text-slate-800">{recipe.protein} г</p>
+            <p className="text-sm font-black text-warm-dark">{recipe.protein} г</p>
             <p className="text-[11px] font-bold text-warm-dark/45">белки</p>
           </div>
           <div>
-            <p className="text-sm font-black text-slate-800">{recipe.fat} г</p>
+            <p className="text-sm font-black text-warm-dark">{recipe.fat} г</p>
             <p className="text-[11px] font-bold text-warm-dark/45">жиры</p>
           </div>
           <div>
-            <p className="text-sm font-black text-slate-800">{recipe.carbs} г</p>
+            <p className="text-sm font-black text-warm-dark">{recipe.carbs} г</p>
             <p className="text-[11px] font-bold text-warm-dark/45">углеводы</p>
           </div>
         </div>

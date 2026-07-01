@@ -18,10 +18,10 @@ const macroItems = [
 export function RecipeShareCard({ recipe, deepLink }: RecipeShareCardProps) {
   return (
     <article className="relative overflow-hidden rounded-[2rem] bg-white text-warm-dark shadow-2xl shadow-ghee/70">
-      <div className="absolute -right-10 top-20 h-32 w-32 rounded-full bg-rose-200/40 blur-2xl" />
-      <div className="absolute -left-12 -top-12 h-40 w-40 rounded-full bg-amber-200/60 blur-2xl" />
+      <div className="absolute -right-10 top-20 h-32 w-32 rounded-full bg-ghee/50 blur-2xl" />
+      <div className="absolute -left-12 -top-12 h-40 w-40 rounded-full bg-butter/70 blur-2xl" />
 
-      <div className="relative min-h-48 bg-gradient-to-br from-olive via-rose-400 to-butter p-5 text-white">
+      <div className="relative min-h-48 bg-gradient-to-br from-olive via-olive-dark to-butter p-5 text-white">
         {recipe.imageUrl ? (
           <img
             alt={recipe.title}
@@ -38,7 +38,7 @@ export function RecipeShareCard({ recipe, deepLink }: RecipeShareCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-warm-dark/55 via-warm-dark/10 to-transparent" />
         <div className="relative z-10 flex min-h-40 flex-col justify-between">
           <div className="flex items-center justify-between gap-3">
-            <span className="rounded-full bg-white px-3 py-1 text-xs font-black uppercase tracking-wide text-olive-dark shadow-lg shadow-orange-900/10">
+            <span className="rounded-full bg-white px-3 py-1 text-xs font-black uppercase tracking-wide text-olive-dark shadow-lg shadow-olive-dark/10">
               Ты поела
             </span>
             <span className="rounded-full bg-white/25 px-3 py-1 text-xs font-extrabold uppercase tracking-wide backdrop-blur">

@@ -14,7 +14,6 @@ export default {
         butter: '#F4E8BE',
         'butter-soft': '#FBF3D8',
         'warm-dark': '#4B4636',
-        carrot: '#f97316',
       },
       boxShadow: {
         soft: '0 18px 45px rgba(75, 70, 54, 0.10)',
