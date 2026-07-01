@@ -132,7 +132,7 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
         <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">5 этап</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">Все ингредиенты из Плана уже собраны и объединены.</p>
-        <button className="mt-5 rounded-2xl bg-white px-5 py-3 text-base font-black text-[#30360E] shadow-lg shadow-[#30360E]/10 transition hover:-translate-y-0.5" onClick={handleCopyList} type="button">
+        <button className="mt-5 rounded-2xl bg-[#686F12] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]" onClick={handleCopyList} type="button">
           Скопировать список
         </button>
       </div>
