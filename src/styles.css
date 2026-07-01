@@ -4,8 +4,8 @@
 
 :root {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  color: #30360E;
-  background: #FAF7EF;
+  color: #37410F;
+  background: #FBF6EC;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -27,10 +27,10 @@ button {
 }
 
 body {
-  background: #FAF7EF;
+  background: #FBF6EC;
 }
 
 ::selection {
-  background: #E2D4B9;
-  color: #30360E;
+  background: #F3E2BF;
+  color: #37410F;
 }
