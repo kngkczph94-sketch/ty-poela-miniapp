@@ -108,13 +108,13 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
   if (cartIngredients.length === 0) {
     return (
       <section className="flex flex-1 flex-col">
-        <div className="rounded-[2rem] bg-[#F3E2BF] p-6 text-[#37410F] shadow-xl shadow-[#F3E2BF]/70">
+        <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
           <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">5 этап</p>
           <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
           <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Список покупок появится сам, когда ты добавишь рационы или рецепты в План.</p>
         </div>
 
-        <div className="mt-5 rounded-[2rem] bg-[#FFFDF8] p-6 text-center shadow-sm shadow-[#F3E2BF]/70">
+        <div className="mt-5 rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-6 text-center shadow-sm shadow-[#F3E2BF]/70">
           <p className="text-5xl">🛒</p>
           <h2 className="mt-3 text-xl font-black text-[#37410F]">Сначала добавь рацион в План</h2>
           <p className="mt-2 text-sm font-semibold leading-5 text-[#8B725F]">Выбери рацион дня, а мы автоматически сложим продукты по категориям.</p>
@@ -128,7 +128,7 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
 
   return (
     <section className="flex flex-1 flex-col">
-      <div className="rounded-[2rem] bg-[#F3E2BF] p-6 text-[#37410F] shadow-xl shadow-[#F3E2BF]/70">
+      <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
         <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">5 этап</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Все ингредиенты из Плана уже собраны и объединены.</p>
@@ -146,14 +146,14 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
           }
 
           return (
-            <article className="rounded-[2rem] bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70" key={category}>
+            <article className="rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70" key={category}>
               <h2 className="text-xl font-black text-[#37410F]">{categoryLabels[category]}</h2>
               <div className="mt-3 space-y-2">
                 {categoryIngredients.map((ingredient) => {
                   const isChecked = checkedIngredientIds.includes(ingredient.id);
 
                   return (
-                    <label className={`flex items-center gap-3 rounded-3xl border p-3 transition ${isChecked ? 'border-[#FBF6EC] bg-[#FBF6EC] text-[#8B725F]' : 'border-[#8B725F]/35 bg-[#F3E2BF]/50 text-[#37410F]'}`} key={ingredient.id}>
+                    <label className={`flex items-center gap-3 rounded-3xl border p-3 transition ${isChecked ? 'border-[#FBF6EC] bg-[#FBF6EC] text-[#8B725F]' : 'border-[#D99663]/30 bg-[#F3E2BF]/60 text-[#37410F]'}`} key={ingredient.id}>
                       <input checked={isChecked} className="h-5 w-5 rounded border-[#8B725F]/35 accent-[#6E7E1F]" onChange={() => toggleIngredient(ingredient.id)} type="checkbox" />
                       <span className={`flex-1 text-sm font-extrabold ${isChecked ? 'line-through' : ''}`}>{ingredient.name}</span>
                       <span className={`rounded-full px-3 py-1 text-xs font-black ${isChecked ? 'bg-white text-[#8B725F]' : 'bg-white text-[#37410F]'}`}>{formatAmount(ingredient.amount)} {ingredient.unit}</span>
