@@ -27,7 +27,7 @@ button {
 }
 
 body {
-  background: radial-gradient(circle at top, #E2D4B9 0, #F7F3E8 34%, #F7F3E8 100%);
+  background: #F7F3E8;
 }
 
 ::selection {

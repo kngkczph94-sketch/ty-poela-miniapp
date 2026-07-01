@@ -18,7 +18,7 @@ export function MenuPage({ weeklyMenu, onOpenCart, onOpenRations, onOpenRecipe, 
       <p className="text-sm font-bold uppercase tracking-wide text-[#92735C]">План питания</p>
       <h1 className="mt-2 text-3xl font-black tracking-tight">План</h1>
       <p className="mt-3 text-sm font-medium leading-6 text-[#92735C]">Добавь рацион дня на 1–3 дня или выбранные дни недели — корзина соберётся сама.</p>
-      <button className="mt-5 rounded-2xl bg-white px-5 py-3 text-base font-black text-[#30360E] shadow-lg" onClick={onOpenCart} type="button">Смотреть корзину</button>
+      <button className="mt-5 rounded-2xl bg-[#686F12] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]" onClick={onOpenCart} type="button">Смотреть корзину</button>
     </div>
     {!hasMealsInPlan && <div className="mt-5 rounded-[2rem] bg-[#FAF7EF] p-6 text-center shadow-sm shadow-[#E2D4B9]"><p className="text-5xl">🍽️</p><h2 className="mt-3 text-xl font-black text-[#30360E]">Пока пусто. Добавь рацион дня — и план соберётся сам.</h2><button className="mt-5 rounded-2xl bg-[#686F12] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9]" onClick={onOpenRations} type="button">Выбрать рацион</button></div>}
     <div className="mt-5 space-y-4">{menuDays.map((day) => {

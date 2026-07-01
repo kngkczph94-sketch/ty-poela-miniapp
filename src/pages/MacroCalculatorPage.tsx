@@ -130,7 +130,7 @@ export function MacroCalculatorPage({ onBack, onOpenRation }: MacroCalculatorPag
             <div className="grid grid-cols-3 gap-2">{(['loss', 'maintain', 'gain'] as Goal[]).map((value) => <button className={`rounded-2xl px-2 py-3 text-xs font-black ${goal === value ? 'bg-[#686F12] text-white' : 'bg-[#E2D4B9] text-[#30360E]'}`} key={value} onClick={() => setGoal(value)} type="button">{value === 'loss' ? 'Снижение' : value === 'maintain' ? 'Поддержание' : 'Набор'}</button>)}</div>
           </div>
         </div>
-        <button className="mt-5 w-full rounded-2xl bg-[#30360E] px-4 py-3 text-base font-black text-white shadow-lg" onClick={handleCalculate} type="button">Рассчитать</button>
+        <button className="mt-5 w-full rounded-2xl bg-[#686F12] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#E2D4B9] transition hover:bg-[#30360E]" onClick={handleCalculate} type="button">Рассчитать</button>
       </article>
 
       {result && <>

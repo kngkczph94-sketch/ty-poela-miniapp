@@ -35,7 +35,7 @@ export function RecipeShareCard({ recipe, deepLink }: RecipeShareCardProps) {
             <div className="absolute bottom-8 right-10 h-20 w-20 rounded-full border border-[#92735C]/30" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#30360E]/55 via-[#30360E]/10 to-transparent" />
+        <div className="absolute inset-0 bg-[#30360E]/35" />
         <div className="relative z-10 flex min-h-40 flex-col justify-between">
           <div className="flex items-center justify-between gap-3">
             <span className="rounded-full bg-white px-3 py-1 text-xs font-black uppercase tracking-wide text-[#30360E] shadow-lg shadow-[#30360E]/10">
