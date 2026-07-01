@@ -1,3 +1,4 @@
+import { FoodPhotoPlaceholder, getRecipeFoodVariant } from './FoodPhotoPlaceholder';
 import { mealTypeLabels, type Recipe } from '../types/recipe';
 
 type RecipeCardProps = {
@@ -16,6 +17,7 @@ export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCard
         onClick={() => onOpen(recipe)}
         type="button"
       >
+        <FoodPhotoPlaceholder className="mb-4 min-h-[8rem]" variant={getRecipeFoodVariant(recipe.id)} />
         <div className="flex items-start justify-between gap-3">
           <div>
             <div className="mb-2 flex flex-wrap items-center gap-2">
