@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { RecipeCard } from '../components/RecipeCard';
 import { recipes } from '../data/recipes';
 import { mealTypeLabels, type MealType, type Recipe } from '../types/recipe';
+import { createRecipeShareText, recipeCopiedMessage, shareRecipe } from '../utils/shareRecipe';
 
 const mealTypes: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack'];
 
@@ -16,6 +17,8 @@ type RecipesPageProps = {
 export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe }: RecipesPageProps) {
   const [search, setSearch] = useState('');
   const [activeMealType, setActiveMealType] = useState<ActiveMealType>('все');
+  const [toastMessage, setToastMessage] = useState('');
+  const [manualShareText, setManualShareText] = useState('');
 
   const filteredRecipes = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
@@ -28,9 +31,33 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
     });
   }, [activeMealType, search]);
 
+  useEffect(() => {
+    if (!toastMessage) return;
+
+    const timer = window.setTimeout(() => setToastMessage(''), 2500);
+
+    return () => window.clearTimeout(timer);
+  }, [toastMessage]);
+
   const resetFilters = () => {
     setSearch('');
     setActiveMealType('все');
+  };
+
+  const handleShareRecipe = async (recipe: Recipe) => {
+    try {
+      const result = await shareRecipe(recipe);
+
+      if (result.status === 'copied') {
+        setToastMessage(recipeCopiedMessage);
+      }
+
+      if (result.status === 'manual') {
+        setManualShareText(result.shareText);
+      }
+    } catch {
+      setManualShareText(createRecipeShareText(recipe));
+    }
   };
 
   return (
@@ -80,7 +107,7 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
 
       <div className="mt-3 space-y-3">
         {filteredRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} hasActiveSubscription={hasActiveSubscription} recipe={recipe} onOpen={onOpenRecipe} />
+          <RecipeCard key={recipe.id} hasActiveSubscription={hasActiveSubscription} recipe={recipe} onOpen={onOpenRecipe} onShare={handleShareRecipe} />
         ))}
       </div>
 
@@ -92,6 +119,27 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
           <button className="mt-5 rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]" onClick={resetFilters} type="button">
             Сбросить фильтры
           </button>
+        </div>
+      )}
+
+      {manualShareText && (
+        <div className="fixed inset-0 z-40 flex items-end justify-center bg-[#37410F]/50 px-4 pb-4 pt-10 backdrop-blur-sm sm:items-center">
+          <div className="w-full max-w-md rounded-[2rem] bg-[#FFFDF8] p-4 shadow-2xl">
+            <div className="mb-3 flex items-start justify-between gap-3">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#6E7E1F]">Поделиться</p>
+                <h2 className="text-xl font-black text-[#37410F]">Скопируй рецепт вручную</h2>
+              </div>
+              <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FBF6EC] text-lg font-black text-[#8B725F] transition hover:bg-[#F3E2BF]" onClick={() => setManualShareText('')} type="button">×</button>
+            </div>
+            <pre className="whitespace-pre-wrap rounded-2xl border border-[#8B725F]/30 bg-white p-4 text-sm font-semibold leading-6 text-[#37410F]">{manualShareText}</pre>
+          </div>
+        </div>
+      )}
+
+      {toastMessage && (
+        <div className="fixed inset-x-4 bottom-28 z-30 mx-auto max-w-sm rounded-2xl bg-[#37410F] px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">
+          {toastMessage}
         </div>
       )}
     </section>
