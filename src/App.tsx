@@ -11,7 +11,7 @@ import { FoodPhotoPlaceholder } from './components/FoodPhotoPlaceholder';
 import { recipes } from './data/recipes';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
 import type { DailyRation } from './types/ration';
-import type { ProgressEntry } from './types/progress';
+import type { HabitEntry, MeasurementEntry, ProgressEntry } from './types/progress';
 import type { Recipe } from './types/recipe';
 
 const getStartAppRecipeId = (search: string) => {
@@ -45,7 +45,7 @@ function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecip
     { title: 'Рецепты', description: 'Тёплые блюда на каждый день', icon: '📖', onClick: onOpenRecipes, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
     { title: 'База знаний', description: 'Мягкие подсказки о питании', icon: '📚', soon: true, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
     { title: 'ИИ-подбор', description: 'Персональный подбор рецептов', icon: '✨', soon: true, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
-    { title: 'Прогресс', description: 'Вес, шаги, сон и вода', icon: '🌷', onClick: onOpenProgress, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
+    { title: 'Прогресс', description: 'Вес, замеры, шаги, сон и вода', icon: '🌷', onClick: onOpenProgress, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
   ];
   return <>
     <section className="relative overflow-hidden rounded-[2rem] border border-[#D99663]/35 bg-[#FFFDF8] p-4 text-[#37410F] shadow-xl shadow-[#D99663]/20"><FoodPhotoPlaceholder className="min-h-[13.5rem]" variant="hero" /><div className="absolute inset-x-4 bottom-4 rounded-b-[1.75rem] bg-gradient-to-t from-[#2F240F]/70 via-[#2F240F]/30 to-transparent p-5 pt-16 text-white"><p className="mb-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-sm font-bold backdrop-blur">Telegram Mini App</p><h1 className="max-w-xs text-4xl font-black leading-tight tracking-tight">Ты поела?</h1><p className="mt-3 max-w-sm text-base font-semibold leading-6 text-white/90">Рационы, рецепты и план питания внутри Telegram</p><button className="mt-5 rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-bold text-white shadow-lg shadow-[#2F240F]/25 transition hover:bg-[#37410F]" onClick={onOpenRations} type="button">Выбрать рацион дня</button></div></section>
@@ -145,10 +145,26 @@ function App() {
   const [selectedRation, setSelectedRation] = useState<DailyRation | null>(null);
   const [recipeToOpenAfterAccess, setRecipeToOpenAfterAccess] = useState<Recipe | null>(initialRecipe);
   const [weeklyMenu, setWeeklyMenu] = useState(createEmptyWeeklyMenu);
-  const [progressEntries, setProgressEntries] = useState<ProgressEntry[]>(() => {
+  const [measurementEntries, setMeasurementEntries] = useState<MeasurementEntry[]>(() => {
     try {
-      const savedEntries = window.localStorage.getItem('ty-poela-progress-entries');
-      return savedEntries ? JSON.parse(savedEntries) as ProgressEntry[] : [];
+      const savedMeasurements = window.localStorage.getItem('ty-poela-measurement-entries');
+      if (savedMeasurements) {
+        return JSON.parse(savedMeasurements) as MeasurementEntry[];
+      }
+      const legacyEntries = window.localStorage.getItem('ty-poela-progress-entries');
+      return legacyEntries ? (JSON.parse(legacyEntries) as ProgressEntry[]).map(({ id, date, weight }) => ({ id, date, weight })) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [habitEntries, setHabitEntries] = useState<HabitEntry[]>(() => {
+    try {
+      const savedHabits = window.localStorage.getItem('ty-poela-habit-entries');
+      if (savedHabits) {
+        return JSON.parse(savedHabits) as HabitEntry[];
+      }
+      const legacyEntries = window.localStorage.getItem('ty-poela-progress-entries');
+      return legacyEntries ? (JSON.parse(legacyEntries) as ProgressEntry[]).map(({ id, date, steps, sleep, water }) => ({ id, date, steps, sleep, water })) : [];
     } catch {
       return [];
     }
@@ -173,16 +189,23 @@ function App() {
   };
   const removeRecipeFromMenu = (day: MenuDay, slot: MenuMealSlot) => setWeeklyMenu((currentMenu) => ({ ...currentMenu, [day]: { ...currentMenu[day], meals: { ...currentMenu[day].meals, [slot]: null } } }));
   useEffect(() => {
-    window.localStorage.setItem('ty-poela-progress-entries', JSON.stringify(progressEntries));
-  }, [progressEntries]);
+    window.localStorage.setItem('ty-poela-measurement-entries', JSON.stringify(measurementEntries));
+  }, [measurementEntries]);
+  useEffect(() => {
+    window.localStorage.setItem('ty-poela-habit-entries', JSON.stringify(habitEntries));
+  }, [habitEntries]);
 
-  const saveProgressEntry = (entry: ProgressEntry) => setProgressEntries((currentEntries) => {
+  const saveMeasurementEntry = (entry: MeasurementEntry) => setMeasurementEntries((currentEntries) => {
+    const entriesWithoutToday = currentEntries.filter((currentEntry) => currentEntry.date !== entry.date);
+    return [entry, ...entriesWithoutToday].sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
+  });
+  const saveHabitEntry = (entry: HabitEntry) => setHabitEntries((currentEntries) => {
     const entriesWithoutToday = currentEntries.filter((currentEntry) => currentEntry.date !== entry.date);
     return [entry, ...entriesWithoutToday].sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
   });
 
   return <main className="min-h-screen bg-gradient-to-b from-[#FBF6EC] via-[#F3E2BF]/45 to-[#FBF6EC] text-[#37410F]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
-    {showProgressCard ? <ProgressPage entries={progressEntries} onSaveEntry={saveProgressEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={() => setSelectedRecipe(null)} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={() => setSelectedRation(null)} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={() => setActiveTab('home')} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} /> : activeTab === 'cart' ? <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage subscriptionStatus={userProfile.subscriptionStatus} onOpenAccess={() => openAccess()} onOpenRations={openRations} onOpenCart={() => setActiveTab('cart')} onOpenRecipes={openRecipes} onOpenProgress={() => setShowProgressCard(true)} onOpenMacros={openMacros} />}
+    {showProgressCard ? <ProgressPage habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={() => setSelectedRecipe(null)} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={() => setSelectedRation(null)} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={() => setActiveTab('home')} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} /> : activeTab === 'cart' ? <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage subscriptionStatus={userProfile.subscriptionStatus} onOpenAccess={() => openAccess()} onOpenRations={openRations} onOpenCart={() => setActiveTab('cart')} onOpenRecipes={openRecipes} onOpenProgress={() => setShowProgressCard(true)} onOpenMacros={openMacros} />}
   </div><nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#D99663]/35 bg-[#FFFDF8]/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#D99663]/25 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id && !showProgressCard ? 'bg-[#6E7E1F] text-white shadow-md shadow-[#6E7E1F]/20' : 'text-[#8B725F] hover:bg-[#F3E2BF]/70 hover:text-[#37410F]'}`} key={item.id} onClick={()=>{ setShowProgressCard(false); setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }
 
