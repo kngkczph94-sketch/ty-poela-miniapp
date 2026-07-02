@@ -20,6 +20,25 @@ export const awards: Award[] = [
 const getCurrentAward = (uniqueDaysCount: number) => [...awards].reverse().find((award) => uniqueDaysCount >= award.days) ?? awards[0];
 const getNextAward = (uniqueDaysCount: number) => awards.find((award) => uniqueDaysCount < award.days) ?? null;
 const getProgressPercent = (current: number, target: number) => Math.min(100, Math.round((current / target) * 100));
+const getDayWord = (days: number) => {
+  const absDays = Math.abs(days);
+  const lastTwoDigits = absDays % 100;
+  const lastDigit = absDays % 10;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+    return 'дней';
+  }
+
+  if (lastDigit === 1) {
+    return 'день';
+  }
+
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return 'дня';
+  }
+
+  return 'дней';
+};
 
 export function AwardsPage({ uniqueDaysCount }: { uniqueDaysCount: number }) {
   const currentAward = getCurrentAward(uniqueDaysCount);
@@ -27,9 +46,9 @@ export function AwardsPage({ uniqueDaysCount }: { uniqueDaysCount: number }) {
 
   return <section className="flex flex-1 flex-col">
     <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/25 to-[#FFFDF8] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
-      <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Звания за регулярность</p>
+      <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">ЗВАНИЯ ЗА РЕГУЛЯРНОСТЬ</p>
       <h1 className="mt-2 text-3xl font-black tracking-tight">Награды</h1>
-      <p className="mt-3 text-sm font-semibold leading-6 text-[#8B725F]">Звания за регулярность. Не за результат — за то, что ты возвращаешься к себе.</p>
+      <p className="mt-3 text-sm font-semibold leading-6 text-[#8B725F]">Чем чаще ты возвращаешься в приложение, тем выше твоё звание.</p>
     </div>
 
     <article className="mt-5 rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-5 shadow-sm shadow-[#F3E2BF]/70">
@@ -41,7 +60,7 @@ export function AwardsPage({ uniqueDaysCount }: { uniqueDaysCount: number }) {
       <div className="mt-5 rounded-3xl bg-[#F3E2BF]/60 p-4">
         <div className="flex items-center justify-between gap-3 text-sm font-black text-[#37410F]">
           <span>{nextAward ? 'До следующего звания:' : 'Все звания получены:'}</span>
-          <span>{nextAward ? `${uniqueDaysCount} / ${nextAward.days} дней` : `${uniqueDaysCount} дней`}</span>
+          <span>{nextAward ? `${uniqueDaysCount} / ${nextAward.days} ${getDayWord(nextAward.days)}` : `${uniqueDaysCount} ${getDayWord(uniqueDaysCount)}`}</span>
         </div>
         {nextAward && <div className="mt-3 h-3 overflow-hidden rounded-full bg-[#FFFDF8]"><div className="h-full rounded-full bg-[#6E7E1F] transition-all" style={{ width: `${getProgressPercent(uniqueDaysCount, nextAward.days)}%` }} /></div>}
       </div>
@@ -60,12 +79,12 @@ export function AwardsPage({ uniqueDaysCount }: { uniqueDaysCount: number }) {
                 <h2 className="text-lg font-extrabold text-[#37410F]">{award.title}</h2>
                 {isReceived ? <span className="rounded-full bg-[#6E7E1F]/15 px-3 py-1 text-xs font-black text-[#6E7E1F]">Получено</span> : <span className="rounded-full bg-[#D99663]/15 px-3 py-1 text-xs font-black text-[#D99663]">В процессе</span>}
               </div>
-              <p className="mt-1 text-sm font-semibold text-[#8B725F]">{award.days} разных дней в приложении</p>
+              <p className="mt-1 text-sm font-semibold text-[#8B725F]">{award.days} {getDayWord(award.days)} вместе</p>
               <div className="mt-3 flex items-center gap-3">
                 <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#F3E2BF]">
                   <div className="h-full rounded-full bg-[#6E7E1F] transition-all" style={{ width: `${getProgressPercent(progress, award.days)}%` }} />
                 </div>
-                <span className="text-xs font-black text-[#8B725F]">{progress} / {award.days} дней</span>
+                <span className="text-xs font-black text-[#8B725F]">{progress} / {award.days} {getDayWord(award.days)}</span>
               </div>
             </div>
           </div>

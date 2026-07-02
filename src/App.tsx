@@ -54,7 +54,7 @@ function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecip
     { title: 'База знаний', description: 'Мягкие подсказки о питании', icon: '📚', soon: true, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
     { title: 'ИИ-подбор', description: 'Персональный подбор рецептов', icon: '✨', soon: true, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
     { title: 'Прогресс', description: 'Вес, замеры, шаги, сон и вода', icon: '🌷', onClick: onOpenProgress, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
-    { title: 'Награды', description: 'Звания за регулярность — только за разные дни возвращения', icon: '🏅', onClick: onOpenAwards, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
+    { title: 'Награды', description: 'Звания за регулярность', icon: '🏅', onClick: onOpenAwards, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
   ];
   return <>
     <section className="relative overflow-hidden rounded-[2rem] border border-[#D99663]/35 bg-[#FFFDF8] p-4 text-[#37410F] shadow-xl shadow-[#D99663]/20"><FoodPhotoPlaceholder className="min-h-[13.5rem]" variant="hero" /><div className="absolute inset-x-4 bottom-4 rounded-b-[1.75rem] bg-gradient-to-t from-[#2F240F]/70 via-[#2F240F]/30 to-transparent p-5 pt-16 text-white"><p className="mb-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-sm font-bold backdrop-blur">Telegram Mini App</p><h1 className="max-w-xs text-4xl font-black leading-tight tracking-tight">Ты поела?</h1><p className="mt-3 max-w-sm text-base font-semibold leading-6 text-white/90">Рационы, рецепты и план питания внутри Telegram</p><button className="mt-5 rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-bold text-white shadow-lg shadow-[#2F240F]/25 transition hover:bg-[#37410F]" onClick={onOpenRations} type="button">Выбрать рацион дня</button></div></section>
