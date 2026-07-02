@@ -5,9 +5,10 @@ type RecipeCardProps = {
   recipe: Recipe;
   hasActiveSubscription: boolean;
   onOpen: (recipe: Recipe) => void;
+  onShare: (recipe: Recipe) => void;
 };
 
-export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCardProps) {
+export function RecipeCard({ recipe, hasActiveSubscription, onOpen, onShare }: RecipeCardProps) {
   const isLocked = recipe.isPremium && !hasActiveSubscription;
   return (
     <article className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl ${isLocked ? 'border-[#D99663]/30 bg-[#F3E2BF]/80 shadow-[#F3E2BF]/70' : 'border-[#D99663]/20 bg-[#FFFDF8] shadow-[#F3E2BF]/80'}`}>
@@ -64,8 +65,15 @@ export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCard
           <span>🍽️ {recipe.servings} порц.</span>
         </div>
       </button>
+      <button
+        className="mt-4 rounded-2xl border border-[#8B725F]/30 bg-white px-4 py-2.5 text-sm font-black text-[#37410F] shadow-sm shadow-[#F3E2BF]/60 transition hover:bg-[#FBF6EC]"
+        onClick={() => onShare(recipe)}
+        type="button"
+      >
+        Поделиться
+      </button>
       {isLocked && (
-        <div className="pointer-events-none absolute inset-x-4 bottom-4 rounded-2xl bg-white/85 px-3 py-2 text-center text-xs font-black text-[#37410F] backdrop-blur">
+        <div className="pointer-events-none absolute inset-x-4 bottom-16 rounded-2xl bg-white/85 px-3 py-2 text-center text-xs font-black text-[#37410F] backdrop-blur">
           Нажми, чтобы посмотреть preview и оформить доступ
         </div>
       )}

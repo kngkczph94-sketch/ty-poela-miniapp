@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { RecipeShareCard, createRecipeDeepLink } from '../components/RecipeShareCard';
+import { useEffect, useState } from 'react';
 import { menuDays, menuMealSlots, menuSlotLabels, type MenuDay, type MenuMealSlot } from '../types/menu';
 import { mealTypeLabels, type Recipe } from '../types/recipe';
+import { createRecipeShareText, recipeCopiedMessage, shareRecipe } from '../utils/shareRecipe';
 
 type RecipeDetailPageProps = {
   hasActiveSubscription: boolean;
@@ -35,8 +35,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
   const [selectedDay, setSelectedDay] = useState<MenuDay>('Сегодня');
   const [selectedSlot, setSelectedSlot] = useState<MenuMealSlot>('breakfast');
   const [isMenuPickerOpen, setIsMenuPickerOpen] = useState(false);
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const deepLink = createRecipeDeepLink(recipe.id);
+  const [manualShareText, setManualShareText] = useState('');
   const isPremiumPreview = recipe.isPremium && !hasActiveSubscription;
 
   const showActionFeedback = (action: keyof ActionState, message: string) => {
@@ -56,32 +55,30 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
     showActionFeedback('menu', `Готово: ${selectedDay}, ${menuSlotLabels[selectedSlot].toLowerCase()}. Белок есть, паники нет.`);
   };
 
-  const copyToClipboard = async (value: string, successMessage: string) => {
-    if (!navigator.clipboard) {
-      setToastMessage('Скопируй вручную: буфер обмена недоступен');
-      return;
-    }
+  useEffect(() => {
+    if (!toastMessage) return;
 
+    const timer = window.setTimeout(() => setToastMessage(''), 2500);
+
+    return () => window.clearTimeout(timer);
+  }, [toastMessage]);
+
+  const handleShareRecipe = async () => {
     try {
-      await navigator.clipboard.writeText(value);
-      setToastMessage(successMessage);
+      const result = await shareRecipe(recipe);
+      setActionState((current) => ({ ...current, shared: true }));
+
+      if (result.status === 'copied') {
+        setToastMessage(recipeCopiedMessage);
+      }
+
+      if (result.status === 'manual') {
+        setManualShareText(result.shareText);
+      }
     } catch {
-      setToastMessage('Скопируй вручную: буфер обмена недоступен');
+      setManualShareText(createRecipeShareText(recipe));
     }
   };
-
-  const shareText = [
-    `Рецепт “${recipe.title}”`,
-    '',
-    'КБЖУ:',
-    `Калории: ${recipe.calories} ккал`,
-    `Белки: ${recipe.protein} г`,
-    `Жиры: ${recipe.fat} г`,
-    `Углеводы: ${recipe.carbs} г`,
-    '',
-    'Открыть рецепт:',
-    deepLink,
-  ].join('\n');
 
   return (
     <section className="flex flex-1 flex-col">
@@ -216,11 +213,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
             </button>
             <button
               className="rounded-2xl border border-[#8B725F]/35 bg-white px-4 py-3 text-base font-black text-[#37410F] transition hover:bg-[#FBF6EC]"
-              onClick={() => {
-                setIsShareModalOpen(true);
-                setActionState((current) => ({ ...current, shared: true }));
-                setToastMessage('');
-              }}
+              onClick={handleShareRecipe}
               type="button"
             >
               {actionState.shared ? 'Поделиться ещё раз' : 'Поделиться'}
@@ -271,48 +264,17 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
         </>
       )}
 
-      {isShareModalOpen && (
+      {manualShareText && (
         <div className="fixed inset-0 z-40 flex items-end justify-center bg-[#37410F]/50 px-4 pb-4 pt-10 backdrop-blur-sm sm:items-center">
-          <div className="max-h-[92vh] w-full max-w-md overflow-y-auto rounded-[2rem] bg-[#FFFDF8] p-4 shadow-2xl">
-            <div className="mb-3 flex items-center justify-between gap-3">
+          <div className="w-full max-w-md rounded-[2rem] bg-[#FFFDF8] p-4 shadow-2xl">
+            <div className="mb-3 flex items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.2em] text-[#6E7E1F]">Поделиться</p>
-                <h2 className="text-xl font-black text-[#37410F]">Шер-карточка рецепта</h2>
+                <h2 className="text-xl font-black text-[#37410F]">Скопируй рецепт вручную</h2>
               </div>
-              <button
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FBF6EC] text-lg font-black text-[#8B725F] transition hover:bg-[#F3E2BF]"
-                onClick={() => setIsShareModalOpen(false)}
-                type="button"
-              >
-                ×
-              </button>
+              <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FBF6EC] text-lg font-black text-[#8B725F] transition hover:bg-[#F3E2BF]" onClick={() => setManualShareText('')} type="button">×</button>
             </div>
-
-            <RecipeShareCard deepLink={deepLink} recipe={recipe} />
-
-            <div className="mt-4 grid gap-2">
-              <button
-                className="rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]"
-                onClick={() => copyToClipboard(deepLink, 'Ссылка скопирована')}
-                type="button"
-              >
-                Скопировать ссылку
-              </button>
-              <button
-                className="rounded-2xl bg-[#F3E2BF] px-4 py-3 text-base font-black text-[#37410F] transition hover:bg-[#F3E2BF]"
-                onClick={() => copyToClipboard(shareText, 'Текст скопирован')}
-                type="button"
-              >
-                Скопировать текст
-              </button>
-              <button
-                className="rounded-2xl border border-[#8B725F]/35 bg-white px-4 py-3 text-base font-black text-[#8B725F] transition hover:bg-[#FBF6EC]"
-                onClick={() => setIsShareModalOpen(false)}
-                type="button"
-              >
-                Закрыть
-              </button>
-            </div>
+            <pre className="whitespace-pre-wrap rounded-2xl border border-[#8B725F]/30 bg-white p-4 text-sm font-semibold leading-6 text-[#37410F]">{manualShareText}</pre>
           </div>
         </div>
       )}
