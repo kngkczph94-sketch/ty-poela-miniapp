@@ -103,13 +103,12 @@ export const shareRecipe = async (recipe: Recipe) => {
   const recipeLink = createRecipeLink(recipe.id);
   const shareText = createRecipeShareText(recipe, recipeLink);
 
-  console.log('shareText', shareText);
+  console.log("shareText", shareText);
 
   if (navigator.share) {
     await navigator.share({
       title: recipe.title,
       text: shareText,
-      url: recipeLink,
     });
     return { status: 'shared' as const, shareText };
   }
