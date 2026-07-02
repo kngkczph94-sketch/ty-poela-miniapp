@@ -48,58 +48,118 @@ const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
 
 type HomeAction = { label: string; onClick?: () => void; soon?: boolean };
 
-type HomeCard = { title: string; description: string; icon: string; soon?: boolean; action: HomeAction };
+type HomeCardVisual = 'macros' | 'rations' | 'recipes' | 'ai' | 'knowledge' | 'progress' | 'awards' | 'share';
+
+type HomeCard = { title: string; description: string; visual: HomeCardVisual; soon?: boolean; action: HomeAction };
+
+const HomeFeatureIcon = ({ visual }: { visual: HomeCardVisual }) => {
+  const commonProps = { className: 'h-6 w-6', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
+
+  switch (visual) {
+    case 'macros':
+      return <svg {...commonProps} aria-hidden="true"><path d="M5 19h14" /><path d="M7 19V9.5a5 5 0 0 1 10 0V19" /><path d="M9.5 10.5h5" /><path d="M12 10.5V8" /><path d="M8 15h8" /></svg>;
+    case 'rations':
+      return <svg {...commonProps} aria-hidden="true"><path d="M4 12.5c.5 4 3.6 6.5 8 6.5s7.5-2.5 8-6.5H4Z" /><path d="M7 12.5c.6-2.2 2.4-3.6 5-3.6s4.4 1.4 5 3.6" /><path d="M9 8.5c.5-1.5 1.5-2.5 3-3" /><path d="M14 6.5c1.3.2 2.2.9 2.8 2" /></svg>;
+    case 'recipes':
+      return <svg {...commonProps} aria-hidden="true"><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v16H7.5A2.5 2.5 0 0 0 5 21.5v-16Z" /><path d="M5 17.5A2.5 2.5 0 0 1 7.5 15H19" /><path d="M9 7h6" /><path d="M9 10h4" /></svg>;
+    case 'ai':
+      return <svg {...commonProps} aria-hidden="true"><path d="m12 3 1.3 4.1L17 9l-3.7 1.9L12 15l-1.3-4.1L7 9l3.7-1.9L12 3Z" /><path d="m18 14 .8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8L18 14Z" /><path d="m5.5 13 .6 1.6 1.4.6-1.4.6-.6 1.7-.6-1.7-1.4-.6 1.4-.6.6-1.6Z" /></svg>;
+    case 'knowledge':
+      return <svg {...commonProps} aria-hidden="true"><path d="M6 4.5h7a3 3 0 0 1 3 3V20H8a3 3 0 0 0-3 3V5.5a1 1 0 0 1 1-1Z" /><path d="M16 7.5h2a1 1 0 0 1 1 1V20" /><path d="M9 9h4" /><path d="M9 12h5" /></svg>;
+    case 'progress':
+      return <svg {...commonProps} aria-hidden="true"><path d="M4 19V5" /><path d="M4 19h16" /><path d="m7 15 3.2-3.2 2.8 2.4L18 8" /><path d="M18 8v4" /><path d="M18 8h-4" /></svg>;
+    case 'awards':
+      return <svg {...commonProps} aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z" /><path d="M8 6H5.5A2.5 2.5 0 0 0 8 10" /><path d="M16 6h2.5A2.5 2.5 0 0 1 16 10" /><path d="M12 13v4" /><path d="M9 20h6" /><path d="M10 17h4" /></svg>;
+    case 'share':
+      return <svg {...commonProps} aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5v-9Z" /><path d="m5 7 7 5.5L19 7" /></svg>;
+  }
+};
+
+const HomeFeaturePhoto = ({ visual }: { visual: HomeCardVisual }) => (
+  <div className={`home-feature-photo home-feature-photo--${visual}`} aria-hidden="true">
+    <span className="home-feature-photo__glow" />
+    <span className="home-feature-photo__plate" />
+    <span className="home-feature-photo__accent" />
+    <span className="home-feature-photo__line home-feature-photo__line--one" />
+    <span className="home-feature-photo__line home-feature-photo__line--two" />
+  </div>
+);
+
+function HomeFeatureCard({ card }: { card: HomeCard }) {
+  return (
+    <article className="group overflow-hidden rounded-[1.8rem] border border-[#D99663]/20 bg-[#FFFDF8] text-left shadow-sm shadow-[#F3E2BF]/70 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#D99663]/15">
+      <HomeFeaturePhoto visual={card.visual} />
+      <div className="p-4 pt-3">
+        <div className="flex items-start gap-3">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#D99663]/20 bg-[#F3E2BF]/75 text-[#6E7E1F] shadow-inner shadow-white/60">
+            <HomeFeatureIcon visual={card.visual} />
+          </span>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-lg font-extrabold text-[#37410F]">{card.title}</h2>
+              {card.soon && <span className="rounded-full bg-[#D99663]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#D99663]">скоро</span>}
+            </div>
+            <p className="mt-1 text-sm leading-5 text-[#8B725F]">{card.description}</p>
+          </div>
+        </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {card.action.onClick ? <button className="rounded-full bg-[#6E7E1F] px-4 py-2 text-sm font-black text-white shadow-sm shadow-[#6E7E1F]/20 transition hover:bg-[#37410F]" onClick={card.action.onClick} type="button">{card.action.label}</button> : <span className="rounded-full bg-[#F3E2BF] px-4 py-2 text-sm font-black text-[#8B725F]">{card.action.label} скоро</span>}
+        </div>
+      </div>
+    </article>
+  );
+}
 
 function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecipes, onOpenCart, onOpenProgress, onOpenMacros, onOpenAwards, onOpenShare }: { subscriptionStatus: SubscriptionStatus; onOpenAccess: () => void; onOpenRations: () => void; onOpenRecipes: () => void; onOpenCart: () => void; onOpenProgress: () => void; onOpenMacros: () => void; onOpenAwards: () => void; onOpenShare: () => void }) {
   const homeCards: HomeCard[] = [
     {
       title: 'Расчёт БЖУ',
       description: 'Выбери готовый день питания, рассчитай норму или открой тёплые рецепты на каждый день.',
-      icon: '🥣',
+      visual: 'macros',
       action: { label: 'БЖУ', onClick: onOpenMacros },
     },
     {
       title: 'Рационы',
       description: 'Выбери готовый день питания, рассчитай норму или открой тёплые рецепты на каждый день.',
-      icon: '🥣',
+      visual: 'rations',
       action: { label: 'Рационы', onClick: onOpenRations },
     },
     {
       title: 'Рецепты',
       description: 'Выбери готовый день питания, рассчитай норму или открой тёплые рецепты на каждый день.',
-      icon: '🥣',
+      visual: 'recipes',
       action: { label: 'Рецепты', onClick: onOpenRecipes },
     },
     {
       title: 'ИИ-подбор',
       description: 'Скоро здесь появятся мягкие подсказки о питании и персональный ИИ-подбор рецептов.',
-      icon: '✨',
+      visual: 'ai',
       soon: true,
       action: { label: 'ИИ', soon: true },
     },
     {
       title: 'База знаний',
       description: 'Скоро здесь появятся мягкие подсказки о питании и персональный ИИ-подбор рецептов.',
-      icon: '✨',
+      visual: 'knowledge',
       soon: true,
       action: { label: 'База знаний', soon: true },
     },
     {
       title: 'Прогресс',
       description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность без давления.',
-      icon: '🌷',
+      visual: 'progress',
       action: { label: 'Прогресс', onClick: onOpenProgress },
     },
     {
       title: 'Награды',
       description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность без давления.',
-      icon: '🌷',
+      visual: 'awards',
       action: { label: 'Награды', onClick: onOpenAwards },
     },
     {
       title: 'Поделиться приложением',
       description: 'Отправь ссылку тому, кому тоже нужен понятный план питания.',
-      icon: '💌',
+      visual: 'share',
       action: { label: 'Поделиться', onClick: onOpenShare },
     },
   ];
@@ -108,10 +168,11 @@ function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecip
     <section className="relative overflow-hidden rounded-[2rem] border border-[#D99663]/35 bg-[#FFFDF8] p-4 text-[#37410F] shadow-xl shadow-[#D99663]/20"><FoodPhotoPlaceholder className="min-h-[13.5rem]" variant="hero" /><div className="absolute inset-x-4 bottom-4 rounded-b-[1.75rem] bg-gradient-to-t from-[#2F240F]/70 via-[#2F240F]/30 to-transparent p-5 pt-16 text-white"><p className="mb-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-sm font-bold backdrop-blur">Telegram Mini App</p><h1 className="max-w-xs text-4xl font-black leading-tight tracking-tight">Ты поела?</h1><p className="mt-3 max-w-sm text-base font-semibold leading-6 text-white/90">Рационы, рецепты и план питания внутри Telegram</p><button className="mt-5 rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-bold text-white shadow-lg shadow-[#2F240F]/25 transition hover:bg-[#37410F]" onClick={onOpenRations} type="button">Выбрать рацион дня</button></div></section>
     <section className="mt-5 overflow-hidden rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-4 shadow-lg shadow-[#F3E2BF]/80"><div className="grid gap-5 sm:grid-cols-[1fr_10rem] sm:items-center"><div className="p-2"><p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">ГЛАВНОЕ</p><h2 className="mt-2 text-2xl font-black leading-tight text-[#37410F]">Рацион — это план, а не интуиция</h2><p className="mt-3 text-sm font-semibold leading-6 text-[#8B725F]">Собери день питания, добавь его в План — и получи понятную корзину без лишней суеты.</p><button className="mt-4 rounded-2xl bg-[#F3E2BF] px-4 py-3 text-sm font-black text-[#37410F]" onClick={onOpenRecipes} type="button">Посмотреть рецепты</button></div><FoodPhotoPlaceholder className="min-h-[10rem]" variant="salad" /></div></section>
     <section className="mt-5 rounded-3xl border border-[#D99663]/25 bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70"><div className="flex items-center justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Статус доступа</p><h2 className="mt-1 text-lg font-black text-[#37410F]">{subscriptionStatus === 'active' ? 'Доступ активен' : 'Бесплатный доступ'}</h2><p className="mt-1 text-sm font-semibold text-[#8B725F]">{subscriptionStatus === 'active' ? 'Premium-рационы открыты' : 'Открой premium-рационы и рецепты'}</p></div>{subscriptionStatus === 'free' && <button className="shrink-0 rounded-2xl bg-[#6E7E1F] px-4 py-3 text-sm font-black text-white transition hover:bg-[#37410F]" onClick={onOpenAccess} type="button">Открыть доступ</button>}</div></section>
-    <section className="mt-6 grid gap-3">{homeCards.map((card) => <article className="rounded-3xl border border-[#D99663]/20 bg-[#FFFDF8] p-5 text-left shadow-sm shadow-[#F3E2BF]/70" key={card.title}><div className="flex items-start gap-4"><span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F3E2BF] text-2xl text-[#6E7E1F]">{card.icon}</span><div className="min-w-0 flex-1"><div className="flex items-center gap-2"><h2 className="text-lg font-extrabold text-[#37410F]">{card.title}</h2>{card.soon && <span className="rounded-full bg-[#D99663]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#D99663]">скоро</span>}</div><p className="mt-1 text-sm leading-5 text-[#8B725F]">{card.description}</p><div className="mt-4 flex flex-wrap gap-2">{card.action.onClick ? <button className="rounded-full bg-[#6E7E1F] px-4 py-2 text-sm font-black text-white transition hover:bg-[#37410F]" onClick={card.action.onClick} type="button">{card.action.label}</button> : <span className="rounded-full bg-[#F3E2BF] px-4 py-2 text-sm font-black text-[#8B725F]">{card.action.label} скоро</span>}</div></div></div></article>)}</section>
+    <section className="mt-6 grid gap-4">{homeCards.map((card) => <HomeFeatureCard card={card} key={card.title} />)}</section>
     <section className="mt-7 grid grid-cols-2 gap-3"><button className="rounded-3xl bg-[#FFFDF8] p-4 text-left font-black text-[#37410F] shadow-sm shadow-[#F3E2BF]/70" onClick={onOpenRecipes} type="button">Открыть рецепты</button><button className="rounded-3xl bg-[#FFFDF8] p-4 text-left font-black text-[#37410F] shadow-sm shadow-[#F3E2BF]/70" onClick={onOpenCart} type="button">Корзина</button></section>
   </>;
 }
+
 function AccessPage({
   subscriptionStatus,
   subscriptionUntil,
