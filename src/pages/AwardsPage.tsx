@@ -39,6 +39,8 @@ const getDayWord = (days: number) => {
 
   return 'дней';
 };
+const getDayLabel = (days: number) => `${days} ${getDayWord(days)}`;
+const getAwardDescription = (days: number) => `${getDayLabel(days)} вместе`;
 
 export function AwardsPage({ uniqueDaysCount }: { uniqueDaysCount: number }) {
   const currentAward = getCurrentAward(uniqueDaysCount);
@@ -60,7 +62,7 @@ export function AwardsPage({ uniqueDaysCount }: { uniqueDaysCount: number }) {
       <div className="mt-5 rounded-3xl bg-[#F3E2BF]/60 p-4">
         <div className="flex items-center justify-between gap-3 text-sm font-black text-[#37410F]">
           <span>{nextAward ? 'До следующего звания:' : 'Все звания получены:'}</span>
-          <span>{nextAward ? `${uniqueDaysCount} / ${nextAward.days} ${getDayWord(nextAward.days)}` : `${uniqueDaysCount} ${getDayWord(uniqueDaysCount)}`}</span>
+          <span>{nextAward ? `${uniqueDaysCount} / ${getDayLabel(nextAward.days)}` : getDayLabel(uniqueDaysCount)}</span>
         </div>
         {nextAward && <div className="mt-3 h-3 overflow-hidden rounded-full bg-[#FFFDF8]"><div className="h-full rounded-full bg-[#6E7E1F] transition-all" style={{ width: `${getProgressPercent(uniqueDaysCount, nextAward.days)}%` }} /></div>}
       </div>
@@ -79,12 +81,12 @@ export function AwardsPage({ uniqueDaysCount }: { uniqueDaysCount: number }) {
                 <h2 className="text-lg font-extrabold text-[#37410F]">{award.title}</h2>
                 {isReceived ? <span className="rounded-full bg-[#6E7E1F]/15 px-3 py-1 text-xs font-black text-[#6E7E1F]">Получено</span> : <span className="rounded-full bg-[#D99663]/15 px-3 py-1 text-xs font-black text-[#D99663]">В процессе</span>}
               </div>
-              <p className="mt-1 text-sm font-semibold text-[#8B725F]">{award.days} {getDayWord(award.days)} вместе</p>
+              <p className="mt-1 text-sm font-semibold text-[#8B725F]">{getAwardDescription(award.days)}</p>
               <div className="mt-3 flex items-center gap-3">
                 <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#F3E2BF]">
                   <div className="h-full rounded-full bg-[#6E7E1F] transition-all" style={{ width: `${getProgressPercent(progress, award.days)}%` }} />
                 </div>
-                <span className="text-xs font-black text-[#8B725F]">{progress} / {award.days} {getDayWord(award.days)}</span>
+                <span className="text-xs font-black text-[#8B725F]">{progress} / {getDayLabel(award.days)}</span>
               </div>
             </div>
           </div>
