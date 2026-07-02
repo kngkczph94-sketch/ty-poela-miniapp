@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { AwardsPage } from './pages/AwardsPage';
 import { CartPage } from './pages/CartPage';
 import { MacroCalculatorPage } from './pages/MacroCalculatorPage';
 import { MenuPage } from './pages/MenuPage';
@@ -31,7 +32,7 @@ const getRecipeIdFromSearch = (search: string) => {
   return startApp.replace(/^recipe_/, '');
 };
 
-type NavigationTab = 'home' | 'rations' | 'recipes' | 'menu' | 'cart' | 'access' | 'macros' | 'progress';
+type NavigationTab = 'home' | 'rations' | 'recipes' | 'menu' | 'cart' | 'access' | 'macros' | 'progress' | 'awards';
 
 type SubscriptionStatus = 'free' | 'active';
 
@@ -45,7 +46,7 @@ const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
   { id: 'cart', label: 'Корзина', icon: '🛒' },
 ];
 
-function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecipes, onOpenCart, onOpenProgress, onOpenMacros }: { subscriptionStatus: SubscriptionStatus; onOpenAccess: () => void; onOpenRations: () => void; onOpenRecipes: () => void; onOpenCart: () => void; onOpenProgress: () => void; onOpenMacros: () => void }) {
+function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecipes, onOpenCart, onOpenProgress, onOpenMacros, onOpenAwards }: { subscriptionStatus: SubscriptionStatus; onOpenAccess: () => void; onOpenRations: () => void; onOpenRecipes: () => void; onOpenCart: () => void; onOpenProgress: () => void; onOpenMacros: () => void; onOpenAwards: () => void }) {
   const cards = [
     { title: 'Рационы дня', description: 'Готовый день питания из 4 приёмов пищи', icon: '🥣', onClick: onOpenRations, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
     { title: 'Рассчитать БЖУ', description: 'Калории, БЖУ и подгонка рациона', icon: '🧮', onClick: onOpenMacros, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
@@ -53,6 +54,7 @@ function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecip
     { title: 'База знаний', description: 'Мягкие подсказки о питании', icon: '📚', soon: true, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
     { title: 'ИИ-подбор', description: 'Персональный подбор рецептов', icon: '✨', soon: true, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
     { title: 'Прогресс', description: 'Вес, замеры, шаги, сон и вода', icon: '🌷', onClick: onOpenProgress, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
+    { title: 'Награды', description: 'Звания за регулярность — только за разные дни возвращения', icon: '🏅', onClick: onOpenAwards, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
   ];
   return <>
     <section className="relative overflow-hidden rounded-[2rem] border border-[#D99663]/35 bg-[#FFFDF8] p-4 text-[#37410F] shadow-xl shadow-[#D99663]/20"><FoodPhotoPlaceholder className="min-h-[13.5rem]" variant="hero" /><div className="absolute inset-x-4 bottom-4 rounded-b-[1.75rem] bg-gradient-to-t from-[#2F240F]/70 via-[#2F240F]/30 to-transparent p-5 pt-16 text-white"><p className="mb-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-sm font-bold backdrop-blur">Telegram Mini App</p><h1 className="max-w-xs text-4xl font-black leading-tight tracking-tight">Ты поела?</h1><p className="mt-3 max-w-sm text-base font-semibold leading-6 text-white/90">Рационы, рецепты и план питания внутри Telegram</p><button className="mt-5 rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-bold text-white shadow-lg shadow-[#2F240F]/25 transition hover:bg-[#37410F]" onClick={onOpenRations} type="button">Выбрать рацион дня</button></div></section>
@@ -144,6 +146,26 @@ function AccessPage({
   );
 }
 
+
+const getTodayUsageDate = () => new Date().toISOString().slice(0, 10);
+
+const readUsageDates = () => {
+  try {
+    const savedDates = window.localStorage.getItem('ty-poela-award-usage-dates');
+    const parsedDates = savedDates ? (JSON.parse(savedDates) as unknown) : [];
+    return Array.isArray(parsedDates) ? parsedDates.filter((date): date is string => typeof date === 'string') : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveTodayUsageDate = () => {
+  const today = getTodayUsageDate();
+  const uniqueDates = Array.from(new Set([...readUsageDates(), today])).sort();
+  window.localStorage.setItem('ty-poela-award-usage-dates', JSON.stringify(uniqueDates));
+  return uniqueDates;
+};
+
 function App() {
   const initialRecipeId = getRecipeIdFromSearch(window.location.search);
   const initialRecipe = initialRecipeId ? recipes.find((recipe) => recipe.id === initialRecipeId) ?? null : null;
@@ -177,6 +199,7 @@ function App() {
     }
   });
   const [userProfile, setUserProfile] = useState<UserProfile>({ subscriptionStatus: 'free' });
+  const [usageDates] = useState<string[]>(saveTodayUsageDate);
   const hasActiveSubscription = userProfile.subscriptionStatus === 'active';
 
   const openRecipes = () => { setSelectedRecipe(null); setSelectedRation(null); setActiveTab('recipes'); };
@@ -211,7 +234,7 @@ function App() {
   });
 
   return <main className="min-h-screen bg-gradient-to-b from-[#FBF6EC] via-[#F3E2BF]/45 to-[#FBF6EC] text-[#37410F]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
-    {activeTab === 'progress' ? <ProgressPage habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={() => setSelectedRecipe(null)} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={() => setSelectedRation(null)} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={() => setActiveTab('home')} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} /> : activeTab === 'cart' ? <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage subscriptionStatus={userProfile.subscriptionStatus} onOpenAccess={() => openAccess()} onOpenRations={openRations} onOpenCart={() => setActiveTab('cart')} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} />}
+    {activeTab === 'awards' ? <AwardsPage uniqueDaysCount={usageDates.length} /> : activeTab === 'progress' ? <ProgressPage habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={() => setSelectedRecipe(null)} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={() => setSelectedRation(null)} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={() => setActiveTab('home')} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} /> : activeTab === 'cart' ? <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage subscriptionStatus={userProfile.subscriptionStatus} onOpenAccess={() => openAccess()} onOpenRations={openRations} onOpenCart={() => setActiveTab('cart')} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenAwards={() => setActiveTab('awards')} />}
   </div><nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#D99663]/35 bg-[#FFFDF8]/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#D99663]/25 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id ? 'bg-[#6E7E1F] text-white shadow-md shadow-[#6E7E1F]/20' : 'text-[#8B725F] hover:bg-[#F3E2BF]/70 hover:text-[#37410F]'}`} key={item.id} onClick={()=>{ setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }
 
