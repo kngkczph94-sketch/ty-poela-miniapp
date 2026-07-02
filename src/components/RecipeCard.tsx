@@ -10,14 +10,14 @@ type RecipeCardProps = {
 export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCardProps) {
   const isLocked = recipe.isPremium && !hasActiveSubscription;
   return (
-    <article className={`relative overflow-hidden rounded-3xl border p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${isLocked ? 'border-[#D99663]/30 bg-[#F3E2BF]/80 shadow-[#F3E2BF]/70' : 'border-[#F3E2BF] bg-[#FFFDF8] shadow-[#F3E2BF]/70'}`}>
+    <article className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl ${isLocked ? 'border-[#D99663]/30 bg-[#F3E2BF]/80 shadow-[#F3E2BF]/70' : 'border-[#D99663]/20 bg-[#FFFDF8] shadow-[#F3E2BF]/80'}`}>
       <button
         aria-label={`Открыть рецепт ${recipe.title}`}
         className="block w-full text-left"
         onClick={() => onOpen(recipe)}
         type="button"
       >
-        <FoodPhotoPlaceholder className="mb-4 min-h-[8rem]" variant={getRecipeFoodVariant(recipe.id)} />
+        <FoodPhotoPlaceholder className="mb-5 min-h-[12rem]" variant={getRecipeFoodVariant(recipe.id)} />
         <div className="flex items-start justify-between gap-3">
           <div>
             <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -35,12 +35,12 @@ export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCard
                 </span>
               )}
             </div>
-            <h3 className="text-lg font-black text-[#37410F]">{recipe.title}</h3>
-            <p className="mt-1 text-sm leading-5 text-[#8B725F]">{recipe.description}</p>
+            <h3 className="text-xl font-black leading-tight text-[#37410F]">{recipe.title}</h3>
+            <p className="mt-2 text-sm font-semibold leading-6 text-[#8B725F]">{recipe.description}</p>
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-4 gap-2 rounded-2xl bg-[#F3E2BF] p-3 text-center">
+        <div className="mt-5 grid grid-cols-4 gap-2 rounded-3xl bg-[#F3E2BF]/70 p-4 text-center">
           <div>
             <p className="text-sm font-black text-[#37410F]">{recipe.calories}</p>
             <p className="text-[11px] font-bold text-[#8B725F]">ккал</p>
@@ -59,7 +59,7 @@ export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCard
           </div>
         </div>
 
-        <div className="mt-3 flex items-center justify-between text-sm font-bold text-[#8B725F]">
+        <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#FFFDF8] px-1 text-sm font-bold text-[#8B725F]">
           <span>⏱️ {recipe.cookingTime} мин</span>
           <span>🍽️ {recipe.servings} порц.</span>
         </div>
