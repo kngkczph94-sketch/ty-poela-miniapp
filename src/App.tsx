@@ -206,6 +206,7 @@ function ShareAppPage() {
 
         <button
           className="mt-6 w-full rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]"
+          aria-label="Поделиться приложением"
           onClick={handleShare}
           type="button"
         >
