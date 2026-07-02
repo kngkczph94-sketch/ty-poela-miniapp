@@ -17,7 +17,7 @@ export function RecipeCard({ recipe, hasActiveSubscription, onOpen }: RecipeCard
         onClick={() => onOpen(recipe)}
         type="button"
       >
-        <FoodPhotoPlaceholder className="mb-5 min-h-[12rem]" variant={getRecipeFoodVariant(recipe.id)} />
+        <FoodPhotoPlaceholder alt={recipe.title} className="mb-5 min-h-[12rem]" imageUrl={recipe.imageUrl} variant={getRecipeFoodVariant(recipe.id)} />
         <div className="flex items-start justify-between gap-3">
           <div>
             <div className="mb-2 flex flex-wrap items-center gap-2">
