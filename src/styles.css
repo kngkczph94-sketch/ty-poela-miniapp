@@ -37,9 +37,9 @@ body {
 
 .home-feature-photo {
   position: relative;
-  min-height: 7.5rem;
+  min-height: 8.5rem;
   overflow: hidden;
-  border-radius: 1.45rem 1.45rem 1rem 1rem;
+  border-radius: 1.45rem;
   background:
     radial-gradient(circle at 18% 20%, rgba(255, 253, 248, 0.95) 0 0.6rem, transparent 0.7rem),
     radial-gradient(circle at 82% 22%, rgba(255, 253, 248, 0.7) 0 0.35rem, transparent 0.45rem),
@@ -52,6 +52,31 @@ body {
   position: absolute;
   display: block;
   content: '';
+}
+
+.home-feature-photo .home-feature-photo__icon {
+  position: absolute;
+  right: 2.75rem;
+  bottom: 2.48rem;
+  z-index: 2;
+  display: flex;
+  width: 2.55rem;
+  height: 2.55rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #37410F;
+  background: rgba(255, 253, 248, 0.78);
+  box-shadow: inset 0 0 0 1px rgba(217, 150, 99, 0.2), 0 0.7rem 1.3rem rgba(47, 36, 15, 0.12);
+}
+
+.home-feature-photo__icon svg {
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+.home-feature-photo--share .home-feature-photo__icon {
+  color: #6E7E1F;
 }
 
 .home-feature-photo::before {

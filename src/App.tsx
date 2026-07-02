@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { AwardsPage } from './pages/AwardsPage';
 import { CartPage } from './pages/CartPage';
 import { MacroCalculatorPage } from './pages/MacroCalculatorPage';
@@ -75,36 +75,34 @@ const HomeFeatureIcon = ({ visual }: { visual: HomeCardVisual }) => {
   }
 };
 
-const HomeFeaturePhoto = ({ visual }: { visual: HomeCardVisual }) => (
+const HomeFeaturePhoto = ({ children, visual }: { children: ReactNode; visual: HomeCardVisual }) => (
   <div className={`home-feature-photo home-feature-photo--${visual}`} aria-hidden="true">
     <span className="home-feature-photo__glow" />
     <span className="home-feature-photo__plate" />
     <span className="home-feature-photo__accent" />
     <span className="home-feature-photo__line home-feature-photo__line--one" />
     <span className="home-feature-photo__line home-feature-photo__line--two" />
+    <span className="home-feature-photo__icon">{children}</span>
   </div>
 );
 
 function HomeFeatureCard({ card }: { card: HomeCard }) {
   return (
-    <article className="group overflow-hidden rounded-[1.8rem] border border-[#D99663]/20 bg-[#FFFDF8] text-left shadow-sm shadow-[#F3E2BF]/70 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#D99663]/15">
-      <HomeFeaturePhoto visual={card.visual} />
-      <div className="p-4 pt-3">
-        <div className="flex items-start gap-3">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#D99663]/20 bg-[#F3E2BF]/75 text-[#6E7E1F] shadow-inner shadow-white/60">
-            <HomeFeatureIcon visual={card.visual} />
-          </span>
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-lg font-extrabold text-[#37410F]">{card.title}</h2>
-              {card.soon && <span className="rounded-full bg-[#D99663]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#D99663]">скоро</span>}
-            </div>
-            <p className="mt-1 text-sm leading-5 text-[#8B725F]">{card.description}</p>
-          </div>
+    <article className="group grid overflow-hidden rounded-[1.8rem] border border-[#D99663]/20 bg-[#FFFDF8] text-left shadow-sm shadow-[#F3E2BF]/70 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#D99663]/15 sm:grid-cols-[1fr_9.5rem]">
+      <div className="order-2 flex min-w-0 flex-col p-4 pt-1 sm:order-1 sm:pt-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className="text-lg font-extrabold text-[#37410F]">{card.title}</h2>
+          {card.soon && <span className="rounded-full bg-[#D99663]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#D99663]">скоро</span>}
         </div>
+        <p className="mt-1 text-sm leading-5 text-[#8B725F]">{card.description}</p>
         <div className="mt-4 flex flex-wrap gap-2">
           {card.action.onClick ? <button className="rounded-full bg-[#6E7E1F] px-4 py-2 text-sm font-black text-white shadow-sm shadow-[#6E7E1F]/20 transition hover:bg-[#37410F]" onClick={card.action.onClick} type="button">{card.action.label}</button> : <span className="rounded-full bg-[#F3E2BF] px-4 py-2 text-sm font-black text-[#8B725F]">{card.action.label} скоро</span>}
         </div>
+      </div>
+      <div className="order-1 p-3 pb-2 sm:order-2 sm:pl-0">
+        <HomeFeaturePhoto visual={card.visual}>
+          <HomeFeatureIcon visual={card.visual} />
+        </HomeFeaturePhoto>
       </div>
     </article>
   );
