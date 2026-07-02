@@ -53,33 +53,48 @@ type HomeCardGroup = { title: string; description: string; icon: string; soon?: 
 function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecipes, onOpenCart, onOpenProgress, onOpenMacros, onOpenAwards, onOpenShare }: { subscriptionStatus: SubscriptionStatus; onOpenAccess: () => void; onOpenRations: () => void; onOpenRecipes: () => void; onOpenCart: () => void; onOpenProgress: () => void; onOpenMacros: () => void; onOpenAwards: () => void; onOpenShare: () => void }) {
   const cardGroups: HomeCardGroup[] = [
     {
-      title: 'Рационы / БЖУ / Рецепты',
+      title: 'Расчёт БЖУ',
       description: 'Выбери готовый день питания, рассчитай норму или открой тёплые рецепты на каждый день.',
       icon: '🥣',
-      actions: [
-        { label: 'Рационы', onClick: onOpenRations },
-        { label: 'БЖУ', onClick: onOpenMacros },
-        { label: 'Рецепты', onClick: onOpenRecipes },
-      ],
+      actions: [{ label: 'БЖУ', onClick: onOpenMacros }],
     },
     {
-      title: 'Прогресс / Награды',
-      description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность без давления.',
-      icon: '🌷',
-      actions: [
-        { label: 'Прогресс', onClick: onOpenProgress },
-        { label: 'Награды', onClick: onOpenAwards },
-      ],
+      title: 'Рационы',
+      description: 'Выбери готовый день питания, рассчитай норму или открой тёплые рецепты на каждый день.',
+      icon: '🥣',
+      actions: [{ label: 'Рационы', onClick: onOpenRations }],
     },
     {
-      title: 'База знаний / ИИ',
+      title: 'Рецепты',
+      description: 'Выбери готовый день питания, рассчитай норму или открой тёплые рецепты на каждый день.',
+      icon: '🥣',
+      actions: [{ label: 'Рецепты', onClick: onOpenRecipes }],
+    },
+    {
+      title: 'ИИ-подбор',
       description: 'Скоро здесь появятся мягкие подсказки о питании и персональный ИИ-подбор рецептов.',
       icon: '✨',
       soon: true,
-      actions: [
-        { label: 'База знаний', soon: true },
-        { label: 'ИИ', soon: true },
-      ],
+      actions: [{ label: 'ИИ', soon: true }],
+    },
+    {
+      title: 'База знаний',
+      description: 'Скоро здесь появятся мягкие подсказки о питании и персональный ИИ-подбор рецептов.',
+      icon: '✨',
+      soon: true,
+      actions: [{ label: 'База знаний', soon: true }],
+    },
+    {
+      title: 'Прогресс',
+      description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность без давления.',
+      icon: '🌷',
+      actions: [{ label: 'Прогресс', onClick: onOpenProgress }],
+    },
+    {
+      title: 'Награды',
+      description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность без давления.',
+      icon: '🌷',
+      actions: [{ label: 'Награды', onClick: onOpenAwards }],
     },
     {
       title: 'Поделиться приложением',
