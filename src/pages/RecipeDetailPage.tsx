@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { menuDays, menuMealSlots, menuSlotLabels, type MenuDay, type MenuMealSlot } from '../types/menu';
+import { FoodPhotoPlaceholder, getRecipeFoodVariant } from '../components/FoodPhotoPlaceholder';
 import { mealTypeLabels, type Recipe } from '../types/recipe';
 import { createRecipeShareText, recipeCopiedMessage, shareRecipe } from '../utils/shareRecipe';
 
@@ -25,7 +26,7 @@ const nutritionItems = [
   { key: 'carbs', label: 'углеводы', suffix: ' г' },
 ] as const;
 
-export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddToMenu, onOpenAccess, onOpenMenu }: RecipeDetailPageProps) {
+export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription, recipe, onBack, onAddToMenu, onOpenAccess: _onOpenAccess, onOpenMenu }: RecipeDetailPageProps) {
   const [actionState, setActionState] = useState<ActionState>({
     menu: false,
     cart: false,
@@ -36,7 +37,6 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
   const [selectedSlot, setSelectedSlot] = useState<MenuMealSlot>('breakfast');
   const [isMenuPickerOpen, setIsMenuPickerOpen] = useState(false);
   const [manualShareText, setManualShareText] = useState('');
-  const isPremiumPreview = recipe.isPremium && !hasActiveSubscription;
 
   const showActionFeedback = (action: keyof ActionState, message: string) => {
     setActionState((current) => ({ ...current, [action]: true }));
@@ -92,6 +92,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
 
       <article className="overflow-hidden rounded-[2rem] bg-[#FFFDF8] shadow-xl shadow-[#F3E2BF]/70">
         <div className="bg-[#F3E2BF] p-6 text-[#37410F]">
+          <FoodPhotoPlaceholder alt={recipe.title} className="mb-5 min-h-[15rem]" imageUrl={recipe.imageUrl} variant={getRecipeFoodVariant(recipe.id)} />
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-[#FBF6EC]/70 px-3 py-1 text-xs font-extrabold uppercase tracking-wide backdrop-blur">
               {mealTypeLabels[recipe.mealType]}
@@ -131,22 +132,6 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
             ))}
           </div>
 
-          {isPremiumPreview ? (
-            <div className="mt-5 rounded-3xl border border-[#8B725F]/35 bg-[#F3E2BF] p-5 text-center">
-              <p className="text-4xl">🔒</p>
-              <h2 className="mt-3 text-xl font-black text-[#37410F]">Открой полный рецепт, меню и корзину</h2>
-              <p className="mt-2 text-sm font-semibold leading-5 text-[#8B725F]">
-                Ингредиенты, шаги приготовления, добавление в меню и автокорзина доступны после mock-подписки. Ты не слабая. Ты просто не планировала еду.
-              </p>
-              <button
-                className="mt-4 w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]"
-                onClick={onOpenAccess}
-                type="button"
-              >
-                Открыть полный доступ
-              </button>
-            </div>
-          ) : (
             <>
           {isMenuPickerOpen && (
             <div className="mt-5 rounded-3xl bg-[#F3E2BF] p-3">
@@ -229,12 +214,10 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
           )}
           </div>
             </>
-          )}
         </div>
       </article>
 
-      {!isPremiumPreview && (
-        <>
+      <>
       <section className="mt-5 rounded-3xl bg-[#FFFDF8] p-5 shadow-sm shadow-[#F3E2BF]/70">
         <h2 className="text-xl font-black text-[#37410F]">Ингредиенты</h2>
         <ul className="mt-3 space-y-2 text-sm font-semibold text-[#8B725F]">
@@ -261,8 +244,7 @@ export function RecipeDetailPage({ hasActiveSubscription, recipe, onBack, onAddT
         </ol>
       </section>
 
-        </>
-      )}
+      </>
 
       {manualShareText && (
         <div className="fixed inset-0 z-40 flex items-end justify-center bg-[#37410F]/50 px-4 pb-4 pt-10 backdrop-blur-sm sm:items-center">

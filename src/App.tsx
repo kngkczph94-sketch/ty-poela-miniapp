@@ -14,8 +14,15 @@ import type { DailyRation } from './types/ration';
 import type { HabitEntry, MeasurementEntry, ProgressEntry } from './types/progress';
 import type { Recipe } from './types/recipe';
 
-const getStartAppRecipeId = (search: string) => {
-  const startApp = new URLSearchParams(search).get('startapp');
+const getRecipeIdFromSearch = (search: string) => {
+  const params = new URLSearchParams(search);
+  const recipeId = params.get('recipe');
+
+  if (recipeId) {
+    return recipeId;
+  }
+
+  const startApp = params.get('startapp');
 
   if (!startApp?.startsWith('recipe_')) {
     return null;
@@ -138,9 +145,9 @@ function AccessPage({
 }
 
 function App() {
-  const startAppRecipeId = getStartAppRecipeId(window.location.search);
-  const initialRecipe = startAppRecipeId ? recipes.find((recipe) => recipe.id === startAppRecipeId) ?? null : null;
-  const [activeTab, setActiveTab] = useState<NavigationTab>(startAppRecipeId ? 'recipes' : 'home');
+  const initialRecipeId = getRecipeIdFromSearch(window.location.search);
+  const initialRecipe = initialRecipeId ? recipes.find((recipe) => recipe.id === initialRecipeId) ?? null : null;
+  const [activeTab, setActiveTab] = useState<NavigationTab>(initialRecipe ? 'recipes' : 'home');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(initialRecipe);
   const [selectedRation, setSelectedRation] = useState<DailyRation | null>(null);
   const [recipeToOpenAfterAccess, setRecipeToOpenAfterAccess] = useState<Recipe | null>(initialRecipe);
