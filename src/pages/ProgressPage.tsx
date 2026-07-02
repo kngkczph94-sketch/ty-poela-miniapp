@@ -130,16 +130,15 @@ export function ProgressPage({ entries, onSaveEntry }: ProgressPageProps) {
   return (
     <section className="flex flex-1 flex-col">
       <div className="overflow-hidden rounded-[2rem] bg-[#F3E2BF] p-6 text-[#37410F] shadow-xl shadow-[#F3E2BF]/70">
-        <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">wellness-трекер</p>
-        <h1 className="mt-2 text-3xl font-black tracking-tight">Прогресс</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Вес, шаги, сон и вода — чтобы видеть картину, а не один день.</p>
+        <h1 className="text-3xl font-black tracking-tight">Прогресс</h1>
+        <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Вес, шаги, сон и вода помогают видеть общую картину и оценивать прогресс.</p>
       </div>
 
       <article className="mt-5 rounded-[2rem] border border-[#D99663]/20 bg-[#FFFDF8] p-5 shadow-sm shadow-[#F3E2BF]/70">
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Сегодня</p>
-            <h2 className="mt-1 text-xl font-black text-[#37410F]">Мягкая отметка дня</h2>
+            <h2 className="mt-1 text-xl font-black text-[#37410F]">Данные за день</h2>
           </div>
           <span className="rounded-full bg-[#F3E2BF] px-3 py-1 text-xs font-black text-[#8B725F]">{formatDate(today)}</span>
         </div>
