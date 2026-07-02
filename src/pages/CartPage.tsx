@@ -109,7 +109,7 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
     return (
       <section className="flex flex-1 flex-col">
         <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
-          <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">5 этап</p>
+          <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">СПИСОК ПОКУПОК</p>
           <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
           <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Список покупок появится сам, когда ты добавишь рационы или рецепты в План.</p>
         </div>
@@ -129,7 +129,7 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
   return (
     <section className="flex flex-1 flex-col">
       <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
-        <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">5 этап</p>
+        <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">СПИСОК ПОКУПОК</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Все ингредиенты из Плана уже собраны и объединены.</p>
         <button className="mt-5 rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]" onClick={handleCopyList} type="button">
