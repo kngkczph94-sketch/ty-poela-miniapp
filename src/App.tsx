@@ -46,27 +46,54 @@ const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
   { id: 'cart', label: 'Корзина', icon: '🛒' },
 ];
 
+type HomeAction = { label: string; onClick?: () => void; soon?: boolean };
+
+type HomeCardGroup = { title: string; description: string; icon: string; soon?: boolean; actions: HomeAction[] };
+
 function HomePage({ subscriptionStatus, onOpenAccess, onOpenRations, onOpenRecipes, onOpenCart, onOpenProgress, onOpenMacros, onOpenAwards, onOpenShare }: { subscriptionStatus: SubscriptionStatus; onOpenAccess: () => void; onOpenRations: () => void; onOpenRecipes: () => void; onOpenCart: () => void; onOpenProgress: () => void; onOpenMacros: () => void; onOpenAwards: () => void; onOpenShare: () => void }) {
-  const cards = [
-    { title: 'Рационы дня', description: 'Готовый день питания из 4 приёмов пищи', icon: '🥣', onClick: onOpenRations, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
-    { title: 'Рассчитать БЖУ', description: 'Калории, БЖУ и подгонка рациона', icon: '🧮', onClick: onOpenMacros, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
-    { title: 'Рецепты', description: 'Тёплые блюда на каждый день', icon: '📖', onClick: onOpenRecipes, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
-    { title: 'База знаний', description: 'Мягкие подсказки о питании', icon: '📚', soon: true, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
-    { title: 'Поделиться приложением', description: 'Отправь ссылку тому, кому тоже нужен понятный план питания.', icon: '💌', onClick: onOpenShare, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
-    { title: 'ИИ-подбор', description: 'Персональный подбор рецептов', icon: '✨', soon: true, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
-    { title: 'Прогресс', description: 'Вес, замеры, шаги, сон и вода', icon: '🌷', onClick: onOpenProgress, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
-    { title: 'Награды', description: 'Звания за регулярность', icon: '🏅', onClick: onOpenAwards, tone: 'bg-[#F3E2BF] text-[#6E7E1F]' },
+  const cardGroups: HomeCardGroup[] = [
+    {
+      title: 'Рационы / БЖУ / Рецепты',
+      description: 'Выбери готовый день питания, рассчитай норму или открой тёплые рецепты на каждый день.',
+      icon: '🥣',
+      actions: [
+        { label: 'Рационы', onClick: onOpenRations },
+        { label: 'БЖУ', onClick: onOpenMacros },
+        { label: 'Рецепты', onClick: onOpenRecipes },
+      ],
+    },
+    {
+      title: 'Прогресс / Награды',
+      description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность без давления.',
+      icon: '🌷',
+      actions: [
+        { label: 'Прогресс', onClick: onOpenProgress },
+        { label: 'Награды', onClick: onOpenAwards },
+      ],
+    },
+    {
+      title: 'База знаний / ИИ',
+      description: 'Скоро здесь появятся мягкие подсказки о питании и персональный ИИ-подбор рецептов.',
+      icon: '✨',
+      soon: true,
+      actions: [
+        { label: 'База знаний', soon: true },
+        { label: 'ИИ', soon: true },
+      ],
+    },
+    {
+      title: 'Поделиться приложением',
+      description: 'Отправь ссылку тому, кому тоже нужен понятный план питания.',
+      icon: '💌',
+      actions: [{ label: 'Поделиться', onClick: onOpenShare }],
+    },
   ];
+
   return <>
     <section className="relative overflow-hidden rounded-[2rem] border border-[#D99663]/35 bg-[#FFFDF8] p-4 text-[#37410F] shadow-xl shadow-[#D99663]/20"><FoodPhotoPlaceholder className="min-h-[13.5rem]" variant="hero" /><div className="absolute inset-x-4 bottom-4 rounded-b-[1.75rem] bg-gradient-to-t from-[#2F240F]/70 via-[#2F240F]/30 to-transparent p-5 pt-16 text-white"><p className="mb-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-sm font-bold backdrop-blur">Telegram Mini App</p><h1 className="max-w-xs text-4xl font-black leading-tight tracking-tight">Ты поела?</h1><p className="mt-3 max-w-sm text-base font-semibold leading-6 text-white/90">Рационы, рецепты и план питания внутри Telegram</p><button className="mt-5 rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-bold text-white shadow-lg shadow-[#2F240F]/25 transition hover:bg-[#37410F]" onClick={onOpenRations} type="button">Выбрать рацион дня</button></div></section>
     <section className="mt-5 overflow-hidden rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-4 shadow-lg shadow-[#F3E2BF]/80"><div className="grid gap-5 sm:grid-cols-[1fr_10rem] sm:items-center"><div className="p-2"><p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">ГЛАВНОЕ</p><h2 className="mt-2 text-2xl font-black leading-tight text-[#37410F]">Рацион — это план, а не интуиция</h2><p className="mt-3 text-sm font-semibold leading-6 text-[#8B725F]">Собери день питания, добавь его в План — и получи понятную корзину без лишней суеты.</p><button className="mt-4 rounded-2xl bg-[#F3E2BF] px-4 py-3 text-sm font-black text-[#37410F]" onClick={onOpenRecipes} type="button">Посмотреть рецепты</button></div><FoodPhotoPlaceholder className="min-h-[10rem]" variant="salad" /></div></section>
     <section className="mt-5 rounded-3xl border border-[#D99663]/25 bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70"><div className="flex items-center justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Статус доступа</p><h2 className="mt-1 text-lg font-black text-[#37410F]">{subscriptionStatus === 'active' ? 'Доступ активен' : 'Бесплатный доступ'}</h2><p className="mt-1 text-sm font-semibold text-[#8B725F]">{subscriptionStatus === 'active' ? 'Premium-рационы открыты' : 'Открой premium-рационы и рецепты'}</p></div>{subscriptionStatus === 'free' && <button className="shrink-0 rounded-2xl bg-[#6E7E1F] px-4 py-3 text-sm font-black text-white transition hover:bg-[#37410F]" onClick={onOpenAccess} type="button">Открыть доступ</button>}</div></section>
-    <section className="mt-6 grid gap-3">{cards.map((card) => {
-      const content = <div className="flex items-start gap-4"><span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl ${card.tone}`}>{card.icon}</span><div className="min-w-0 flex-1"><div className="flex items-center gap-2"><h2 className="text-lg font-extrabold text-[#37410F]">{card.title}</h2>{card.soon && <span className="rounded-full bg-[#D99663]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#D99663]">скоро</span>}</div><p className="mt-1 text-sm leading-5 text-[#8B725F]">{card.description}</p></div></div>;
-      const className = `rounded-3xl border border-[#D99663]/20 bg-[#FFFDF8] p-5 text-left shadow-sm shadow-[#F3E2BF]/70 ${card.onClick ? 'cursor-pointer transition hover:-translate-y-0.5 hover:shadow-md' : ''}`;
-
-      return card.onClick ? <button className={className} key={card.title} onClick={card.onClick} type="button">{content}</button> : <article className={className} key={card.title}>{content}</article>;
-    })}</section>
+    <section className="mt-6 grid gap-3">{cardGroups.map((group) => <article className="rounded-3xl border border-[#D99663]/20 bg-[#FFFDF8] p-5 text-left shadow-sm shadow-[#F3E2BF]/70" key={group.title}><div className="flex items-start gap-4"><span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F3E2BF] text-2xl text-[#6E7E1F]">{group.icon}</span><div className="min-w-0 flex-1"><div className="flex items-center gap-2"><h2 className="text-lg font-extrabold text-[#37410F]">{group.title}</h2>{group.soon && <span className="rounded-full bg-[#D99663]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#D99663]">скоро</span>}</div><p className="mt-1 text-sm leading-5 text-[#8B725F]">{group.description}</p><div className="mt-4 flex flex-wrap gap-2">{group.actions.map((action) => action.onClick ? <button className="rounded-full bg-[#6E7E1F] px-4 py-2 text-sm font-black text-white transition hover:bg-[#37410F]" key={action.label} onClick={action.onClick} type="button">{action.label}</button> : <span className="rounded-full bg-[#F3E2BF] px-4 py-2 text-sm font-black text-[#8B725F]" key={action.label}>{action.label} скоро</span>)}</div></div></div></article>)}</section>
     <section className="mt-7 grid grid-cols-2 gap-3"><button className="rounded-3xl bg-[#FFFDF8] p-4 text-left font-black text-[#37410F] shadow-sm shadow-[#F3E2BF]/70" onClick={onOpenRecipes} type="button">Открыть рецепты</button><button className="rounded-3xl bg-[#FFFDF8] p-4 text-left font-black text-[#37410F] shadow-sm shadow-[#F3E2BF]/70" onClick={onOpenCart} type="button">Корзина</button></section>
   </>;
 }
