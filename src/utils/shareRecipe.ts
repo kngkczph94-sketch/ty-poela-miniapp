@@ -5,18 +5,27 @@ const defaultAppUrl = 'https://kngkczph94-sketch.github.io/ty-poela-miniapp/';
 export const recipeCopiedMessage = 'Рецепт скопирован. Можно отправить его в чат.';
 
 export const createRecipeLink = (recipeId: string) => {
-  const baseUrl = typeof window === 'undefined'
-    ? defaultAppUrl
-    : new URL(import.meta.env.BASE_URL, window.location.origin).toString();
-  const recipeUrl = new URL(baseUrl || defaultAppUrl);
+  const recipeUrl = new URL(defaultAppUrl);
   recipeUrl.searchParams.set('recipe', recipeId);
 
   return recipeUrl.toString();
 };
 
-const formatIngredient = (ingredient: Recipe['ingredients'][number]) => (
-  `- ${ingredient.name}${ingredient.amount ? ` — ${ingredient.amount} ${ingredient.unit}` : ''}`
-);
+const formatIngredient = (ingredient: Recipe['ingredients'][number]) => {
+  if (typeof ingredient === 'string') {
+    return `- ${ingredient}`;
+  }
+
+  return `- ${[ingredient.name, ingredient.amount, ingredient.unit].filter(Boolean).join(' ')}`;
+};
+
+const formatRecipeSteps = (steps: Recipe['steps']) => {
+  if (Array.isArray(steps)) {
+    return steps.map((step, index) => `${index + 1}. ${step}`);
+  }
+
+  return [steps];
+};
 
 export const createRecipeShareText = (recipe: Recipe, recipeLink = createRecipeLink(recipe.id)) => {
   const lines = [
@@ -37,7 +46,7 @@ export const createRecipeShareText = (recipe: Recipe, recipeLink = createRecipeL
     ...recipe.ingredients.map(formatIngredient),
     '',
     'Приготовление:',
-    ...recipe.steps.map((step, index) => `${index + 1}. ${step}`),
+    ...formatRecipeSteps(recipe.steps),
     '',
     'Открыть рецепт полностью:',
     recipeLink,
