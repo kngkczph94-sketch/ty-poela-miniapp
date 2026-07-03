@@ -2,6 +2,7 @@ import type { Meal } from './recipe';
 
 export type DailyRation = {
   id: string;
+  number: number;
   rationNumber: number;
   title: string;
   description: string;
