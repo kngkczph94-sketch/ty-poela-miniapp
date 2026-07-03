@@ -1590,6 +1590,102 @@ export const recipes: Recipe[] = [
     id: 'real-ration-12-snack', title: 'Клюквенная пастила', description: 'Порция клюквенной пастилы для сладкого перекуса.', calories: 124, protein: 0, fat: 0, carbs: 30,
     cookingTime: 5, servings: 1, mealType: 'snack', ingredients: [{ name: 'клюквенная пастила', amount: 40, unit: 'г', category: 'бакалея' }], steps: ['Отмерить порцию пастилы.', 'Подать как перекус.'], tags: ['snack', 'КБЖУ', 'Рацион №12'], allergens: ['нет'], imageUrl: '', isPremium: false, source: 'recipe_book',
   },
+
+  {
+    id: 'real-ration-13-breakfast',
+    title: 'Блинчики с греческим йогуртом',
+    description: 'Рисовые блинчики с греческим йогуртом и вишнёвым сиропом zero.',
+    calories: 356, protein: 30, fat: 7, carbs: 40,
+    cookingTime: 25, servings: 1, mealType: 'breakfast',
+    ingredients: [
+      { name: 'рисовая мука', amount: 40, unit: 'г', category: 'бакалея' },
+      { name: 'вода', amount: 100, unit: 'г', category: 'прочее' },
+      { name: 'яйцо', amount: 1, unit: 'шт', category: 'белок' },
+      { name: 'яичные белки', amount: 100, unit: 'г', category: 'белок' },
+      { name: 'соль', amount: 0, unit: 'по вкусу', category: 'специи' },
+      { name: 'сахарозаменитель', amount: 0, unit: 'по вкусу', category: 'бакалея' },
+      { name: 'греческий йогурт 2%', amount: 140, unit: 'г', category: 'молочные' },
+      { name: 'вишнёвый сироп zero', amount: 50, unit: 'г', category: 'бакалея' },
+    ],
+    steps: ['Смешать рисовую муку, воду, яйцо, яичные белки, соль и сахарозаменитель.', 'Пробить блендером или хорошо перемешать венчиком.', 'Выпекать блинчики на антипригарной сковороде.', 'Подать с греческим йогуртом и вишнёвым сиропом zero.'],
+    tags: ['breakfast', 'КБЖУ', 'Рацион №13'],
+    allergens: ['яйцо', 'молочные продукты'],
+    imageUrl: '',
+    isPremium: false,
+    source: 'recipe_book',
+  },
+  {
+    id: 'real-ration-13-lunch',
+    title: 'Удон с куриным бедром и овощами',
+    description: 'Удон с куриным бедром, овощами, кунжутом и соевым соусом.',
+    calories: 528, protein: 33, fat: 25, carbs: 42,
+    cookingTime: 30, servings: 1, mealType: 'lunch',
+    ingredients: [
+      { name: 'куриное бедро', amount: 150, unit: 'г', category: 'белок' },
+      { name: 'удон', amount: 50, unit: 'г', category: 'крупы' },
+      { name: 'морковь', amount: 20, unit: 'г', category: 'овощи' },
+      { name: 'болгарский перец', amount: 30, unit: 'г', category: 'овощи' },
+      { name: 'шампиньоны', amount: 20, unit: 'г', category: 'овощи' },
+      { name: 'кунжут', amount: 3, unit: 'г', category: 'бакалея' },
+      { name: 'кунжутное масло', amount: 5, unit: 'г', category: 'бакалея' },
+      { name: 'соевый соус', amount: 0, unit: 'по вкусу', category: 'бакалея' },
+      { name: 'соль', amount: 0, unit: 'по вкусу', category: 'специи' },
+      { name: 'ширача', amount: 0, unit: 'по желанию', category: 'бакалея' },
+      { name: 'аджика', amount: 0, unit: 'по вкусу', category: 'бакалея' },
+      { name: 'чеснок', amount: 2, unit: 'зубчика', category: 'овощи' },
+      { name: 'имбирь', amount: 1, unit: 'см', category: 'овощи' },
+    ],
+    steps: ['Удон отварить по инструкции.', 'Куриное бедро обжарить на сухой сковороде до готовности.', 'В конце добавить соль и аджику, протушить ещё 5 минут.', 'Овощи нарезать соломкой.', 'Обжарить овощи на кунжутном масле.', 'Добавить соевый соус и соль при необходимости.', 'Добавить отваренный удон.', 'Перемешать и дать постоять 5 минут.', 'При подаче сверху выложить курицу и посыпать кунжутом.'],
+    tags: ['lunch', 'КБЖУ', 'Рацион №13'], allergens: ['глютен', 'соя', 'кунжут'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+  {
+    id: 'real-ration-13-dinner', title: 'Картофельный салат с селёдкой', description: 'Картофельный салат с маринованными овощами, йогуртовой заправкой и селёдкой.', calories: 340, protein: 19, fat: 16, carbs: 30,
+    cookingTime: 75, servings: 1, mealType: 'dinner',
+    ingredients: [{ name: 'селёдка', amount: 100, unit: 'г', category: 'белок' }, { name: 'картофель', amount: 150, unit: 'г', category: 'овощи' }, { name: 'грузди маринованные', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'огурцы маринованные', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'лук маринованный', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'греческий йогурт', amount: 30, unit: 'г', category: 'молочные' }, { name: 'горчица', amount: 10, unit: 'г', category: 'бакалея' }, { name: 'лимонный сок', amount: 0, unit: 'по вкусу', category: 'бакалея' }, { name: 'чёрный перец', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'яблочный уксус', amount: 0, unit: 'для маринования лука', category: 'бакалея' }],
+    steps: ['Селёдку промокнуть бумажным полотенцем.', 'Картофель очистить и отварить до готовности.', 'Охладить картофель.', 'Лук нарезать полукольцами и замариновать в уксусе с водой минимум на 1 час.', 'В салатнике смешать картофель, грузди, огурцы и маринованный лук.', 'Заправить соусом из йогурта, горчицы, лимонного сока и чёрного перца.', 'Подать с селёдкой.'], tags: ['dinner', 'КБЖУ', 'Рацион №13'], allergens: ['рыба', 'молочные продукты', 'горчица'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+  {
+    id: 'real-ration-13-snack', title: 'Тульский пряник с фруктовой начинкой', description: 'Порция тульского пряника с фруктовой начинкой.', calories: 222, protein: 3, fat: 4, carbs: 44,
+    cookingTime: 5, servings: 1, mealType: 'snack', ingredients: [{ name: 'тульский пряник с фруктовой начинкой', amount: 130, unit: 'г', category: 'бакалея' }], steps: ['Отмерить порцию пряника.', 'Подать как перекус.'], tags: ['snack', 'КБЖУ', 'Рацион №13'], allergens: ['глютен'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+
+
+  {
+    id: 'real-ration-14-breakfast', title: 'Ленивые пирожки с яйцом и зелёным луком', description: 'Ленивые пирожки с яйцом, зелёным луком, фетой и греческим йогуртом.', calories: 288, protein: 19, fat: 10, carbs: 30,
+    cookingTime: 25, servings: 1, mealType: 'breakfast', ingredients: [{ name: 'рисовая или пшеничная мука', amount: 40, unit: 'г', category: 'бакалея' }, { name: 'яйцо', amount: 1.5, unit: 'шт', category: 'белок' }, { name: 'зелёный лук', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'соль', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'сыр фета', amount: 10, unit: 'г', category: 'молочные' }, { name: 'сода', amount: 0, unit: 'на кончике ложки', category: 'бакалея' }, { name: 'греческий йогурт 2% в тесто', amount: 30, unit: 'г', category: 'молочные' }, { name: 'греческий йогурт для подачи', amount: 30, unit: 'г', category: 'молочные' }, { name: 'чёрный перец', amount: 0, unit: 'по вкусу', category: 'специи' }],
+    steps: ['Одно яйцо отварить и мелко нарезать.', 'Зелёный лук мелко нарезать.', 'Фету раскрошить.', 'В 30 г греческого йогурта размешать соду.', 'Добавить половину сырого яйца, отварное яйцо, фету, зелёный лук, соль и муку.', 'Перемешать.', 'Жарить на сухой сковороде с двух сторон.', 'Подать с греческим йогуртом, солью и чёрным перцем.'], tags: ['breakfast', 'КБЖУ', 'Рацион №14'], allergens: ['яйцо', 'молочные продукты', 'глютен'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+  {
+    id: 'real-ration-14-lunch', title: 'Куриные котлетки с вялеными томатами и фетой с пастой песто', description: 'Куриные котлетки с фетой, вялеными томатами и макаронами с песто.', calories: 503, protein: 45, fat: 17, carbs: 39,
+    cookingTime: 30, servings: 1, mealType: 'lunch', ingredients: [{ name: 'куриное филе', amount: 150, unit: 'г', category: 'белок' }, { name: 'вяленые томаты', amount: 15, unit: 'г', category: 'овощи' }, { name: 'сыр фета', amount: 20, unit: 'г', category: 'молочные' }, { name: 'макароны', amount: 50, unit: 'г', category: 'крупы' }, { name: 'песто', amount: 10, unit: 'г', category: 'бакалея' }, { name: 'прованские травы', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'соль', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'яйцо', amount: 0.5, unit: 'шт', category: 'белок' }, { name: 'кукурузный крахмал', amount: 5, unit: 'г', category: 'бакалея' }],
+    steps: ['Макароны отварить по инструкции.', 'Добавить песто и перемешать.', 'Куриную грудку мелко нарезать.', 'Фету раскрошить.', 'Вяленые томаты мелко нарезать.', 'Соединить курицу, фету, томаты и яйцо.', 'Добавить крахмал, соль и специи.', 'Выпекать котлетки на сковороде с двух сторон.', 'Подать с пастой песто.'], tags: ['lunch', 'КБЖУ', 'Рацион №14'], allergens: ['молочные продукты', 'глютен', 'яйцо', 'орехи'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+  {
+    id: 'real-ration-14-dinner', title: 'Тушёная говядина в сливочном соусе с черносливом и рисом', description: 'Говядина в йогуртовом соусе с черносливом, чесноком и рисом.', calories: 456, protein: 37, fat: 10, carbs: 53,
+    cookingTime: 45, servings: 1, mealType: 'dinner', ingredients: [{ name: 'говядина лопатка', amount: 150, unit: 'г', category: 'белок' }, { name: 'рис', amount: 50, unit: 'г', category: 'крупы' }, { name: 'чернослив', amount: 30, unit: 'г', category: 'фрукты' }, { name: 'греческий йогурт', amount: 50, unit: 'г', category: 'молочные' }, { name: 'чёрный перец', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'соль', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'чеснок', amount: 1, unit: 'зубчик', category: 'овощи' }],
+    steps: ['Рис отварить.', 'Говядину нарезать тонкими полосками.', 'Обжарить в казане без масла.', 'Добавить соль и перец.', 'Залить водой, чтобы мясо полностью покрылось.', 'Тушить 10 минут.', 'Добавить йогурт и чернослив.', 'Тушить ещё 15–30 минут.', 'В конце добавить мелко нарезанный чеснок.'], tags: ['dinner', 'КБЖУ', 'Рацион №14'], allergens: ['молочные продукты'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+  {
+    id: 'real-ration-14-snack', title: 'Киви, виноград, сушки и конфеты без сахара', description: 'Фруктовый перекус с сушками и конфетами «Соната» без сахара.', calories: 219, protein: 4, fat: 6, carbs: 38,
+    cookingTime: 5, servings: 1, mealType: 'snack', ingredients: [{ name: 'киви', amount: 80, unit: 'г', category: 'фрукты' }, { name: 'виноград', amount: 90, unit: 'г', category: 'фрукты' }, { name: 'сушки', amount: 8, unit: 'г', category: 'бакалея' }, { name: 'конфеты «Соната» без сахара', amount: 2, unit: 'шт', category: 'бакалея' }], steps: ['Фрукты вымыть.', 'Киви нарезать.', 'Отмерить виноград, сушки и конфеты.', 'Подать как перекус.'], tags: ['snack', 'КБЖУ', 'Рацион №14'], allergens: ['глютен', 'молочные продукты'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+  {
+    id: 'real-ration-15-breakfast', title: 'Сырная лепёшка роти с ветчиной и яйцом', description: 'Сырная лепёшка роти с яичной начинкой, ветчиной из индейки, салатом и шрирачей.', calories: 442, protein: 22, fat: 22, carbs: 36,
+    cookingTime: 20, servings: 1, mealType: 'breakfast', ingredients: [{ name: 'сырная лепёшка роти', amount: 90, unit: 'г', category: 'крупы' }, { name: 'яйцо', amount: 1, unit: 'шт', category: 'белок' }, { name: 'сливочный сыр', amount: 10, unit: 'г', category: 'молочные' }, { name: 'ветчина из индейки', amount: 60, unit: 'г', category: 'белок' }, { name: 'микс салата', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'шрирача', amount: 0, unit: 'для подачи', category: 'бакалея' }, { name: 'соль', amount: 0, unit: 'по вкусу', category: 'специи' }], steps: ['Лепёшку обжарить на сухой сковороде с двух сторон, не размораживая.', 'Сыр натереть на тёрке.', 'Ветчину мелко нарезать.', 'Смешать сыр, ветчину и взбитое яйцо.', 'Посолить.', 'Вылить яичную массу на сковороду.', 'Сверху накрыть лепёшкой.', 'На готовую лепёшку выложить микс салата и шрирачу.', 'Свернуть пополам.'], tags: ['breakfast', 'КБЖУ', 'Рацион №15'], allergens: ['глютен', 'яйцо', 'молочные продукты'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+  {
+    id: 'real-ration-15-lunch', title: 'Боул с креветками и овощами', description: 'Боул с рисом, креветками, цветной капустой, авокадо, овощами и соусом том ям.', calories: 450, protein: 33, fat: 14, carbs: 50,
+    cookingTime: 35, servings: 1, mealType: 'lunch', ingredients: [{ name: 'рис', amount: 60, unit: 'г', category: 'крупы' }, { name: 'цветная капуста', amount: 100, unit: 'г', category: 'овощи' }, { name: 'авокадо', amount: 50, unit: 'г', category: 'фрукты' }, { name: 'огурец', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'салат', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'креветки', amount: 160, unit: 'г', category: 'белок' }, { name: 'яйцо', amount: 1, unit: 'шт', category: 'белок' }, { name: 'нори', amount: 0, unit: 'по вкусу', category: 'бакалея' }, { name: 'греческий йогурт', amount: 40, unit: 'г', category: 'молочные' }, { name: 'паста для том ям', amount: 5, unit: 'г', category: 'бакалея' }, { name: 'лимонный сок', amount: 0, unit: 'по вкусу', category: 'бакалея' }, { name: 'приправа для картофельных долек', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'приправа для морепродуктов', amount: 0, unit: 'по вкусу', category: 'специи' }], steps: ['Рис отварить по инструкции.', 'Цветную капусту разобрать на соцветия.', 'Посыпать приправой и запекать при 170 градусах 20–30 минут.', 'Креветки обжарить на сухой сковороде с приправой для морепродуктов.', 'Сбрызнуть лимонным соком.', 'Очистить креветки.', 'Для соуса смешать греческий йогурт, пасту том ям и лимонный сок.', 'Выложить рис в центр тарелки.', 'Вокруг выложить цветную капусту, креветки, авокадо, огурец и листья салата.', 'Полить соусом.', 'Посыпать нарезанными нори.'], tags: ['lunch', 'КБЖУ', 'Рацион №15'], allergens: ['ракообразные', 'яйцо', 'молочные продукты'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+  {
+    id: 'real-ration-15-dinner', title: 'Салат с курицей и ананасом', description: 'Салат с куриной грудкой, ананасом, кукурузой, йогуртовой заправкой и грецким орехом.', calories: 378, protein: 53, fat: 9, carbs: 20,
+    cookingTime: 30, servings: 1, mealType: 'dinner', ingredients: [{ name: 'куриная грудка', amount: 200, unit: 'г', category: 'белок' }, { name: 'ананас', amount: 100, unit: 'г', category: 'фрукты' }, { name: 'кукуруза консервированная', amount: 50, unit: 'г', category: 'овощи' }, { name: 'греческий йогурт', amount: 40, unit: 'г', category: 'молочные' }, { name: 'грецкий орех', amount: 8, unit: 'г', category: 'бакалея' }, { name: 'салат', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'приправа для салата цезарь', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'чёрный перец', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'соль', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'лавровый лист', amount: 0, unit: 'по вкусу', category: 'специи' }], steps: ['Куриную грудку отварить с чёрным перцем, солью и лавровым листом.', 'Разобрать грудку на волокна.', 'Ананас нарезать кубиком.', 'Салат мелко порвать.', 'Добавить кукурузу.', 'Греческий йогурт смешать с приправой для салата цезарь.', 'Перемешать салат с заправкой.', 'Сверху посыпать грецкими орехами.'], tags: ['dinner', 'КБЖУ', 'Рацион №15'], allergens: ['молочные продукты', 'орехи'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+  {
+    id: 'real-ration-15-snack', title: 'Кислый мармелад', description: 'Порция кислого мармелада для сладкого перекуса.', calories: 203, protein: 1, fat: 0, carbs: 48,
+    cookingTime: 5, servings: 1, mealType: 'snack', ingredients: [{ name: 'кислый мармелад', amount: 60, unit: 'г', category: 'бакалея' }], steps: ['Отмерить порцию мармелада.', 'Подать как перекус.'], tags: ['snack', 'КБЖУ', 'Рацион №15'], allergens: ['может содержать индивидуальные аллергены'], imageUrl: '', isPremium: false, source: 'recipe_book',
+  },
+
   {
     id: 'snack-5',
     title: 'Протеиновый какао',
