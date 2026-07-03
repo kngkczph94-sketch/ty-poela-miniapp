@@ -7,10 +7,14 @@ import type { DailyRation } from '../types/ration';
 
 type Filter = 'all' | 'free' | 'premium';
 
+const rationsForList = [...dailyRations].sort((left, right) =>
+  left.sortOrder - right.sortOrder || left.rationNumber - right.rationNumber,
+);
+
 export function RationsPage({ hasActiveSubscription, onOpenAccess, onOpenRation }: { hasActiveSubscription: boolean; onOpenAccess: () => void; onOpenRation: (ration: DailyRation) => void }) {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
-  const rations = useMemo(() => dailyRations.filter((ration) => {
+  const rations = useMemo(() => rationsForList.filter((ration) => {
     const matchesSearch = !search.trim() || String(ration.rationNumber).includes(search.trim()) || ration.title.toLowerCase().includes(search.trim().toLowerCase());
     const matchesFilter = filter === 'all' || (filter === 'premium' ? ration.isPremium : !ration.isPremium);
     return matchesSearch && matchesFilter;
