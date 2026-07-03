@@ -7,9 +7,10 @@ import type { DailyRation } from '../types/ration';
 
 type Filter = 'all' | 'free' | 'premium';
 
-const rationsForList = [...dailyRations].sort((left, right) =>
-  left.sortOrder - right.sortOrder || left.rationNumber - right.rationNumber,
-);
+const rationsForList = [...dailyRations].sort((left, right) => {
+  if (left.isPremium !== right.isPremium) return left.isPremium ? 1 : -1;
+  return left.sortOrder - right.sortOrder || left.rationNumber - right.rationNumber;
+});
 
 export function RationsPage({ hasActiveSubscription, onOpenAccess, onOpenRation }: { hasActiveSubscription: boolean; onOpenAccess: () => void; onOpenRation: (ration: DailyRation) => void }) {
   const [search, setSearch] = useState('');
