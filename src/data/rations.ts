@@ -124,4 +124,27 @@ export const dailyRations: DailyRation[] = [
     publishedAt: '2026-07-03',
     sortOrder: 5,
   },
+  {
+    id: 'ration-6',
+    number: 6,
+    rationNumber: 6,
+    title: 'Рацион №6',
+    description: 'Рацион на день: 1500 ккал, Б 110 / Ж 50 / У 157.',
+    previewMealTitles: {
+      breakfast: 'Тост TUNACADO',
+      lunch: 'Гречотто с куриным бедром',
+      dinner: 'Кокосово-имбирная тилапия с рисом',
+      snack: 'Хурма, киви и пастила без сахара',
+    },
+    isPremium: false,
+    tags: ['сбалансировано', '1500 ккал', 'Рацион №6'],
+    meals: {
+      breakfast: mealById('real-ration-6-breakfast'),
+      lunch: mealById('real-ration-6-lunch'),
+      dinner: mealById('real-ration-6-dinner'),
+      snack: mealById('real-ration-6-snack'),
+    },
+    publishedAt: '2026-07-03',
+    sortOrder: 6,
+  },
 ];
