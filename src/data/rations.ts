@@ -15,6 +15,12 @@ export const dailyRations: DailyRation[] = [
     rationNumber: 1,
     title: 'Рацион №1',
     description: 'Рацион на день: 1500 ккал, Б 115 / Ж 42 / У 155.',
+    previewMealTitles: {
+      breakfast: 'Блинчики',
+      lunch: 'Батат',
+      dinner: 'Шаурма',
+      snack: 'Мандарины',
+    },
     isPremium: false,
     tags: ['старт', 'сбалансировано', '1500 ккал'],
     meals: {

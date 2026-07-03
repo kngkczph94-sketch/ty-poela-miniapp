@@ -6,6 +6,12 @@ export type DailyRation = {
   rationNumber: number;
   title: string;
   description: string;
+  previewMealTitles?: {
+    breakfast: string;
+    lunch: string;
+    dinner: string;
+    snack: string;
+  };
   isPremium: boolean;
   tags: string[];
   imageUrl?: string;
