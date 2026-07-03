@@ -7,15 +7,24 @@ import type { DailyRation } from '../types/ration';
 
 type Filter = 'all' | 'free' | 'premium';
 
-const rationsForList = [...dailyRations].sort((left, right) => {
-  if (left.isPremium !== right.isPremium) return left.isPremium ? 1 : -1;
-  return left.sortOrder - right.sortOrder || left.rationNumber - right.rationNumber;
-});
+const getRationsForList = () => {
+  const rationsByNumber = new Map<number, DailyRation>();
+
+  for (const ration of dailyRations) {
+    const existingRation = rationsByNumber.get(ration.rationNumber);
+
+    if (!existingRation || (existingRation.isPremium && !ration.isPremium)) {
+      rationsByNumber.set(ration.rationNumber, ration);
+    }
+  }
+
+  return Array.from(rationsByNumber.values()).sort((left, right) => left.sortOrder - right.sortOrder || left.rationNumber - right.rationNumber);
+};
 
 export function RationsPage({ hasActiveSubscription, onOpenAccess, onOpenRation }: { hasActiveSubscription: boolean; onOpenAccess: () => void; onOpenRation: (ration: DailyRation) => void }) {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
-  const rations = useMemo(() => rationsForList.filter((ration) => {
+  const rations = useMemo(() => getRationsForList().filter((ration) => {
     const matchesSearch = !search.trim() || String(ration.rationNumber).includes(search.trim()) || ration.title.toLowerCase().includes(search.trim().toLowerCase());
     const matchesFilter = filter === 'all' || (filter === 'premium' ? ration.isPremium : !ration.isPremium);
     return matchesSearch && matchesFilter;
