@@ -147,4 +147,28 @@ export const dailyRations: DailyRation[] = [
     publishedAt: '2026-07-03',
     sortOrder: 6,
   },
+
+  {
+    id: 'ration-7',
+    number: 7,
+    rationNumber: 7,
+    title: 'Рацион №7',
+    description: 'Рацион на день: 1650 ккал, Б 105 / Ж 40 / У 215.',
+    previewMealTitles: {
+      breakfast: 'Шоколадные блинчики с вишнёвым сиропом',
+      lunch: 'Паста с индейкой и соусом песто',
+      dinner: 'Зелёный салат с красной рыбой и хрустящими макаронами',
+      snack: 'Зефир, сушки и банан',
+    },
+    isPremium: false,
+    tags: ['сбалансировано', '1650 ккал', 'Рацион №7'],
+    meals: {
+      breakfast: mealById('real-ration-7-breakfast'),
+      lunch: mealById('real-ration-7-lunch'),
+      dinner: mealById('real-ration-7-dinner'),
+      snack: mealById('real-ration-7-snack'),
+    },
+    publishedAt: '2026-07-03',
+    sortOrder: 7,
+  },
 ];
