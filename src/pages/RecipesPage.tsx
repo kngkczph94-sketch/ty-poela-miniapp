@@ -24,10 +24,22 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
     const normalizedSearch = search.trim().toLowerCase();
 
     return recipes.filter((recipe) => {
-      const matchesTitle = recipe.title.toLowerCase().includes(normalizedSearch);
+      const searchText = [
+        recipe.title,
+        recipe.description,
+        recipe.mealType,
+        ...recipe.ingredients.flatMap((ingredient) => [
+          ingredient.name,
+          `${ingredient.amount} ${ingredient.unit}`,
+        ]),
+        ...recipe.steps,
+      ]
+        .join(' ')
+        .toLowerCase();
+      const matchesSearch = searchText.includes(normalizedSearch);
       const matchesMealType = activeMealType === 'все' || recipe.mealType === activeMealType;
 
-      return matchesTitle && matchesMealType;
+      return matchesSearch && matchesMealType;
     });
   }, [activeMealType, search]);
 
