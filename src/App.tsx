@@ -111,45 +111,45 @@ function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, 
   const homeCards: HomeCard[] = [
     {
       title: 'Расчёт БЖУ',
-      description: 'Выбери готовый день питания, рассчитай норму или открой тёплые рецепты на каждый день.',
+      description: 'Рассчитай свою норму калорий, белков, жиров и углеводов под цель.',
       visual: 'macros',
       action: { label: 'БЖУ', onClick: onOpenMacros },
     },
     {
       title: 'Рационы',
-      description: 'Выбери готовый день питания, рассчитай норму или открой тёплые рецепты на каждый день.',
+      description: 'Выбери готовый день питания, рассчитай норму или открой рецепты на каждый день.',
       visual: 'rations',
       action: { label: 'Рационы', onClick: onOpenRations },
     },
     {
       title: 'Рецепты',
-      description: 'Выбери готовый день питания, рассчитай норму или открой тёплые рецепты на каждый день.',
+      description: 'Выбери готовый день питания, рассчитай норму или открой рецепты на каждый день.',
       visual: 'recipes',
       action: { label: 'Рецепты', onClick: onOpenRecipes },
     },
     {
       title: 'ИИ-подбор',
-      description: 'Скоро здесь появятся мягкие подсказки о питании и персональный ИИ-подбор рецептов.',
+      description: 'Скоро здесь появятся понятные подсказки о питании и персональный ИИ-подбор рецептов.',
       visual: 'ai',
       soon: true,
       action: { label: 'ИИ', soon: true },
     },
     {
       title: 'База знаний',
-      description: 'Скоро здесь появятся мягкие подсказки о питании и персональный ИИ-подбор рецептов.',
+      description: 'Скоро здесь появятся понятные подсказки о питании и персональный ИИ-подбор рецептов.',
       visual: 'knowledge',
       soon: true,
       action: { label: 'База знаний', soon: true },
     },
     {
       title: 'Прогресс',
-      description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность без давления.',
+      description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность.',
       visual: 'progress',
       action: { label: 'Прогресс', onClick: onOpenProgress },
     },
     {
       title: 'Награды',
-      description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность без давления.',
+      description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность.',
       visual: 'awards',
       action: { label: 'Награды', onClick: onOpenAwards },
     },
@@ -165,7 +165,7 @@ function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, 
     <section className="relative overflow-hidden rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-5 text-[#37410F] shadow-lg shadow-[#F3E2BF]/80">
       <p className="inline-flex rounded-full bg-[#F3E2BF] px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Telegram Mini App</p>
       <h1 className="mt-4 text-4xl font-black leading-tight tracking-tight">Ты поела?</h1>
-      <p className="mt-3 max-w-md text-base font-semibold leading-6 text-[#8B725F]">Спокойный помощник по питанию: расчёт БЖУ, готовые рационы, рецепты, прогресс и список покупок внутри Telegram.</p>
+      <p className="mt-3 max-w-md text-base font-semibold leading-6 text-[#8B725F]">Готовые рационы, рецепты, расчёт БЖУ и список покупок внутри Telegram.</p>
     </section>
     <section className="mt-5 grid gap-4">{homeCards.map((card) => <HomeFeatureCard card={card} key={card.title} />)}</section>
   </>;
@@ -218,7 +218,7 @@ function AccessPage({
             'меню на неделю',
             'автокорзина продуктов',
             'шер-карточки',
-            'трекер прогресса без давления',
+            'трекер прогресса',
           ].map((item) => (
             <p className="flex items-center gap-3 text-sm font-bold text-[#37410F]" key={item}>
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#F3E2BF] text-[#37410F]">✓</span>
