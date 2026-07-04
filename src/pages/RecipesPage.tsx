@@ -66,7 +66,7 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
         <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Каталог</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Рецепты</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">
-          20 идей с КБЖУ: блюда можно добавлять в План и использовать для замен в рационах.
+          {recipes.length} рецепта с КБЖУ: блюда можно добавлять в План и использовать для замен в рационах.
         </p>
       </div>
 
