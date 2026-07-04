@@ -62,6 +62,20 @@ const normalizeRecipeText = (value: string) => value.toLowerCase().replace(/ё/g
 const includesAnyKeyword = (value: string, keywords: string[]) =>
   keywords.some((keyword) => value.includes(keyword));
 
+const buildRecipeSearchText = (recipe: Recipe) =>
+  [
+    recipe.title,
+    recipe.description,
+    recipe.mealType,
+    ...recipe.ingredients.flatMap((ingredient) => [
+      ingredient.name,
+      String(ingredient.amount),
+      ingredient.unit,
+      `${ingredient.name} ${ingredient.amount} ${ingredient.unit}`,
+    ]),
+    ...recipe.steps,
+  ].join(' ');
+
 const isSimpleRationSnack = (recipe: Recipe) => {
   if (!recipe.id.startsWith('real-ration-') || recipe.mealType !== 'snack') {
     return false;
@@ -110,18 +124,7 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
     const normalizedSearch = search.trim().toLowerCase();
 
     return visibleRecipes.filter((recipe) => {
-      const searchText = [
-        recipe.title,
-        recipe.description,
-        recipe.mealType,
-        ...recipe.ingredients.flatMap((ingredient) => [
-          ingredient.name,
-          `${ingredient.amount} ${ingredient.unit}`,
-        ]),
-        ...recipe.steps,
-      ]
-        .join(' ')
-        .toLowerCase();
+      const searchText = buildRecipeSearchText(recipe).toLowerCase();
       const matchesSearch = searchText.includes(normalizedSearch);
       const matchesMealType = activeMealType === 'все' || recipe.mealType === activeMealType;
 
