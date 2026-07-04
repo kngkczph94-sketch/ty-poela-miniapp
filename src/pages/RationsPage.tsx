@@ -21,14 +21,32 @@ const getRationsForList = () => {
   return Array.from(rationsByNumber.values()).sort((left, right) => left.sortOrder - right.sortOrder || left.rationNumber - right.rationNumber);
 };
 
+const buildRationSearchText = (ration: DailyRation) => [
+  ration.rationNumber,
+  `Рацион ${ration.rationNumber}`,
+  `Рацион №${ration.rationNumber}`,
+  ration.title,
+  ration.description,
+  ...Object.values(ration.previewMealTitles ?? {}),
+  ...Object.values(ration.meals).flatMap((meal) => [
+    meal.title,
+    ...meal.ingredients.map((ingredient) => ingredient.name),
+  ]),
+].join(' ');
+
 export function RationsPage({ hasActiveSubscription, onOpenAccess, onOpenRation }: { hasActiveSubscription: boolean; onOpenAccess: () => void; onOpenRation: (ration: DailyRation) => void }) {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
-  const rations = useMemo(() => getRationsForList().filter((ration) => {
-    const matchesSearch = !search.trim() || String(ration.rationNumber).includes(search.trim()) || ration.title.toLowerCase().includes(search.trim().toLowerCase());
-    const matchesFilter = filter === 'all' || (filter === 'premium' ? ration.isPremium : !ration.isPremium);
-    return matchesSearch && matchesFilter;
-  }), [filter, search]);
+  const rations = useMemo(() => {
+    const query = search.trim().toLowerCase();
+
+    return getRationsForList().filter((ration) => {
+      const searchText = buildRationSearchText(ration).toLowerCase();
+      const matchesSearch = !query || searchText.includes(query);
+      const matchesFilter = filter === 'all' || (filter === 'premium' ? ration.isPremium : !ration.isPremium);
+      return matchesSearch && matchesFilter;
+    });
+  }, [filter, search]);
 
   return <section className="flex flex-1 flex-col">
     <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
