@@ -1496,7 +1496,7 @@ export const recipes: Recipe[] = [
     cookingTime: 30, servings: 1, mealType: 'snack', ingredients: [{ name: 'мороженое Орео', amount: 0, unit: 'по вкусу', category: 'бакалея' }], steps: ['Отмерить порцию мороженого.', 'Подать как перекус.'], tags: ['snack', 'КБЖУ', 'Рацион №23'], allergens: ['может содержать индивидуальные аллергены'], imageUrl: '', isPremium: false, source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-001',
+    id: 'recipe-book-001',
     title: 'Овсянка на кокосовом молоке',
     description: 'Овсяная каша с кокосовым молоком. Можно подать с ягодами или фруктами.',
     calories: 206, protein: 7, fat: 6, carbs: 33,
@@ -1516,7 +1516,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-002',
+    id: 'recipe-book-002',
     title: 'Рисовая каша на кокосовом молоке',
     description: 'Рисовая каша с кокосовым молоком, клубникой и джемом.',
     calories: 257, protein: 5, fat: 3, carbs: 52,
@@ -1537,7 +1537,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-003',
+    id: 'recipe-book-003',
     title: 'Рисовая каша на кокосовом молоке с чиа и бурбонской ванилью',
     description: 'Рисовая каша с кокосовым молоком, семенами чиа и ванилью.',
     calories: 252, protein: 5, fat: 5, carbs: 48,
@@ -1558,7 +1558,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-004',
+    id: 'recipe-book-004',
     title: 'Рисовая манка / Cream of Rice',
     description: 'Каша на основе рисовой манки с кокосовым молоком.',
     calories: 198, protein: 4, fat: 3, carbs: 40,
@@ -1578,7 +1578,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-005',
+    id: 'recipe-book-005',
     title: 'Пшённая каша с кедровым орехом и сиропом топинамбура',
     description: 'Пшённая каша с кедровым орехом, голубикой и сиропом топинамбура.',
     calories: 386, protein: 10, fat: 15, carbs: 53,
@@ -1599,7 +1599,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-006',
+    id: 'recipe-book-006',
     title: 'Пшеничная каша с клубникой и шоколадом',
     description: 'Пшеничная каша с клубникой и шоколадом без сахара.',
     calories: 289, protein: 8, fat: 8, carbs: 48,
@@ -1620,7 +1620,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-007',
+    id: 'recipe-book-007',
     title: 'Овсяная каша на миндальном молоке с корицей и яблоком',
     description: 'Овсяная каша на миндальном молоке с яблоком и корицей.',
     calories: 227, protein: 7, fat: 5, carbs: 42,
@@ -1641,7 +1641,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-008',
+    id: 'recipe-book-008',
     title: 'Каша из микса резаных зёрен MYLLIN PARAS с кокосовым урбечем',
     description: 'Каша из микса резаных зёрен с кокосовым урбечем, чиа и маракуйей.',
     calories: 250, protein: 9, fat: 9, carbs: 32,
@@ -1663,7 +1663,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-009',
+    id: 'recipe-book-009',
     title: 'Рисовая каша с киноа и тыквой НАЦИОНАЛЬ',
     description: 'Каша из микса риса, киноа и тыквы со сливочным маслом и тыквенными семечками.',
     calories: 323, protein: 9, fat: 13, carbs: 42,
@@ -1683,7 +1683,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-010',
+    id: 'recipe-book-010',
     title: 'Гречка с фисташковым молоком и клубникой',
     description: 'Гречневая каша с фисташковым молоком и клубникой.',
     calories: 259, protein: 9, fat: 5, carbs: 49,
@@ -1703,7 +1703,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-011',
+    id: 'recipe-book-011',
     title: 'Овсяная каша с пармезаном',
     description: 'Несладкая овсяная каша со сливочным маслом и пармезаном.',
     calories: 268, protein: 14, fat: 12, carbs: 26,
@@ -1722,7 +1722,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-012',
+    id: 'recipe-book-012',
     title: 'Каша из резаного овса MYLLIN PARAS с шампиньонами',
     description: 'Несладкая каша из резаного овса с шампиньонами и луком.',
     calories: 228, protein: 7, fat: 7, carbs: 30,
@@ -1742,7 +1742,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-013',
+    id: 'recipe-book-013',
     title: 'Рисовая каша с жареным яйцом / Бодибилдерский рис',
     description: 'Рисовая каша с яйцом, яичным белком и сливочным маслом.',
     calories: 333, protein: 17, fat: 9, carbs: 44,
@@ -1762,7 +1762,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-014',
+    id: 'recipe-book-014',
     title: 'Яйцо пашот',
     description: 'Базовый рецепт яйца пашот для завтраков, боулов и тостов.',
     calories: 65, protein: 5, fat: 4, carbs: 0,
@@ -1780,7 +1780,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-015',
+    id: 'recipe-book-015',
     title: 'Яичница с помидорами и болгарским перцем',
     description: 'Яичница с помидорами, болгарским перцем и зеленью.',
     calories: 211, protein: 12, fat: 14, carbs: 7,
@@ -1802,7 +1802,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-016',
+    id: 'recipe-book-016',
     title: 'Омлет пуляр',
     description: 'Омлет из отдельно взбитых белков и желтков.',
     calories: 208, protein: 18, fat: 13, carbs: 1,
@@ -1821,7 +1821,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-017',
+    id: 'recipe-book-017',
     title: 'Омлет «Халка»',
     description: 'Зелёный омлет со шпинатом, яйцом и яичным белком.',
     calories: 125, protein: 10, fat: 8, carbs: 1,
@@ -1841,7 +1841,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-018',
+    id: 'recipe-book-018',
     title: 'Турецкие яйца',
     description: 'Яйца пашот с греческим йогуртом, чесноком, специями и зеленью.',
     calories: 252, protein: 15, fat: 14, carbs: 3,
@@ -1864,7 +1864,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-019',
+    id: 'recipe-book-019',
     title: 'Овсяноблин',
     description: 'Овсяноблин на основе овсяных хлопьев и яиц. Можно подать со сладкими или несладкими добавками.',
     calories: 304, protein: 17, fat: 11, carbs: 32,
@@ -1884,7 +1884,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-020',
+    id: 'recipe-book-020',
     title: 'Рисовые блины',
     description: 'Рисовые блины на основе рисовой муки или рисовой манки, яиц и джема.',
     calories: 420, protein: 21, fat: 14, carbs: 50,
@@ -1905,7 +1905,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-021',
+    id: 'recipe-book-021',
     title: 'Безуглеводные блины с псиллиумом',
     description: 'Блины на основе яйца, яичных белков и псиллиума.',
     calories: 116, protein: 16, fat: 4, carbs: 1,
@@ -1926,7 +1926,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-022',
+    id: 'recipe-book-022',
     title: 'Классические блины на молоке',
     description: 'Классические блины на молоке, воде, яйцах и пшеничной муке.',
     calories: 995, protein: 32, fat: 36, carbs: 134,
@@ -1949,7 +1949,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-023',
+    id: 'recipe-book-023',
     title: 'Шпинатные блинчики',
     description: 'Шпинатные блинчики на основе яиц, яичных белков и рисовой муки.',
     calories: 240, protein: 21, fat: 9, carbs: 17,
@@ -1971,7 +1971,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-024',
+    id: 'recipe-book-024',
     title: 'Панкейки на греческом йогурте',
     description: 'Панкейки на греческом йогурте, яйцах и муке.',
     calories: 680, protein: 38, fat: 18, carbs: 90,
@@ -1993,7 +1993,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-025',
+    id: 'recipe-book-025',
     title: 'Творожные оладьи',
     description: 'Оладьи на основе творога, греческого йогурта, яиц и муки.',
     calories: 993, protein: 80, fat: 18, carbs: 125,
@@ -2015,7 +2015,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-026',
+    id: 'recipe-book-026',
     title: 'Рисовые оладушки с голубикой',
     description: 'Рисовые оладушки с голубикой на основе яйца, яичного белка и рисовой муки.',
     calories: 309, protein: 14, fat: 5, carbs: 52,
@@ -2038,7 +2038,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-027',
+    id: 'recipe-book-027',
     title: 'Запечённые сырники с яблоком и курагой',
     description: 'Запечённые сырники с творогом, яблоком, курагой и корицей.',
     calories: 572, protein: 60, fat: 11, carbs: 63,
@@ -2061,7 +2061,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-028',
+    id: 'recipe-book-028',
     title: 'Сырники',
     description: 'Классические сырники из творога, яйца и рисовой муки.',
     calories: 561, protein: 70, fat: 12, carbs: 44,
@@ -2082,7 +2082,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-029',
+    id: 'recipe-book-029',
     title: 'Творожные ватрушки с манго',
     description: 'Творожные ватрушки с начинкой из манго.',
     calories: 568, protein: 37, fat: 14, carbs: 67,
@@ -2106,7 +2106,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-030',
+    id: 'recipe-book-030',
     title: 'Ватрушки с фисташковым кремом и вишней',
     description: 'Творожные ватрушки с фисташковым кремом, вишней и крошкой.',
     calories: 568, protein: 52, fat: 16, carbs: 52,
@@ -2133,7 +2133,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-031',
+    id: 'recipe-book-031',
     title: 'Творожные бейглы',
     description: 'Творожные бейглы на основе творога, яйца и рисовой муки.',
     calories: 273, protein: 32, fat: 6, carbs: 27,
@@ -2154,7 +2154,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-032',
+    id: 'recipe-book-032',
     title: 'Творожные вафли',
     description: 'Творожные вафли на основе творога, яйца и рисовой муки.',
     calories: 348, protein: 38, fat: 8, carbs: 30,
@@ -2175,7 +2175,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-033',
+    id: 'recipe-book-033',
     title: 'Овсяные вафли',
     description: 'Овсяные вафли на основе хлопьев, яйца и яичных белков.',
     calories: 245, protein: 22, fat: 7, carbs: 22,
@@ -2196,7 +2196,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-034',
+    id: 'recipe-book-034',
     title: 'Вафли на кефире',
     description: 'Классические вафли на кефире, яйцах и пшеничной муке.',
     calories: 1430, protein: 31, fat: 92, carbs: 140,
@@ -2218,7 +2218,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-035',
+    id: 'recipe-book-035',
     title: 'Картофельные вафли',
     description: 'Несладкие картофельные вафли с сыром.',
     calories: 1120, protein: 46, fat: 54, carbs: 120,
@@ -2240,7 +2240,7 @@ export const recipes: Recipe[] = [
   },
 
   {
-    id: 'recipe-book-snack-001',
+    id: 'recipe-book-037',
     title: 'Овсяный кекс с корицей и яблоком',
     description: 'Овсяный кекс с яблоком, корицей и сахарозаменителем.',
     calories: 551, protein: 24, fat: 15, carbs: 82,
@@ -2263,7 +2263,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-snack-002',
+    id: 'recipe-book-038',
     title: 'Яблочный заливной пирог без муки',
     description: 'Яблочный заливной пирог на яйце, белке и греческом йогурте.',
     calories: 260, protein: 26, fat: 6, carbs: 26,
@@ -2285,7 +2285,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-snack-003',
+    id: 'recipe-book-039',
     title: 'Кучерявый пирог с ягодами',
     description: 'Ягодный пирог с песочной крошкой.',
     calories: 754, protein: 14, fat: 34, carbs: 100,
@@ -2308,7 +2308,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-snack-004',
+    id: 'recipe-book-040',
     title: 'Frozen bananas / Банановый десерт',
     description: 'Замороженный банановый десерт с вариантами топпингов.',
     calories: 90, protein: 1, fat: 0, carbs: 23,
@@ -2425,7 +2425,7 @@ export const recipes: Recipe[] = [
     source: 'recipe_book',
   },
   {
-    id: 'recipe-book-breakfast-036',
+    id: 'recipe-book-036',
     title: 'Сырные вафли',
     description: 'Несладкие сырные вафли на молоке, яйцах и пшеничной муке.',
     calories: 1830, protein: 63, fat: 82, carbs: 200,
