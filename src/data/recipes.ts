@@ -1,5 +1,6 @@
 import type { Recipe } from '../types/recipe';
 
+// Recipe book entries are intentionally kept sequential through recipe-book-067.
 export const recipes: Recipe[] = [
   {
     id: 'real-ration-1-breakfast',
