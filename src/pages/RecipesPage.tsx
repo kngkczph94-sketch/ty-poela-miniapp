@@ -8,6 +8,90 @@ const mealTypes: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack'];
 
 type ActiveMealType = MealType | 'все';
 
+const simpleRationSnackKeywords = [
+  'кефир',
+  'яблок',
+  'пастил',
+  'йогурт',
+  'фрукт',
+  'ягод',
+  'клубник',
+  'орех',
+  'хлебц',
+  'творог',
+];
+
+const preparationKeywords = [
+  'выпек',
+  'обжар',
+  'отвар',
+  'запек',
+  'запеч',
+  'приготов',
+  'сформир',
+  'жарить',
+  'тушить',
+  'томить',
+  'варить',
+  'замес',
+  'раскат',
+  'пробить',
+  'блендер',
+  'охлад',
+  'замороз',
+];
+
+const simpleStepKeywords = [
+  'пода',
+  'нареж',
+  'смеша',
+  'добав',
+  'отмер',
+  'вымы',
+  'помы',
+  'очист',
+  'разлож',
+  'посол',
+  'поперч',
+  'сбрыз',
+  'заправ',
+];
+
+const normalizeRecipeText = (value: string) => value.toLowerCase().replace(/ё/g, 'е');
+
+const includesAnyKeyword = (value: string, keywords: string[]) =>
+  keywords.some((keyword) => value.includes(keyword));
+
+const isSimpleRationSnack = (recipe: Recipe) => {
+  if (!recipe.id.startsWith('real-ration-') || recipe.mealType !== 'snack') {
+    return false;
+  }
+
+  const recipeText = normalizeRecipeText(
+    [
+      recipe.title,
+      recipe.description,
+      ...recipe.ingredients.map((ingredient) => ingredient.name),
+      ...recipe.steps,
+    ].join(' '),
+  );
+
+  if (includesAnyKeyword(recipeText, preparationKeywords)) {
+    return false;
+  }
+
+  if (recipe.steps.length === 0) {
+    return true;
+  }
+
+  const hasSimpleProductKeyword = includesAnyKeyword(recipeText, simpleRationSnackKeywords);
+  const hasOnlySimpleSteps = recipe.steps.every((step) =>
+    includesAnyKeyword(normalizeRecipeText(step), simpleStepKeywords),
+  );
+
+  return hasSimpleProductKeyword || (recipe.steps.length <= 3 && hasOnlySimpleSteps);
+};
+
 type RecipesPageProps = {
   hasActiveSubscription: boolean;
   onOpenAccess: () => void;
@@ -20,10 +104,12 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
   const [toastMessage, setToastMessage] = useState('');
   const [manualShareText, setManualShareText] = useState('');
 
+  const visibleRecipes = useMemo(() => recipes.filter((recipe) => !isSimpleRationSnack(recipe)), []);
+
   const filteredRecipes = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
 
-    return recipes.filter((recipe) => {
+    return visibleRecipes.filter((recipe) => {
       const searchText = [
         recipe.title,
         recipe.description,
@@ -41,7 +127,7 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
 
       return matchesSearch && matchesMealType;
     });
-  }, [activeMealType, search]);
+  }, [activeMealType, search, visibleRecipes]);
 
   useEffect(() => {
     if (!toastMessage) return;
@@ -78,7 +164,7 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
         <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Каталог</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Рецепты</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">
-          {recipes.length} рецепта с КБЖУ: блюда можно добавлять в План и использовать для замен в рационах.
+          {visibleRecipes.length} рецепта с КБЖУ: блюда можно добавлять в План и использовать для замен в рационах.
         </p>
       </div>
 
