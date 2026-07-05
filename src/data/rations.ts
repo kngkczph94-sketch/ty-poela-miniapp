@@ -539,4 +539,27 @@ export const dailyRations: DailyRation[] = [
     publishedAt: '2026-07-04',
     sortOrder: 23,
   },
+  {
+    id: 'ration-24',
+    number: 24,
+    rationNumber: 24,
+    title: 'Рацион №24',
+    description: 'Рацион на 1400 ккал: клаб-сэндвич с бужениной и яйцом, салат с утиной грудкой, тартар из сёмги с гренками и отварная кукуруза.',
+    previewMealTitles: {
+      breakfast: 'Клаб-сэндвич с бужениной и яйцом',
+      lunch: 'Салат с утиной грудкой, дыней и малиной',
+      dinner: 'Тартар из сёмги с гренками и салатом романо',
+      snack: 'Кукуруза отварная с солью',
+    },
+    isPremium: false,
+    tags: ['сбалансировано', '1400 ккал', 'Рацион №24'],
+    meals: {
+      breakfast: mealById('real-ration-24-breakfast'),
+      lunch: mealById('real-ration-24-lunch'),
+      dinner: mealById('real-ration-24-dinner'),
+      snack: mealById('real-ration-24-snack'),
+    },
+    publishedAt: '2026-07-05',
+    sortOrder: 24,
+  },
 ];
