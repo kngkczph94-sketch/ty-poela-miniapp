@@ -1528,7 +1528,7 @@ export const recipes: Recipe[] = [
     steps: ['Отварите овсяные хлопья в воде до готовности.', 'Добавьте соль, сахарозаменитель и кокосовое молоко.', 'Перемешайте и подавайте с ягодами или фруктами при желании.'],
     tags: ['breakfast', 'КБЖУ', 'Ты поела'],
     allergens: ['может содержать индивидуальные аллергены'],
-    imageUrl: '',
+    imageUrl: '/ty-poela-miniapp/images/recipes/recipe-book-001-oatmeal-coconut.jpeg',
     isPremium: false,
     source: 'recipe_book',
   },
