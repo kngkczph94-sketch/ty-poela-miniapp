@@ -19,6 +19,7 @@ const simpleRationSnackKeywords = [
   'орех',
   'хлебц',
   'творог',
+  'кукуруз',
 ];
 
 const preparationKeywords = [
@@ -90,6 +91,12 @@ const isSimpleRationSnack = (recipe: Recipe) => {
     ].join(' '),
   );
 
+  const hasSimpleProductKeyword = includesAnyKeyword(recipeText, simpleRationSnackKeywords);
+
+  if (hasSimpleProductKeyword) {
+    return true;
+  }
+
   if (includesAnyKeyword(recipeText, preparationKeywords)) {
     return false;
   }
@@ -98,12 +105,11 @@ const isSimpleRationSnack = (recipe: Recipe) => {
     return true;
   }
 
-  const hasSimpleProductKeyword = includesAnyKeyword(recipeText, simpleRationSnackKeywords);
   const hasOnlySimpleSteps = recipe.steps.every((step) =>
     includesAnyKeyword(normalizeRecipeText(step), simpleStepKeywords),
   );
 
-  return hasSimpleProductKeyword || (recipe.steps.length <= 3 && hasOnlySimpleSteps);
+  return recipe.steps.length <= 3 && hasOnlySimpleSteps;
 };
 
 type RecipesPageProps = {
