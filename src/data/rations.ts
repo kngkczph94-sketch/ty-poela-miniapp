@@ -15,6 +15,7 @@ export const dailyRations: DailyRation[] = [
     rationNumber: 1,
     title: 'Рацион №1',
     description: 'Рацион на день: 1500 ккал, Б 115 / Ж 42 / У 155.',
+    imageUrl: '/ty-poela-miniapp/images/rations/ration-001-dark.jpeg',
     previewMealTitles: {
       breakfast: 'Блинчики',
       lunch: 'Батат',
@@ -38,6 +39,7 @@ export const dailyRations: DailyRation[] = [
     rationNumber: 2,
     title: 'Рацион №2',
     description: 'Рацион на день: 1450 ккал, Б 120 / Ж 37 / У 156.',
+    imageUrl: '/ty-poela-miniapp/images/rations/ration-002-dark.jpeg',
     previewMealTitles: {
       breakfast: 'Сырники в аэрогриле',
       lunch: 'Спагетти болоньезе',
@@ -61,6 +63,7 @@ export const dailyRations: DailyRation[] = [
     rationNumber: 3,
     title: 'Рацион №3',
     description: 'Рацион на день: 1600 ккал, Б 150 / Ж 44 / У 150.',
+    imageUrl: '/ty-poela-miniapp/images/rations/ration-003-dark.jpeg',
     previewMealTitles: {
       breakfast: 'Арабские блинчики с куриной грудкой и моцареллой',
       lunch: 'Рисовая лапша с овощами и креветками',
@@ -84,6 +87,7 @@ export const dailyRations: DailyRation[] = [
     rationNumber: 4,
     title: 'Рацион №4',
     description: 'Рацион на день: 1470 ккал, Б 115 / Ж 45 / У 153.',
+    imageUrl: '/ty-poela-miniapp/images/rations/ration-004-dark.jpeg',
     previewMealTitles: {
       breakfast: 'Нежная творожная запеканка с вишнёвым конфи',
       lunch: 'Куриные рулетики с моцареллой и шпинатом с картошкой и морковью по-деревенски',
