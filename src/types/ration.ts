@@ -15,6 +15,12 @@ export type DailyRation = {
   isPremium: boolean;
   tags: string[];
   imageUrl?: string;
+  mealImageUrls?: {
+    breakfast?: string;
+    lunch?: string;
+    dinner?: string;
+    snack?: string;
+  };
   meals: {
     breakfast: Meal;
     lunch: Meal;
