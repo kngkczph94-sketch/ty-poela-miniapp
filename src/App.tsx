@@ -8,7 +8,7 @@ import { RationDetailPage } from './pages/RationDetailPage';
 import { RationsPage } from './pages/RationsPage';
 import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
-import { recipes } from './data/recipes';
+import { findRecipeWithRationImage } from './data/recipesWithRationImages';
 import { dailyRations } from './data/rations';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
 import type { DailyRation } from './types/ration';
@@ -375,7 +375,7 @@ const saveTodayUsageDate = () => {
 
 function App() {
   const initialRecipeId = getRecipeIdFromSearch(window.location.search);
-  const initialRecipe = initialRecipeId ? recipes.find((recipe) => recipe.id === initialRecipeId) ?? null : null;
+  const initialRecipe = initialRecipeId ? findRecipeWithRationImage(initialRecipeId) ?? null : null;
   const initialRation = initialRecipe ? null : findRationBySearchId(getRationIdFromSearch(window.location.search));
   const [activeTab, setActiveTab] = useState<NavigationTab>(initialRecipe ? 'recipes' : initialRation ? 'rations' : 'home');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(initialRecipe);
