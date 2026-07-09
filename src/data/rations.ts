@@ -155,6 +155,13 @@ export const dailyRations: DailyRation[] = ([
       snack: 'Фруктовый перекус с яблоком, грушей и киви',
     },
     isPremium: false,
+    imageUrl: '/ty-poela-miniapp/images/recipes/grok-90d8b0e3-e10c-4794-a733-d596aa23b51d.jpg',
+    mealImageUrls: {
+      breakfast: '/ty-poela-miniapp/images/recipes/grok-6f0ffd07-933f-4665-b587-054213046308.jpg',
+      lunch: '/ty-poela-miniapp/images/recipes/grok-4550f7f5-76f7-4772-9c6d-181233e52070.jpg',
+      dinner: '/ty-poela-miniapp/images/recipes/grok-1da4b417-659d-49d9-946b-c2396c6187e9.jpg',
+      snack: '/ty-poela-miniapp/images/recipes/grok-bf6711a6-885e-4bb5-8d63-ec8fdac84f21.jpg',
+    },
     tags: ['сбалансировано', '1512 ккал', 'Рацион №5'],
     meals: {
       breakfast: mealById('real-ration-5-breakfast'),
