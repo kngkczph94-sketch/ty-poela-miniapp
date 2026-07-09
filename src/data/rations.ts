@@ -217,6 +217,13 @@ export const dailyRations: DailyRation[] = ([
     },
     isPremium: false,
     tags: ['сбалансировано', '1650 ккал', 'Рацион №7'],
+    imageUrl: '/ty-poela-miniapp/images/recipes/00_коллаж_без_надписей.jpg',
+    mealImageUrls: {
+      breakfast: '/ty-poela-miniapp/images/recipes/01_ЗАВТРАК_шоколадные_блинчики_вишнёвый_сироп.jpg',
+      lunch: '/ty-poela-miniapp/images/recipes/02_ОБЕД_паста_индейка_песто.jpg',
+      dinner: '/ty-poela-miniapp/images/recipes/03_УЖИН_салат_красная_рыба_хрустящие_макароны.jpg',
+      snack: '/ty-poela-miniapp/images/recipes/04_ПЕРЕКУС_зефир_сушки_банан.jpg',
+    },
     meals: {
       breakfast: mealById('real-ration-7-breakfast'),
       lunch: mealById('real-ration-7-lunch'),
