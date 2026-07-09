@@ -217,12 +217,12 @@ export const dailyRations: DailyRation[] = ([
     },
     isPremium: false,
     tags: ['сбалансировано', '1650 ккал', 'Рацион №7'],
-    imageUrl: '/ty-poela-miniapp/images/recipes/00_коллаж_без_надписей.jpg',
+    imageUrl: '/ty-poela-miniapp/images/recipes/grok-255c8e0e-5d3a-47b0-823f-d07fd61a93f9.jpg',
     mealImageUrls: {
-      breakfast: '/ty-poela-miniapp/images/recipes/01_ЗАВТРАК_шоколадные_блинчики_вишнёвый_сироп.jpg',
-      lunch: '/ty-poela-miniapp/images/recipes/02_ОБЕД_паста_индейка_песто.jpg',
-      dinner: '/ty-poela-miniapp/images/recipes/03_УЖИН_салат_красная_рыба_хрустящие_макароны.jpg',
-      snack: '/ty-poela-miniapp/images/recipes/04_ПЕРЕКУС_зефир_сушки_банан.jpg',
+      breakfast: '/ty-poela-miniapp/images/recipes/grok-d85f3d37-4b0c-4343-831b-86e04d01c0fd.jpg',
+      lunch: '/ty-poela-miniapp/images/recipes/grok-60a9f1f8-95dd-4aee-9da1-e29207759180.jpg',
+      dinner: '/ty-poela-miniapp/images/recipes/grok-c91b8ce0-aa74-4537-946a-5cff9a4dcd8b.jpg',
+      snack: '/ty-poela-miniapp/images/recipes/grok-bde7f657-df20-459d-9f3d-1a056d16668a.jpg',
     },
     meals: {
       breakfast: mealById('real-ration-7-breakfast'),
