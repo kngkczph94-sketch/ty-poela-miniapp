@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { RecipeCard } from '../components/RecipeCard';
-import { recipes } from '../data/recipes';
+import { recipesWithRationImages } from '../data/recipesWithRationImages';
 import { mealTypeLabels, type MealType, type Recipe } from '../types/recipe';
 import { createRecipeShareText, recipeCopiedMessage, shareRecipe } from '../utils/shareRecipe';
 
@@ -124,7 +124,7 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
   const [toastMessage, setToastMessage] = useState('');
   const [manualShareText, setManualShareText] = useState('');
 
-  const visibleRecipes = useMemo(() => recipes.filter((recipe) => !isSimpleRationSnack(recipe)), []);
+  const visibleRecipes = useMemo(() => recipesWithRationImages.filter((recipe) => !isSimpleRationSnack(recipe)), []);
 
   const filteredRecipes = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();

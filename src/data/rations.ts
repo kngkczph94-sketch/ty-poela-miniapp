@@ -8,7 +8,20 @@ const mealById = (id: string): Meal => {
   return { ...meal, source: 'ration' };
 };
 
-export const dailyRations: DailyRation[] = [
+const withMealImages = (ration: DailyRation): DailyRation => ({
+  ...ration,
+  meals: Object.fromEntries(
+    Object.entries(ration.meals).map(([slot, meal]) => [
+      slot,
+      {
+        ...meal,
+        imageUrl: meal.imageUrl || ration.mealImageUrls?.[slot as keyof DailyRation['meals']],
+      },
+    ]),
+  ) as DailyRation['meals'],
+});
+
+export const dailyRations: DailyRation[] = ([
   {
     id: 'ration-1',
     number: 1,
@@ -590,4 +603,4 @@ export const dailyRations: DailyRation[] = [
     publishedAt: '2026-07-05',
     sortOrder: 24,
   },
-];
+]).map(withMealImages);
