@@ -186,6 +186,13 @@ export const dailyRations: DailyRation[] = ([
     },
     isPremium: false,
     tags: ['сбалансировано', '1500 ккал', 'Рацион №6'],
+    imageUrl: '/ty-poela-miniapp/images/recipes/grok-988b62c8-e316-456b-9212-dd55bfa6d99f.jpg',
+    mealImageUrls: {
+      breakfast: '/ty-poela-miniapp/images/recipes/grok-a631d8b9-c335-4f00-b379-5bb76ce73ffe.jpg',
+      lunch: '/ty-poela-miniapp/images/recipes/grok-1cdb9c70-2518-444c-9be3-a26f1ad8d1b0.jpg',
+      dinner: '/ty-poela-miniapp/images/recipes/grok-92766478-c9a0-489f-94f0-336d7efa832b.jpg',
+      snack: '/ty-poela-miniapp/images/recipes/grok-400b03c8-88f8-426e-82de-6cf71683f87a.jpg',
+    },
     meals: {
       breakfast: mealById('real-ration-6-breakfast'),
       lunch: mealById('real-ration-6-lunch'),
