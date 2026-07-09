@@ -9,6 +9,7 @@ import { RationsPage } from './pages/RationsPage';
 import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
 import { recipes } from './data/recipes';
+import { dailyRations } from './data/rations';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
 import type { DailyRation } from './types/ration';
 import type { HabitEntry, MeasurementEntry, ProgressEntry } from './types/progress';
@@ -29,6 +30,36 @@ const getRecipeIdFromSearch = (search: string) => {
   }
 
   return startApp.replace(/^recipe_/, '');
+};
+
+const getRationIdFromSearch = (search: string) => {
+  const params = new URLSearchParams(search);
+  const rationId = params.get('ration');
+
+  if (rationId) {
+    return rationId;
+  }
+
+  const startApp = params.get('startapp');
+
+  if (!startApp?.startsWith('ration_')) {
+    return null;
+  }
+
+  return startApp.replace(/^ration_/, '');
+};
+
+const findRationBySearchId = (rationId: string | null) => {
+  if (!rationId) {
+    return null;
+  }
+
+  const normalizedRationId = rationId.startsWith('ration-') ? rationId : `ration-${rationId}`;
+  const rationNumber = Number(rationId);
+
+  return dailyRations.find((ration) =>
+    ration.id === normalizedRationId || (!Number.isNaN(rationNumber) && ration.rationNumber === rationNumber),
+  ) ?? null;
 };
 
 type NavigationTab = 'home' | 'rations' | 'recipes' | 'menu' | 'cart' | 'access' | 'macros' | 'progress' | 'awards' | 'share';
@@ -345,9 +376,10 @@ const saveTodayUsageDate = () => {
 function App() {
   const initialRecipeId = getRecipeIdFromSearch(window.location.search);
   const initialRecipe = initialRecipeId ? recipes.find((recipe) => recipe.id === initialRecipeId) ?? null : null;
-  const [activeTab, setActiveTab] = useState<NavigationTab>(initialRecipe ? 'recipes' : 'home');
+  const initialRation = initialRecipe ? null : findRationBySearchId(getRationIdFromSearch(window.location.search));
+  const [activeTab, setActiveTab] = useState<NavigationTab>(initialRecipe ? 'recipes' : initialRation ? 'rations' : 'home');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(initialRecipe);
-  const [selectedRation, setSelectedRation] = useState<DailyRation | null>(null);
+  const [selectedRation, setSelectedRation] = useState<DailyRation | null>(initialRation);
   const [recipeToOpenAfterAccess, setRecipeToOpenAfterAccess] = useState<Recipe | null>(initialRecipe);
   const [weeklyMenu, setWeeklyMenu] = useState(createEmptyWeeklyMenu);
   const [measurementEntries, setMeasurementEntries] = useState<MeasurementEntry[]>(() => {
