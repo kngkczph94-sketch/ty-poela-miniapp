@@ -336,7 +336,14 @@ export const dailyRations: DailyRation[] = ([
       snack: 'Запечённые яблоки',
     },
     isPremium: false,
+    imageUrl: '/ty-poela-miniapp/images/recipes/ration-011-cover.png',
     tags: ['сбалансировано', '1409 ккал', 'Рацион №11'],
+    mealImageUrls: {
+      breakfast: '/ty-poela-miniapp/images/recipes/ration-011-breakfast.png',
+      lunch: '/ty-poela-miniapp/images/recipes/ration-011-lunch.png',
+      dinner: '/ty-poela-miniapp/images/recipes/ration-011-dinner.png',
+      snack: '/ty-poela-miniapp/images/recipes/ration-011-snack.png',
+    },
     meals: {
       breakfast: mealById('real-ration-11-breakfast'),
       lunch: mealById('real-ration-11-lunch'),
