@@ -479,6 +479,13 @@ export const dailyRations: DailyRation[] = ([
     rationNumber: 16,
     title: 'Рацион №16',
     description: 'Рацион на день: 1392 ккал, Б 100 / Ж 55 / У 130.',
+    imageUrl: '/ty-poela-miniapp/images/recipes/ration-016-cover.png',
+    mealImageUrls: {
+      breakfast: '/ty-poela-miniapp/images/recipes/ration-016-breakfast.png',
+      lunch: '/ty-poela-miniapp/images/recipes/ration-016-lunch.png',
+      dinner: '/ty-poela-miniapp/images/recipes/ration-016-dinner.png',
+      snack: '/ty-poela-miniapp/images/recipes/ration-016-snack.png',
+    },
     previewMealTitles: {
       breakfast: 'Фокачча с розмарином и моцареллой, соусом песто и помидоркой',
       lunch: 'Корнишон с бейби картофелем и салатом с печёным перцем',
