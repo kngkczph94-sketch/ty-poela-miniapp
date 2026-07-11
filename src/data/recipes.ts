@@ -1300,7 +1300,7 @@ export const recipes: Recipe[] = [
     steps: ['Смешать рисовую муку, воду, яйцо, яичные белки, соль и сахарозаменитель.', 'Пробить блендером или хорошо перемешать венчиком.', 'Выпекать блинчики на антипригарной сковороде.', 'Подать с греческим йогуртом и вишнёвым сиропом zero.'],
     tags: ['breakfast', 'КБЖУ', 'Рацион №13'],
     allergens: ['яйцо', 'молочные продукты'],
-    imageUrl: '',
+    imageUrl: '/ty-poela-miniapp/images/recipes/ration-013-breakfast.png',
     isPremium: false,
     source: 'recipe_book',
   },
@@ -1326,17 +1326,17 @@ export const recipes: Recipe[] = [
       { name: 'имбирь', amount: 1, unit: 'см', category: 'овощи' },
     ],
     steps: ['Удон отварить по инструкции.', 'Куриное бедро обжарить на сухой сковороде до готовности.', 'В конце добавить соль и аджику, протушить ещё 5 минут.', 'Овощи нарезать соломкой.', 'Обжарить овощи на кунжутном масле.', 'Добавить соевый соус и соль при необходимости.', 'Добавить отваренный удон.', 'Перемешать и дать постоять 5 минут.', 'При подаче сверху выложить курицу и посыпать кунжутом.'],
-    tags: ['lunch', 'КБЖУ', 'Рацион №13'], allergens: ['глютен', 'соя', 'кунжут'], imageUrl: '', isPremium: false, source: 'recipe_book',
+    tags: ['lunch', 'КБЖУ', 'Рацион №13'], allergens: ['глютен', 'соя', 'кунжут'], imageUrl: '/ty-poela-miniapp/images/recipes/ration-013-lunch.png', isPremium: false, source: 'recipe_book',
   },
   {
     id: 'real-ration-13-dinner', title: 'Картофельный салат с селёдкой', description: 'Картофельный салат с маринованными овощами, йогуртовой заправкой и селёдкой.', calories: 340, protein: 19, fat: 16, carbs: 30,
     cookingTime: 75, servings: 1, mealType: 'dinner',
     ingredients: [{ name: 'селёдка', amount: 100, unit: 'г', category: 'белок' }, { name: 'картофель', amount: 150, unit: 'г', category: 'овощи' }, { name: 'грузди маринованные', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'огурцы маринованные', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'лук маринованный', amount: 0, unit: 'по вкусу', category: 'овощи' }, { name: 'греческий йогурт', amount: 30, unit: 'г', category: 'молочные' }, { name: 'горчица', amount: 10, unit: 'г', category: 'бакалея' }, { name: 'лимонный сок', amount: 0, unit: 'по вкусу', category: 'бакалея' }, { name: 'чёрный перец', amount: 0, unit: 'по вкусу', category: 'специи' }, { name: 'яблочный уксус', amount: 0, unit: 'для маринования лука', category: 'бакалея' }],
-    steps: ['Селёдку промокнуть бумажным полотенцем.', 'Картофель очистить и отварить до готовности.', 'Охладить картофель.', 'Лук нарезать полукольцами и замариновать в уксусе с водой минимум на 1 час.', 'В салатнике смешать картофель, грузди, огурцы и маринованный лук.', 'Заправить соусом из йогурта, горчицы, лимонного сока и чёрного перца.', 'Подать с селёдкой.'], tags: ['dinner', 'КБЖУ', 'Рацион №13'], allergens: ['рыба', 'молочные продукты', 'горчица'], imageUrl: '', isPremium: false, source: 'recipe_book',
+    steps: ['Селёдку промокнуть бумажным полотенцем.', 'Картофель очистить и отварить до готовности.', 'Охладить картофель.', 'Лук нарезать полукольцами и замариновать в уксусе с водой минимум на 1 час.', 'В салатнике смешать картофель, грузди, огурцы и маринованный лук.', 'Заправить соусом из йогурта, горчицы, лимонного сока и чёрного перца.', 'Подать с селёдкой.'], tags: ['dinner', 'КБЖУ', 'Рацион №13'], allergens: ['рыба', 'молочные продукты', 'горчица'], imageUrl: '/ty-poela-miniapp/images/recipes/ration-013-dinner.png', isPremium: false, source: 'recipe_book',
   },
   {
     id: 'real-ration-13-snack', title: 'Тульский пряник с фруктовой начинкой', description: 'Порция тульского пряника с фруктовой начинкой.', calories: 222, protein: 3, fat: 4, carbs: 44,
-    cookingTime: 5, servings: 1, mealType: 'snack', ingredients: [{ name: 'тульский пряник с фруктовой начинкой', amount: 130, unit: 'г', category: 'бакалея' }], steps: ['Отмерить порцию пряника.', 'Подать как перекус.'], tags: ['snack', 'КБЖУ', 'Рацион №13'], allergens: ['глютен'], imageUrl: '', isPremium: false, source: 'recipe_book',
+    cookingTime: 5, servings: 1, mealType: 'snack', ingredients: [{ name: 'тульский пряник с фруктовой начинкой', amount: 130, unit: 'г', category: 'бакалея' }], steps: ['Отмерить порцию пряника.', 'Подать как перекус.'], tags: ['snack', 'КБЖУ', 'Рацион №13'], allergens: ['глютен'], imageUrl: '/ty-poela-miniapp/images/recipes/ration-013-snack.png', isPremium: false, source: 'recipe_book',
   },
 
 
