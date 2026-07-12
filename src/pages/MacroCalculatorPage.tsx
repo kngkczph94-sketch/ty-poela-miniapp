@@ -67,7 +67,7 @@ export function MacroCalculatorPage({ onBack, onOpenRation }: MacroCalculatorPag
 
   const suitableRations = result
     ? dailyRations
-        .map((ration) => ({ ration, totals: ration.nutrition ?? calculateMealsNutrition(ration.meals) }))
+        .map((ration) => ({ ration, totals: calculateMealsNutrition(ration.meals) }))
         .sort((first, second) => Math.abs(first.totals.calories - result.calories) - Math.abs(second.totals.calories - result.calories))
         .slice(0, 3)
     : [];

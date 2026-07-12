@@ -32,7 +32,7 @@ export function RationDetailPage({ ration, onBack, onOpenAccess, onOpenRecipe, o
     setIsOriginalRestored(false);
   }, [displayRation]);
 
-  const totals = displayRation.nutrition ?? calculateMealsNutrition(meals);
+  const totals = calculateMealsNutrition(meals);
   const locked = displayRation.isPremium === true && !hasActiveSubscription;
   const adaptation = isOriginalRestored ? undefined : displayRation.adaptedFrom;
   const changePercent = adaptation ? Math.round((adaptation.scaleFactor - 1) * 100) : 0;

@@ -757,12 +757,6 @@ export const dailyRations: DailyRation[] = ([
     },
     isPremium: false,
     tags: ['сбалансировано', '1468 ккал', 'Рацион №25'],
-    nutrition: {
-      calories: 1468,
-      protein: 118,
-      fat: 50,
-      carbs: 139,
-    },
     imageUrl: '/ty-poela-miniapp/images/recipes/ration-025-cover.jpg',
     mealImageUrls: {
       breakfast: '/ty-poela-miniapp/images/recipes/ration-025-breakfast.jpg',

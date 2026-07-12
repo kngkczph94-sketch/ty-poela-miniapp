@@ -59,7 +59,7 @@ export function RationsPage({ hasActiveSubscription, onOpenAccess, onOpenRation 
       <div className="mt-3 flex gap-2 overflow-x-auto pb-1">{(['all','free','premium'] as Filter[]).map((item)=><button className={`shrink-0 rounded-full px-4 py-2 text-sm font-extrabold ${filter===item?'bg-[#6E7E1F] text-white shadow-md shadow-[#6E7E1F]/20':'bg-[#FFFDF8] text-[#8B725F] shadow-sm shadow-[#F3E2BF]/70'}`} key={item} onClick={()=>setFilter(item)} type="button">{item==='all'?'Все':item==='free'?'Бесплатные':'Premium'}</button>)}</div>
     </div>
     <div className="mt-2 space-y-3">{rations.map((ration)=>{
-      const totals = ration.nutrition ?? calculateMealsNutrition(ration.meals);
+      const totals = calculateMealsNutrition(ration.meals);
       const locked = ration.isPremium && !hasActiveSubscription;
       return <article className={`rounded-3xl border p-4 shadow-sm ${locked?'border-[#D99663]/35 bg-[#F3E2BF]':'border-[#D99663]/25 bg-[#FFFDF8] shadow-[#F3E2BF]/70'}`} key={ration.id}>
         <div className="grid gap-4 sm:grid-cols-[7.5rem_1fr] sm:items-start"><FoodPhotoPlaceholder alt={ration.title} className="min-h-[7.5rem]" imageUrl={ration.imageUrl} variant="ration" /><div>{ration.isPremium&&<div className="flex gap-2"><span className="rounded-full bg-[#D99663]/15 px-3 py-1 text-xs font-extrabold text-[#D99663]">Premium</span></div>}<h2 className="mt-2 text-xl font-black text-[#37410F]">{ration.title}</h2></div></div>
