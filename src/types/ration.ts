@@ -14,6 +14,12 @@ export type DailyRation = {
   };
   isPremium: boolean;
   tags: string[];
+  nutrition?: {
+    calories: number;
+    protein: number;
+    fat: number;
+    carbs: number;
+  };
   imageUrl?: string;
   mealImageUrls?: {
     breakfast?: string;
@@ -72,6 +78,7 @@ export const adaptRationToCalories = (ration: DailyRation, targetCalories: numbe
 
   return {
     ...ration,
+    nutrition: undefined,
     meals,
     adaptedFrom: {
       originalCalories,
