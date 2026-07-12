@@ -666,6 +666,13 @@ export const dailyRations: DailyRation[] = ([
       snack: 'Kinder Cards',
     },
     isPremium: false,
+    imageUrl: '/ty-poela-miniapp/images/recipes/ration-022-cover.png',
+    mealImageUrls: {
+      breakfast: '/ty-poela-miniapp/images/recipes/ration-022-breakfast.png',
+      lunch: '/ty-poela-miniapp/images/recipes/ration-022-lunch.png',
+      dinner: '/ty-poela-miniapp/images/recipes/ration-022-dinner.png',
+      snack: '/ty-poela-miniapp/images/recipes/ration-022-snack.png',
+    },
     tags: ['сбалансировано', '1390 ккал', 'Рацион №22'],
     meals: {
       breakfast: mealById('real-ration-22-breakfast'),
