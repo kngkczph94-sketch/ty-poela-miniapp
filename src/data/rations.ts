@@ -757,6 +757,13 @@ export const dailyRations: DailyRation[] = ([
     },
     isPremium: false,
     tags: ['сбалансировано', '1468 ккал', 'Рацион №25'],
+    imageUrl: '/ty-poela-miniapp/images/recipes/ration-025-cover.jpg',
+    mealImageUrls: {
+      breakfast: '/ty-poela-miniapp/images/recipes/ration-025-breakfast.jpg',
+      lunch: '/ty-poela-miniapp/images/recipes/ration-025-lunch.jpg',
+      dinner: '/ty-poela-miniapp/images/recipes/ration-025-dinner.jpg',
+      snack: '/ty-poela-miniapp/images/recipes/ration-025-snack.jpg',
+    },
     meals: {
       breakfast: mealById('real-ration-25-breakfast'),
       lunch: mealById('real-ration-25-lunch'),
