@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import { AwardsPage } from './pages/AwardsPage';
 import { CartPage } from './pages/CartPage';
 import { MacroCalculatorPage } from './pages/MacroCalculatorPage';
@@ -80,39 +80,11 @@ type HomeAction = { label: string; onClick?: () => void; soon?: boolean };
 
 type HomeCardVisual = 'macros' | 'rations' | 'recipes' | 'ai' | 'knowledge' | 'progress' | 'awards' | 'share';
 
-type HomeCard = { title: string; description: string; visual: HomeCardVisual; soon?: boolean; action: HomeAction };
+type HomeCard = { title: string; description: string; visual: HomeCardVisual; imageSrc?: string; soon?: boolean; action: HomeAction };
 
-const HomeFeatureIcon = ({ visual }: { visual: HomeCardVisual }) => {
-  const commonProps = { className: 'h-6 w-6', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
-
-  switch (visual) {
-    case 'macros':
-      return <svg {...commonProps} aria-hidden="true"><path d="M5 19h14" /><path d="M7 19V9.5a5 5 0 0 1 10 0V19" /><path d="M9.5 10.5h5" /><path d="M12 10.5V8" /><path d="M8 15h8" /></svg>;
-    case 'rations':
-      return <svg {...commonProps} aria-hidden="true"><path d="M4 12.5c.5 4 3.6 6.5 8 6.5s7.5-2.5 8-6.5H4Z" /><path d="M7 12.5c.6-2.2 2.4-3.6 5-3.6s4.4 1.4 5 3.6" /><path d="M9 8.5c.5-1.5 1.5-2.5 3-3" /><path d="M14 6.5c1.3.2 2.2.9 2.8 2" /></svg>;
-    case 'recipes':
-      return <svg {...commonProps} aria-hidden="true"><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v16H7.5A2.5 2.5 0 0 0 5 21.5v-16Z" /><path d="M5 17.5A2.5 2.5 0 0 1 7.5 15H19" /><path d="M9 7h6" /><path d="M9 10h4" /></svg>;
-    case 'ai':
-      return <svg {...commonProps} aria-hidden="true"><path d="m12 3 1.3 4.1L17 9l-3.7 1.9L12 15l-1.3-4.1L7 9l3.7-1.9L12 3Z" /><path d="m18 14 .8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8L18 14Z" /><path d="m5.5 13 .6 1.6 1.4.6-1.4.6-.6 1.7-.6-1.7-1.4-.6 1.4-.6.6-1.6Z" /></svg>;
-    case 'knowledge':
-      return <svg {...commonProps} aria-hidden="true"><path d="M6 4.5h7a3 3 0 0 1 3 3V20H8a3 3 0 0 0-3 3V5.5a1 1 0 0 1 1-1Z" /><path d="M16 7.5h2a1 1 0 0 1 1 1V20" /><path d="M9 9h4" /><path d="M9 12h5" /></svg>;
-    case 'progress':
-      return <svg {...commonProps} aria-hidden="true"><path d="M4 19V5" /><path d="M4 19h16" /><path d="m7 15 3.2-3.2 2.8 2.4L18 8" /><path d="M18 8v4" /><path d="M18 8h-4" /></svg>;
-    case 'awards':
-      return <svg {...commonProps} aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z" /><path d="M8 6H5.5A2.5 2.5 0 0 0 8 10" /><path d="M16 6h2.5A2.5 2.5 0 0 1 16 10" /><path d="M12 13v4" /><path d="M9 20h6" /><path d="M10 17h4" /></svg>;
-    case 'share':
-      return <svg {...commonProps} aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5v-9Z" /><path d="m5 7 7 5.5L19 7" /></svg>;
-  }
-};
-
-const HomeFeaturePhoto = ({ children, visual }: { children: ReactNode; visual: HomeCardVisual }) => (
-  <div className={`home-feature-photo home-feature-photo--${visual}`} aria-hidden="true">
-    <span className="home-feature-photo__glow" />
-    <span className="home-feature-photo__plate" />
-    <span className="home-feature-photo__accent" />
-    <span className="home-feature-photo__line home-feature-photo__line--one" />
-    <span className="home-feature-photo__line home-feature-photo__line--two" />
-    <span className="home-feature-photo__icon">{children}</span>
+const HomeFeaturePhoto = ({ alt, imageSrc, visual }: { alt: string; imageSrc?: string; visual: HomeCardVisual }) => (
+  <div className={`home-feature-photo home-feature-photo--${visual}`}>
+    {imageSrc && <img alt={alt} className="home-feature-photo__image" loading="lazy" src={imageSrc} />}
   </div>
 );
 
@@ -130,9 +102,7 @@ function HomeFeatureCard({ card }: { card: HomeCard }) {
         </div>
       </div>
       <div className="order-1 p-3 pb-2 sm:order-2 sm:pl-0">
-        <HomeFeaturePhoto visual={card.visual}>
-          <HomeFeatureIcon visual={card.visual} />
-        </HomeFeaturePhoto>
+        <HomeFeaturePhoto alt={card.title} imageSrc={card.imageSrc} visual={card.visual} />
       </div>
     </article>
   );
@@ -144,26 +114,29 @@ function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, 
       title: 'Расчёт БЖУ',
       description: 'Рассчитай свою норму калорий, белков, жиров и углеводов под цель.',
       visual: 'macros',
+      imageSrc: '/ty-poela-miniapp/images/home/home-macros.jpg',
       action: { label: 'БЖУ', onClick: onOpenMacros },
     },
     {
       title: 'Рационы',
       description: 'Выбери готовый день питания с уже собранными приёмами пищи и КБЖУ.',
       visual: 'rations',
+      imageSrc: '/ty-poela-miniapp/images/home/home-rations.jpg',
       action: { label: 'Рационы', onClick: onOpenRations },
     },
     {
       title: 'Рецепты',
       description: 'Открой отдельные рецепты с ингредиентами, шагами приготовления и КБЖУ.',
       visual: 'recipes',
+      imageSrc: '/ty-poela-miniapp/images/home/home-recipes.jpg',
       action: { label: 'Рецепты', onClick: onOpenRecipes },
     },
     {
       title: 'ИИ-подбор',
-      description: 'Скоро: подбор рецепта или рациона по списку продуктов или фото продуктов.',
+      description: 'Подбери рецепт или рацион по списку продуктов или фотографии.',
       visual: 'ai',
-      soon: true,
-      action: { label: 'ИИ', soon: true },
+      imageSrc: '/ty-poela-miniapp/images/home/home-ai-selection.jpg',
+      action: { label: 'ИИ', onClick: () => undefined },
     },
     {
       title: 'База знаний',
@@ -176,27 +149,33 @@ function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, 
       title: 'Прогресс',
       description: 'Отмечай вес, замеры, шаги, сон и воду — приложение поддержит регулярность.',
       visual: 'progress',
+      imageSrc: '/ty-poela-miniapp/images/home/home-progress.jpg',
       action: { label: 'Прогресс', onClick: onOpenProgress },
     },
     {
       title: 'Награды',
       description: 'Собирай достижения за регулярные отметки и движение к своей цели.',
       visual: 'awards',
+      imageSrc: '/ty-poela-miniapp/images/home/home-rewards.jpg',
       action: { label: 'Награды', onClick: onOpenAwards },
     },
     {
       title: 'Поделиться приложением',
       description: 'Отправь ссылку тому, кому тоже нужен понятный план питания.',
       visual: 'share',
+      imageSrc: '/ty-poela-miniapp/images/home/home-share.jpg',
       action: { label: 'Поделиться', onClick: onOpenShare },
     },
   ];
 
   return <>
-    <section className="relative overflow-hidden rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-5 text-[#37410F] shadow-lg shadow-[#F3E2BF]/80">
-      <p className="inline-flex rounded-full bg-[#F3E2BF] px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Telegram Mini App</p>
-      <h1 className="mt-4 text-4xl font-black leading-tight tracking-tight">Ты поела?</h1>
-      <p className="mt-3 max-w-md text-base font-semibold leading-6 text-[#8B725F]">Готовые рационы, рецепты, расчёт БЖУ и список покупок внутри Telegram.</p>
+    <section className="relative overflow-hidden rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] text-[#37410F] shadow-lg shadow-[#F3E2BF]/80">
+      <img alt="Ты поела?" className="home-hero-image" src="/ty-poela-miniapp/images/home/home-hero.jpg" />
+      <div className="p-5">
+        <p className="inline-flex rounded-full bg-[#F3E2BF] px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Telegram Mini App</p>
+        <h1 className="mt-4 text-4xl font-black leading-tight tracking-tight">Ты поела?</h1>
+        <p className="mt-3 max-w-md text-base font-semibold leading-6 text-[#8B725F]">Готовые рационы, рецепты, расчёт БЖУ и список покупок внутри Telegram.</p>
+      </div>
     </section>
     <section className="mt-5 grid gap-4">{homeCards.map((card) => <HomeFeatureCard card={card} key={card.title} />)}</section>
   </>;
