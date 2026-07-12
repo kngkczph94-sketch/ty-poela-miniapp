@@ -743,4 +743,27 @@ export const dailyRations: DailyRation[] = ([
     publishedAt: '2026-07-05',
     sortOrder: 24,
   },
+  {
+    id: 'ration-25',
+    number: 25,
+    rationNumber: 25,
+    title: 'Рацион №25',
+    description: 'Рацион на день: 1468 ккал, Б 118 / Ж 50 / У 139.',
+    previewMealTitles: {
+      breakfast: 'Шакшука с овощами гриль',
+      lunch: 'Боул с индейкой, рисом и яйцом',
+      dinner: 'Хрустящая роти с креветками, артишоками гриль и сыром',
+      snack: 'Персик и абрикосы',
+    },
+    isPremium: false,
+    tags: ['сбалансировано', '1468 ккал', 'Рацион №25'],
+    meals: {
+      breakfast: mealById('real-ration-25-breakfast'),
+      lunch: mealById('real-ration-25-lunch'),
+      dinner: mealById('real-ration-25-dinner'),
+      snack: mealById('real-ration-25-snack'),
+    },
+    publishedAt: '2026-07-12',
+    sortOrder: 25,
+  },
 ]).map(withMealImages);
