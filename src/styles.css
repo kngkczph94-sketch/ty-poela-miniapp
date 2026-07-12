@@ -57,3 +57,21 @@ body {
   min-height: 8.5rem;
   object-fit: cover;
 }
+
+.home-feature-photo--recipes {
+  background-image: url('/ty-poela-miniapp/images/recipes/home-recipes.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home-feature-photo--recipes .home-feature-photo__image {
+  display: none;
+}
+
+.home-feature-photo--knowledge {
+  background-image: url('/ty-poela-miniapp/images/recipes/home-knowledge.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
