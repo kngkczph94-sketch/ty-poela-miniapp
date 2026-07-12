@@ -98,7 +98,7 @@ function HomeFeatureCard({ card }: { card: HomeCard }) {
         </div>
         <p className="mt-1 text-sm leading-5 text-[#8B725F]">{card.description}</p>
         <div className="mt-4 flex flex-wrap gap-2">
-          {card.action.onClick ? <button className="rounded-full bg-[#6E7E1F] px-4 py-2 text-sm font-black text-white shadow-sm shadow-[#6E7E1F]/20 transition hover:bg-[#37410F]" onClick={card.action.onClick} type="button">{card.action.label}</button> : <span className="rounded-full bg-[#F3E2BF] px-4 py-2 text-sm font-black text-[#8B725F]">{card.action.label} скоро</span>}
+          {card.action.onClick ? <button className="rounded-full bg-[#6E7E1F] px-4 py-2 text-sm font-black text-white shadow-sm shadow-[#6E7E1F]/20 transition hover:bg-[#37410F]" onClick={card.action.onClick} type="button">{card.action.label}</button> : <span className="rounded-full bg-[#F3E2BF] px-4 py-2 text-sm font-black text-[#8B725F]">{card.action.label}{card.action.soon ? ' скоро' : ''}</span>}
         </div>
       </div>
       <div className="order-1 p-3 pb-2 sm:order-2 sm:pl-0">
@@ -140,10 +140,9 @@ function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, 
     },
     {
       title: 'База знаний',
-      description: 'Скоро: материалы о питании, коррекции веса, БЖУ, продуктах и пищевых привычках.',
+      description: 'Материалы о питании, коррекции веса, БЖУ, продуктах и пищевых привычках.',
       visual: 'knowledge',
-      soon: true,
-      action: { label: 'База знаний', soon: true },
+      action: { label: 'База знаний' },
     },
     {
       title: 'Прогресс',
