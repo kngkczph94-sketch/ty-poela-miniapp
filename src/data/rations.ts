@@ -636,6 +636,13 @@ export const dailyRations: DailyRation[] = ([
       snack: 'Wagon Wheels и Kinder',
     },
     isPremium: false,
+    imageUrl: '/ty-poela-miniapp/images/recipes/ration-021-cover.png',
+    mealImageUrls: {
+      breakfast: '/ty-poela-miniapp/images/recipes/ration-021-breakfast.png',
+      lunch: '/ty-poela-miniapp/images/recipes/ration-021-lunch.png',
+      dinner: '/ty-poela-miniapp/images/recipes/ration-021-dinner.png',
+      snack: '/ty-poela-miniapp/images/recipes/ration-021-snack.png',
+    },
     tags: ['сбалансировано', '1580 ккал', 'Рацион №21'],
     meals: {
       breakfast: mealById('real-ration-21-breakfast'),
