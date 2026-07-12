@@ -35,168 +35,25 @@ body {
   color: #37410F;
 }
 
+
+.home-hero-image {
+  display: block;
+  width: 100%;
+  height: 13rem;
+  object-fit: cover;
+}
+
 .home-feature-photo {
-  position: relative;
   min-height: 8.5rem;
   overflow: hidden;
   border-radius: 1.45rem;
-  background:
-    radial-gradient(circle at 18% 20%, rgba(255, 253, 248, 0.95) 0 0.6rem, transparent 0.7rem),
-    radial-gradient(circle at 82% 22%, rgba(255, 253, 248, 0.7) 0 0.35rem, transparent 0.45rem),
-    linear-gradient(135deg, rgba(243, 226, 191, 0.96), rgba(217, 150, 99, 0.24));
+  background: #F3E2BF;
 }
 
-.home-feature-photo::before,
-.home-feature-photo::after,
-.home-feature-photo span {
-  position: absolute;
+.home-feature-photo__image {
   display: block;
-  content: '';
-}
-
-.home-feature-photo .home-feature-photo__icon {
-  position: absolute;
-  right: 2.75rem;
-  bottom: 2.48rem;
-  z-index: 2;
-  display: flex;
-  width: 2.55rem;
-  height: 2.55rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  color: #37410F;
-  background: rgba(255, 253, 248, 0.78);
-  box-shadow: inset 0 0 0 1px rgba(217, 150, 99, 0.2), 0 0.7rem 1.3rem rgba(47, 36, 15, 0.12);
-}
-
-.home-feature-photo__icon svg {
-  width: 1.55rem;
-  height: 1.55rem;
-}
-
-.home-feature-photo--share .home-feature-photo__icon {
-  color: #6E7E1F;
-}
-
-.home-feature-photo::before {
-  inset: 0;
-  background-image:
-    linear-gradient(120deg, rgba(255, 253, 248, 0.2) 25%, transparent 25%),
-    linear-gradient(300deg, rgba(110, 126, 31, 0.08) 18%, transparent 18%);
-  background-size: 2.2rem 2.2rem, 2.8rem 2.8rem;
-  opacity: 0.45;
-}
-
-.home-feature-photo::after {
-  right: 1rem;
-  bottom: 0.9rem;
-  width: 4.7rem;
-  height: 2.2rem;
-  border-radius: 999px;
-  background: rgba(55, 65, 15, 0.1);
-  filter: blur(0.1rem);
-}
-
-.home-feature-photo__glow {
-  inset: auto auto 0.2rem 0.9rem;
-  width: 7rem;
-  height: 7rem;
-  border-radius: 999px;
-  background: rgba(255, 253, 248, 0.36);
-}
-
-.home-feature-photo__plate {
-  right: 1.45rem;
-  bottom: 1.2rem;
-  width: 5.2rem;
-  height: 5.2rem;
-  border: 0.65rem solid rgba(255, 253, 248, 0.9);
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(110, 126, 31, 0.34) 0 26%, rgba(217, 150, 99, 0.4) 27% 43%, rgba(243, 226, 191, 0.86) 44%);
-  box-shadow: 0 1rem 1.8rem rgba(47, 36, 15, 0.12);
-}
-
-.home-feature-photo__accent {
-  left: 1.5rem;
-  bottom: 1.25rem;
-  width: 4.1rem;
-  height: 3.1rem;
-  border-radius: 1.2rem;
-  background: rgba(255, 253, 248, 0.72);
-  box-shadow: inset 0 0 0 1px rgba(217, 150, 99, 0.18), 0 0.8rem 1.4rem rgba(47, 36, 15, 0.08);
-}
-
-.home-feature-photo__line {
-  left: 2.25rem;
-  height: 0.38rem;
-  border-radius: 999px;
-  background: rgba(110, 126, 31, 0.42);
-}
-
-.home-feature-photo__line--one {
-  bottom: 3rem;
-  width: 2.6rem;
-}
-
-.home-feature-photo__line--two {
-  bottom: 2.1rem;
-  width: 1.8rem;
-  background: rgba(217, 150, 99, 0.5);
-}
-
-.home-feature-photo--macros .home-feature-photo__plate,
-.home-feature-photo--progress .home-feature-photo__plate {
-  border-radius: 1.3rem;
-  background: linear-gradient(180deg, rgba(255, 253, 248, 0.9), rgba(243, 226, 191, 0.82));
-}
-
-.home-feature-photo--macros .home-feature-photo__plate::before,
-.home-feature-photo--progress .home-feature-photo__plate::before,
-.home-feature-photo--awards .home-feature-photo__plate::before {
-  position: absolute;
-  inset: 1rem 1rem 1.1rem;
-  border-left: 0.35rem solid rgba(110, 126, 31, 0.55);
-  border-bottom: 0.35rem solid rgba(110, 126, 31, 0.55);
-  border-radius: 0.25rem;
-  content: '';
-}
-
-.home-feature-photo--macros .home-feature-photo__plate::after,
-.home-feature-photo--progress .home-feature-photo__plate::after {
-  position: absolute;
-  right: 0.95rem;
-  bottom: 1.1rem;
-  width: 2.2rem;
-  height: 2.6rem;
-  border-radius: 0.35rem 0.35rem 0.2rem 0.2rem;
-  background: linear-gradient(90deg, rgba(110, 126, 31, 0.35) 28%, rgba(217, 150, 99, 0.48) 28% 62%, rgba(110, 126, 31, 0.22) 62%);
-  content: '';
-}
-
-.home-feature-photo--recipes .home-feature-photo__plate,
-.home-feature-photo--knowledge .home-feature-photo__plate,
-.home-feature-photo--share .home-feature-photo__plate {
-  border-radius: 0.9rem;
-  background: linear-gradient(90deg, rgba(255, 253, 248, 0.92) 48%, rgba(243, 226, 191, 0.88) 48%);
-}
-
-.home-feature-photo--ai .home-feature-photo__plate {
-  background: radial-gradient(circle at 50% 50%, rgba(255, 253, 248, 0.92) 0 20%, rgba(110, 126, 31, 0.26) 21% 42%, rgba(217, 150, 99, 0.32) 43%);
-}
-
-.home-feature-photo--awards .home-feature-photo__plate {
-  border-radius: 1.2rem 1.2rem 2.3rem 2.3rem;
-  background: linear-gradient(180deg, rgba(255, 253, 248, 0.92), rgba(217, 150, 99, 0.42));
-}
-
-.home-feature-photo--rations,
-.home-feature-photo--recipes {
-  background:
-    radial-gradient(circle at 20% 22%, rgba(255, 253, 248, 0.95) 0 0.6rem, transparent 0.7rem),
-    linear-gradient(135deg, rgba(243, 226, 191, 0.96), rgba(110, 126, 31, 0.22));
-}
-
-.home-feature-photo--share .home-feature-photo__accent {
-  transform: rotate(-8deg);
+  width: 100%;
+  height: 100%;
+  min-height: 8.5rem;
+  object-fit: cover;
 }
