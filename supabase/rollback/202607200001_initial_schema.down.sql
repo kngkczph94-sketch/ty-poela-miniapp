@@ -1,0 +1,25 @@
+-- Roll back only after a backup and only in the environment where the matching migration ran.
+begin;
+drop table if exists public.subscriptions cascade;
+drop table if exists public.favorites cascade;
+drop table if exists public.user_goals cascade;
+drop table if exists public.habit_entries cascade;
+drop table if exists public.measurements cascade;
+drop table if exists public.daily_summaries cascade;
+drop table if exists public.meal_completions cascade;
+drop table if exists public.meal_plan_items cascade;
+drop table if exists public.meal_plans cascade;
+drop table if exists public.ration_meals cascade;
+drop table if exists public.rations cascade;
+drop table if exists public.recipe_ingredients cascade;
+drop table if exists public.ingredients cascade;
+drop table if exists public.recipes cascade;
+drop table if exists public.users cascade;
+drop function if exists public.has_premium_access();
+drop function if exists public.current_app_user_id();
+drop function if exists public.set_updated_at();
+drop type if exists public.goal_kind;
+drop type if exists public.subscription_status;
+drop type if exists public.meal_source;
+drop type if exists public.meal_type;
+commit;
