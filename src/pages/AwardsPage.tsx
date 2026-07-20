@@ -1,3 +1,5 @@
+import { BackButton } from '../components/BackButton';
+
 export type Award = {
   days: number;
   title: string;
@@ -42,11 +44,12 @@ const getDayWord = (days: number) => {
 const getDayLabel = (days: number) => `${days} ${getDayWord(days)}`;
 const getAwardDescription = (days: number) => `${getDayLabel(days)} вместе`;
 
-export function AwardsPage({ uniqueDaysCount }: { uniqueDaysCount: number }) {
+export function AwardsPage({ uniqueDaysCount, onBack }: { uniqueDaysCount: number; onBack: () => void }) {
   const currentAward = getCurrentAward(uniqueDaysCount);
   const nextAward = getNextAward(uniqueDaysCount);
 
   return <section className="flex flex-1 flex-col">
+    <BackButton onClick={onBack} />
     <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/25 to-[#FFFDF8] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
       <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">ЗВАНИЯ ЗА РЕГУЛЯРНОСТЬ</p>
       <h1 className="mt-2 text-3xl font-black tracking-tight">Награды</h1>

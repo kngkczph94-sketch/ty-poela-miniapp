@@ -1,3 +1,4 @@
+import { BackButton } from '../components/BackButton';
 import { useEffect, useState } from 'react';
 import { menuDays, menuMealSlots, menuSlotLabels, type MenuDay, type MenuMealSlot } from '../types/menu';
 import { FoodPhotoPlaceholder, getRecipeFoodVariant } from '../components/FoodPhotoPlaceholder';
@@ -82,13 +83,7 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
 
   return (
     <section className="flex flex-1 flex-col">
-      <button
-        className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-[#37410F] shadow-sm shadow-[#F3E2BF]/70 transition hover:-translate-x-0.5 hover:bg-[#F3E2BF]"
-        onClick={onBack}
-        type="button"
-      >
-        ← Назад к рецептам
-      </button>
+      <BackButton onClick={onBack} />
 
       <article className="overflow-hidden rounded-[2rem] bg-[#FFFDF8] shadow-xl shadow-[#F3E2BF]/70">
         <div className="bg-[#F3E2BF] p-6 text-[#37410F]">

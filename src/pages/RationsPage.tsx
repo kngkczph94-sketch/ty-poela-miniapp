@@ -1,3 +1,4 @@
+import { BackButton } from '../components/BackButton';
 import { useMemo, useState } from 'react';
 import { FoodPhotoPlaceholder } from '../components/FoodPhotoPlaceholder';
 import { dailyRations } from '../data/rations';
@@ -34,7 +35,7 @@ const buildRationSearchText = (ration: DailyRation) => [
   ]),
 ].join(' ');
 
-export function RationsPage({ hasActiveSubscription, onOpenAccess, onOpenRation }: { hasActiveSubscription: boolean; onOpenAccess: () => void; onOpenRation: (ration: DailyRation) => void }) {
+export function RationsPage({ hasActiveSubscription, onBack, onOpenAccess, onOpenRation }: { hasActiveSubscription: boolean; onBack: () => void; onOpenAccess: () => void; onOpenRation: (ration: DailyRation) => void }) {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
   const rations = useMemo(() => {
@@ -49,6 +50,7 @@ export function RationsPage({ hasActiveSubscription, onOpenAccess, onOpenRation 
   }, [filter, search]);
 
   return <section className="flex flex-1 flex-col">
+    <BackButton onClick={onBack} />
     <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
       <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Рационы дня</p>
       <h1 className="mt-2 text-3xl font-black tracking-tight">Рационы</h1>

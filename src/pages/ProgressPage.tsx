@@ -1,7 +1,9 @@
+import { BackButton } from '../components/BackButton';
 import { useMemo, useState, type FormEvent } from 'react';
 import type { HabitEntry, MeasurementEntry } from '../types/progress';
 
 type ProgressPageProps = {
+  onBack: () => void;
   measurements: MeasurementEntry[];
   habits: HabitEntry[];
   onSaveMeasurement: (entry: MeasurementEntry) => void;
@@ -138,7 +140,7 @@ function LineChart({ entries, selectedMetric }: { entries: MeasurementEntry[]; s
   );
 }
 
-export function ProgressPage({ measurements, habits, onSaveMeasurement, onSaveHabit }: ProgressPageProps) {
+export function ProgressPage({ measurements, habits, onBack, onSaveMeasurement, onSaveHabit }: ProgressPageProps) {
   const [activeTab, setActiveTab] = useState<ProgressTab>('measurements');
   const [measurementForm, setMeasurementForm] = useState(() => createMeasurementFormState(measurements));
   const [habitForm, setHabitForm] = useState(() => createHabitFormState(habits));
@@ -185,6 +187,7 @@ export function ProgressPage({ measurements, habits, onSaveMeasurement, onSaveHa
 
   return (
     <section className="flex flex-1 flex-col">
+      <BackButton onClick={onBack} />
       <div className="overflow-hidden rounded-[2rem] bg-[#F3E2BF] p-6 text-[#37410F] shadow-xl shadow-[#F3E2BF]/70">
         <h1 className="text-3xl font-black tracking-tight">Прогресс</h1>
         <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Вес, шаги, сон и вода помогают видеть общую картину и оценивать прогресс.</p>

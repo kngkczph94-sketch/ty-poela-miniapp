@@ -1,3 +1,4 @@
+import { BackButton } from '../components/BackButton';
 import { useEffect, useMemo, useState } from 'react';
 import { RecipeCard } from '../components/RecipeCard';
 import { recipesWithRationImages } from '../data/recipesWithRationImages';
@@ -116,9 +117,10 @@ type RecipesPageProps = {
   hasActiveSubscription: boolean;
   onOpenAccess: () => void;
   onOpenRecipe: (recipe: Recipe) => void;
+  onBack: () => void;
 };
 
-export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe }: RecipesPageProps) {
+export function RecipesPage({ hasActiveSubscription, onBack, onOpenAccess, onOpenRecipe }: RecipesPageProps) {
   const [search, setSearch] = useState('');
   const [activeMealType, setActiveMealType] = useState<ActiveMealType>('все');
   const [toastMessage, setToastMessage] = useState('');
@@ -169,6 +171,7 @@ export function RecipesPage({ hasActiveSubscription, onOpenAccess, onOpenRecipe 
 
   return (
     <section className="flex flex-1 flex-col">
+    <BackButton onClick={onBack} />
       <div className="rounded-[2rem] bg-[#F3E2BF] p-6 text-[#37410F] shadow-xl shadow-[#F3E2BF]/70">
         <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Каталог</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Рецепты</h1>
