@@ -1,3 +1,4 @@
+import { BackButton } from '../components/BackButton';
 import { useState } from 'react';
 import { dailyRations } from '../data/rations';
 import { adaptRationToCalories, calculateMealsNutrition } from '../types/ration';
@@ -101,7 +102,7 @@ export function MacroCalculatorPage({ onBack, onOpenRation }: MacroCalculatorPag
 
   return (
     <section className="flex flex-1 flex-col">
-      <button className="mb-4 self-start rounded-2xl bg-[#FFFDF8] px-4 py-3 text-sm font-black text-[#37410F] shadow-sm shadow-[#F3E2BF]/70 transition hover:bg-[#F3E2BF]" onClick={onBack} type="button">← Назад</button>
+      <BackButton onClick={onBack} />
       <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
         <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Калькулятор</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Расчёт БЖУ</h1>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { BackButton } from './components/BackButton';
 import { AwardsPage } from './pages/AwardsPage';
 import { CartPage } from './pages/CartPage';
 import { MacroCalculatorPage } from './pages/MacroCalculatorPage';
@@ -185,11 +186,13 @@ function AccessPage({
   subscriptionUntil,
   onActivate,
   onOpenRecipes,
+  onBack,
 }: {
   subscriptionStatus: SubscriptionStatus;
   subscriptionUntil?: string;
   onActivate: () => void;
   onOpenRecipes: () => void;
+  onBack: () => void;
 }) {
   const formattedUntil = subscriptionUntil
     ? new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long' }).format(new Date(subscriptionUntil))
@@ -197,6 +200,7 @@ function AccessPage({
 
   return (
     <section className="flex flex-1 flex-col">
+      <BackButton onClick={onBack} />
       <div className="overflow-hidden rounded-[2rem] bg-[#F3E2BF] p-6 text-[#37410F] shadow-xl shadow-[#F3E2BF]/70">
         <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Подписка</p>
         <h1 className="mt-2 text-3xl font-black leading-tight tracking-tight">Открой рецепты, меню и корзину</h1>
@@ -262,7 +266,7 @@ const appShareText = `Я пользуюсь «Ты поела» — здесь �
 Попробуй тоже:
 https://kngkczph94-sketch.github.io/ty-poela-miniapp/`;
 
-function ShareAppPage() {
+function ShareAppPage({ onBack }: { onBack: () => void }) {
   const [copiedMessage, setCopiedMessage] = useState('');
   const [manualShareText, setManualShareText] = useState('');
 
@@ -299,6 +303,7 @@ function ShareAppPage() {
 
   return (
     <section className="flex flex-1 flex-col">
+      <BackButton onClick={onBack} />
       <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
         <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Поделиться</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Поделиться приложением</h1>
@@ -358,6 +363,9 @@ function App() {
   const [activeTab, setActiveTab] = useState<NavigationTab>(initialRecipe ? 'recipes' : initialRation ? 'rations' : 'home');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(initialRecipe);
   const [selectedRation, setSelectedRation] = useState<DailyRation | null>(initialRation);
+  const [recipeReturnTarget, setRecipeReturnTarget] = useState<{ tab: NavigationTab; ration?: DailyRation }>({ tab: 'recipes' });
+  const [rationReturnTab, setRationReturnTab] = useState<NavigationTab>('rations');
+  const [accessReturnTarget, setAccessReturnTarget] = useState<{ tab: NavigationTab; recipe?: Recipe; ration?: DailyRation }>({ tab: 'home' });
   const [recipeToOpenAfterAccess, setRecipeToOpenAfterAccess] = useState<Recipe | null>(initialRecipe);
   const [weeklyMenu, setWeeklyMenu] = useState(createEmptyWeeklyMenu);
   const [measurementEntries, setMeasurementEntries] = useState<MeasurementEntry[]>(() => {
@@ -389,11 +397,11 @@ function App() {
   const hasActiveSubscription = userProfile.subscriptionStatus === 'active';
 
   const openRecipes = () => { setSelectedRecipe(null); setSelectedRation(null); setActiveTab('recipes'); };
-  const openRecipe = (recipe: Recipe) => { setSelectedRecipe(recipe); setSelectedRation(null); setActiveTab('recipes'); };
+  const openRecipe = (recipe: Recipe) => { setRecipeReturnTarget({ tab: activeTab, ration: selectedRation ?? undefined }); setSelectedRecipe(recipe); setSelectedRation(null); setActiveTab('recipes'); };
   const openRations = () => { setSelectedRation(null); setSelectedRecipe(null); setActiveTab('rations'); };
   const openMacros = () => { setSelectedRation(null); setSelectedRecipe(null); setActiveTab('macros'); };
-  const openRation = (ration: DailyRation) => { setSelectedRation(ration); setSelectedRecipe(null); setActiveTab('rations'); };
-  const openAccess = (recipe?: Recipe) => { setRecipeToOpenAfterAccess(recipe ?? selectedRecipe); setActiveTab('access'); };
+  const openRation = (ration: DailyRation) => { setRationReturnTab(activeTab); setSelectedRation(ration); setSelectedRecipe(null); setActiveTab('rations'); };
+  const openAccess = (recipe?: Recipe) => { setAccessReturnTarget({ tab: activeTab, recipe: recipe ?? selectedRecipe ?? undefined, ration: selectedRation ?? undefined }); setRecipeToOpenAfterAccess(recipe ?? selectedRecipe); setActiveTab('access'); };
   const activateSubscription = () => { const until = new Date(); until.setDate(until.getDate() + 7); setUserProfile({ subscriptionStatus: 'active', subscriptionUntil: until.toISOString() }); if (recipeToOpenAfterAccess) { setSelectedRecipe(recipeToOpenAfterAccess); setRecipeToOpenAfterAccess(null); setActiveTab('recipes'); } };
 
   const addRecipeToMenu = (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => {
@@ -419,8 +427,45 @@ function App() {
     return [entry, ...entriesWithoutToday].sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
   });
 
+  const goHome = () => { setActiveTab('home'); setSelectedRecipe(null); setSelectedRation(null); };
+  const goBack = () => {
+    if (selectedRecipe) {
+      setSelectedRecipe(null);
+      setSelectedRation(recipeReturnTarget.ration ?? null);
+      setActiveTab(recipeReturnTarget.tab === 'home' ? 'recipes' : recipeReturnTarget.tab);
+      return;
+    }
+    if (selectedRation) {
+      setSelectedRation(null);
+      setActiveTab(rationReturnTab === 'home' ? 'rations' : rationReturnTab);
+      return;
+    }
+    if (activeTab === 'access') {
+      setSelectedRecipe(accessReturnTarget.recipe ?? null);
+      setSelectedRation(accessReturnTarget.ration ?? null);
+      setActiveTab(accessReturnTarget.tab === 'access' ? 'home' : accessReturnTarget.tab);
+      return;
+    }
+    goHome();
+  };
+
+  useEffect(() => {
+    const telegramBackButton = (window as Window & {
+      Telegram?: { WebApp?: { BackButton?: { show: () => void; hide: () => void; onClick: (callback: () => void) => void; offClick: (callback: () => void) => void } } };
+    }).Telegram?.WebApp?.BackButton;
+
+    if (activeTab === 'home' && !selectedRecipe && !selectedRation) {
+      telegramBackButton?.hide();
+      return;
+    }
+
+    telegramBackButton?.show();
+    telegramBackButton?.onClick(goBack);
+    return () => telegramBackButton?.offClick(goBack);
+  });
+
   return <main className="min-h-screen bg-gradient-to-b from-[#FBF6EC] via-[#F3E2BF]/45 to-[#FBF6EC] text-[#37410F]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
-    {activeTab === 'awards' ? <AwardsPage uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage /> : activeTab === 'progress' ? <ProgressPage habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={() => setSelectedRecipe(null)} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={() => setSelectedRation(null)} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={() => setActiveTab('home')} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} /> : activeTab === 'cart' ? <CartPage weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage onOpenRations={openRations} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} />}
+    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage onOpenRations={openRations} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} />}
   </div><nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#D99663]/35 bg-[#FFFDF8]/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#D99663]/25 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id ? 'bg-[#6E7E1F] text-white shadow-md shadow-[#6E7E1F]/20' : 'text-[#8B725F] hover:bg-[#F3E2BF]/70 hover:text-[#37410F]'}`} key={item.id} onClick={()=>{ setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }
 

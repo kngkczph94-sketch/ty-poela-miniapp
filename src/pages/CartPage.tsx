@@ -1,3 +1,4 @@
+import { BackButton } from '../components/BackButton';
 import { useMemo, useState } from 'react';
 import { menuDays, menuMealSlots, type WeeklyMenu } from '../types/menu';
 import type { Ingredient, IngredientCategory } from '../types/recipe';
@@ -21,6 +22,7 @@ type CartIngredient = Ingredient & {
 
 type CartPageProps = {
   weeklyMenu: WeeklyMenu;
+  onBack: () => void;
   onOpenRecipes: () => void;
 };
 
@@ -78,7 +80,7 @@ const buildCopyText = (ingredients: CartIngredient[]) => {
   return lines.join('\n').trim();
 };
 
-export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
+export function CartPage({ weeklyMenu, onBack, onOpenRecipes }: CartPageProps) {
   const [checkedIngredientIds, setCheckedIngredientIds] = useState<string[]>([]);
   const [copyMessage, setCopyMessage] = useState('');
   const cartIngredients = useMemo(() => buildCartIngredients(weeklyMenu), [weeklyMenu]);
@@ -108,6 +110,7 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
   if (cartIngredients.length === 0) {
     return (
       <section className="flex flex-1 flex-col">
+      <BackButton onClick={onBack} />
         <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
           <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">СПИСОК ПОКУПОК</p>
           <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>
@@ -128,6 +131,7 @@ export function CartPage({ weeklyMenu, onOpenRecipes }: CartPageProps) {
 
   return (
     <section className="flex flex-1 flex-col">
+      <BackButton onClick={onBack} />
       <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
         <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">СПИСОК ПОКУПОК</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Корзина продуктов</h1>

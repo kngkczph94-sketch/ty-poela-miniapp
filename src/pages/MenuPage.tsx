@@ -1,3 +1,4 @@
+import { BackButton } from '../components/BackButton';
 import { FoodPhotoPlaceholder } from '../components/FoodPhotoPlaceholder';
 import { calculateMealsNutrition } from '../types/ration';
 import { menuDays, menuMealSlots, menuSlotLabels, type MenuDay, type MenuMealSlot, type WeeklyMenu } from '../types/menu';
@@ -5,16 +6,18 @@ import type { Meal } from '../types/recipe';
 
 type MenuPageProps = {
   weeklyMenu: WeeklyMenu;
+  onBack: () => void;
   onOpenCart: () => void;
   onOpenRations: () => void;
   onOpenRecipe: (recipe: Meal) => void;
   onRemoveRecipe: (day: MenuDay, slot: MenuMealSlot) => void;
 };
 
-export function MenuPage({ weeklyMenu, onOpenCart, onOpenRations, onOpenRecipe, onRemoveRecipe }: MenuPageProps) {
+export function MenuPage({ weeklyMenu, onBack, onOpenCart, onOpenRations, onOpenRecipe, onRemoveRecipe }: MenuPageProps) {
   const hasMealsInPlan = menuDays.some((day) => menuMealSlots.some((slot) => Boolean(weeklyMenu[day].meals[slot])));
 
   return <section className="flex flex-1 flex-col">
+    <BackButton onClick={onBack} />
     <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
       <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">План питания</p>
       <h1 className="mt-2 text-3xl font-black tracking-tight">План</h1>
