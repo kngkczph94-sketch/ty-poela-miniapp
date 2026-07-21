@@ -1,0 +1,2558 @@
+{
+  "version": 1,
+  "bucket": "content-images",
+  "entries": [
+    {
+      "oldPath": "public/images/home/home-ai-selection.jpg",
+      "objectPath": "legacy-assets/home/home-ai-selection.jpg",
+      "entity": "asset",
+      "legacyId": "public/images/home/home-ai-selection.jpg",
+      "mime": "image/jpeg",
+      "sha256": "8bb684358181de82f31fe5cfa251ef6a7260d2e0ef89e6301f3c06821d377142"
+    },
+    {
+      "oldPath": "public/images/home/home-hero.jpg",
+      "objectPath": "legacy-assets/home/home-hero.jpg",
+      "entity": "asset",
+      "legacyId": "public/images/home/home-hero.jpg",
+      "mime": "image/jpeg",
+      "sha256": "298818a91df9b8ce374334aa0b899692c3db2303496505557c1d59ef8cb04ee9"
+    },
+    {
+      "oldPath": "public/images/home/home-macros.jpg",
+      "objectPath": "legacy-assets/home/home-macros.jpg",
+      "entity": "asset",
+      "legacyId": "public/images/home/home-macros.jpg",
+      "mime": "image/jpeg",
+      "sha256": "3853978de55a33518fe7f8af56bf8e315d5a2f6902354d3927076f5347c9fdfc"
+    },
+    {
+      "oldPath": "public/images/home/home-progress.jpg",
+      "objectPath": "legacy-assets/home/home-progress.jpg",
+      "entity": "asset",
+      "legacyId": "public/images/home/home-progress.jpg",
+      "mime": "image/jpeg",
+      "sha256": "353d5e3fd0cef1e2adfe2ffea199d08cfa33c8759fb91011d093c0f668ba26b8"
+    },
+    {
+      "oldPath": "public/images/home/home-rations.jpg",
+      "objectPath": "legacy-assets/home/home-rations.jpg",
+      "entity": "asset",
+      "legacyId": "public/images/home/home-rations.jpg",
+      "mime": "image/jpeg",
+      "sha256": "3672c2db50adc4b6c582826686eef7f46debcc1e2018b5c3e3cd9c4f27971b0b"
+    },
+    {
+      "oldPath": "public/images/home/home-recipes.jpg",
+      "objectPath": "legacy-assets/home/home-recipes.jpg",
+      "entity": "asset",
+      "legacyId": "public/images/home/home-recipes.jpg",
+      "mime": "image/jpeg",
+      "sha256": "5dcff7a714e5be502ca106cb6ac78243abce85939c9d4792c35387eb0161bb4a"
+    },
+    {
+      "oldPath": "public/images/home/home-rewards.jpg",
+      "objectPath": "legacy-assets/home/home-rewards.jpg",
+      "entity": "asset",
+      "legacyId": "public/images/home/home-rewards.jpg",
+      "mime": "image/jpeg",
+      "sha256": "e15a797323ab7e0c5a1f074af8d57d1b347e1d47ee8c82121500bf658e7e46e9"
+    },
+    {
+      "oldPath": "public/images/home/home-share.jpg",
+      "objectPath": "legacy-assets/home/home-share.jpg",
+      "entity": "asset",
+      "legacyId": "public/images/home/home-share.jpg",
+      "mime": "image/jpeg",
+      "sha256": "a403a0b3ce52fd833925285d20e2cd5a2f0ec8212732613db9bfa4f5fed54a8b"
+    },
+    {
+      "oldPath": "public/images/recipes/home-knowledge.jpg",
+      "objectPath": "legacy-assets/recipes/home-knowledge.jpg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/home-knowledge.jpg",
+      "mime": "image/jpeg",
+      "sha256": "561beb7219f9f9f458bace7c8a644a836b9031bdaa90a3af4696cee2817939d6"
+    },
+    {
+      "oldPath": "public/images/recipes/home-recipes.jpg",
+      "objectPath": "legacy-assets/recipes/home-recipes.jpg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/home-recipes.jpg",
+      "mime": "image/jpeg",
+      "sha256": "0491d90c0c313311180437e9661f6efbc6ce0e4b7a19b1eece24faa58ef12211"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-001-dark.jpeg",
+      "objectPath": "legacy-assets/recipes/ration-001-dark.jpeg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/ration-001-dark.jpeg",
+      "mime": "image/jpeg",
+      "sha256": "77450d08098d8b66535a1cd61f392bf19830102b7347bfaa5d5fde1e26a8a7f7"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-002-dark.jpeg",
+      "objectPath": "legacy-assets/recipes/ration-002-dark.jpeg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/ration-002-dark.jpeg",
+      "mime": "image/jpeg",
+      "sha256": "1fc64277f8fd8d9893fa34f57bd3125c5b2ec610547e755ad045a3f9b944f573"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-003-dark.jpeg",
+      "objectPath": "legacy-assets/recipes/ration-003-dark.jpeg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/ration-003-dark.jpeg",
+      "mime": "image/jpeg",
+      "sha256": "7720cc1760c6dbed7c7ab83450fc65a2a8b519eac3afcd694864543e9fc34839"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-004-dark.jpeg",
+      "objectPath": "legacy-assets/recipes/ration-004-dark.jpeg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/ration-004-dark.jpeg",
+      "mime": "image/jpeg",
+      "sha256": "ac3f401bfe5a33fdbf583322366acb7df40aaaabbd4cb9368d93a72bd546a3ff"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-040-frozen-bananas.jpeg",
+      "objectPath": "legacy-assets/recipes/recipe-book-040-frozen-bananas.jpeg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/recipe-book-040-frozen-bananas.jpeg",
+      "mime": "image/jpeg",
+      "sha256": "16b9d58feade4592ef996bfd6703c138305ff3e55f3e549864901c8d57357e08"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-042-warm-beef-green-bean-salad.jpeg",
+      "objectPath": "legacy-assets/recipes/recipe-book-042-warm-beef-green-bean-salad.jpeg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/recipe-book-042-warm-beef-green-bean-salad.jpeg",
+      "mime": "image/jpeg",
+      "sha256": "f3dd01d75ae8c7a2e812457cff66a1dd7bf25cf47b0466f9be33c28b9c90e058"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-070-coconut-cookies.jpeg",
+      "objectPath": "legacy-assets/recipes/recipe-book-070-coconut-cookies.jpeg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/recipe-book-070-coconut-cookies.jpeg",
+      "mime": "image/jpeg",
+      "sha256": "baca91e11c860c6c056995d11a7490b39c6fc28737cc3c49810a6c44d0a96c89"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-072-meringue-roll.jpeg",
+      "objectPath": "legacy-assets/recipes/recipe-book-072-meringue-roll.jpeg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/recipe-book-072-meringue-roll.jpeg",
+      "mime": "image/jpeg",
+      "sha256": "f1e72e3be7ae01fec65e969ad6f0e2c82e387b6325341afb8156154d898f9cb4"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-073.jpeg",
+      "objectPath": "legacy-assets/recipes/recipe-book-073.jpeg",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/recipe-book-073.jpeg",
+      "mime": "image/jpeg",
+      "sha256": "8f7aa4171f9e05138d7d4ddf8bb0a1b51f44e9c2986cab229ec799878f9e6c16"
+    },
+    {
+      "oldPath": "public/images/recipes/гармония_вкусов_на_темном_фоне.png",
+      "objectPath": "legacy-assets/recipes/гармония_вкусов_на_темном_фоне.png",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/гармония_вкусов_на_темном_фоне.png",
+      "mime": "image/png",
+      "sha256": "dd1e969163e5fd028114d2ef4f255669c87b8c6103435bc75d5acf80a484711e"
+    },
+    {
+      "oldPath": "public/images/recipes/жареный_лосось_с_картошкой_и_травами.png",
+      "objectPath": "legacy-assets/recipes/жареный_лосось_с_картошкой_и_травами.png",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/жареный_лосось_с_картошкой_и_травами.png",
+      "mime": "image/png",
+      "sha256": "a8d3c03a4b96589d03397bc18d828adf0c7beeb82ffec70251cfab2852dd6c04"
+    },
+    {
+      "oldPath": "public/images/recipes/запечённые_яблоки_на_керамической_тарелке.png",
+      "objectPath": "legacy-assets/recipes/запечённые_яблоки_на_керамической_тарелке.png",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/запечённые_яблоки_на_керамической_тарелке.png",
+      "mime": "image/png",
+      "sha256": "2842204ce19c31c2a56d23c89f2c030af9705fe420fecc12f5f5b3bf284660d0"
+    },
+    {
+      "oldPath": "public/images/recipes/паста_с_мясным_соусом_и_базиликом.png",
+      "objectPath": "legacy-assets/recipes/паста_с_мясным_соусом_и_базиликом.png",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/паста_с_мясным_соусом_и_базиликом.png",
+      "mime": "image/png",
+      "sha256": "860a1e87a564dfcb5f871fef05ae4219d9e58259312501dba8bced4c23afb381"
+    },
+    {
+      "oldPath": "public/images/recipes/творожники_с_ягодами_и_йогуртом.png",
+      "objectPath": "legacy-assets/recipes/творожники_с_ягодами_и_йогуртом.png",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/творожники_с_ягодами_и_йогуртом.png",
+      "mime": "image/png",
+      "sha256": "a0a9341bb10e25adc64f4af0f40cde7926c0fbb3615693826bd99d40c7677eb9"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-001-breakfast.png",
+      "objectPath": "rations/ration-1/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-1:breakfast",
+      "mime": "image/png",
+      "sha256": "63c7864247693393cd421194d73f8510778c072b838eb7e9e1225b6d2368b483"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-001-cover.png",
+      "objectPath": "rations/ration-1/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-1",
+      "mime": "image/png",
+      "sha256": "669123f17ad8777f04a7276e7aef4e1dd210de5c150929b7f1c88a5c0b6179ac"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-001-dinner.png",
+      "objectPath": "rations/ration-1/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-1:dinner",
+      "mime": "image/png",
+      "sha256": "3b307c62daa2d156aaeae389aefa8af3e50d07aa31e8465c60681f8aed5645cd"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-001-lunch.png",
+      "objectPath": "rations/ration-1/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-1:lunch",
+      "mime": "image/png",
+      "sha256": "54d5b7bf44151d40047fb6956292a2416ae18d2d49893e37c7cd2f24fa84aac0"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-001-snack.png",
+      "objectPath": "rations/ration-1/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-1:snack",
+      "mime": "image/png",
+      "sha256": "f6fd79fecd5db0b4f64da6fee2dd204430eb869f16632ce544d72c7dc4baf6cf"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-010-breakfast.png",
+      "objectPath": "rations/ration-10/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-10:breakfast",
+      "mime": "image/png",
+      "sha256": "f086e33cb5cfcb6e5c5002e40c59f0719d867edb581f261a9e67e0a839c21139"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-010-cover.png",
+      "objectPath": "rations/ration-10/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-10",
+      "mime": "image/png",
+      "sha256": "92163db91a1e325954b3744285b00bec7d34de7312c8fec1cb7dcebe17876150"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-010-dinner.png",
+      "objectPath": "rations/ration-10/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-10:dinner",
+      "mime": "image/png",
+      "sha256": "d83bed0a64140948a837ef5e725943172ff224e2522635f5e0862255490ca400"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-010-lunch.png",
+      "objectPath": "rations/ration-10/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-10:lunch",
+      "mime": "image/png",
+      "sha256": "ba30ffaa045bb5499e77343de915fa3386d0ff7dfc960b744506eccabcb35d01"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-010-snack.png",
+      "objectPath": "rations/ration-10/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-10:snack",
+      "mime": "image/png",
+      "sha256": "97930618abafb56e7fa3df060d601eb27a40c8ce66e0bb89e0d07ebfdec81a0e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-011-breakfast.png",
+      "objectPath": "rations/ration-11/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-11:breakfast",
+      "mime": "image/png",
+      "sha256": "da55fb6f1d0c67a9c1b0e128f67da47c6d9730b19bff47faf083210c53370214"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-011-cover.png",
+      "objectPath": "rations/ration-11/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-11",
+      "mime": "image/png",
+      "sha256": "7cb8feac8045d5c0cfe9ed716a28008cd3419fbadec0b4c08cf1b37dd1875275"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-011-dinner.png",
+      "objectPath": "rations/ration-11/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-11:dinner",
+      "mime": "image/png",
+      "sha256": "01cbdd40f7e41cb6da7cd91e277fb4cdc2afce141cbde7907a25f23cd5979667"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-011-lunch.png",
+      "objectPath": "rations/ration-11/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-11:lunch",
+      "mime": "image/png",
+      "sha256": "a1b79b917482f9344b2b23a4288bc64c566567c62e69fc616d7398df66f2409c"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-011-snack.png",
+      "objectPath": "rations/ration-11/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-11:snack",
+      "mime": "image/png",
+      "sha256": "25bccaef0f5339874ecdd956e851933a95bad22b95201551e3e75bc4d7177901"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-012-breakfast.png",
+      "objectPath": "rations/ration-12/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-12:breakfast",
+      "mime": "image/png",
+      "sha256": "971474bfe565c262d4bb10574cb8be59fa11ce545548c84c2c79437ffd5fcd44"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-012-cover.png",
+      "objectPath": "rations/ration-12/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-12",
+      "mime": "image/png",
+      "sha256": "fb8ecffa8eec4b60b42585af2f1dd321716fbcecef5d49117d952457e7a3cd6e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-012-dinner.png",
+      "objectPath": "rations/ration-12/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-12:dinner",
+      "mime": "image/png",
+      "sha256": "0bf50a94e7b9b81488f60c96e0b619cd91f837696a1336f1aaf3a3bcdacb5be5"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-012-lunch.png",
+      "objectPath": "rations/ration-12/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-12:lunch",
+      "mime": "image/png",
+      "sha256": "8c6e334be68ac14a926f925277d920b01bd6358fc4c018e28660763f50bce33c"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-012-snack.png",
+      "objectPath": "rations/ration-12/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-12:snack",
+      "mime": "image/png",
+      "sha256": "14265742d6ce1eba888f75ca3761e3d73b940fa1909e33336b198471aeeb220a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-013-breakfast.png",
+      "objectPath": "rations/ration-13/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-13:breakfast",
+      "mime": "image/png",
+      "sha256": "65077d20276af908fd2e13f039cb7d53474928b006b9d01b06a3e95b4c586320"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-013-cover.png",
+      "objectPath": "rations/ration-13/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-13",
+      "mime": "image/png",
+      "sha256": "d371b2277a94e3adaf60fcb764768747e8e640bc53daf792772ca9cd0cd8ca83"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-013-dinner.png",
+      "objectPath": "rations/ration-13/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-13:dinner",
+      "mime": "image/png",
+      "sha256": "72c0f406e41f15c84407ac3c5e31bc28e2450104e7b0a1aa06ab11e81e3420eb"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-013-lunch.png",
+      "objectPath": "rations/ration-13/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-13:lunch",
+      "mime": "image/png",
+      "sha256": "e83fcefcd24b28cfaf9b1eeee0b185d8d09a9f1f69754a8f8fe51c4574596a85"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-013-snack.png",
+      "objectPath": "rations/ration-13/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-13:snack",
+      "mime": "image/png",
+      "sha256": "84e9faa1db191f9462a03173d3ea429825dbdcd5a0413fcea04e45a63dbcc4a0"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-014-breakfast.png",
+      "objectPath": "rations/ration-14/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-14:breakfast",
+      "mime": "image/png",
+      "sha256": "6235e33df1583f1b5b96f4f236bcf5d048ca86978abbacc7a23a4c68f8f34c1c"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-014-cover.png",
+      "objectPath": "rations/ration-14/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-14",
+      "mime": "image/png",
+      "sha256": "320e764b7f1765dd1e903b588df48ee4d293bf5f722404a5219b6720825be7cf"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-014-dinner.png",
+      "objectPath": "rations/ration-14/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-14:dinner",
+      "mime": "image/png",
+      "sha256": "cf43435a82bbc4443872b975ed48efe86b5b419883ab34199e63d1f4be192af0"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-014-lunch.png",
+      "objectPath": "rations/ration-14/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-14:lunch",
+      "mime": "image/png",
+      "sha256": "1a20ca5ee99626ad0d145e16bc0310de4e0568b8d21631ed7ba94d4dd10eca9d"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-014-snack.png",
+      "objectPath": "rations/ration-14/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-14:snack",
+      "mime": "image/png",
+      "sha256": "29ee6e4159a6a7a7ea02fba7319ea9453ef00352c9883f00eb6c837d336dda56"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-015-breakfast.png",
+      "objectPath": "rations/ration-15/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-15:breakfast",
+      "mime": "image/png",
+      "sha256": "fb9462d5a0570594446d97d5bdf93b1a2e327b67b19507e1ce1cfc255b2a8392"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-015-cover.png",
+      "objectPath": "rations/ration-15/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-15",
+      "mime": "image/png",
+      "sha256": "2a0a5d6117dd0c56f081339ac5220c4ae1245f3a0528121f1b4e8139d9626611"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-015-dinner.png",
+      "objectPath": "rations/ration-15/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-15:dinner",
+      "mime": "image/png",
+      "sha256": "7f8944504b70949d6db0dbf47192d6b1a5ad651bed0bf96b5c33001096391e6a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-015-lunch.png",
+      "objectPath": "rations/ration-15/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-15:lunch",
+      "mime": "image/png",
+      "sha256": "f2c9236ca63f215b7bbc29ece9f7aa833c0d8f0180c24946861871fa9b49dcdd"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-015-snack.png",
+      "objectPath": "rations/ration-15/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-15:snack",
+      "mime": "image/png",
+      "sha256": "9d7a211e5e352e09c5ea59b3b016f81f0ac7586adf47ebc5413ca935bd679de8"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-016-breakfast.png",
+      "objectPath": "rations/ration-16/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-16:breakfast",
+      "mime": "image/png",
+      "sha256": "b1444cf202671695bda29ceca4d924c3ff7263a184e2d24f5b3941588a078892"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-016-cover.png",
+      "objectPath": "rations/ration-16/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-16",
+      "mime": "image/png",
+      "sha256": "74e1f4f90d530635e3a6872cdb7d09c79c789cd87fa3f6986e2d35cda0ac39d6"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-016-dinner.png",
+      "objectPath": "rations/ration-16/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-16:dinner",
+      "mime": "image/png",
+      "sha256": "57ee6b61c31ae52bb97fad94b80caeb684cfe1ce698217ea4c4c5301f2c72d2f"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-016-lunch.png",
+      "objectPath": "rations/ration-16/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-16:lunch",
+      "mime": "image/png",
+      "sha256": "82c74440a30dc05c8e5934a8cd859aa0d79edec59e413abf72d9ba7f14ebbfa3"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-016-snack.png",
+      "objectPath": "rations/ration-16/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-16:snack",
+      "mime": "image/png",
+      "sha256": "1bcbd1d2410eb8d2bfab8051b25e2b15beff712816b039fe944c25ac65502dbd"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-017-breakfast.png",
+      "objectPath": "rations/ration-17/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-17:breakfast",
+      "mime": "image/png",
+      "sha256": "49fc0fd864c1a2e94b7c69a83d2a8717f679dd1ecb7f6d5efa1e8472d1a7995f"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-017-cover.png",
+      "objectPath": "rations/ration-17/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-17",
+      "mime": "image/png",
+      "sha256": "c3230969e949a6ecbacbf02468cca9e477facaa39223830444080c40ad4b1d94"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-017-dinner.png",
+      "objectPath": "rations/ration-17/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-17:dinner",
+      "mime": "image/png",
+      "sha256": "98ba14a115ce09ba39e9f739b35d10eff611211da3c295c3ab7ff622b9928c20"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-017-lunch.png",
+      "objectPath": "rations/ration-17/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-17:lunch",
+      "mime": "image/png",
+      "sha256": "6efca51715ff10d9fc85c8a160069acd175db7cb7b908315cb2e7f7d69bb45d6"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-017-snack.png",
+      "objectPath": "rations/ration-17/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-17:snack",
+      "mime": "image/png",
+      "sha256": "576094f07fab680ad842095d7afde11b573163e50e7261a1f6ce57de0733ae99"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-018-breakfast.png",
+      "objectPath": "rations/ration-18/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-18:breakfast",
+      "mime": "image/png",
+      "sha256": "2c69cfd5ddaece0e81270274882478361517673c74b78a48952ccbaf9bc948ed"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-018-cover.png",
+      "objectPath": "rations/ration-18/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-18",
+      "mime": "image/png",
+      "sha256": "cdf28ba9946713c74f1da0724297d9f30e23fcaedf65a61db271afcc539471e6"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-018-dinner.png",
+      "objectPath": "rations/ration-18/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-18:dinner",
+      "mime": "image/png",
+      "sha256": "a5748e65b09cfac80ae280c1ea158d98b12d555b3dc51bb9991b646ed3f2ee39"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-018-lunch.png",
+      "objectPath": "rations/ration-18/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-18:lunch",
+      "mime": "image/png",
+      "sha256": "61920b03a747f4ccce5ccc8d5b565c7ed713feda5e6c8100112abdfe2c104745"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-018-snack.png",
+      "objectPath": "rations/ration-18/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-18:snack",
+      "mime": "image/png",
+      "sha256": "aa1f3550b822a512d6bca1a71cc2655fbbcbbd990baceec5d0f104ce27c4bf61"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-019-breakfast.png",
+      "objectPath": "rations/ration-19/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-19:breakfast",
+      "mime": "image/png",
+      "sha256": "854f72902add4aed037cb75b1322942e7f8562537e41f3ffb247da5612b5c4da"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-019-cover.png",
+      "objectPath": "rations/ration-19/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-19",
+      "mime": "image/png",
+      "sha256": "0472b1370dc19c3846d7a9de07d718a2ed3dc1bdef2e7c43dbeb2696ec01d365"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-019-dinner.png",
+      "objectPath": "rations/ration-19/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-19:dinner",
+      "mime": "image/png",
+      "sha256": "d03a8adfb369f193583147d2edce400e85caf875f4b847bba59b32f6a65ac28e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-019-lunch.png",
+      "objectPath": "rations/ration-19/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-19:lunch",
+      "mime": "image/png",
+      "sha256": "0c2f677d21eece93e411bb01d9bcfabe8216dc762dc048c788f89c9ab3c2e902"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-019-snack.png",
+      "objectPath": "rations/ration-19/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-19:snack",
+      "mime": "image/png",
+      "sha256": "6f243071d807f31abf623dcb9d89e28b4a58c78dd46623d7397b87a970ff825b"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-002-breakfast.png",
+      "objectPath": "rations/ration-2/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-2:breakfast",
+      "mime": "image/png",
+      "sha256": "a0a9341bb10e25adc64f4af0f40cde7926c0fbb3615693826bd99d40c7677eb9"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-002-cover.png",
+      "objectPath": "rations/ration-2/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-2",
+      "mime": "image/png",
+      "sha256": "dd1e969163e5fd028114d2ef4f255669c87b8c6103435bc75d5acf80a484711e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-002-dinner.png",
+      "objectPath": "rations/ration-2/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-2:dinner",
+      "mime": "image/png",
+      "sha256": "a8d3c03a4b96589d03397bc18d828adf0c7beeb82ffec70251cfab2852dd6c04"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-002-lunch.png",
+      "objectPath": "rations/ration-2/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-2:lunch",
+      "mime": "image/png",
+      "sha256": "860a1e87a564dfcb5f871fef05ae4219d9e58259312501dba8bced4c23afb381"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-002-snack.png",
+      "objectPath": "rations/ration-2/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-2:snack",
+      "mime": "image/png",
+      "sha256": "2842204ce19c31c2a56d23c89f2c030af9705fe420fecc12f5f5b3bf284660d0"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-020-breakfast.png",
+      "objectPath": "rations/ration-20/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-20:breakfast",
+      "mime": "image/png",
+      "sha256": "9b969d50ecd82b4de7b462000c646350c1817663af3cbe286866e164379e3c01"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-020-cover.png",
+      "objectPath": "rations/ration-20/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-20",
+      "mime": "image/png",
+      "sha256": "48a11d342810fa2ce018d08f1e8b0affa7b31bf87019b50c7c2daae20f85d976"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-020-dinner.png",
+      "objectPath": "rations/ration-20/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-20:dinner",
+      "mime": "image/png",
+      "sha256": "4c4142925fc5086942423f51c8032f32a183e4f8616f754d582a9678b730b8e2"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-020-lunch.png",
+      "objectPath": "rations/ration-20/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-20:lunch",
+      "mime": "image/png",
+      "sha256": "a2dad1aaff9f8a684c966814ed1d1c074d383c0c970d5bf39309d80162f5b637"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-020-snack.png",
+      "objectPath": "rations/ration-20/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-20:snack",
+      "mime": "image/png",
+      "sha256": "5d849c150085f77bebf22792fd32d348298e85f7a8fce0acb1f5bd170974134f"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-021-breakfast.png",
+      "objectPath": "rations/ration-21/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-21:breakfast",
+      "mime": "image/png",
+      "sha256": "a3a0c803e35f195376eda6d76245e3d078f11dbc1aa059a26365cd35abb945cb"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-021-cover.png",
+      "objectPath": "rations/ration-21/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-21",
+      "mime": "image/png",
+      "sha256": "26fb8ab61e57e39003b92a9de25a051bae676294320ab581e3ec853af39e26c8"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-021-dinner.png",
+      "objectPath": "rations/ration-21/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-21:dinner",
+      "mime": "image/png",
+      "sha256": "dad5825c91312fd76a61b1d28cc88cbccce4ed515e0c90a8059a293d71ca48a5"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-021-lunch.png",
+      "objectPath": "rations/ration-21/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-21:lunch",
+      "mime": "image/png",
+      "sha256": "f6b5d2d61f39ddc5e420eb868d6c6e40dd001ce8b5155c4dbadb6517481ec0b8"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-021-snack.png",
+      "objectPath": "rations/ration-21/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-21:snack",
+      "mime": "image/png",
+      "sha256": "dd111753c67cdcd21aea4270b7401275e7b049487fb1cdc9cc97730bf6dc6e17"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-022-breakfast.png",
+      "objectPath": "rations/ration-22/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-22:breakfast",
+      "mime": "image/png",
+      "sha256": "9fcb8e04cf56052e005de6eda568340dda796eedddf29c17e87d9633f21ee03e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-022-cover.png",
+      "objectPath": "rations/ration-22/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-22",
+      "mime": "image/png",
+      "sha256": "f4c12e440504330eab181082ab3869aa4b90434cec2581ce922ac5d8eedfc408"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-022-dinner.png",
+      "objectPath": "rations/ration-22/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-22:dinner",
+      "mime": "image/png",
+      "sha256": "2babc80895ff99530fa0689c8acedb80dba2a5f646be495adb659a1b2be27d8d"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-022-lunch.png",
+      "objectPath": "rations/ration-22/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-22:lunch",
+      "mime": "image/png",
+      "sha256": "735cd805fe9af3e7ad06f362e47a8459e963f4f5806a2d035058c1aade0e042a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-022-snack.png",
+      "objectPath": "rations/ration-22/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-22:snack",
+      "mime": "image/png",
+      "sha256": "b93e075d328b8a34cecf4b4f09a2ea7d4bc1a902f060c897269a0d2955ce063a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-023-breakfast.jpg",
+      "objectPath": "rations/ration-23/breakfast.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-23:breakfast",
+      "mime": "image/jpeg",
+      "sha256": "3fb822a9dd44baab3e10575e5655c401207f16d261a8ead575147db4467f6c1e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-023-cover.jpg",
+      "objectPath": "rations/ration-23/cover.jpg",
+      "entity": "ration",
+      "legacyId": "ration-23",
+      "mime": "image/jpeg",
+      "sha256": "32ebc8794b0ddb4ab90242dd2861c2d052f3130d4f464fbdf4d72ada76eb30c6"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-023-dinner.jpg",
+      "objectPath": "rations/ration-23/dinner.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-23:dinner",
+      "mime": "image/jpeg",
+      "sha256": "98b0ef520ee04ba73a15280578ad09c7809d36db02500db48b7d8a142507bfbb"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-023-lunch.jpg",
+      "objectPath": "rations/ration-23/lunch.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-23:lunch",
+      "mime": "image/jpeg",
+      "sha256": "215b4c051bd59c2addaf9f7443bcc00c86459cf0a190688fa12b613e402ae7a1"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-023-snack.jpg",
+      "objectPath": "rations/ration-23/snack.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-23:snack",
+      "mime": "image/jpeg",
+      "sha256": "da1b4ea9863bcacce6877a0fa9e8b50a27e5fd4dad75c92238396f2742ffaa43"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-024-breakfast.jpg",
+      "objectPath": "rations/ration-24/breakfast.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-24:breakfast",
+      "mime": "image/jpeg",
+      "sha256": "b7fa63472e327274a228e37a7223587a07cdb6cb19a4d74e7991b544c8df4c02"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-024-cover.jpg",
+      "objectPath": "rations/ration-24/cover.jpg",
+      "entity": "ration",
+      "legacyId": "ration-24",
+      "mime": "image/jpeg",
+      "sha256": "f46a145643ce254bdc70a7a4132b9c6b327332e5d56d1e70eb91d1cecc92a131"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-024-dinner.jpg",
+      "objectPath": "rations/ration-24/dinner.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-24:dinner",
+      "mime": "image/jpeg",
+      "sha256": "ef8f77ba8484eac00aeb4fac1c29925b988a9e904edcdf851a2c06be1aecd1f3"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-024-lunch.jpg",
+      "objectPath": "rations/ration-24/lunch.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-24:lunch",
+      "mime": "image/jpeg",
+      "sha256": "ab6e8bda9dec81590bb57364284d87970fe2e33d7664938bef9f9ae7d7b1769a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-024-snack.jpg",
+      "objectPath": "rations/ration-24/snack.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-24:snack",
+      "mime": "image/jpeg",
+      "sha256": "1bdb5a7d7b8727608bfd7760ac53bb4556f376c7e499ea77e4c2a98dd285ccf2"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-025-breakfast.jpg",
+      "objectPath": "rations/ration-25/breakfast.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-25:breakfast",
+      "mime": "image/jpeg",
+      "sha256": "8a99d027a62282b5861997d8abd1d2bf10bb3fd53e9ad724b3af295aeb0b7032"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-025-cover.jpg",
+      "objectPath": "rations/ration-25/cover.jpg",
+      "entity": "ration",
+      "legacyId": "ration-25",
+      "mime": "image/jpeg",
+      "sha256": "e145b804f4269e62c5c58fb14b54c2cd2bd8fa101523460a2ac50c6954efccaf"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-025-dinner.jpg",
+      "objectPath": "rations/ration-25/dinner.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-25:dinner",
+      "mime": "image/jpeg",
+      "sha256": "351b370b0c93774c3852841a0e2cf81a204a6093797cde40c6dc802fe45d3034"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-025-lunch.jpg",
+      "objectPath": "rations/ration-25/lunch.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-25:lunch",
+      "mime": "image/jpeg",
+      "sha256": "d3b6688a4524b37748bf62c7c40b91c0cfc9321f315857e7627ac171a8c8cc53"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-025-snack.jpg",
+      "objectPath": "rations/ration-25/snack.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-25:snack",
+      "mime": "image/jpeg",
+      "sha256": "6479cf8214d233e3bb8baa96af8d97b2c1c6b3c19143651aa9ddcc9d487d4bba"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-003-breakfast.png",
+      "objectPath": "rations/ration-3/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-3:breakfast",
+      "mime": "image/png",
+      "sha256": "517ad97d4c0aa839d7150070c06e39fcfd15fb13d1497abded726455c8c72b23"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-003-cover.png",
+      "objectPath": "rations/ration-3/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-3",
+      "mime": "image/png",
+      "sha256": "4e85fe7796d78e72abeddfed1858f8c3ea8925f2172a58b07010285e9c5f8e95"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-003-dinner.png",
+      "objectPath": "rations/ration-3/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-3:dinner",
+      "mime": "image/png",
+      "sha256": "d774fa852f103f4dea5bae552df07b9960a6ab6304bb2367f7264db5a569f039"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-003-lunch.png",
+      "objectPath": "rations/ration-3/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-3:lunch",
+      "mime": "image/png",
+      "sha256": "b7652036a7d8ed74deabebdae9d4c0cf61cc93a88e146334bf65490ad7a90925"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-003-snack.png",
+      "objectPath": "rations/ration-3/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-3:snack",
+      "mime": "image/png",
+      "sha256": "1994d3fc938a81d0a66628ccacf7b3ed92262df2399acda8cadc8ebad81a5768"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-004-breakfast.png",
+      "objectPath": "rations/ration-4/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-4:breakfast",
+      "mime": "image/png",
+      "sha256": "8bab3f2bb49c3fddf1226f3fd27d50b559c2abdf459bc503a09d6d294c73f0b6"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-004-cover.png",
+      "objectPath": "rations/ration-4/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-4",
+      "mime": "image/png",
+      "sha256": "29257dbf3fd12ce8525a3eaea4a569769df8f68983523e76b5d1dd095cbd37ea"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-004-dinner.png",
+      "objectPath": "rations/ration-4/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-4:dinner",
+      "mime": "image/png",
+      "sha256": "1e3651c956c6f6b3a5e311c6f6e8e089c8f4585ca991041f82048b277ffaac6a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-004-lunch.png",
+      "objectPath": "rations/ration-4/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-4:lunch",
+      "mime": "image/png",
+      "sha256": "302274497cd8ce2c7150f9c248cbb55d0fe7e111c99908739af24f7d11f954cf"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-004-snack.png",
+      "objectPath": "rations/ration-4/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-4:snack",
+      "mime": "image/png",
+      "sha256": "314ff8c4c900959a4a98ba202aa5da8306b116d56295a6b07a1d3becc69321ef"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-6f0ffd07-933f-4665-b587-054213046308.jpg",
+      "objectPath": "rations/ration-5/breakfast.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-5:breakfast",
+      "mime": "image/jpeg",
+      "sha256": "fa7853807c38be854f2dd4779b6cf6803396b821a85cdc7747331676127054cc"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-90d8b0e3-e10c-4794-a733-d596aa23b51d.jpg",
+      "objectPath": "rations/ration-5/cover.jpg",
+      "entity": "ration",
+      "legacyId": "ration-5",
+      "mime": "image/jpeg",
+      "sha256": "39dc5619a7df849cedeb6584afdc13cf88fdec0cd6565bd313a9e4503da5af3d"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-1da4b417-659d-49d9-946b-c2396c6187e9.jpg",
+      "objectPath": "rations/ration-5/dinner.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-5:dinner",
+      "mime": "image/jpeg",
+      "sha256": "d68d8b074c0c59fa12ff10b1b5be2225351acca7fa56632fcaf90507fa171665"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-4550f7f5-76f7-4772-9c6d-181233e52070.jpg",
+      "objectPath": "rations/ration-5/lunch.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-5:lunch",
+      "mime": "image/jpeg",
+      "sha256": "53af3248118f3f26e2b42997aa1ed91ae2f1a729912ec9f787e15b1b9651e9a5"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-bf6711a6-885e-4bb5-8d63-ec8fdac84f21.jpg",
+      "objectPath": "rations/ration-5/snack.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-5:snack",
+      "mime": "image/jpeg",
+      "sha256": "30588723ba6af12e484c2079da9013c5fa80e91d765637fccfb78dbf14d47d31"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-a631d8b9-c335-4f00-b379-5bb76ce73ffe.jpg",
+      "objectPath": "rations/ration-6/breakfast.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-6:breakfast",
+      "mime": "image/jpeg",
+      "sha256": "146a9d18ccde9a74825737f6f5d590545ab2c69e6b2da8f5b04c5c28ae5e0eb9"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-988b62c8-e316-456b-9212-dd55bfa6d99f.jpg",
+      "objectPath": "rations/ration-6/cover.jpg",
+      "entity": "ration",
+      "legacyId": "ration-6",
+      "mime": "image/jpeg",
+      "sha256": "f47021eada62ea8684945238889e7950de358726f9acd5398a5597a301a2f3cc"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-92766478-c9a0-489f-94f0-336d7efa832b.jpg",
+      "objectPath": "rations/ration-6/dinner.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-6:dinner",
+      "mime": "image/jpeg",
+      "sha256": "62f770497d90f10ce0f672408a76da58349276ddbc2301cd5b650ea143095f97"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-1cdb9c70-2518-444c-9be3-a26f1ad8d1b0.jpg",
+      "objectPath": "rations/ration-6/lunch.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-6:lunch",
+      "mime": "image/jpeg",
+      "sha256": "5fcf69f86ec2202b5e49a3344710570c2924eba8f0e180261fe86f12c75275da"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-400b03c8-88f8-426e-82de-6cf71683f87a.jpg",
+      "objectPath": "rations/ration-6/snack.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-6:snack",
+      "mime": "image/jpeg",
+      "sha256": "455d5b8e7901e683e9b881ca5e502008799ecc5483ce5db87520b4f6b2bcad00"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-255c8e0e-5d3a-47b0-823f-d07fd61a93f9.jpg",
+      "objectPath": "rations/ration-7/breakfast.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-7:breakfast",
+      "mime": "image/jpeg",
+      "sha256": "244caab20ae363a112898675ff345aa600d8dbae7c89cbec3e3a22655b760bc2"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-bde7f657-df20-459d-9f3d-1a056d16668a.jpg",
+      "objectPath": "rations/ration-7/cover.jpg",
+      "entity": "ration",
+      "legacyId": "ration-7",
+      "mime": "image/jpeg",
+      "sha256": "3649d3f8dfafa39de65a1c705402a30e3a8d580bbae7fdfa217627f8e5bae94e"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-d85f3d37-4b0c-4343-831b-86e04d01c0fd.jpg",
+      "objectPath": "rations/ration-7/dinner.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-7:dinner",
+      "mime": "image/jpeg",
+      "sha256": "06a55ff8328a3ba0ffe153e53a75f9f495521f6895ac54a2340bbe188c40bec9"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-60a9f1f8-95dd-4aee-9da1-e29207759180.jpg",
+      "objectPath": "rations/ration-7/lunch.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-7:lunch",
+      "mime": "image/jpeg",
+      "sha256": "7249c211c818ee64d75bd0afa39de6c9513c2069fc3579b09467bb1251a59d08"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-c91b8ce0-aa74-4537-946a-5cff9a4dcd8b.jpg",
+      "objectPath": "rations/ration-7/snack.jpg",
+      "entity": "ration_meal",
+      "legacyId": "ration-7:snack",
+      "mime": "image/jpeg",
+      "sha256": "a8915c81a219b89a943b8c558f6a5f7a32516d2f2989c4c4a285dd97001e1d19"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-008-breakfast.png",
+      "objectPath": "rations/ration-8/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-8:breakfast",
+      "mime": "image/png",
+      "sha256": "bb690ce09eebfa3ce53171436f15b179b0a7f73ba8dda6d401a31c903041ffa3"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-008-cover.png",
+      "objectPath": "rations/ration-8/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-8",
+      "mime": "image/png",
+      "sha256": "1f145b72094ae3d567ebf8e0d6c59ea0376bdd49942ab04ae8706ba5a358287a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-008-dinner.png",
+      "objectPath": "rations/ration-8/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-8:dinner",
+      "mime": "image/png",
+      "sha256": "56e406b19b2b1891f0fda387604143fd31db48b40058b1d4157053223134420a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-008-lunch.png",
+      "objectPath": "rations/ration-8/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-8:lunch",
+      "mime": "image/png",
+      "sha256": "8d6b5e879a90003884827fcdc58557d609319f5f69adcb340c5a8032bebddfd3"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-008-snack.png",
+      "objectPath": "rations/ration-8/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-8:snack",
+      "mime": "image/png",
+      "sha256": "5793ccd7b8786f4f45901aa6a0357d9da72c13360769f1c2e123f53d301585d2"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-009-breakfast.png",
+      "objectPath": "rations/ration-9/breakfast.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-9:breakfast",
+      "mime": "image/png",
+      "sha256": "85743b0ea2e653e776153c34ccb7fbab12ff681febdcd8ab44253ab1197edb19"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-009-cover.png",
+      "objectPath": "rations/ration-9/cover.png",
+      "entity": "ration",
+      "legacyId": "ration-9",
+      "mime": "image/png",
+      "sha256": "e77e5e2c2c0ac3a705166a3ec0485f574eaf1b26e2868db69088803733bca2e5"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-009-dinner.png",
+      "objectPath": "rations/ration-9/dinner.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-9:dinner",
+      "mime": "image/png",
+      "sha256": "18816c52d32fe875beca9477be3f6025ce7b999a7913f44d0c7d2e07c937a79e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-009-lunch.png",
+      "objectPath": "rations/ration-9/lunch.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-9:lunch",
+      "mime": "image/png",
+      "sha256": "a6d3c26b489f762c0e33a0c2becd9bc6daa9d42593868dfb6f1b663e37b6fcda"
+    },
+    {
+      "oldPath": "public/images/recipes/a_warm_inviting_food_shot_showcases_a_dark_textu.png",
+      "objectPath": "rations/ration-9/snack.png",
+      "entity": "ration_meal",
+      "legacyId": "ration-9:snack",
+      "mime": "image/png",
+      "sha256": "7e952f5fd53109711720acfbb483151c5ea259e15494c33e726157325bc71d9f"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-010-breakfast.png",
+      "objectPath": "recipes/real-ration-10-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-10-breakfast",
+      "mime": "image/png",
+      "sha256": "f086e33cb5cfcb6e5c5002e40c59f0719d867edb581f261a9e67e0a839c21139"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-010-dinner.png",
+      "objectPath": "recipes/real-ration-10-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-10-dinner",
+      "mime": "image/png",
+      "sha256": "d83bed0a64140948a837ef5e725943172ff224e2522635f5e0862255490ca400"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-010-lunch.png",
+      "objectPath": "recipes/real-ration-10-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-10-lunch",
+      "mime": "image/png",
+      "sha256": "ba30ffaa045bb5499e77343de915fa3386d0ff7dfc960b744506eccabcb35d01"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-010-snack.png",
+      "objectPath": "recipes/real-ration-10-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-10-snack",
+      "mime": "image/png",
+      "sha256": "97930618abafb56e7fa3df060d601eb27a40c8ce66e0bb89e0d07ebfdec81a0e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-011-breakfast.png",
+      "objectPath": "recipes/real-ration-11-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-11-breakfast",
+      "mime": "image/png",
+      "sha256": "da55fb6f1d0c67a9c1b0e128f67da47c6d9730b19bff47faf083210c53370214"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-011-dinner.png",
+      "objectPath": "recipes/real-ration-11-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-11-dinner",
+      "mime": "image/png",
+      "sha256": "01cbdd40f7e41cb6da7cd91e277fb4cdc2afce141cbde7907a25f23cd5979667"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-011-lunch.png",
+      "objectPath": "recipes/real-ration-11-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-11-lunch",
+      "mime": "image/png",
+      "sha256": "a1b79b917482f9344b2b23a4288bc64c566567c62e69fc616d7398df66f2409c"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-011-snack.png",
+      "objectPath": "recipes/real-ration-11-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-11-snack",
+      "mime": "image/png",
+      "sha256": "25bccaef0f5339874ecdd956e851933a95bad22b95201551e3e75bc4d7177901"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-012-breakfast.png",
+      "objectPath": "recipes/real-ration-12-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-12-breakfast",
+      "mime": "image/png",
+      "sha256": "971474bfe565c262d4bb10574cb8be59fa11ce545548c84c2c79437ffd5fcd44"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-012-dinner.png",
+      "objectPath": "recipes/real-ration-12-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-12-dinner",
+      "mime": "image/png",
+      "sha256": "0bf50a94e7b9b81488f60c96e0b619cd91f837696a1336f1aaf3a3bcdacb5be5"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-012-lunch.png",
+      "objectPath": "recipes/real-ration-12-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-12-lunch",
+      "mime": "image/png",
+      "sha256": "8c6e334be68ac14a926f925277d920b01bd6358fc4c018e28660763f50bce33c"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-012-snack.png",
+      "objectPath": "recipes/real-ration-12-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-12-snack",
+      "mime": "image/png",
+      "sha256": "14265742d6ce1eba888f75ca3761e3d73b940fa1909e33336b198471aeeb220a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-013-breakfast.png",
+      "objectPath": "recipes/real-ration-13-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-13-breakfast",
+      "mime": "image/png",
+      "sha256": "65077d20276af908fd2e13f039cb7d53474928b006b9d01b06a3e95b4c586320"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-013-dinner.png",
+      "objectPath": "recipes/real-ration-13-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-13-dinner",
+      "mime": "image/png",
+      "sha256": "72c0f406e41f15c84407ac3c5e31bc28e2450104e7b0a1aa06ab11e81e3420eb"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-013-lunch.png",
+      "objectPath": "recipes/real-ration-13-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-13-lunch",
+      "mime": "image/png",
+      "sha256": "e83fcefcd24b28cfaf9b1eeee0b185d8d09a9f1f69754a8f8fe51c4574596a85"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-013-snack.png",
+      "objectPath": "recipes/real-ration-13-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-13-snack",
+      "mime": "image/png",
+      "sha256": "84e9faa1db191f9462a03173d3ea429825dbdcd5a0413fcea04e45a63dbcc4a0"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-014-breakfast.png",
+      "objectPath": "recipes/real-ration-14-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-14-breakfast",
+      "mime": "image/png",
+      "sha256": "6235e33df1583f1b5b96f4f236bcf5d048ca86978abbacc7a23a4c68f8f34c1c"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-014-dinner.png",
+      "objectPath": "recipes/real-ration-14-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-14-dinner",
+      "mime": "image/png",
+      "sha256": "cf43435a82bbc4443872b975ed48efe86b5b419883ab34199e63d1f4be192af0"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-014-lunch.png",
+      "objectPath": "recipes/real-ration-14-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-14-lunch",
+      "mime": "image/png",
+      "sha256": "1a20ca5ee99626ad0d145e16bc0310de4e0568b8d21631ed7ba94d4dd10eca9d"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-014-snack.png",
+      "objectPath": "recipes/real-ration-14-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-14-snack",
+      "mime": "image/png",
+      "sha256": "29ee6e4159a6a7a7ea02fba7319ea9453ef00352c9883f00eb6c837d336dda56"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-015-breakfast.png",
+      "objectPath": "recipes/real-ration-15-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-15-breakfast",
+      "mime": "image/png",
+      "sha256": "fb9462d5a0570594446d97d5bdf93b1a2e327b67b19507e1ce1cfc255b2a8392"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-015-dinner.png",
+      "objectPath": "recipes/real-ration-15-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-15-dinner",
+      "mime": "image/png",
+      "sha256": "7f8944504b70949d6db0dbf47192d6b1a5ad651bed0bf96b5c33001096391e6a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-015-lunch.png",
+      "objectPath": "recipes/real-ration-15-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-15-lunch",
+      "mime": "image/png",
+      "sha256": "f2c9236ca63f215b7bbc29ece9f7aa833c0d8f0180c24946861871fa9b49dcdd"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-015-snack.png",
+      "objectPath": "recipes/real-ration-15-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-15-snack",
+      "mime": "image/png",
+      "sha256": "9d7a211e5e352e09c5ea59b3b016f81f0ac7586adf47ebc5413ca935bd679de8"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-016-breakfast.png",
+      "objectPath": "recipes/real-ration-16-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-16-breakfast",
+      "mime": "image/png",
+      "sha256": "b1444cf202671695bda29ceca4d924c3ff7263a184e2d24f5b3941588a078892"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-016-dinner.png",
+      "objectPath": "recipes/real-ration-16-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-16-dinner",
+      "mime": "image/png",
+      "sha256": "57ee6b61c31ae52bb97fad94b80caeb684cfe1ce698217ea4c4c5301f2c72d2f"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-016-lunch.png",
+      "objectPath": "recipes/real-ration-16-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-16-lunch",
+      "mime": "image/png",
+      "sha256": "82c74440a30dc05c8e5934a8cd859aa0d79edec59e413abf72d9ba7f14ebbfa3"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-016-snack.png",
+      "objectPath": "recipes/real-ration-16-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-16-snack",
+      "mime": "image/png",
+      "sha256": "1bcbd1d2410eb8d2bfab8051b25e2b15beff712816b039fe944c25ac65502dbd"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-017-breakfast.png",
+      "objectPath": "recipes/real-ration-17-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-17-breakfast",
+      "mime": "image/png",
+      "sha256": "49fc0fd864c1a2e94b7c69a83d2a8717f679dd1ecb7f6d5efa1e8472d1a7995f"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-017-dinner.png",
+      "objectPath": "recipes/real-ration-17-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-17-dinner",
+      "mime": "image/png",
+      "sha256": "98ba14a115ce09ba39e9f739b35d10eff611211da3c295c3ab7ff622b9928c20"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-017-lunch.png",
+      "objectPath": "recipes/real-ration-17-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-17-lunch",
+      "mime": "image/png",
+      "sha256": "6efca51715ff10d9fc85c8a160069acd175db7cb7b908315cb2e7f7d69bb45d6"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-017-snack.png",
+      "objectPath": "recipes/real-ration-17-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-17-snack",
+      "mime": "image/png",
+      "sha256": "576094f07fab680ad842095d7afde11b573163e50e7261a1f6ce57de0733ae99"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-018-breakfast.png",
+      "objectPath": "recipes/real-ration-18-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-18-breakfast",
+      "mime": "image/png",
+      "sha256": "2c69cfd5ddaece0e81270274882478361517673c74b78a48952ccbaf9bc948ed"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-018-dinner.png",
+      "objectPath": "recipes/real-ration-18-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-18-dinner",
+      "mime": "image/png",
+      "sha256": "a5748e65b09cfac80ae280c1ea158d98b12d555b3dc51bb9991b646ed3f2ee39"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-018-lunch.png",
+      "objectPath": "recipes/real-ration-18-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-18-lunch",
+      "mime": "image/png",
+      "sha256": "61920b03a747f4ccce5ccc8d5b565c7ed713feda5e6c8100112abdfe2c104745"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-018-snack.png",
+      "objectPath": "recipes/real-ration-18-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-18-snack",
+      "mime": "image/png",
+      "sha256": "aa1f3550b822a512d6bca1a71cc2655fbbcbbd990baceec5d0f104ce27c4bf61"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-019-breakfast.png",
+      "objectPath": "recipes/real-ration-19-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-19-breakfast",
+      "mime": "image/png",
+      "sha256": "854f72902add4aed037cb75b1322942e7f8562537e41f3ffb247da5612b5c4da"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-019-dinner.png",
+      "objectPath": "recipes/real-ration-19-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-19-dinner",
+      "mime": "image/png",
+      "sha256": "d03a8adfb369f193583147d2edce400e85caf875f4b847bba59b32f6a65ac28e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-019-lunch.png",
+      "objectPath": "recipes/real-ration-19-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-19-lunch",
+      "mime": "image/png",
+      "sha256": "0c2f677d21eece93e411bb01d9bcfabe8216dc762dc048c788f89c9ab3c2e902"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-019-snack.png",
+      "objectPath": "recipes/real-ration-19-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-19-snack",
+      "mime": "image/png",
+      "sha256": "6f243071d807f31abf623dcb9d89e28b4a58c78dd46623d7397b87a970ff825b"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-020-breakfast.png",
+      "objectPath": "recipes/real-ration-20-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-20-breakfast",
+      "mime": "image/png",
+      "sha256": "9b969d50ecd82b4de7b462000c646350c1817663af3cbe286866e164379e3c01"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-020-dinner.png",
+      "objectPath": "recipes/real-ration-20-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-20-dinner",
+      "mime": "image/png",
+      "sha256": "4c4142925fc5086942423f51c8032f32a183e4f8616f754d582a9678b730b8e2"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-020-lunch.png",
+      "objectPath": "recipes/real-ration-20-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-20-lunch",
+      "mime": "image/png",
+      "sha256": "a2dad1aaff9f8a684c966814ed1d1c074d383c0c970d5bf39309d80162f5b637"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-020-snack.png",
+      "objectPath": "recipes/real-ration-20-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-20-snack",
+      "mime": "image/png",
+      "sha256": "5d849c150085f77bebf22792fd32d348298e85f7a8fce0acb1f5bd170974134f"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-021-breakfast.png",
+      "objectPath": "recipes/real-ration-21-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-21-breakfast",
+      "mime": "image/png",
+      "sha256": "a3a0c803e35f195376eda6d76245e3d078f11dbc1aa059a26365cd35abb945cb"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-021-dinner.png",
+      "objectPath": "recipes/real-ration-21-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-21-dinner",
+      "mime": "image/png",
+      "sha256": "dad5825c91312fd76a61b1d28cc88cbccce4ed515e0c90a8059a293d71ca48a5"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-021-lunch.png",
+      "objectPath": "recipes/real-ration-21-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-21-lunch",
+      "mime": "image/png",
+      "sha256": "f6b5d2d61f39ddc5e420eb868d6c6e40dd001ce8b5155c4dbadb6517481ec0b8"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-021-snack.png",
+      "objectPath": "recipes/real-ration-21-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-21-snack",
+      "mime": "image/png",
+      "sha256": "dd111753c67cdcd21aea4270b7401275e7b049487fb1cdc9cc97730bf6dc6e17"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-022-breakfast.png",
+      "objectPath": "recipes/real-ration-22-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-22-breakfast",
+      "mime": "image/png",
+      "sha256": "9fcb8e04cf56052e005de6eda568340dda796eedddf29c17e87d9633f21ee03e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-022-dinner.png",
+      "objectPath": "recipes/real-ration-22-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-22-dinner",
+      "mime": "image/png",
+      "sha256": "2babc80895ff99530fa0689c8acedb80dba2a5f646be495adb659a1b2be27d8d"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-022-lunch.png",
+      "objectPath": "recipes/real-ration-22-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-22-lunch",
+      "mime": "image/png",
+      "sha256": "735cd805fe9af3e7ad06f362e47a8459e963f4f5806a2d035058c1aade0e042a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-022-snack.png",
+      "objectPath": "recipes/real-ration-22-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-22-snack",
+      "mime": "image/png",
+      "sha256": "b93e075d328b8a34cecf4b4f09a2ea7d4bc1a902f060c897269a0d2955ce063a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-023-breakfast.jpg",
+      "objectPath": "recipes/real-ration-23-breakfast.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-23-breakfast",
+      "mime": "image/jpeg",
+      "sha256": "3fb822a9dd44baab3e10575e5655c401207f16d261a8ead575147db4467f6c1e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-023-dinner.jpg",
+      "objectPath": "recipes/real-ration-23-dinner.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-23-dinner",
+      "mime": "image/jpeg",
+      "sha256": "98b0ef520ee04ba73a15280578ad09c7809d36db02500db48b7d8a142507bfbb"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-023-lunch.jpg",
+      "objectPath": "recipes/real-ration-23-lunch.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-23-lunch",
+      "mime": "image/jpeg",
+      "sha256": "215b4c051bd59c2addaf9f7443bcc00c86459cf0a190688fa12b613e402ae7a1"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-023-snack.jpg",
+      "objectPath": "recipes/real-ration-23-snack.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-23-snack",
+      "mime": "image/jpeg",
+      "sha256": "da1b4ea9863bcacce6877a0fa9e8b50a27e5fd4dad75c92238396f2742ffaa43"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-024-breakfast.jpg",
+      "objectPath": "recipes/real-ration-24-breakfast.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-24-breakfast",
+      "mime": "image/jpeg",
+      "sha256": "b7fa63472e327274a228e37a7223587a07cdb6cb19a4d74e7991b544c8df4c02"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-024-dinner.jpg",
+      "objectPath": "recipes/real-ration-24-dinner.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-24-dinner",
+      "mime": "image/jpeg",
+      "sha256": "ef8f77ba8484eac00aeb4fac1c29925b988a9e904edcdf851a2c06be1aecd1f3"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-024-lunch.jpg",
+      "objectPath": "recipes/real-ration-24-lunch.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-24-lunch",
+      "mime": "image/jpeg",
+      "sha256": "ab6e8bda9dec81590bb57364284d87970fe2e33d7664938bef9f9ae7d7b1769a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-024-snack.jpg",
+      "objectPath": "recipes/real-ration-24-snack.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-24-snack",
+      "mime": "image/jpeg",
+      "sha256": "1bdb5a7d7b8727608bfd7760ac53bb4556f376c7e499ea77e4c2a98dd285ccf2"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-025-breakfast.jpg",
+      "objectPath": "recipes/real-ration-25-breakfast.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-25-breakfast",
+      "mime": "image/jpeg",
+      "sha256": "8a99d027a62282b5861997d8abd1d2bf10bb3fd53e9ad724b3af295aeb0b7032"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-025-dinner.jpg",
+      "objectPath": "recipes/real-ration-25-dinner.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-25-dinner",
+      "mime": "image/jpeg",
+      "sha256": "351b370b0c93774c3852841a0e2cf81a204a6093797cde40c6dc802fe45d3034"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-025-lunch.jpg",
+      "objectPath": "recipes/real-ration-25-lunch.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-25-lunch",
+      "mime": "image/jpeg",
+      "sha256": "d3b6688a4524b37748bf62c7c40b91c0cfc9321f315857e7627ac171a8c8cc53"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-025-snack.jpg",
+      "objectPath": "recipes/real-ration-25-snack.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-25-snack",
+      "mime": "image/jpeg",
+      "sha256": "6479cf8214d233e3bb8baa96af8d97b2c1c6b3c19143651aa9ddcc9d487d4bba"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-6f0ffd07-933f-4665-b587-054213046308.jpg",
+      "objectPath": "recipes/real-ration-5-breakfast.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-5-breakfast",
+      "mime": "image/jpeg",
+      "sha256": "fa7853807c38be854f2dd4779b6cf6803396b821a85cdc7747331676127054cc"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-1da4b417-659d-49d9-946b-c2396c6187e9.jpg",
+      "objectPath": "recipes/real-ration-5-dinner.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-5-dinner",
+      "mime": "image/jpeg",
+      "sha256": "d68d8b074c0c59fa12ff10b1b5be2225351acca7fa56632fcaf90507fa171665"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-4550f7f5-76f7-4772-9c6d-181233e52070.jpg",
+      "objectPath": "recipes/real-ration-5-lunch.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-5-lunch",
+      "mime": "image/jpeg",
+      "sha256": "53af3248118f3f26e2b42997aa1ed91ae2f1a729912ec9f787e15b1b9651e9a5"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-bf6711a6-885e-4bb5-8d63-ec8fdac84f21.jpg",
+      "objectPath": "recipes/real-ration-5-snack.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-5-snack",
+      "mime": "image/jpeg",
+      "sha256": "30588723ba6af12e484c2079da9013c5fa80e91d765637fccfb78dbf14d47d31"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-a631d8b9-c335-4f00-b379-5bb76ce73ffe.jpg",
+      "objectPath": "recipes/real-ration-6-breakfast.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-6-breakfast",
+      "mime": "image/jpeg",
+      "sha256": "146a9d18ccde9a74825737f6f5d590545ab2c69e6b2da8f5b04c5c28ae5e0eb9"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-92766478-c9a0-489f-94f0-336d7efa832b.jpg",
+      "objectPath": "recipes/real-ration-6-dinner.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-6-dinner",
+      "mime": "image/jpeg",
+      "sha256": "62f770497d90f10ce0f672408a76da58349276ddbc2301cd5b650ea143095f97"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-1cdb9c70-2518-444c-9be3-a26f1ad8d1b0.jpg",
+      "objectPath": "recipes/real-ration-6-lunch.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-6-lunch",
+      "mime": "image/jpeg",
+      "sha256": "5fcf69f86ec2202b5e49a3344710570c2924eba8f0e180261fe86f12c75275da"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-400b03c8-88f8-426e-82de-6cf71683f87a.jpg",
+      "objectPath": "recipes/real-ration-6-snack.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-6-snack",
+      "mime": "image/jpeg",
+      "sha256": "455d5b8e7901e683e9b881ca5e502008799ecc5483ce5db87520b4f6b2bcad00"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-255c8e0e-5d3a-47b0-823f-d07fd61a93f9.jpg",
+      "objectPath": "recipes/real-ration-7-breakfast.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-7-breakfast",
+      "mime": "image/jpeg",
+      "sha256": "244caab20ae363a112898675ff345aa600d8dbae7c89cbec3e3a22655b760bc2"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-d85f3d37-4b0c-4343-831b-86e04d01c0fd.jpg",
+      "objectPath": "recipes/real-ration-7-dinner.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-7-dinner",
+      "mime": "image/jpeg",
+      "sha256": "06a55ff8328a3ba0ffe153e53a75f9f495521f6895ac54a2340bbe188c40bec9"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-60a9f1f8-95dd-4aee-9da1-e29207759180.jpg",
+      "objectPath": "recipes/real-ration-7-lunch.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-7-lunch",
+      "mime": "image/jpeg",
+      "sha256": "7249c211c818ee64d75bd0afa39de6c9513c2069fc3579b09467bb1251a59d08"
+    },
+    {
+      "oldPath": "public/images/recipes/grok-c91b8ce0-aa74-4537-946a-5cff9a4dcd8b.jpg",
+      "objectPath": "recipes/real-ration-7-snack.jpg",
+      "entity": "recipe",
+      "legacyId": "real-ration-7-snack",
+      "mime": "image/jpeg",
+      "sha256": "a8915c81a219b89a943b8c558f6a5f7a32516d2f2989c4c4a285dd97001e1d19"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-008-breakfast.png",
+      "objectPath": "recipes/real-ration-8-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-8-breakfast",
+      "mime": "image/png",
+      "sha256": "bb690ce09eebfa3ce53171436f15b179b0a7f73ba8dda6d401a31c903041ffa3"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-008-dinner.png",
+      "objectPath": "recipes/real-ration-8-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-8-dinner",
+      "mime": "image/png",
+      "sha256": "56e406b19b2b1891f0fda387604143fd31db48b40058b1d4157053223134420a"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-008-lunch.png",
+      "objectPath": "recipes/real-ration-8-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-8-lunch",
+      "mime": "image/png",
+      "sha256": "8d6b5e879a90003884827fcdc58557d609319f5f69adcb340c5a8032bebddfd3"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-008-snack.png",
+      "objectPath": "recipes/real-ration-8-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-8-snack",
+      "mime": "image/png",
+      "sha256": "5793ccd7b8786f4f45901aa6a0357d9da72c13360769f1c2e123f53d301585d2"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-009-breakfast.png",
+      "objectPath": "recipes/real-ration-9-breakfast.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-9-breakfast",
+      "mime": "image/png",
+      "sha256": "85743b0ea2e653e776153c34ccb7fbab12ff681febdcd8ab44253ab1197edb19"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-009-dinner.png",
+      "objectPath": "recipes/real-ration-9-dinner.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-9-dinner",
+      "mime": "image/png",
+      "sha256": "18816c52d32fe875beca9477be3f6025ce7b999a7913f44d0c7d2e07c937a79e"
+    },
+    {
+      "oldPath": "public/images/recipes/ration-009-lunch.png",
+      "objectPath": "recipes/real-ration-9-lunch.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-9-lunch",
+      "mime": "image/png",
+      "sha256": "a6d3c26b489f762c0e33a0c2becd9bc6daa9d42593868dfb6f1b663e37b6fcda"
+    },
+    {
+      "oldPath": "public/images/recipes/a_warm_inviting_food_shot_showcases_a_dark_textu.png",
+      "objectPath": "recipes/real-ration-9-snack.png",
+      "entity": "recipe",
+      "legacyId": "real-ration-9-snack",
+      "mime": "image/png",
+      "sha256": "7e952f5fd53109711720acfbb483151c5ea259e15494c33e726157325bc71d9f"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-001-oatmeal-coconut.jpeg",
+      "objectPath": "recipes/recipe-book-001.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-001",
+      "mime": "image/jpeg",
+      "sha256": "f515e8c08acfbe376a734d43453c9f1f66c39cd5c6aaba23c6d3e036ea7f2a9c"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-002-rice-porridge-coconut.jpeg",
+      "objectPath": "recipes/recipe-book-002.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-002",
+      "mime": "image/jpeg",
+      "sha256": "5d9ec9d36cbaab91c4db3bcc8f7a0d1e2ae2a2b1f96d2e9bfcea153ce011b5c0"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-003-rice-porridge-coconut-chia-vanilla.jpeg",
+      "objectPath": "recipes/recipe-book-003.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-003",
+      "mime": "image/jpeg",
+      "sha256": "463b6546aa68f2a5650a486b33e10a0606f64ad51e95988b1ea4f09309b6a65d"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-004-cream-of-rice.jpeg",
+      "objectPath": "recipes/recipe-book-004.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-004",
+      "mime": "image/jpeg",
+      "sha256": "f13d3a09fa2aeac8332f4f527c113234dcc51a9329e5a119ca3276798e69a87f"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-005-millet-pine-nuts-topinambur.jpeg",
+      "objectPath": "recipes/recipe-book-005.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-005",
+      "mime": "image/jpeg",
+      "sha256": "fa72fdb0691e2debc796a528e24b6115675f6047176d810ea6aaabee7cef2656"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-006-wheat-porridge-strawberry-chocolate.jpeg",
+      "objectPath": "recipes/recipe-book-006.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-006",
+      "mime": "image/jpeg",
+      "sha256": "46ca8568b8f8855670551a1e5d6bf3cdc2d2b3cbcd3388560b633f9fbac8f5aa"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-007-oatmeal-almond-apple-cinnamon.jpeg",
+      "objectPath": "recipes/recipe-book-007.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-007",
+      "mime": "image/jpeg",
+      "sha256": "9c887a91db28cf54e414fe9c68a8884084b34a49ddb74c170f76b48d1473f8a8"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-008-mixed-grains-coconut-urbech.jpeg",
+      "objectPath": "recipes/recipe-book-008.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-008",
+      "mime": "image/jpeg",
+      "sha256": "25664a3442bb1a86993cddb0d0f1b970ddedb3f54265612ffd0e8e30cf19bfdd"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-009-rice-quinoa-pumpkin.jpeg",
+      "objectPath": "recipes/recipe-book-009.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-009",
+      "mime": "image/jpeg",
+      "sha256": "1e74c91cbb05d94befec2798a182a4efbaa628ffd65b75d97e2623b1c874fff0"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-010-buckwheat-pistachio-strawberry.jpeg",
+      "objectPath": "recipes/recipe-book-010.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-010",
+      "mime": "image/jpeg",
+      "sha256": "114c627386f1db0fce1fa1b4983ab586f8039cb77b02831c0fd2501357f05d65"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-011.jpeg",
+      "objectPath": "recipes/recipe-book-011.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-011",
+      "mime": "image/jpeg",
+      "sha256": "ca5796020f3eace25843ff801c8a457b751882fb9414816ec7e9ff86698bec00"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-012.jpeg",
+      "objectPath": "recipes/recipe-book-012.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-012",
+      "mime": "image/jpeg",
+      "sha256": "b5e74eb8bd3d3e7abdf71ce944fba2fd5910badaa80928f8616a8eaf6ba6dc9a"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-013.jpeg",
+      "objectPath": "recipes/recipe-book-013.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-013",
+      "mime": "image/jpeg",
+      "sha256": "a10097367b917829cf79b37dc1defde108079d18208ded4c36167904cc270584"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-014.jpeg",
+      "objectPath": "recipes/recipe-book-014.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-014",
+      "mime": "image/jpeg",
+      "sha256": "0debeb6e1219dcae032a05210cc06f1d78dedf76055f31945cff7e3f4c6f5381"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-015.jpeg",
+      "objectPath": "recipes/recipe-book-015.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-015",
+      "mime": "image/jpeg",
+      "sha256": "5bb4f5fae6296cf49e68cc722fcc1ac32f4ecb1f98469b24c95b14d5ffde1a8a"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-016.jpeg",
+      "objectPath": "recipes/recipe-book-016.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-016",
+      "mime": "image/jpeg",
+      "sha256": "8862cd05e6a7eb97159b181f0e303bfdf1b80a1bc1bae5c15e999176b685fd08"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-017.jpeg",
+      "objectPath": "recipes/recipe-book-017.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-017",
+      "mime": "image/jpeg",
+      "sha256": "be0e0d0f271cd0c55a50fbc3b10439c94f629a080197af915e5e1e2b581587c5"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-018.jpeg",
+      "objectPath": "recipes/recipe-book-018.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-018",
+      "mime": "image/jpeg",
+      "sha256": "45f221de8218b7daa346d20a56bf5d5ed089db77f7c5aa9281be289b077c04eb"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-019.jpeg",
+      "objectPath": "recipes/recipe-book-019.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-019",
+      "mime": "image/jpeg",
+      "sha256": "a9c3f11d42791694ea00c31ee3ab47d40288dfd3f81fdf8ed5a6a15640504075"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-020.jpeg",
+      "objectPath": "recipes/recipe-book-020.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-020",
+      "mime": "image/jpeg",
+      "sha256": "29cfdcc7cef01d35e4a8001d730b9b9382f6de46c52d0bd1fb0084dc39e6670c"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-021.jpeg",
+      "objectPath": "recipes/recipe-book-021.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-021",
+      "mime": "image/jpeg",
+      "sha256": "05e4bbcf15e6c4f1b5bf67a286e190ff0777cbb3e4f1df6fa1d7c8386fd971c0"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-022.jpeg",
+      "objectPath": "recipes/recipe-book-022.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-022",
+      "mime": "image/jpeg",
+      "sha256": "01677dc254004c2cc653ee8846363098b301887eeeada8bb2710b898181a52bd"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-023.jpeg",
+      "objectPath": "recipes/recipe-book-023.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-023",
+      "mime": "image/jpeg",
+      "sha256": "8490d0e428e188ddce6b4d794562cfc91f4651d8a754af928d5fff7afd064cc2"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-024.jpeg",
+      "objectPath": "recipes/recipe-book-024.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-024",
+      "mime": "image/jpeg",
+      "sha256": "05fcbbc3ebdf429e5915328cecbee9423e26d3a2e362bb813d6fce5f5a72f9e8"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-025.jpeg",
+      "objectPath": "recipes/recipe-book-025.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-025",
+      "mime": "image/jpeg",
+      "sha256": "72e5c2c4f6bf71bdc94f9dbbf3fe956b121b2fe09e143b1be25ce8bea1013b35"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-026.jpeg",
+      "objectPath": "recipes/recipe-book-026.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-026",
+      "mime": "image/jpeg",
+      "sha256": "6c77937ef24ee61ecaed2e2a2223df105890e4873460e90d1521545a2aaec28c"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-027.jpeg",
+      "objectPath": "recipes/recipe-book-027.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-027",
+      "mime": "image/jpeg",
+      "sha256": "dd770f397e44e36039f12e7bfd332efb81702b237b0a88648eeacebc19198ed0"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-028.jpeg",
+      "objectPath": "recipes/recipe-book-028.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-028",
+      "mime": "image/jpeg",
+      "sha256": "d63e9bb81a38f289f3a4f8f21e51ade5f0932ccb6cb00af4e4b32e7a2c13f94f"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-029.jpeg",
+      "objectPath": "recipes/recipe-book-029.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-029",
+      "mime": "image/jpeg",
+      "sha256": "45da92b60a503a6d6c0a3528bd0572d9c82667d94208efa161fc8f85c59025c2"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-030.jpeg",
+      "objectPath": "recipes/recipe-book-030.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-030",
+      "mime": "image/jpeg",
+      "sha256": "fd1c63b9d82fc4fdfca53873c27745a75b2b403f7cc950079d4e7f3fddbaef6f"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-031.jpeg",
+      "objectPath": "recipes/recipe-book-031.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-031",
+      "mime": "image/jpeg",
+      "sha256": "c205944132fa20ecb14620a57c50064c2c2b8fb904f69b7453d44bb2abad3e3f"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-032.jpeg",
+      "objectPath": "recipes/recipe-book-032.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-032",
+      "mime": "image/jpeg",
+      "sha256": "379e8702e705a0d0602c00a806c0aef561b2f519cacdfe57a3f94690f10b7984"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-033.jpeg",
+      "objectPath": "recipes/recipe-book-033.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-033",
+      "mime": "image/jpeg",
+      "sha256": "14128c125f4092c58d136b04d630f308ac4343c7182df9a262d8bfefdf156996"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-034.jpeg",
+      "objectPath": "recipes/recipe-book-034.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-034",
+      "mime": "image/jpeg",
+      "sha256": "841cf99fc8b3accf7399533e3205dba5980c821f66d90a4757e461e184783458"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-035.jpeg",
+      "objectPath": "recipes/recipe-book-035.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-035",
+      "mime": "image/jpeg",
+      "sha256": "9ac336c15d3f80e5aeb3923b7d8687e3b90dc0c2c7b7602f7fd369f9fd78f7f1"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-036.jpeg",
+      "objectPath": "recipes/recipe-book-036.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-036",
+      "mime": "image/jpeg",
+      "sha256": "39ea40e177b5877fd66c7cc2a11547f3959d14567da75ba12fa00146f7eb294c"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-037.jpeg",
+      "objectPath": "recipes/recipe-book-037.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-037",
+      "mime": "image/jpeg",
+      "sha256": "918b05818844545e237508d95eff2f5426923dd80a45c67c96f4e8e959609311"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-043.jpeg",
+      "objectPath": "recipes/recipe-book-038.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-038",
+      "mime": "image/jpeg",
+      "sha256": "48319371332e58326a481253f51713b60622edbf5dba44c533032a8016df2821"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-042.jpeg",
+      "objectPath": "recipes/recipe-book-039.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-039",
+      "mime": "image/jpeg",
+      "sha256": "3aca659f1aaf0a27d5ba46816223ef79f81543e4521458679618a45ddb2d46d2"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-040-frozen-bananas-dark.jpeg",
+      "objectPath": "recipes/recipe-book-040.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-040",
+      "mime": "image/jpeg",
+      "sha256": "913129d9f9d95d5c4cc8706bbeb3dc975db43ed7fe37c5bebf91e480ca84a761"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-055.jpeg",
+      "objectPath": "recipes/recipe-book-041.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-041",
+      "mime": "image/jpeg",
+      "sha256": "e12a69f65d04f3e93c45b5ce56d482de2397c037aa0d4ace75f2a6c99f3217c1"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-042-warm-beef-green-bean-salad-dark.jpeg",
+      "objectPath": "recipes/recipe-book-042.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-042",
+      "mime": "image/jpeg",
+      "sha256": "f80f553bc986aa4627deaa984433cece055571cc2b5c4156850fb1fa6a1a339f"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-069.jpeg",
+      "objectPath": "recipes/recipe-book-043.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-043",
+      "mime": "image/jpeg",
+      "sha256": "213a7de411df220f8ec4dbabb572833c9d92d33c5fecc76bef4513e161be3df8"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-062.jpeg",
+      "objectPath": "recipes/recipe-book-044.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-044",
+      "mime": "image/jpeg",
+      "sha256": "6443dd263d909b0e9db9a38026524f99f38b6164c96c3b4f988fb707d8e997bc"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-051.jpeg",
+      "objectPath": "recipes/recipe-book-045.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-045",
+      "mime": "image/jpeg",
+      "sha256": "e9261ecb3c0ebdafaf7ac22f164b12350681935d885a6752634f0c976ec45d72"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-058.jpeg",
+      "objectPath": "recipes/recipe-book-046.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-046",
+      "mime": "image/jpeg",
+      "sha256": "07a0d0e2d84386c9c18a56bd716be8260848b0ed3fc16d37e5eff3cf5bbc4b6b"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-060.jpeg",
+      "objectPath": "recipes/recipe-book-047.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-047",
+      "mime": "image/jpeg",
+      "sha256": "81bdab32be4627c1c73bbceaf1c66e9b278aa766f3cb0ca8dc7187f2e70cad20"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-050.jpeg",
+      "objectPath": "recipes/recipe-book-048.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-048",
+      "mime": "image/jpeg",
+      "sha256": "5e2619348e63a9e33906d42dac6b3f2a325a6133010bd650a294a853908e08d2"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-061.jpeg",
+      "objectPath": "recipes/recipe-book-049.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-049",
+      "mime": "image/jpeg",
+      "sha256": "e0a218ee6ab0195b6f80e2c283ff6d1566ca9d89d580b11f07f272940af09b8a"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-064.jpeg",
+      "objectPath": "recipes/recipe-book-050.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-050",
+      "mime": "image/jpeg",
+      "sha256": "7afedea9db654968ccc71369597e825ef169da4a034967cb989d857b00b79301"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-071.jpeg",
+      "objectPath": "recipes/recipe-book-051.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-051",
+      "mime": "image/jpeg",
+      "sha256": "c9d4337450b8a18b8c838bda2dcf779233a7bd142ca171e303a12ac8657d4abf"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-052.jpeg",
+      "objectPath": "recipes/recipe-book-052.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-052",
+      "mime": "image/jpeg",
+      "sha256": "ca2c8a33a8e71328d68afcc3f08dca900fcd04ba4adec6e879d3d3420aa533ed"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-047.jpeg",
+      "objectPath": "recipes/recipe-book-053.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-053",
+      "mime": "image/jpeg",
+      "sha256": "94ac7a3a18e0cee6f643aad658ad2b543699ca4f95cfff089de9a625fe5acaf7"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-046.jpeg",
+      "objectPath": "recipes/recipe-book-054.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-054",
+      "mime": "image/jpeg",
+      "sha256": "f59ffce49f294a927356c5fe3d77b10060c8f1b5f8b5d5ab7a3fcd7d53bb50aa"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-057.jpeg",
+      "objectPath": "recipes/recipe-book-055.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-055",
+      "mime": "image/jpeg",
+      "sha256": "9154c8c5fe13527d61bda0a6711bb52eecacd3ee3636f1f749c8ac671d6d0fee"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-059.jpeg",
+      "objectPath": "recipes/recipe-book-056.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-056",
+      "mime": "image/jpeg",
+      "sha256": "08fd1f6befed8cfb2d633e25171952ccc664ac3bfb0b10fc81669440bb349e12"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-054.jpeg",
+      "objectPath": "recipes/recipe-book-057.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-057",
+      "mime": "image/jpeg",
+      "sha256": "bf026898fde701f9bc29778fd26ae97d5df09334c81a88d944cfb46fee512e77"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-048.jpeg",
+      "objectPath": "recipes/recipe-book-058.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-058",
+      "mime": "image/jpeg",
+      "sha256": "8a45b29a6b4b3c97c7012ecbde72f0353668f54e44d777c739e9326e3cf6444e"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-049.jpeg",
+      "objectPath": "recipes/recipe-book-059.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-059",
+      "mime": "image/jpeg",
+      "sha256": "63ae248ab988428a1d8b1c67d4724f0ee391f25a7d54f50ef3fceb3360d62985"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-053.jpeg",
+      "objectPath": "recipes/recipe-book-060.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-060",
+      "mime": "image/jpeg",
+      "sha256": "81604ce95c45539381f6e5e2cb695d3656b8cd9cbad9a71343a79696c9fa55f2"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-067.jpeg",
+      "objectPath": "recipes/recipe-book-061.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-061",
+      "mime": "image/jpeg",
+      "sha256": "49bed5dc00357754a950cc55f91359dfba0d7d83b8fb0183b1d2b720e6b9550a"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-065.jpeg",
+      "objectPath": "recipes/recipe-book-062.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-062",
+      "mime": "image/jpeg",
+      "sha256": "db7c13ca289e31643a58d9c5ae929667c8fae9340bf01e2096d0c9edf04292b1"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-056.jpeg",
+      "objectPath": "recipes/recipe-book-063.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-063",
+      "mime": "image/jpeg",
+      "sha256": "0cafbb5e44b0c5c22113fdab900a6e2d3a10045057f8448d016d7dd4c486eead"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-063.jpeg",
+      "objectPath": "recipes/recipe-book-064.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-064",
+      "mime": "image/jpeg",
+      "sha256": "fc99e4320c58500268b4f17fa41d768ef251546cf1b830d5edcd7d29bcf689bf"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-066.jpeg",
+      "objectPath": "recipes/recipe-book-065.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-065",
+      "mime": "image/jpeg",
+      "sha256": "5d31ab8fe6fdd0d785c68c973f9af3842402f17ddd35c08d61679137cc770934"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-070.jpeg",
+      "objectPath": "recipes/recipe-book-066.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-066",
+      "mime": "image/jpeg",
+      "sha256": "f1e5800a15a327312653e683ee5a8d9c11ee9b0ba9e35280ce4971001f4b622f"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-076.jpeg",
+      "objectPath": "recipes/recipe-book-067.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-067",
+      "mime": "image/jpeg",
+      "sha256": "2004285bb4e99003d69d6a11c841ba1241a02dce4b18b939c5be19eb4ffa61d8"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-068-cabbage-pomegranate-salad-dark.jpeg",
+      "objectPath": "recipes/recipe-book-068.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-068",
+      "mime": "image/jpeg",
+      "sha256": "1cf2f4dff5dcabd479d657787a2937b013e68d9dec7a11706bcffe8752e0da91"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-069-strawberry-avocado-salad-dark.jpeg",
+      "objectPath": "recipes/recipe-book-069.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-069",
+      "mime": "image/jpeg",
+      "sha256": "77934c3d82d5422cdec7b2eb079e93464b4a566079c7f0e7398e01772a09bf60"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-070-coconut-cookies-dark.jpeg",
+      "objectPath": "recipes/recipe-book-070.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-070",
+      "mime": "image/jpeg",
+      "sha256": "8b3e090cbb00dfb92bec8ca2c24bf53867599e28a9cb3b38145b85569e8baec9"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-071-sugar-free-merings-dark.jpeg",
+      "objectPath": "recipes/recipe-book-071.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-071",
+      "mime": "image/jpeg",
+      "sha256": "970570de2fd1ac3cca022c18cd1ee156248988bcc9498fd7e3807acbcc0915c2"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-072-meringue-roll-dark.jpeg",
+      "objectPath": "recipes/recipe-book-072.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-072",
+      "mime": "image/jpeg",
+      "sha256": "0ad7fe7a60286f0fc1cd1df7b702149b46e242489cf12f079518eebc774d9f79"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-073-protein-chocolate-dessert-dark.jpeg",
+      "objectPath": "recipes/recipe-book-073.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-073",
+      "mime": "image/jpeg",
+      "sha256": "1707644fe980877106442937abdf7fdc50fa2646a721ef7d4c90d5fa95c2bfec"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-038.jpeg",
+      "objectPath": "recipes/recipe-book-074.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-074",
+      "mime": "image/jpeg",
+      "sha256": "d706229fd4afc36a04466764fbc44258ec93ee46b2595b5b64efb14e637e3ffe"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-075-lemon-panna-cotta-dark.jpeg",
+      "objectPath": "recipes/recipe-book-075.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-075",
+      "mime": "image/jpeg",
+      "sha256": "1a8d40adadcf77a6f9c41abcb6731917e16308d13865c9475e68cdd92d21fe6a"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-076-zero-jam-dark.jpeg",
+      "objectPath": "recipes/recipe-book-076.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-076",
+      "mime": "image/jpeg",
+      "sha256": "bcc2495b2d098003587f5e70e7033b1ba67ec039a2bcba9f98a1995a4397e2bf"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-039.jpeg",
+      "objectPath": "recipes/recipe-book-077.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-077",
+      "mime": "image/jpeg",
+      "sha256": "253e37d83a4f24de767cc796eb74cdacf3de52a55294f4e75146bd9b1ea3b4b7"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-040.jpeg",
+      "objectPath": "recipes/recipe-book-078.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-078",
+      "mime": "image/jpeg",
+      "sha256": "085f330a4d63d7b818cceb4fe443f72347182d7b8d19c8748fd954f940c252a1"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-041.jpeg",
+      "objectPath": "recipes/recipe-book-079.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-079",
+      "mime": "image/jpeg",
+      "sha256": "ed482f1663a23398cf04d31d78097eb41713b13ad1c952091ffb1f510827168e"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-044.jpeg",
+      "objectPath": "recipes/recipe-book-080.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-080",
+      "mime": "image/jpeg",
+      "sha256": "d4f4b300061aaf9d5e37fbe30c19d220801bcaad7bcb885edce20cc6fc1e3382"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-045.jpeg",
+      "objectPath": "recipes/recipe-book-081.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-081",
+      "mime": "image/jpeg",
+      "sha256": "b86ed8841f38e991abd7c1098ddacd11dfbe8595d8a031b1a02d7e16ab0b89bd"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-068.jpeg",
+      "objectPath": "recipes/recipe-book-082.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-082",
+      "mime": "image/jpeg",
+      "sha256": "78c7af014710c2d9c350c58993f8cbb5b68dedb0ad0463b47bf2bddc9a53d514"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-072.jpeg",
+      "objectPath": "recipes/recipe-book-083.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-083",
+      "mime": "image/jpeg",
+      "sha256": "0ae38910222d240c97a081abc066c06466ead93479653c0213c9b98e3eb63624"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-084-turkey-bean-protein-salad-dark.jpeg",
+      "objectPath": "recipes/recipe-book-084.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-084",
+      "mime": "image/jpeg",
+      "sha256": "bed77f31b034a3c64871573a032ace7065702fb6a28e37ad1c270bf66e1af8ab"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-074.jpeg",
+      "objectPath": "recipes/recipe-book-085.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-085",
+      "mime": "image/jpeg",
+      "sha256": "a9efe5ea407cfa498066f48ee7319deb1de4ad5c015dfc2552f6ee167985f577"
+    },
+    {
+      "oldPath": "public/images/recipes/recipe-book-075.jpeg",
+      "objectPath": "recipes/recipe-book-086.jpeg",
+      "entity": "recipe",
+      "legacyId": "recipe-book-086",
+      "mime": "image/jpeg",
+      "sha256": "523e91d393e4b68bc8d0b67b119401129bc7b6e47318b7d436c9cbc9a9804d50"
+    }
+  ]
+}
