@@ -1,0 +1,64 @@
+name: Import staging content to Supabase
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Type IMPORT-STAGING to confirm the staging import"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-staging-import
+  cancel-in-progress: false
+
+jobs:
+  import-staging:
+    name: Import staging content
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Validate confirmation
+        env:
+          IMPORT_CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          if [[ "$IMPORT_CONFIRMATION" != "IMPORT-STAGING" ]]; then
+            echo "::error::Import confirmation did not match the required text."
+            exit 1
+          fi
+
+      - name: Validate required secrets
+        env:
+          STAGING_SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
+          STAGING_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.STAGING_SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [[ -z "$STAGING_SUPABASE_URL" || -z "$STAGING_SUPABASE_SERVICE_ROLE_KEY" ]]; then
+            echo "::error::Required staging Supabase secrets are not configured."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run migration dry-run
+        run: npm run migration:dry-run
+
+      - name: Apply migration
+        env:
+          SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.STAGING_SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_STORAGE_BUCKET: content-images
+        run: npm run migration:apply
