@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "migration:manifest": "node scripts/supabase/build-image-manifest.mjs",
+    "migration:dry-run": "node scripts/supabase/import-content.mjs && node scripts/supabase/upload-images.mjs",
+    "migration:apply": "node scripts/supabase/import-content.mjs --apply && node scripts/supabase/upload-images.mjs --apply"
   },
   "dependencies": {
     "react": "^18.3.1",
