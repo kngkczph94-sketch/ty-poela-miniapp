@@ -54,9 +54,14 @@ export async function readManifest() {
 export function configForApply(apply) {
   if (!apply) return null;
   const url = process.env.SUPABASE_URL?.replace(/\/$/, '');
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) throw new Error('--apply requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY');
-  return { url, key };
+  const secretKey = process.env.SUPABASE_SECRET_KEY;
+  const legacyKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const key = secretKey || legacyKey;
+  if (!url || !key) {
+    throw new Error('--apply requires SUPABASE_URL and SUPABASE_SECRET_KEY (or legacy SUPABASE_SERVICE_ROLE_KEY)');
+  }
+  const isLegacyJwt = !secretKey && key.split('.').length === 3;
+  return { url, key, isLegacyJwt };
 }
 
 export async function request(config, endpoint, options = {}) {
@@ -64,7 +69,7 @@ export async function request(config, endpoint, options = {}) {
     ...options,
     headers: {
       apikey: config.key,
-      Authorization: `Bearer ${config.key}`,
+      ...(config.isLegacyJwt ? { Authorization: `Bearer ${config.key}` } : {}),
       ...options.headers,
     },
   });
