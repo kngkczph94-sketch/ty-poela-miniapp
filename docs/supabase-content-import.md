@@ -24,11 +24,13 @@ npm run migration:dry-run
 
 # Explicit real run, from a private local shell
 SUPABASE_URL=https://<PROJECT_REF>.supabase.co \
-SUPABASE_SERVICE_ROLE_KEY='<SERVICE_ROLE_KEY>' \
+SUPABASE_SECRET_KEY='sb_secret_<SECRET_API_KEY>' \
 SUPABASE_STORAGE_BUCKET=content-images \
 npm run migration:apply
 ```
 
+For projects that still use legacy keys, `SUPABASE_SERVICE_ROLE_KEY='<SERVICE_ROLE_JWT>'` is supported as a fallback when `SUPABASE_SECRET_KEY` is not set.
+
 Create the private Storage bucket named `content-images` before apply (or choose an existing private bucket via `SUPABASE_STORAGE_BUCKET`). The content importer validates all data and manifest hashes before its first request, and checks that every file below `public/images` is represented. Entity images receive entity-specific object paths; otherwise-unused assets are retained below `legacy-assets/`. Rows use stable `legacy_id` upserts; ingredients use `(normalized_name, category)`; objects use Storage `x-upsert`, so reruns do not duplicate records or objects.
 
-The two apply phases can also be invoked separately with `node scripts/supabase/import-content.mjs --apply` and `node scripts/supabase/upload-images.mjs --apply`. Keep the service-role key only in the local process environment or an ignored `.env`; never commit it or expose it with a `VITE_` prefix.
+The two apply phases can also be invoked separately with `node scripts/supabase/import-content.mjs --apply` and `node scripts/supabase/upload-images.mjs --apply`. Keep the Secret API key (or legacy service-role fallback) only in the local process environment or an ignored `.env`; never commit it or expose it with a `VITE_` prefix.

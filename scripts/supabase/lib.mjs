@@ -54,18 +54,25 @@ export async function readManifest() {
 export function configForApply(apply) {
   if (!apply) return null;
   const url = process.env.SUPABASE_URL?.replace(/\/$/, '');
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) throw new Error('--apply requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY');
-  return { url, key };
+  const secretKey = process.env.SUPABASE_SECRET_KEY;
+  const legacyServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const key = secretKey || legacyServiceRoleKey;
+  if (!url || !key) {
+    throw new Error('--apply requires SUPABASE_URL and SUPABASE_SECRET_KEY (or legacy SUPABASE_SERVICE_ROLE_KEY)');
+  }
+  return { url, key, useBearerAuthorization: !secretKey && Boolean(legacyServiceRoleKey) };
 }
 
 export async function request(config, endpoint, options = {}) {
+  const authorizationHeaders = config.useBearerAuthorization
+    ? { Authorization: `Bearer ${config.key}` }
+    : {};
   const response = await fetch(`${config.url}${endpoint}`, {
     ...options,
     headers: {
-      apikey: config.key,
-      Authorization: `Bearer ${config.key}`,
       ...options.headers,
+      apikey: config.key,
+      ...authorizationHeaders,
     },
   });
   if (!response.ok) throw new Error(`${options.method ?? 'GET'} ${endpoint}: ${response.status} ${await response.text()}`);
