@@ -3,6 +3,46 @@
   "bucket": "content-images",
   "entries": [
     {
+      "oldPath": "public/images/recipes/запечённые_яблоки_на_керамической_тарелке.png",
+      "objectPath": "legacy-assets/0c906c3fb35e9cd2a491b5e039524ba8d08c46eec8c8d6f383239ee89e6ef3dd.png",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/запечённые_яблоки_на_керамической_тарелке.png",
+      "mime": "image/png",
+      "sha256": "2842204ce19c31c2a56d23c89f2c030af9705fe420fecc12f5f5b3bf284660d0"
+    },
+    {
+      "oldPath": "public/images/recipes/паста_с_мясным_соусом_и_базиликом.png",
+      "objectPath": "legacy-assets/1bdaeacede8b2450265a56395d961ec5c14ece73268de90dd10320ffa378d782.png",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/паста_с_мясным_соусом_и_базиликом.png",
+      "mime": "image/png",
+      "sha256": "860a1e87a564dfcb5f871fef05ae4219d9e58259312501dba8bced4c23afb381"
+    },
+    {
+      "oldPath": "public/images/recipes/творожники_с_ягодами_и_йогуртом.png",
+      "objectPath": "legacy-assets/64c2bc8d1f5b37940ef97b63a9abac0c897aca15e71c32c199f17b7f8b3ae829.png",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/творожники_с_ягодами_и_йогуртом.png",
+      "mime": "image/png",
+      "sha256": "a0a9341bb10e25adc64f4af0f40cde7926c0fbb3615693826bd99d40c7677eb9"
+    },
+    {
+      "oldPath": "public/images/recipes/гармония_вкусов_на_темном_фоне.png",
+      "objectPath": "legacy-assets/86605daf8295f86b17954f5a5a449cac881c918efca8bee849ebed5fa9cc99f5.png",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/гармония_вкусов_на_темном_фоне.png",
+      "mime": "image/png",
+      "sha256": "dd1e969163e5fd028114d2ef4f255669c87b8c6103435bc75d5acf80a484711e"
+    },
+    {
+      "oldPath": "public/images/recipes/жареный_лосось_с_картошкой_и_травами.png",
+      "objectPath": "legacy-assets/ff995f38e6f749ff85ceb668382f87fac08d1c64d9f78a898350c8b15fa5a814.png",
+      "entity": "asset",
+      "legacyId": "public/images/recipes/жареный_лосось_с_картошкой_и_травами.png",
+      "mime": "image/png",
+      "sha256": "a8d3c03a4b96589d03397bc18d828adf0c7beeb82ffec70251cfab2852dd6c04"
+    },
+    {
       "oldPath": "public/images/home/home-ai-selection.jpg",
       "objectPath": "legacy-assets/home/home-ai-selection.jpg",
       "entity": "asset",
@@ -153,46 +193,6 @@
       "legacyId": "public/images/recipes/recipe-book-073.jpeg",
       "mime": "image/jpeg",
       "sha256": "8f7aa4171f9e05138d7d4ddf8bb0a1b51f44e9c2986cab229ec799878f9e6c16"
-    },
-    {
-      "oldPath": "public/images/recipes/гармония_вкусов_на_темном_фоне.png",
-      "objectPath": "legacy-assets/recipes/гармония_вкусов_на_темном_фоне.png",
-      "entity": "asset",
-      "legacyId": "public/images/recipes/гармония_вкусов_на_темном_фоне.png",
-      "mime": "image/png",
-      "sha256": "dd1e969163e5fd028114d2ef4f255669c87b8c6103435bc75d5acf80a484711e"
-    },
-    {
-      "oldPath": "public/images/recipes/жареный_лосось_с_картошкой_и_травами.png",
-      "objectPath": "legacy-assets/recipes/жареный_лосось_с_картошкой_и_травами.png",
-      "entity": "asset",
-      "legacyId": "public/images/recipes/жареный_лосось_с_картошкой_и_травами.png",
-      "mime": "image/png",
-      "sha256": "a8d3c03a4b96589d03397bc18d828adf0c7beeb82ffec70251cfab2852dd6c04"
-    },
-    {
-      "oldPath": "public/images/recipes/запечённые_яблоки_на_керамической_тарелке.png",
-      "objectPath": "legacy-assets/recipes/запечённые_яблоки_на_керамической_тарелке.png",
-      "entity": "asset",
-      "legacyId": "public/images/recipes/запечённые_яблоки_на_керамической_тарелке.png",
-      "mime": "image/png",
-      "sha256": "2842204ce19c31c2a56d23c89f2c030af9705fe420fecc12f5f5b3bf284660d0"
-    },
-    {
-      "oldPath": "public/images/recipes/паста_с_мясным_соусом_и_базиликом.png",
-      "objectPath": "legacy-assets/recipes/паста_с_мясным_соусом_и_базиликом.png",
-      "entity": "asset",
-      "legacyId": "public/images/recipes/паста_с_мясным_соусом_и_базиликом.png",
-      "mime": "image/png",
-      "sha256": "860a1e87a564dfcb5f871fef05ae4219d9e58259312501dba8bced4c23afb381"
-    },
-    {
-      "oldPath": "public/images/recipes/творожники_с_ягодами_и_йогуртом.png",
-      "objectPath": "legacy-assets/recipes/творожники_с_ягодами_и_йогуртом.png",
-      "entity": "asset",
-      "legacyId": "public/images/recipes/творожники_с_ягодами_и_йогуртом.png",
-      "mime": "image/png",
-      "sha256": "a0a9341bb10e25adc64f4af0f40cde7926c0fbb3615693826bd99d40c7677eb9"
     },
     {
       "oldPath": "public/images/recipes/ration-001-breakfast.png",
