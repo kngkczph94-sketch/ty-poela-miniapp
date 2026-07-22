@@ -120,7 +120,13 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
   if (rationResult.error) throw rationResult.error;
 
   const recipeIds = new Map((recipesResult.data ?? []).map((recipe) => [recipe.legacy_id as string, recipe.id as string]));
-  if (recipeIds.size !== new Set(recipeLegacyIds).size) throw new Error('Не удалось найти один из рецептов плана.');
+  const missingRecipeIds = [...new Set(recipeLegacyIds)].filter((legacyId) => !recipeIds.has(legacyId));
+  if (missingRecipeIds.length > 0) {
+    throw new Error(`Блюда рациона недоступны: ${missingRecipeIds.join(', ')}. Проверьте доступ к Premium.`);
+  }
+  if (planDay.rationId && !rationResult.data?.id) {
+    throw new Error('Рацион недоступен для текущего уровня подписки.');
+  }
 
   const { data: plan, error: planError } = await supabase
     .from('meal_plans')
