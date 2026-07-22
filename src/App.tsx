@@ -450,9 +450,7 @@ function App() {
   };
 
   useEffect(() => {
-    const telegramBackButton = (window as Window & {
-      Telegram?: { WebApp?: { BackButton?: { show: () => void; hide: () => void; onClick: (callback: () => void) => void; offClick: (callback: () => void) => void } } };
-    }).Telegram?.WebApp?.BackButton;
+    const telegramBackButton = window.Telegram?.WebApp?.BackButton;
 
     if (activeTab === 'home' && !selectedRecipe && !selectedRation) {
       telegramBackButton?.hide();
