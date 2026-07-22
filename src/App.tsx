@@ -453,6 +453,7 @@ function App() {
       ));
     } catch (error) {
       console.error('Meal plan save failed', error);
+      throw error;
     }
   };
   const removeRecipeFromMenu = async (day: MenuDay, slot: MenuMealSlot) => {
