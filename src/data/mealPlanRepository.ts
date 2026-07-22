@@ -34,9 +34,12 @@ const localDateAtOffset = (offset: number) => {
 const dateForMenuDay = (day: MenuDay) => localDateAtOffset(menuDays.indexOf(day));
 
 const requireProfileId = async () => {
-  const { data, error } = await supabase.from('users').select('id').single();
-  if (error || !data?.id) throw new Error('Не удалось определить профиль пользователя.');
-  return data.id as string;
+  const { data, error } = await supabase.rpc('current_app_user_id');
+  if (error) throw new Error(`Не удалось определить профиль пользователя: ${error.message}`);
+  if (typeof data !== 'string' || !data) {
+    throw new Error('Профиль пользователя не связан с текущей авторизацией.');
+  }
+  return data;
 };
 
 export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
