@@ -438,18 +438,18 @@ function App() {
   }, [session?.user.id]);
 
   const saveMeasurementEntry = async (entry: MeasurementEntry) => {
+    await persistMeasurement(entry);
     setMeasurementEntries((currentEntries) => {
       const entriesWithoutToday = currentEntries.filter((currentEntry) => currentEntry.date !== entry.date);
       return [entry, ...entriesWithoutToday].sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
     });
-    await persistMeasurement(entry);
   };
   const saveHabitEntry = async (entry: HabitEntry) => {
+    await persistHabit(entry);
     setHabitEntries((currentEntries) => {
       const entriesWithoutToday = currentEntries.filter((currentEntry) => currentEntry.date !== entry.date);
       return [entry, ...entriesWithoutToday].sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
     });
-    await persistHabit(entry);
   };
 
   const goHome = () => { setActiveTab('home'); setSelectedRecipe(null); setSelectedRation(null); };
