@@ -10,6 +10,7 @@ import { RationDetailPage } from './pages/RationDetailPage';
 import { RationsPage } from './pages/RationsPage';
 import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
+import { loadWeeklyMenu, persistPlanDay } from './data/mealPlanRepository';
 import { findRecipeWithRationImage } from './data/recipesWithRationImages';
 import { persistHabit, persistMeasurement, syncProgress } from './data/progressRepository';
 import { dailyRations } from './data/rations';
@@ -415,13 +416,57 @@ function App() {
   const openAccess = (recipe?: Recipe) => { setAccessReturnTarget({ tab: activeTab, recipe: recipe ?? selectedRecipe ?? undefined, ration: selectedRation ?? undefined }); setRecipeToOpenAfterAccess(recipe ?? selectedRecipe); setActiveTab('access'); };
   const activateSubscription = () => { const until = new Date(); until.setDate(until.getDate() + 7); setUserProfile({ subscriptionStatus: 'active', subscriptionUntil: until.toISOString() }); if (recipeToOpenAfterAccess) { setSelectedRecipe(recipeToOpenAfterAccess); setRecipeToOpenAfterAccess(null); setActiveTab('recipes'); } };
 
-  const addRecipeToMenu = (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => {
-    setWeeklyMenu((currentMenu) => ({ ...currentMenu, [day]: { ...currentMenu[day], meals: { ...currentMenu[day].meals, [slot]: recipe } } }));
+  useEffect(() => {
+    if (!session?.user.id) return;
+    let cancelled = false;
+
+    void loadWeeklyMenu()
+      .then((menu) => {
+        if (!cancelled) setWeeklyMenu(menu);
+      })
+      .catch((error) => console.error('Meal plan load failed', error));
+
+    return () => {
+      cancelled = true;
+    };
+  }, [session?.user.id]);
+
+  const addRecipeToMenu = async (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => {
+    const nextDay = { ...weeklyMenu[day], meals: { ...weeklyMenu[day].meals, [slot]: recipe } };
+    try {
+      await persistPlanDay(day, nextDay);
+      setWeeklyMenu((currentMenu) => ({ ...currentMenu, [day]: nextDay }));
+    } catch (error) {
+      console.error('Meal plan save failed', error);
+    }
   };
-  const addRationToPlan = (ration: DailyRation, meals: DailyRation['meals'], days: MenuDay[]) => {
-    setWeeklyMenu((currentMenu) => days.reduce((nextMenu, day) => ({ ...nextMenu, [day]: { rationId: ration.id, rationNumber: ration.rationNumber, meals: { ...meals } } }), currentMenu));
+  const addRationToPlan = async (ration: DailyRation, meals: DailyRation['meals'], days: MenuDay[]) => {
+    const nextDays = days.map((day) => ({
+      day,
+      plan: { rationId: ration.id, rationNumber: ration.rationNumber, meals: { ...meals } },
+    }));
+    try {
+      await Promise.all(nextDays.map(({ day, plan }) => persistPlanDay(day, plan)));
+      setWeeklyMenu((currentMenu) => nextDays.reduce(
+        (nextMenu, { day, plan }) => ({ ...nextMenu, [day]: plan }),
+        currentMenu,
+      ));
+    } catch (error) {
+      console.error('Meal plan save failed', error);
+    }
   };
-  const removeRecipeFromMenu = (day: MenuDay, slot: MenuMealSlot) => setWeeklyMenu((currentMenu) => ({ ...currentMenu, [day]: { ...currentMenu[day], meals: { ...currentMenu[day].meals, [slot]: null } } }));
+  const removeRecipeFromMenu = async (day: MenuDay, slot: MenuMealSlot) => {
+    const nextDay = {
+      ...weeklyMenu[day],
+      meals: { ...weeklyMenu[day].meals, [slot]: null },
+    };
+    try {
+      await persistPlanDay(day, nextDay);
+      setWeeklyMenu((currentMenu) => ({ ...currentMenu, [day]: nextDay }));
+    } catch (error) {
+      console.error('Meal plan save failed', error);
+    }
+  };
   useEffect(() => {
     window.localStorage.setItem('ty-poela-measurement-entries', JSON.stringify(measurementEntries));
   }, [measurementEntries]);
