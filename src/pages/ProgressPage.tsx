@@ -6,8 +6,8 @@ type ProgressPageProps = {
   onBack: () => void;
   measurements: MeasurementEntry[];
   habits: HabitEntry[];
-  onSaveMeasurement: (entry: MeasurementEntry) => void;
-  onSaveHabit: (entry: HabitEntry) => void;
+  onSaveMeasurement: (entry: MeasurementEntry) => Promise<void>;
+  onSaveHabit: (entry: HabitEntry) => Promise<void>;
 };
 
 type ProgressTab = 'measurements' | 'charts' | 'habits';
@@ -146,6 +146,7 @@ export function ProgressPage({ measurements, habits, onBack, onSaveMeasurement, 
   const [habitForm, setHabitForm] = useState(() => createHabitFormState(habits));
   const [selectedMetric, setSelectedMetric] = useState<MeasurementKey>('weight');
   const [notice, setNotice] = useState('');
+  const [saving, setSaving] = useState(false);
   const today = todayDate();
   const sortedMeasurements = useMemo(() => [...measurements].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()), [measurements]);
   const sortedHabits = useMemo(() => [...habits].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 7), [habits]);
@@ -163,26 +164,40 @@ export function ProgressPage({ measurements, habits, onBack, onSaveMeasurement, 
     window.setTimeout(() => setNotice(''), 2200);
   };
 
-  const handleMeasurementSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleMeasurementSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSaveMeasurement({
-      id: today,
-      date: today,
-      weight: parseOptionalNumber(measurementForm.weight),
-      neck: parseOptionalNumber(measurementForm.neck),
-      chest: parseOptionalNumber(measurementForm.chest),
-      waist: parseOptionalNumber(measurementForm.waist),
-      hips: parseOptionalNumber(measurementForm.hips),
-      leg: parseOptionalNumber(measurementForm.leg),
-      arm: parseOptionalNumber(measurementForm.arm),
-    });
-    showNotice('Замеры сохранены');
+    setSaving(true);
+    try {
+      await onSaveMeasurement({
+        id: today,
+        date: today,
+        weight: parseOptionalNumber(measurementForm.weight),
+        neck: parseOptionalNumber(measurementForm.neck),
+        chest: parseOptionalNumber(measurementForm.chest),
+        waist: parseOptionalNumber(measurementForm.waist),
+        hips: parseOptionalNumber(measurementForm.hips),
+        leg: parseOptionalNumber(measurementForm.leg),
+        arm: parseOptionalNumber(measurementForm.arm),
+      });
+      showNotice('Замеры сохранены в профиле');
+    } catch (error) {
+      showNotice(error instanceof Error ? error.message : 'Не удалось сохранить замеры');
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const handleHabitSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleHabitSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSaveHabit({ id: today, date: today, steps: currentSteps, sleep: currentSleep, water: currentWater });
-    showNotice('День сохранён');
+    setSaving(true);
+    try {
+      await onSaveHabit({ id: today, date: today, steps: currentSteps, sleep: currentSleep, water: currentWater });
+      showNotice('День сохранён в профиле');
+    } catch (error) {
+      showNotice(error instanceof Error ? error.message : 'Не удалось сохранить день');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -209,7 +224,7 @@ export function ProgressPage({ measurements, habits, onBack, onSaveMeasurement, 
           <div className="flex items-start justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Сегодня</p><h2 className="mt-1 text-xl font-black text-[#37410F]">Замеры тела</h2></div><span className="rounded-full bg-[#F3E2BF] px-3 py-1 text-xs font-black text-[#8B725F]">{formatDate(today)}</span></div>
           <form className="mt-4 space-y-3" onSubmit={handleMeasurementSubmit}>
             {measurementFields.map((field) => <TrackerInput key={field.key} label={field.label} onChange={(value) => setMeasurementForm((state) => ({ ...state, [field.key]: value }))} placeholder={field.placeholder} value={measurementForm[field.key]} />)}
-            <button className="w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]" type="submit">Сохранить замеры</button>
+            <button className="w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F] disabled:cursor-wait disabled:opacity-60" disabled={saving} type="submit">{saving ? 'Сохраняем…' : 'Сохранить замеры'}</button>
           </form>
         </article>
         <h2 className="mt-5 text-xl font-black text-[#37410F]">История замеров</h2>
@@ -228,7 +243,7 @@ export function ProgressPage({ measurements, habits, onBack, onSaveMeasurement, 
             <TrackerInput description="Цель по умолчанию — 10000 шагов" label="Шаги" onChange={(value) => setHabitForm((state) => ({ ...state, steps: value }))} placeholder="8700" progressLabel={`${currentSteps ?? 0} / ${STEPS_GOAL}`} progressValue={clampProgress(currentSteps, STEPS_GOAL)} step="1" value={habitForm.steps} />
             <TrackerInput description="Цель по умолчанию — 7.5 часов" label="Сон" onChange={(value) => setHabitForm((state) => ({ ...state, sleep: value }))} placeholder="7.5" progressLabel={`${currentSleep ?? 0} / ${SLEEP_GOAL} ч`} progressValue={clampProgress(currentSleep, SLEEP_GOAL)} value={habitForm.sleep} />
             <TrackerInput description="Цель по умолчанию — 2.5 л" label="Вода" onChange={(value) => setHabitForm((state) => ({ ...state, water: value }))} placeholder="2.1" progressLabel={`${currentWater ?? 0} / ${WATER_GOAL} л`} progressValue={clampProgress(currentWater, WATER_GOAL)} value={habitForm.water} />
-            <button className="w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]" type="submit">Сохранить день</button>
+            <button className="w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F] disabled:cursor-wait disabled:opacity-60" disabled={saving} type="submit">{saving ? 'Сохраняем…' : 'Сохранить день'}</button>
           </form>
         </article>
         <h2 className="mt-5 text-xl font-black text-[#37410F]">История привычек</h2>
