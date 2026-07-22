@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useAuth } from './auth/AuthProvider';
 import { BackButton } from './components/BackButton';
 import { AwardsPage } from './pages/AwardsPage';
 import { CartPage } from './pages/CartPage';
@@ -10,6 +11,7 @@ import { RationsPage } from './pages/RationsPage';
 import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
 import { findRecipeWithRationImage } from './data/recipesWithRationImages';
+import { persistHabit, persistMeasurement, syncProgress } from './data/progressRepository';
 import { dailyRations } from './data/rations';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
 import type { DailyRation } from './types/ration';
@@ -357,6 +359,7 @@ const saveTodayUsageDate = () => {
 };
 
 function App() {
+  const { session } = useAuth();
   const initialRecipeId = getRecipeIdFromSearch(window.location.search);
   const initialRecipe = initialRecipeId ? findRecipeWithRationImage(initialRecipeId) ?? null : null;
   const initialRation = initialRecipe ? null : findRationBySearchId(getRationIdFromSearch(window.location.search));
@@ -417,15 +420,37 @@ function App() {
   useEffect(() => {
     window.localStorage.setItem('ty-poela-habit-entries', JSON.stringify(habitEntries));
   }, [habitEntries]);
+  useEffect(() => {
+    if (!session?.user.id) return;
+    let cancelled = false;
 
-  const saveMeasurementEntry = (entry: MeasurementEntry) => setMeasurementEntries((currentEntries) => {
-    const entriesWithoutToday = currentEntries.filter((currentEntry) => currentEntry.date !== entry.date);
-    return [entry, ...entriesWithoutToday].sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
-  });
-  const saveHabitEntry = (entry: HabitEntry) => setHabitEntries((currentEntries) => {
-    const entriesWithoutToday = currentEntries.filter((currentEntry) => currentEntry.date !== entry.date);
-    return [entry, ...entriesWithoutToday].sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
-  });
+    void syncProgress(measurementEntries, habitEntries)
+      .then((progress) => {
+        if (cancelled) return;
+        setMeasurementEntries(progress.measurements);
+        setHabitEntries(progress.habits);
+      })
+      .catch((error) => console.error('Progress sync failed', error));
+
+    return () => {
+      cancelled = true;
+    };
+  }, [session?.user.id]);
+
+  const saveMeasurementEntry = async (entry: MeasurementEntry) => {
+    await persistMeasurement(entry);
+    setMeasurementEntries((currentEntries) => {
+      const entriesWithoutToday = currentEntries.filter((currentEntry) => currentEntry.date !== entry.date);
+      return [entry, ...entriesWithoutToday].sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
+    });
+  };
+  const saveHabitEntry = async (entry: HabitEntry) => {
+    await persistHabit(entry);
+    setHabitEntries((currentEntries) => {
+      const entriesWithoutToday = currentEntries.filter((currentEntry) => currentEntry.date !== entry.date);
+      return [entry, ...entriesWithoutToday].sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
+    });
+  };
 
   const goHome = () => { setActiveTab('home'); setSelectedRecipe(null); setSelectedRation(null); };
   const goBack = () => {
