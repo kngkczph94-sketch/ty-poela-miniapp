@@ -12,6 +12,7 @@
     "migration:apply": "node scripts/supabase/import-content.mjs --apply && node scripts/supabase/upload-images.mjs --apply"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.52.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
