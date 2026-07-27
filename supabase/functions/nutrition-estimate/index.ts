@@ -102,13 +102,13 @@ Deno.serve(async (request) => {
 
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
-    const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
+    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     const openAiKey = Deno.env.get("OPENAI_API_KEY");
     const authorization = request.headers.get("authorization");
-    if (!supabaseUrl || !anonKey || !openAiKey) {
+    if (!supabaseUrl || !serviceRoleKey || !openAiKey) {
       logFailure("SERVICE_NOT_CONFIGURED", requestId, {
         hasSupabaseUrl: Boolean(supabaseUrl),
-        hasAnonKey: Boolean(anonKey),
+        hasServiceRoleKey: Boolean(serviceRoleKey),
         hasOpenAiKey: Boolean(openAiKey),
       });
       return errorJson(
@@ -130,11 +130,23 @@ Deno.serve(async (request) => {
       );
     }
 
-    const client = createClient(supabaseUrl, anonKey, {
-      global: { headers: { Authorization: authorization } },
+    const accessToken = authorization.replace(/^Bearer\s+/i, "").trim();
+    if (!accessToken) {
+      logFailure("AUTHORIZATION_MISSING", requestId);
+      return errorJson(
+        origin,
+        401,
+        "AUTHORIZATION_MISSING",
+        "Authentication is required",
+        requestId,
+      );
+    }
+
+    const client = createClient(supabaseUrl, serviceRoleKey, {
       auth: { persistSession: false, autoRefreshToken: false },
     });
-    const { data: authData, error: authError } = await client.auth.getUser();
+    const { data: authData, error: authError } =
+      await client.auth.getUser(accessToken);
     if (authError || !authData.user) {
       logFailure("AUTHORIZATION_FAILED", requestId, {
         authError: authError?.name ?? null,
