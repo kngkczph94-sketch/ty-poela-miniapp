@@ -438,6 +438,7 @@ function App() {
       setWeeklyMenu((currentMenu) => ({ ...currentMenu, [day]: nextDay }));
     } catch (error) {
       console.error('Meal plan save failed', error);
+      throw error;
     }
   };
   const addManualMealToMenu = async (day: MenuDay, slot: MenuMealSlot, products: PlanProduct[]) => {
