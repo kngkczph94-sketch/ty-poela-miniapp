@@ -76,7 +76,7 @@ const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
   { id: 'home', label: 'Главная', icon: '🏠' },
   { id: 'rations', label: 'Рационы', icon: '🥣' },
   { id: 'recipes', label: 'Рецепты', icon: '📖' },
-  { id: 'menu', label: 'План', icon: '🍽️' },
+  { id: 'menu', label: 'План питания', icon: '🍽️' },
   { id: 'cart', label: 'Корзина', icon: '🛒' },
 ];
 

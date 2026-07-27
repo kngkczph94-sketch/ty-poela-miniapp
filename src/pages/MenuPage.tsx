@@ -20,7 +20,7 @@ export function MenuPage({ weeklyMenu, onBack, onOpenCart, onOpenRations, onOpen
     <BackButton onClick={onBack} />
     <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
       <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">План питания</p>
-      <h1 className="mt-2 text-3xl font-black tracking-tight">План</h1>
+      <h1 className="mt-2 text-3xl font-black tracking-tight">План питания</h1>
       <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Добавь рацион дня на 1–3 дня или выбранные дни недели — корзина соберётся сама.</p>
       <button className="mt-5 rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]" onClick={onOpenCart} type="button">Смотреть корзину</button>
     </div>
