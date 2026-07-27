@@ -12,11 +12,14 @@ type NutritionEstimateResponse = {
 };
 
 export async function estimatePlanProducts(products: PlanProduct[]): Promise<PlanProduct[]> {
-  await ensureFreshSession();
+  const session = await ensureFreshSession();
 
   const { data, error } = await supabase.functions.invoke<NutritionEstimateResponse>('nutrition-estimate', {
     body: {
       products: products.map(({ id, name, amount, unit }) => ({ id, name, amount, unit })),
+    },
+    headers: {
+      Authorization: `Bearer ${session.access_token}`,
     },
   });
 
