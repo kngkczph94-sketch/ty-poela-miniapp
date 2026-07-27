@@ -17,7 +17,7 @@ import { dailyRations } from './data/rations';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
 import type { DailyRation } from './types/ration';
 import type { HabitEntry, MeasurementEntry, ProgressEntry } from './types/progress';
-import type { Recipe } from './types/recipe';
+import type { PlanProduct, Recipe } from './types/recipe';
 
 const getRecipeIdFromSearch = (search: string) => {
   const params = new URLSearchParams(search);
@@ -438,7 +438,33 @@ function App() {
       setWeeklyMenu((currentMenu) => ({ ...currentMenu, [day]: nextDay }));
     } catch (error) {
       console.error('Meal plan save failed', error);
+      throw error;
     }
+  };
+  const addManualMealToMenu = async (day: MenuDay, slot: MenuMealSlot, products: PlanProduct[]) => {
+    const total = (key: 'calories' | 'protein' | 'fat' | 'carbs') =>
+      Math.round(products.reduce((sum, product) => sum + product[key], 0) * 10) / 10;
+    const manualMeal: Recipe = {
+      id: `manual-${globalThis.crypto?.randomUUID?.() ?? Date.now()}`,
+      title: 'Продукты',
+      description: 'Добавлено вручную',
+      mealType: slot,
+      calories: total('calories'),
+      protein: total('protein'),
+      fat: total('fat'),
+      carbs: total('carbs'),
+      ingredients: products.map(({ name, amount, unit }) => ({ name, amount, unit, category: 'прочее' })),
+      steps: [],
+      tags: ['вручную'],
+      allergens: [],
+      isPremium: false,
+      source: 'manual',
+      entrySource: 'manual',
+      planProducts: products,
+      cookingTime: 0,
+      servings: 1,
+    };
+    await addRecipeToMenu(manualMeal, day, slot);
   };
   const addRationToPlan = async (ration: DailyRation, meals: DailyRation['meals'], days: MenuDay[]) => {
     const nextDays = days.map((day) => ({
@@ -544,7 +570,7 @@ function App() {
   });
 
   return <main className="min-h-screen bg-gradient-to-b from-[#FBF6EC] via-[#F3E2BF]/45 to-[#FBF6EC] text-[#37410F]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
-    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage onOpenRations={openRations} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} />}
+    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} onAddManualMeal={addManualMealToMenu} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage onOpenRations={openRations} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} />}
   </div><nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#D99663]/35 bg-[#FFFDF8]/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#D99663]/25 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id ? 'bg-[#6E7E1F] text-white shadow-md shadow-[#6E7E1F]/20' : 'text-[#8B725F] hover:bg-[#F3E2BF]/70 hover:text-[#37410F]'}`} key={item.id} onClick={()=>{ setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }
 

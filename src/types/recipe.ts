@@ -1,5 +1,6 @@
 export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack';
 export type MealSource = 'ration' | 'recipe_book' | 'manual';
+export type MealEntrySource = 'recipe' | 'manual' | 'ai';
 
 export const mealTypeLabels: Record<MealType, string> = {
   breakfast: 'Завтрак',
@@ -25,6 +26,17 @@ export type Ingredient = {
   category: IngredientCategory;
 };
 
+export type PlanProduct = {
+  id: string;
+  name: string;
+  amount: number;
+  unit: string;
+  calories: number;
+  protein: number;
+  fat: number;
+  carbs: number;
+};
+
 export type Meal = {
   id: string;
   title: string;
@@ -42,6 +54,8 @@ export type Meal = {
   videoUrl?: string;
   isPremium: boolean;
   source: MealSource;
+  entrySource?: MealEntrySource;
+  planProducts?: PlanProduct[];
   cookingTime: number;
   servings: number;
 };

@@ -8,6 +8,7 @@ import {
   type PlanDay,
   type WeeklyMenu,
 } from '../types/menu';
+import type { Meal, MealEntrySource, PlanProduct } from '../types/recipe';
 
 type MealPlanRow = {
   id: string;
@@ -19,6 +20,13 @@ type MealPlanItemRow = {
   meal_plan_id: string;
   meal_type: keyof PlanDay['meals'];
   planned_recipe_id: string | null;
+  entry_source: MealEntrySource;
+  custom_title: string | null;
+  custom_products: unknown;
+  custom_calories: number | string;
+  custom_protein_g: number | string;
+  custom_fat_g: number | string;
+  custom_carbs_g: number | string;
 };
 
 const localDateAtOffset = (offset: number) => {
@@ -32,6 +40,40 @@ const localDateAtOffset = (offset: number) => {
 };
 
 const dateForMenuDay = (day: MenuDay) => localDateAtOffset(menuDays.indexOf(day));
+
+const isPlanProduct = (value: unknown): value is PlanProduct => {
+  if (!value || typeof value !== 'object') return false;
+  const product = value as Partial<PlanProduct>;
+  return typeof product.id === 'string'
+    && typeof product.name === 'string'
+    && typeof product.unit === 'string'
+    && ['amount', 'calories', 'protein', 'fat', 'carbs'].every((key) => typeof product[key as keyof PlanProduct] === 'number');
+};
+
+const manualMealFromRow = (item: MealPlanItemRow): Meal | null => {
+  if (item.entry_source === 'recipe' || !item.custom_title) return null;
+  const products = Array.isArray(item.custom_products) ? item.custom_products.filter(isPlanProduct) : [];
+  return {
+    id: `${item.entry_source}-${item.meal_plan_id}-${item.meal_type}`,
+    title: item.custom_title,
+    description: item.entry_source === 'ai' ? 'Блюдо распознано ИИ' : 'Продукты добавлены вручную',
+    mealType: item.meal_type,
+    calories: Number(item.custom_calories),
+    protein: Number(item.custom_protein_g),
+    fat: Number(item.custom_fat_g),
+    carbs: Number(item.custom_carbs_g),
+    ingredients: products.map(({ name, amount, unit }) => ({ name, amount, unit, category: 'прочее' })),
+    steps: [],
+    tags: [item.entry_source === 'ai' ? 'ИИ' : 'вручную'],
+    allergens: [],
+    isPremium: false,
+    source: 'manual',
+    entrySource: item.entry_source,
+    planProducts: products,
+    cookingTime: 0,
+    servings: 1,
+  };
+};
 
 const requireProfileId = async () => {
   await ensureFreshSession();
@@ -64,7 +106,7 @@ export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
   const rationIds = plans.flatMap((plan) => plan.source_ration_id ? [plan.source_ration_id] : []);
   const { data: itemsData, error: itemsError } = await supabase
     .from('meal_plan_items')
-    .select('meal_plan_id, meal_type, planned_recipe_id')
+    .select('meal_plan_id, meal_type, planned_recipe_id, entry_source, custom_title, custom_products, custom_calories, custom_protein_g, custom_fat_g, custom_carbs_g')
     .in('meal_plan_id', planIds);
   if (itemsError) throw itemsError;
 
@@ -95,10 +137,13 @@ export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
       result[day].rationNumber = ration.ration_number as number;
     }
     items.filter((item) => item.meal_plan_id === plan.id).forEach((item) => {
-      if (!item.planned_recipe_id) return;
-      const legacyId = recipeLegacyIds.get(item.planned_recipe_id);
-      const recipe = legacyId ? findRecipeWithRationImage(legacyId) : undefined;
-      if (recipe) result[day].meals[item.meal_type] = recipe;
+      if (item.planned_recipe_id) {
+        const legacyId = recipeLegacyIds.get(item.planned_recipe_id);
+        const recipe = legacyId ? findRecipeWithRationImage(legacyId) : undefined;
+        if (recipe) result[day].meals[item.meal_type] = recipe;
+        return;
+      }
+      result[day].meals[item.meal_type] = manualMealFromRow(item);
     });
   });
 
@@ -119,9 +164,12 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
     return;
   }
 
-  const recipeLegacyIds = meals.map(({ recipe }) => recipe.id);
+  const catalogMeals = meals.filter(({ recipe }) => !recipe.entrySource || recipe.entrySource === 'recipe');
+  const recipeLegacyIds = catalogMeals.map(({ recipe }) => recipe.id);
   const [recipesResult, rationResult] = await Promise.all([
-    supabase.from('recipes').select('id, legacy_id').in('legacy_id', recipeLegacyIds),
+    recipeLegacyIds.length
+      ? supabase.from('recipes').select('id, legacy_id').in('legacy_id', recipeLegacyIds)
+      : Promise.resolve({ data: [], error: null }),
     planDay.rationId
       ? supabase.from('rations').select('id').eq('legacy_id', planDay.rationId).maybeSingle()
       : Promise.resolve({ data: null, error: null }),
@@ -156,12 +204,23 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
   if (deleteError) throw deleteError;
 
   const { error: itemsError } = await supabase.from('meal_plan_items').insert(
-    meals.map(({ slot, recipe }) => ({
-      meal_plan_id: plan.id,
-      meal_type: slot,
-      planned_recipe_id: recipeIds.get(recipe.id),
-      planned_servings: 1,
-    })),
+    meals.map(({ slot, recipe }) => {
+      const entrySource = recipe.entrySource ?? 'recipe';
+      const isCatalogRecipe = entrySource === 'recipe';
+      return {
+        meal_plan_id: plan.id,
+        meal_type: slot,
+        planned_recipe_id: isCatalogRecipe ? recipeIds.get(recipe.id) : null,
+        planned_servings: 1,
+        entry_source: entrySource,
+        custom_title: isCatalogRecipe ? null : recipe.title,
+        custom_products: isCatalogRecipe ? [] : recipe.planProducts ?? [],
+        custom_calories: isCatalogRecipe ? 0 : recipe.calories,
+        custom_protein_g: isCatalogRecipe ? 0 : recipe.protein,
+        custom_fat_g: isCatalogRecipe ? 0 : recipe.fat,
+        custom_carbs_g: isCatalogRecipe ? 0 : recipe.carbs,
+      };
+    }),
   );
   if (itemsError) throw itemsError;
 }
