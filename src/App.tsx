@@ -432,7 +432,12 @@ function App() {
   }, [session?.user.id]);
 
   const addRecipeToMenu = async (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => {
-    const nextDay = { ...weeklyMenu[day], meals: { ...weeklyMenu[day].meals, [slot]: recipe } };
+    const nextDay = {
+      ...weeklyMenu[day],
+      rationId: undefined,
+      rationNumber: undefined,
+      meals: { ...weeklyMenu[day].meals, [slot]: recipe },
+    };
     try {
       await persistPlanDay(day, nextDay);
       setWeeklyMenu((currentMenu) => ({ ...currentMenu, [day]: nextDay }));
@@ -485,6 +490,8 @@ function App() {
   const removeRecipeFromMenu = async (day: MenuDay, slot: MenuMealSlot) => {
     const nextDay = {
       ...weeklyMenu[day],
+      rationId: undefined,
+      rationNumber: undefined,
       meals: { ...weeklyMenu[day].meals, [slot]: null },
     };
     try {
