@@ -1,6 +1,6 @@
 import type { Session } from '@supabase/supabase-js';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
-import { supabase } from '../lib/supabase';
+import { ensureFreshSession, supabase } from '../lib/supabase';
 
 type AuthState = {
   session: Session | null;
@@ -44,8 +44,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { data } = await supabase.auth.getSession();
         if (cancelled) return;
         if (data.session) {
-          setSession(data.session);
-          return;
+          try {
+            const validSession = await ensureFreshSession();
+            if (!cancelled) setSession(validSession);
+            return;
+          } catch {
+            if (cancelled) return;
+            setSession(null);
+          }
         }
         if (preview) return;
 
