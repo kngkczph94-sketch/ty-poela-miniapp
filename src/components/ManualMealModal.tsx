@@ -8,7 +8,9 @@ type ManualMealModalProps = {
   onSave: (products: PlanProduct[]) => Promise<void>;
 };
 
-type ProductDraft = PlanProduct;
+type NumericField = 'amount' | 'calories' | 'protein' | 'fat' | 'carbs';
+
+type ProductDraft = Omit<PlanProduct, NumericField> & Record<NumericField, number | ''>;
 
 const createProduct = (): ProductDraft => ({
   id: globalThis.crypto?.randomUUID?.() ?? `product-${Date.now()}-${Math.random()}`,
@@ -21,7 +23,7 @@ const createProduct = (): ProductDraft => ({
   carbs: 0,
 });
 
-const numericFields: Array<{ key: keyof Pick<ProductDraft, 'amount' | 'calories' | 'protein' | 'fat' | 'carbs'>; label: string }> = [
+const numericFields: Array<{ key: NumericField; label: string }> = [
   { key: 'amount', label: 'Количество' },
   { key: 'calories', label: 'Ккал' },
   { key: 'protein', label: 'Белки' },
@@ -41,10 +43,15 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
     if (key === 'name' || key === 'amount' || key === 'unit') setHasEstimate(false);
   };
 
-  const normalizeProducts = () => products.map((product) => ({
+  const normalizeProducts = (): PlanProduct[] => products.map((product) => ({
     ...product,
     name: product.name.trim(),
     unit: product.unit.trim() || 'г',
+    amount: product.amount === '' ? 0 : product.amount,
+    calories: product.calories === '' ? 0 : product.calories,
+    protein: product.protein === '' ? 0 : product.protein,
+    fat: product.fat === '' ? 0 : product.fat,
+    carbs: product.carbs === '' ? 0 : product.carbs,
   }));
 
   const handleEstimate = async () => {
@@ -118,7 +125,7 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
           </label>
           <div className="mt-3 grid grid-cols-[1fr_6rem] gap-2">
             <label className="text-xs font-black text-[#8B725F]">Количество
-              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" min="0" step="any" type="number" value={product.amount} onChange={(event) => updateProduct(product.id, 'amount', Number(event.target.value))} />
+              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" min="0" step="any" type="number" value={product.amount} onChange={(event) => updateProduct(product.id, 'amount', event.target.value === '' ? '' : Number(event.target.value))} />
             </label>
             <label className="text-xs font-black text-[#8B725F]">Единица
               <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" value={product.unit} onChange={(event) => updateProduct(product.id, 'unit', event.target.value)} />
@@ -126,7 +133,7 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
           </div>
           {hasEstimate && <div className="mt-3 grid grid-cols-2 gap-2">
             {numericFields.slice(1).map(({ key, label }) => <label className="text-xs font-black text-[#8B725F]" key={key}>{label}
-              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" min="0" step="any" type="number" value={product[key]} onChange={(event) => updateProduct(product.id, key, Number(event.target.value))} />
+              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" min="0" step="any" type="number" value={product[key]} onChange={(event) => updateProduct(product.id, key, event.target.value === '' ? '' : Number(event.target.value))} />
             </label>)}
           </div>}
         </div>)}
