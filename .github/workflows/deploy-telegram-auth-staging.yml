@@ -54,6 +54,7 @@ jobs:
           supabase functions deploy telegram-auth
           --project-ref bosjuelpvkqpdgazxteu
           --no-verify-jwt
+          --no-verify-jwt
 
       - name: Deploy nutrition-estimate
         env:
