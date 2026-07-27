@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FocusEvent, type KeyboardEvent } from 'react';
 import { estimatePlanProducts } from '../data/nutritionRepository';
 import type { PlanProduct } from '../types/recipe';
 
@@ -41,6 +41,22 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
   const updateProduct = <K extends keyof ProductDraft>(id: string, key: K, value: ProductDraft[K]) => {
     setProducts((current) => current.map((product) => product.id === id ? { ...product, [key]: value } : product));
     if (key === 'name' || key === 'amount' || key === 'unit') setHasEstimate(false);
+  };
+
+  const handleNumericKeyDown = (
+    event: KeyboardEvent<HTMLInputElement>,
+    id: string,
+    key: NumericField,
+    value: number | '',
+  ) => {
+    if ((event.key === 'Backspace' || event.key === 'Delete') && value === 0) {
+      event.preventDefault();
+      updateProduct(id, key, '');
+    }
+  };
+
+  const handleNumericFocus = (event: FocusEvent<HTMLInputElement>, value: number | '') => {
+    if (value === 0) event.currentTarget.select();
   };
 
   const normalizeProducts = (): PlanProduct[] => products.map((product) => ({
@@ -125,7 +141,7 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
           </label>
           <div className="mt-3 grid grid-cols-[1fr_6rem] gap-2">
             <label className="text-xs font-black text-[#8B725F]">Количество
-              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" min="0" step="any" type="number" value={product.amount} onChange={(event) => updateProduct(product.id, 'amount', event.target.value === '' ? '' : Number(event.target.value))} />
+              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" min="0" step="any" type="number" value={product.amount} onChange={(event) => updateProduct(product.id, 'amount', event.target.value === '' ? '' : Number(event.target.value))} onFocus={(event) => handleNumericFocus(event, product.amount)} onKeyDown={(event) => handleNumericKeyDown(event, product.id, 'amount', product.amount)} />
             </label>
             <label className="text-xs font-black text-[#8B725F]">Единица
               <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" value={product.unit} onChange={(event) => updateProduct(product.id, 'unit', event.target.value)} />
@@ -133,7 +149,7 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
           </div>
           {hasEstimate && <div className="mt-3 grid grid-cols-2 gap-2">
             {numericFields.slice(1).map(({ key, label }) => <label className="text-xs font-black text-[#8B725F]" key={key}>{label}
-              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" min="0" step="any" type="number" value={product[key]} onChange={(event) => updateProduct(product.id, key, event.target.value === '' ? '' : Number(event.target.value))} />
+              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" min="0" step="any" type="number" value={product[key]} onChange={(event) => updateProduct(product.id, key, event.target.value === '' ? '' : Number(event.target.value))} onFocus={(event) => handleNumericFocus(event, product[key])} onKeyDown={(event) => handleNumericKeyDown(event, product.id, key, product[key])} />
             </label>)}
           </div>}
         </div>)}
