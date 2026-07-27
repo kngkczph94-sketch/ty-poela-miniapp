@@ -1,10 +1,26 @@
-import { createClient } from "npm:@supabase/supabase-js@2";
-
 type ProductInput = { id: string; name: string; amount: number; unit: string };
 type FailureDetails = Record<
   string,
   string | number | boolean | null | undefined
 >;
+type JwtPayload = { sub?: unknown; role?: unknown };
+
+const decodeJwtPayload = (token: string): JwtPayload | null => {
+  const parts = token.split(".");
+  if (parts.length !== 3) return null;
+
+  try {
+    const base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, "=");
+    const bytes = Uint8Array.from(atob(padded), (char) => char.charCodeAt(0));
+    const parsed = JSON.parse(new TextDecoder().decode(bytes));
+    return parsed && typeof parsed === "object"
+      ? (parsed as JwtPayload)
+      : null;
+  } catch {
+    return null;
+  }
+};
 
 const corsHeaders = (origin: string) => ({
   "access-control-allow-origin": origin,
@@ -101,15 +117,11 @@ Deno.serve(async (request) => {
   }
 
   try {
-    const supabaseUrl = Deno.env.get("SUPABASE_URL");
-    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     const openAiKey = Deno.env.get("OPENAI_API_KEY");
     const authorization = request.headers.get("authorization");
-    if (!supabaseUrl || !serviceRoleKey || !openAiKey) {
+    if (!openAiKey) {
       logFailure("SERVICE_NOT_CONFIGURED", requestId, {
-        hasSupabaseUrl: Boolean(supabaseUrl),
-        hasServiceRoleKey: Boolean(serviceRoleKey),
-        hasOpenAiKey: Boolean(openAiKey),
+        hasOpenAiKey: false,
       });
       return errorJson(
         origin,
@@ -142,15 +154,16 @@ Deno.serve(async (request) => {
       );
     }
 
-    const client = createClient(supabaseUrl, serviceRoleKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
-    const { data: authData, error: authError } =
-      await client.auth.getUser(accessToken);
-    if (authError || !authData.user) {
-      logFailure("AUTHORIZATION_FAILED", requestId, {
-        authError: authError?.name ?? null,
-      });
+    // Supabase Edge Gateway verifies this JWT before the function runs.
+    // Keep JWT verification enabled when deploying nutrition-estimate.
+    const claims = decodeJwtPayload(accessToken);
+    if (
+      !claims ||
+      typeof claims.sub !== "string" ||
+      claims.sub.length === 0 ||
+      claims.role !== "authenticated"
+    ) {
+      logFailure("AUTHORIZATION_FAILED", requestId);
       return errorJson(
         origin,
         401,
