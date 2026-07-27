@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { estimatePlanProducts } from '../data/nutritionRepository';
 import type { PlanProduct } from '../types/recipe';
 
 type ManualMealModalProps = {
@@ -32,20 +33,49 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
   const [products, setProducts] = useState<ProductDraft[]>([createProduct()]);
   const [error, setError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [isEstimating, setIsEstimating] = useState(false);
+  const [hasEstimate, setHasEstimate] = useState(false);
 
   const updateProduct = <K extends keyof ProductDraft>(id: string, key: K, value: ProductDraft[K]) => {
     setProducts((current) => current.map((product) => product.id === id ? { ...product, [key]: value } : product));
+    if (key === 'name' || key === 'amount' || key === 'unit') setHasEstimate(false);
+  };
+
+  const normalizeProducts = () => products.map((product) => ({
+    ...product,
+    name: product.name.trim(),
+    unit: product.unit.trim() || 'г',
+  }));
+
+  const handleEstimate = async () => {
+    const normalized = normalizeProducts();
+    if (normalized.some((product) => !product.name || product.amount <= 0)) {
+      setError('Укажите название и количество каждого продукта.');
+      return;
+    }
+
+    setError('');
+    setIsEstimating(true);
+    try {
+      setProducts(await estimatePlanProducts(normalized));
+      setHasEstimate(true);
+    } catch (estimateError) {
+      console.error('Nutrition estimate failed', estimateError);
+      setError('Не удалось рассчитать КБЖУ. Проверьте соединение и попробуйте ещё раз.');
+    } finally {
+      setIsEstimating(false);
+    }
   };
 
   const handleSave = async () => {
-    const normalized = products.map((product) => ({
-      ...product,
-      name: product.name.trim(),
-      unit: product.unit.trim() || 'г',
-    }));
+    const normalized = normalizeProducts();
 
     if (normalized.some((product) => !product.name || product.amount <= 0)) {
       setError('Укажите название и количество каждого продукта.');
+      return;
+    }
+    if (!hasEstimate) {
+      setError('Сначала рассчитайте КБЖУ.');
       return;
     }
     if (normalized.some((product) => [product.calories, product.protein, product.fat, product.carbs].some((value) => value < 0))) {
@@ -94,17 +124,19 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
               <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" value={product.unit} onChange={(event) => updateProduct(product.id, 'unit', event.target.value)} />
             </label>
           </div>
-          <div className="mt-3 grid grid-cols-2 gap-2">
+          {hasEstimate && <div className="mt-3 grid grid-cols-2 gap-2">
             {numericFields.slice(1).map(({ key, label }) => <label className="text-xs font-black text-[#8B725F]" key={key}>{label}
               <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" min="0" step="any" type="number" value={product[key]} onChange={(event) => updateProduct(product.id, key, Number(event.target.value))} />
             </label>)}
-          </div>
+          </div>}
         </div>)}
       </div>
 
-      <button className="mt-4 w-full rounded-2xl border border-[#6E7E1F] px-4 py-3 text-sm font-black text-[#6E7E1F]" onClick={() => setProducts((current) => [...current, createProduct()])} type="button">+ Добавить ещё продукт</button>
+      <button className="mt-4 w-full rounded-2xl border border-[#6E7E1F] px-4 py-3 text-sm font-black text-[#6E7E1F]" onClick={() => { setProducts((current) => [...current, createProduct()]); setHasEstimate(false); }} type="button">+ Добавить ещё продукт</button>
+      <button className="mt-3 w-full rounded-2xl bg-[#37410F] px-4 py-4 text-base font-black text-white disabled:opacity-60" disabled={isEstimating || isSaving} onClick={handleEstimate} type="button">{isEstimating ? 'Рассчитываем…' : hasEstimate ? 'Рассчитать заново' : '✨ Рассчитать КБЖУ'}</button>
+      {hasEstimate && <p className="mt-3 rounded-2xl bg-[#F3E2BF]/65 px-4 py-3 text-xs font-bold leading-5 text-[#8B725F]">Расчёт ориентировочный. Для продукта в упаковке сверьте значения с этикеткой — их можно исправить перед сохранением.</p>}
       {error && <p className="mt-3 rounded-2xl bg-[#D99663]/15 px-4 py-3 text-sm font-bold text-[#A45135]">{error}</p>}
-      <button className="mt-4 w-full rounded-2xl bg-[#6E7E1F] px-4 py-4 text-base font-black text-white disabled:opacity-60" disabled={isSaving} onClick={handleSave} type="button">{isSaving ? 'Сохраняем…' : 'Сохранить приём пищи'}</button>
+      <button className="mt-4 w-full rounded-2xl bg-[#6E7E1F] px-4 py-4 text-base font-black text-white disabled:opacity-60" disabled={isSaving || isEstimating || !hasEstimate} onClick={handleSave} type="button">{isSaving ? 'Сохраняем…' : 'Сохранить приём пищи'}</button>
       <button className="mt-2 w-full px-4 py-3 text-sm font-black text-[#8B725F]" disabled={isSaving} onClick={onClose} type="button">Отмена</button>
     </div>
   </div>;
