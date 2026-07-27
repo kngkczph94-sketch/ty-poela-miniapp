@@ -1,10 +1,10 @@
-name: Deploy Telegram auth to staging
+name: Deploy staging Edge Functions
 
 on:
   workflow_dispatch:
     inputs:
       confirmation:
-        description: Type DEPLOY-TELEGRAM-AUTH to confirm the staging deployment
+        description: Type DEPLOY-STAGING-FUNCTIONS to confirm the staging deployment
         required: true
         type: string
 
@@ -12,12 +12,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: deploy-telegram-auth-staging
+  group: deploy-edge-functions-staging
   cancel-in-progress: false
 
 jobs:
   deploy:
-    name: Deploy telegram-auth
+    name: Deploy Edge Functions
     runs-on: ubuntu-latest
     environment: staging
     steps:
@@ -25,7 +25,7 @@ jobs:
         env:
           CONFIRMATION: ${{ inputs.confirmation }}
         run: |
-          if [ "$CONFIRMATION" != "DEPLOY-TELEGRAM-AUTH" ]; then
+          if [ "$CONFIRMATION" != "DEPLOY-STAGING-FUNCTIONS" ]; then
             echo "Invalid confirmation."
             exit 1
           fi
@@ -52,5 +52,13 @@ jobs:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: >
           supabase functions deploy telegram-auth
+          --project-ref bosjuelpvkqpdgazxteu
+          --no-verify-jwt
+
+      - name: Deploy nutrition-estimate
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: >
+          supabase functions deploy nutrition-estimate
           --project-ref bosjuelpvkqpdgazxteu
           --no-verify-jwt
