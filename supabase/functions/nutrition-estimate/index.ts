@@ -81,7 +81,7 @@ Deno.serve(async (request) => {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5.6-luna',
+        model: 'gpt-4o-mini',
         store: false,
         input: [
           {
