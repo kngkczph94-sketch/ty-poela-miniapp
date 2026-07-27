@@ -111,7 +111,7 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
         {products.map((product, index) => <div className="rounded-3xl border border-[#D99663]/30 bg-[#F3E2BF]/55 p-4" key={product.id}>
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm font-black text-[#37410F]">Продукт {index + 1}</p>
-            {products.length > 1 && <button className="text-xs font-black text-[#A45135]" onClick={() => setProducts((current) => current.filter((item) => item.id !== product.id))} type="button">Удалить</button>}
+            {products.length > 1 && <button className="text-xs font-black text-[#A45135]" onClick={() => { setProducts((current) => current.filter((item) => item.id !== product.id)); setHasEstimate(false); }} type="button">Удалить</button>}
           </div>
           <label className="mt-3 block text-xs font-black text-[#8B725F]">Название
             <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 text-base font-bold text-[#37410F] outline-none focus:border-[#6E7E1F]" placeholder="Например, макароны" value={product.name} onChange={(event) => updateProduct(product.id, 'name', event.target.value)} />
