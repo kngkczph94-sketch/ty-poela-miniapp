@@ -479,6 +479,7 @@ function App() {
       id: `ai-${globalThis.crypto?.randomUUID?.() ?? Date.now()}`,
       title: suggestion.title,
       description: suggestion.description,
+      imageUrl: suggestion.imageUrl,
       mealType: slot,
       calories: suggestion.calories,
       protein: suggestion.protein,
