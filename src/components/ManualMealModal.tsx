@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { estimatePlanProducts } from '../data/nutritionRepository';
+import { PhotoMealCapture } from './PhotoMealCapture';
 import type { PlanProduct } from '../types/recipe';
 
 type ManualMealModalProps = {
@@ -59,10 +60,14 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
   const [isSaving, setIsSaving] = useState(false);
   const [isEstimating, setIsEstimating] = useState(false);
   const [hasEstimate, setHasEstimate] = useState(false);
+  const [photoNotice, setPhotoNotice] = useState('');
 
   const updateProduct = <K extends keyof ProductDraft>(id: string, key: K, value: ProductDraft[K]) => {
     setProducts((current) => current.map((product) => product.id === id ? { ...product, [key]: value } : product));
-    if (key === 'name' || key === 'amount' || key === 'unit') setHasEstimate(false);
+    if (key === 'name' || key === 'amount' || key === 'unit') {
+      setHasEstimate(false);
+      setPhotoNotice('');
+    }
   };
 
   const normalizeProducts = (): PlanProduct[] => products.map((product) => ({
@@ -88,6 +93,7 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
     try {
       setProducts((await estimatePlanProducts(normalized)).map(toProductDraft));
       setHasEstimate(true);
+      setPhotoNotice('');
     } catch (estimateError) {
       console.error('Nutrition estimate failed', estimateError);
       setError('Не удалось рассчитать КБЖУ. Проверьте соединение и попробуйте ещё раз.');
@@ -136,11 +142,22 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
         <button className="rounded-full bg-[#F3E2BF] px-3 py-2 font-black text-[#37410F]" onClick={onClose} type="button" aria-label="Закрыть">×</button>
       </div>
 
+      <PhotoMealCapture
+        disabled={isEstimating || isSaving}
+        onRecognized={(recognized, notice) => {
+          setProducts(recognized.map(toProductDraft));
+          setHasEstimate(true);
+          setPhotoNotice(notice);
+          setError('');
+        }}
+      />
+      {photoNotice && <p className="mt-3 rounded-2xl bg-[#F3E2BF]/65 px-4 py-3 text-xs font-bold leading-5 text-[#8B725F]">{photoNotice}</p>}
+
       <div className="mt-5 space-y-4">
         {products.map((product, index) => <div className="rounded-3xl border border-[#D99663]/30 bg-[#F3E2BF]/55 p-4" key={product.id}>
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm font-black text-[#37410F]">Продукт {index + 1}</p>
-            {products.length > 1 && <button className="text-xs font-black text-[#A45135]" onClick={() => { setProducts((current) => current.filter((item) => item.id !== product.id)); setHasEstimate(false); }} type="button">Удалить</button>}
+            {products.length > 1 && <button className="text-xs font-black text-[#A45135]" onClick={() => { setProducts((current) => current.filter((item) => item.id !== product.id)); setHasEstimate(false); setPhotoNotice(''); }} type="button">Удалить</button>}
           </div>
           <label className="mt-3 block text-xs font-black text-[#8B725F]">Название
             <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 text-base font-bold text-[#37410F] outline-none focus:border-[#6E7E1F]" placeholder="Например, макароны" value={product.name} onChange={(event) => updateProduct(product.id, 'name', event.target.value)} />
@@ -161,7 +178,7 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
         </div>)}
       </div>
 
-      <button className="mt-4 w-full rounded-2xl border border-[#6E7E1F] px-4 py-3 text-sm font-black text-[#6E7E1F]" onClick={() => { setProducts((current) => [...current, createProduct()]); setHasEstimate(false); }} type="button">+ Добавить ещё продукт</button>
+      <button className="mt-4 w-full rounded-2xl border border-[#6E7E1F] px-4 py-3 text-sm font-black text-[#6E7E1F]" onClick={() => { setProducts((current) => [...current, createProduct()]); setHasEstimate(false); setPhotoNotice(''); }} type="button">+ Добавить ещё продукт</button>
       <button className="mt-3 w-full rounded-2xl bg-[#37410F] px-4 py-4 text-base font-black text-white disabled:opacity-60" disabled={isEstimating || isSaving} onClick={handleEstimate} type="button">{isEstimating ? 'Рассчитываем…' : hasEstimate ? 'Рассчитать заново' : '✨ Рассчитать КБЖУ'}</button>
       {hasEstimate && <p className="mt-3 rounded-2xl bg-[#F3E2BF]/65 px-4 py-3 text-xs font-bold leading-5 text-[#8B725F]">Расчёт ориентировочный. Для продукта в упаковке сверьте значения с этикеткой — их можно исправить перед сохранением.</p>}
       {error && <p className="mt-3 rounded-2xl bg-[#D99663]/15 px-4 py-3 text-sm font-bold text-[#A45135]">{error}</p>}
