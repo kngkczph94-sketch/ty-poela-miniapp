@@ -11,6 +11,11 @@ type NutritionEstimateResponse = {
   }>;
 };
 
+type PhotoNutritionEstimateResponse = {
+  products?: PlanProduct[];
+  notice?: string;
+};
+
 export async function estimatePlanProducts(products: PlanProduct[]): Promise<PlanProduct[]> {
   const session = await ensureFreshSession();
 
@@ -34,4 +39,25 @@ export async function estimatePlanProducts(products: PlanProduct[]): Promise<Pla
     if (!estimate) throw new Error(`Не удалось рассчитать КБЖУ для «${product.name}».`);
     return { ...product, ...estimate };
   });
+}
+
+export async function estimateMealPhoto(imageDataUrl: string): Promise<{ products: PlanProduct[]; notice: string }> {
+  const session = await ensureFreshSession();
+
+  const { data, error } = await supabase.functions.invoke<PhotoNutritionEstimateResponse>('nutrition-photo-estimate', {
+    body: { imageDataUrl },
+    headers: {
+      Authorization: `Bearer ${session.access_token}`,
+    },
+  });
+
+  if (error) throw error;
+  if (!data?.products?.length) {
+    throw new Error('Сервис не распознал продукты на фотографии.');
+  }
+
+  return {
+    products: data.products,
+    notice: data.notice ?? 'Распознавание по фото приблизительное. Проверьте состав, вес и КБЖУ перед сохранением.',
+  };
 }
