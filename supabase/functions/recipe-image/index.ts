@@ -13,7 +13,7 @@ const signedUrlSeconds = 60 * 60 * 24 * 365;
 const imageStyleVersion = 'ty-poela-food-v2';
 
 type Ingredient = { name?: unknown; amount?: unknown; unit?: unknown };
-type RecipeInput = { title?: unknown; description?: unknown; ingredients?: unknown };
+type RecipeInput = { id?: unknown; title?: unknown; description?: unknown; ingredients?: unknown };
 
 class RecipeImageError extends Error {
   constructor(
@@ -115,6 +115,7 @@ Deno.serve(async (request) => {
 
   try {
     validateJwt(request.headers.get('Authorization'));
+    console.log(JSON.stringify({ event: 'recipe-image-invoked', requestId }));
     if (!openAiKey || !supabaseUrl || !serviceRoleKey) throw new Error('SERVER_NOT_CONFIGURED');
 
     const body = await request.json();

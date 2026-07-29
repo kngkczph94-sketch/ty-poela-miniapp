@@ -13,7 +13,7 @@ import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { RecipesPage } from './pages/RecipesPage';
 import { loadWeeklyMenu, persistPlanDay } from './data/mealPlanRepository';
 import { findRecipeWithRationImage } from './data/recipesWithRationImages';
-import type { RecipeSuggestion } from './data/recipeSuggestionRepository';
+import { generateRecipeImage, type RecipeSuggestion } from './data/recipeSuggestionRepository';
 import { persistHabit, persistMeasurement, syncProgress } from './data/progressRepository';
 import { dailyRations } from './data/rations';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
@@ -496,6 +496,23 @@ function App() {
       servings: suggestion.servings,
     };
     await addRecipeToMenu(aiMeal, day, slot);
+    try {
+      const imageUrl = await generateRecipeImage({ ...suggestion, id: aiMeal.id });
+      setWeeklyMenu((currentMenu) => ({
+        ...currentMenu,
+        [day]: {
+          ...currentMenu[day],
+          meals: {
+            ...currentMenu[day].meals,
+            [slot]: { ...aiMeal, imageUrl },
+          },
+        },
+      }));
+      return true;
+    } catch (error) {
+      console.warn('[recipe-image] generation failed', { recipeId: aiMeal.id });
+      return false;
+    }
   };
   const addRationToPlan = async (ration: DailyRation, meals: DailyRation['meals'], days: MenuDay[]) => {
     const nextDays = days.map((day) => ({

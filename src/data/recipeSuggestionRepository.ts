@@ -56,7 +56,7 @@ async function readableFunctionError(error: unknown) {
 async function invokeWithSession<T>(functionName: string, body: unknown): Promise<T> {
   const session = await ensureFreshSession();
   const invoke = (accessToken: string) => supabase.functions.invoke<T>(functionName, {
-    body,
+    body: body as Record<string, unknown>,
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
@@ -81,8 +81,10 @@ export async function suggestRecipes(input: RecipeSuggestionRequest): Promise<Re
 }
 
 export async function generateRecipeImage(recipe: RecipeSuggestion): Promise<string> {
+  console.info('[recipe-image] invoke', { recipeId: recipe.id });
   const data = await invokeWithSession<RecipeImageResponse>('recipe-image', {
     recipe: {
+      id: recipe.id,
       title: recipe.title,
       description: recipe.description,
       ingredients: recipe.ingredients,
