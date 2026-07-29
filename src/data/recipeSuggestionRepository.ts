@@ -23,11 +23,35 @@ export type RecipeSuggestion = {
 };
 
 type SuggestionResponse = { suggestions?: RecipeSuggestion[] };
-type RecipeImageResponse = { imageUrl?: string; cached?: boolean };
+type RecipeImageResponse = { imageUrl?: string; cached?: boolean; requestId?: string };
+type FunctionErrorResponse = { error?: string; requestId?: string };
 
 export type RecipeSuggestionRequest =
   | { mode: 'products'; products: string }
   | { mode: 'photo'; imageDataUrl: string };
+
+const functionErrorMessages: Record<string, string> = {
+  AUTHORIZATION_FAILED: 'Сессия устарела. Закройте и снова откройте приложение в Telegram.',
+  IMAGE_PROVIDER_FAILED: 'Сервис создания фото временно недоступен.',
+  IMAGE_RESPONSE_INVALID: 'Сервис не смог создать корректное фото блюда.',
+  IMAGE_UPLOAD_FAILED: 'Фото создано, но не удалось сохранить его.',
+  SIGNED_URL_FAILED: 'Фото сохранено, но не удалось открыть его.',
+  SERVER_NOT_CONFIGURED: 'Сервис изображений ещё не настроен.',
+};
+
+async function readableFunctionError(error: unknown) {
+  if (!error || typeof error !== 'object' || !('context' in error)) return null;
+  const context = (error as { context?: unknown }).context;
+  if (!(context instanceof Response)) return null;
+  try {
+    const body = await context.clone().json() as FunctionErrorResponse;
+    const message = body.error ? functionErrorMessages[body.error] : '';
+    if (!message) return null;
+    return new Error(body.requestId ? `${message} Код запроса: ${body.requestId}` : message);
+  } catch {
+    return null;
+  }
+}
 
 async function invokeWithSession<T>(functionName: string, body: unknown): Promise<T> {
   const session = await ensureFreshSession();
@@ -41,7 +65,9 @@ async function invokeWithSession<T>(functionName: string, body: unknown): Promis
     const refreshed = await ensureFreshSession(true);
     result = await invoke(refreshed.access_token);
   }
-  if (result.error) throw result.error;
+  if (result.error) {
+    throw (await readableFunctionError(result.error)) ?? result.error;
+  }
   if (!result.data) throw new Error('Сервис не вернул данные.');
   return result.data;
 }
@@ -62,6 +88,10 @@ export async function generateRecipeImage(recipe: RecipeSuggestion): Promise<str
       ingredients: recipe.ingredients,
     },
   });
-  if (!data.imageUrl) throw new Error('Не удалось получить изображение блюда.');
+  if (!data.imageUrl) {
+    throw new Error(data.requestId
+      ? `Не удалось получить изображение блюда. Код запроса: ${data.requestId}`
+      : 'Не удалось получить изображение блюда.');
+  }
   return data.imageUrl;
 }
