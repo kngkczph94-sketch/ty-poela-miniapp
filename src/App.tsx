@@ -6,6 +6,7 @@ import { AwardsPage } from './pages/AwardsPage';
 import { CartPage } from './pages/CartPage';
 import { MacroCalculatorPage } from './pages/MacroCalculatorPage';
 import { MenuPage } from './pages/MenuPage';
+import { PhotoNutritionPage } from './pages/PhotoNutritionPage';
 import { ProgressPage } from './pages/ProgressPage';
 import { RationDetailPage } from './pages/RationDetailPage';
 import { RationsPage } from './pages/RationsPage';
@@ -68,7 +69,7 @@ const findRationBySearchId = (rationId: string | null) => {
   ) ?? null;
 };
 
-type NavigationTab = 'home' | 'rations' | 'recipes' | 'menu' | 'cart' | 'access' | 'macros' | 'progress' | 'awards' | 'share';
+type NavigationTab = 'home' | 'rations' | 'recipes' | 'menu' | 'cart' | 'access' | 'macros' | 'progress' | 'photoNutrition' | 'awards' | 'share';
 
 type SubscriptionStatus = 'free' | 'active';
 
@@ -84,7 +85,7 @@ const navigationItems: { id: NavigationTab; label: string; icon: string }[] = [
 
 type HomeAction = { label: string; onClick?: () => void; soon?: boolean };
 
-type HomeCardVisual = 'macros' | 'rations' | 'recipes' | 'ai' | 'knowledge' | 'progress' | 'awards' | 'share';
+type HomeCardVisual = 'macros' | 'rations' | 'recipes' | 'ai' | 'photo' | 'knowledge' | 'progress' | 'awards' | 'share';
 
 type HomeCard = { title: string; description: string; visual: HomeCardVisual; imageSrc?: string; soon?: boolean; action: HomeAction };
 
@@ -114,7 +115,7 @@ function HomeFeatureCard({ card }: { card: HomeCard }) {
   );
 }
 
-function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, onOpenAwards, onOpenShare, onOpenAi }: { onOpenRations: () => void; onOpenRecipes: () => void; onOpenProgress: () => void; onOpenMacros: () => void; onOpenAwards: () => void; onOpenShare: () => void; onOpenAi: () => void }) {
+function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, onOpenPhotoNutrition, onOpenAwards, onOpenShare, onOpenAi }: { onOpenRations: () => void; onOpenRecipes: () => void; onOpenProgress: () => void; onOpenMacros: () => void; onOpenPhotoNutrition: () => void; onOpenAwards: () => void; onOpenShare: () => void; onOpenAi: () => void }) {
   const homeCards: HomeCard[] = [
     {
       title: 'Расчёт БЖУ',
@@ -145,6 +146,13 @@ function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, 
       action: { label: 'Подобрать', onClick: onOpenAi },
     },
     {
+      title: 'КБЖУ по фото',
+      description: 'Сфотографируй готовое блюдо — ИИ оценит порцию и КБЖУ. Результат можно исправить перед сохранением.',
+      visual: 'photo',
+      imageSrc: '/ty-poela-miniapp/images/home/home-macros.jpg',
+      action: { label: 'Распознать', onClick: onOpenPhotoNutrition },
+    },
+    {
       title: 'База знаний',
       description: 'Материалы о питании, коррекции веса, БЖУ, продуктах и пищевых привычках.',
       visual: 'knowledge',
@@ -156,20 +164,6 @@ function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, 
       visual: 'progress',
       imageSrc: '/ty-poela-miniapp/images/home/home-progress.jpg',
       action: { label: 'Прогресс', onClick: onOpenProgress },
-    },
-    {
-      title: 'Награды',
-      description: 'Собирай достижения за регулярные отметки и движение к своей цели.',
-      visual: 'awards',
-      imageSrc: '/ty-poela-miniapp/images/home/home-rewards.jpg',
-      action: { label: 'Награды', onClick: onOpenAwards },
-    },
-    {
-      title: 'Поделиться приложением',
-      description: 'Отправь ссылку тому, кому тоже нужен понятный план питания.',
-      visual: 'share',
-      imageSrc: '/ty-poela-miniapp/images/home/home-share.jpg',
-      action: { label: 'Поделиться', onClick: onOpenShare },
     },
   ];
 
@@ -183,6 +177,14 @@ function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, 
       </div>
     </section>
     <section className="mt-5 grid gap-4">{homeCards.map((card) => <HomeFeatureCard card={card} key={card.title} />)}</section>
+    <section className="mt-4 grid grid-cols-2 gap-3" aria-label="Дополнительные возможности">
+      <button className="flex items-center justify-center gap-2 rounded-2xl border border-[#D99663]/25 bg-[#FFFDF8] px-3 py-3 text-sm font-black text-[#37410F] shadow-sm" onClick={onOpenAwards} type="button">
+        <span aria-hidden="true">🏆</span><span>Награды</span>
+      </button>
+      <button className="flex items-center justify-center gap-2 rounded-2xl border border-[#D99663]/25 bg-[#FFFDF8] px-3 py-3 text-sm font-black text-[#37410F] shadow-sm" onClick={onOpenShare} type="button">
+        <span aria-hidden="true">💌</span><span>Поделиться</span>
+      </button>
+    </section>
   </>;
 }
 
@@ -620,7 +622,7 @@ function App() {
   });
 
   return <main className="min-h-screen bg-gradient-to-b from-[#FBF6EC] via-[#F3E2BF]/45 to-[#FBF6EC] text-[#37410F]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
-    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} onAddManualMeal={addManualMealToMenu} onAddAiMeal={(day, slot) => setAiTarget({ day, slot })} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage onOpenRations={openRations} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} onOpenAi={() => setAiTarget({ day: 'Сегодня', slot: 'breakfast' })} />}
+    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'photoNutrition' ? <PhotoNutritionPage onBack={goBack} onSave={addManualMealToMenu} /> : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} onAddManualMeal={addManualMealToMenu} onAddAiMeal={(day, slot) => setAiTarget({ day, slot })} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage onOpenRations={openRations} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenPhotoNutrition={() => setActiveTab('photoNutrition')} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} onOpenAi={() => setAiTarget({ day: 'Сегодня', slot: 'breakfast' })} />}
   </div>{aiTarget && <AiRecipeModal initialDay={aiTarget.day} initialSlot={aiTarget.slot} onChoose={addAiRecipeToMenu} onClose={() => setAiTarget(null)} />}
   <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#D99663]/35 bg-[#FFFDF8]/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#D99663]/25 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id ? 'bg-[#6E7E1F] text-white shadow-md shadow-[#6E7E1F]/20' : 'text-[#8B725F] hover:bg-[#F3E2BF]/70 hover:text-[#37410F]'}`} key={item.id} onClick={()=>{ setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }
