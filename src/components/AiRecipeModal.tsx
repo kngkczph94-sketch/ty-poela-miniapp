@@ -85,8 +85,12 @@ export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'br
     try {
       const imageUrl = await generateRecipeImage(recipe);
       setSelectedRecipe((current) => current?.id === recipe.id ? { ...current, imageUrl } : current);
-    } catch {
-      setImageError('Фото не загрузилось. Можно повторить или добавить рецепт без фото.');
+    } catch (cause) {
+      setImageError(
+        cause instanceof Error
+          ? cause.message
+          : 'Фото не загрузилось. Можно повторить или добавить рецепт без фото.',
+      );
     } finally {
       setImageLoading(false);
     }
