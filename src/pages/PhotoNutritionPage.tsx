@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { BackButton } from '../components/BackButton';
 import { PhotoMealCapture } from '../components/PhotoMealCapture';
-import { menuDayLabels, menuDays, menuMealSlotLabels, menuMealSlots, type MenuDay, type MenuMealSlot } from '../types/menu';
+import { menuDays, menuMealSlots, menuSlotLabels, type MenuDay, type MenuMealSlot } from '../types/menu';
 import type { PlanProduct } from '../types/recipe';
 
 type PhotoNutritionPageProps = {
@@ -101,12 +101,12 @@ export function PhotoNutritionPage({ onBack, onSave }: PhotoNutritionPageProps) 
       <div className="mt-5 grid grid-cols-2 gap-3">
         <label className="text-sm font-black text-[#8B725F]">День
           <select className="mt-2 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" value={day} onChange={(event) => setDay(event.target.value as MenuDay)}>
-            {menuDays.map((item) => <option key={item} value={item}>{menuDayLabels[item]}</option>)}
+            {menuDays.map((item) => <option key={item} value={item}>{item}</option>)}
           </select>
         </label>
         <label className="text-sm font-black text-[#8B725F]">Приём пищи
           <select className="mt-2 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" value={slot} onChange={(event) => setSlot(event.target.value as MenuMealSlot)}>
-            {menuMealSlots.map((item) => <option key={item} value={item}>{menuMealSlotLabels[item]}</option>)}
+            {menuMealSlots.map((item) => <option key={item} value={item}>{menuSlotLabels[item]}</option>)}
           </select>
         </label>
       </div>
