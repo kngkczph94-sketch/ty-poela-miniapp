@@ -22,7 +22,15 @@ export type RecipeSuggestion = {
   imageUrl?: string;
 };
 
-type SuggestionResponse = { suggestions?: RecipeSuggestion[] };
+export type RecipeSuggestionResult = {
+  suggestions: RecipeSuggestion[];
+  recognizedProducts: string[];
+};
+
+type SuggestionResponse = {
+  suggestions?: RecipeSuggestion[];
+  recognizedProducts?: string[];
+};
 type RecipeImageResponse = { imageUrl?: string; cached?: boolean; requestId?: string };
 type FunctionErrorResponse = { error?: string; requestId?: string };
 
@@ -31,10 +39,17 @@ export type RecipeSuggestionRequest =
   | { mode: 'photo'; imageDataUrl: string };
 
 const functionErrorMessages: Record<string, string> = {
+  AI_NOT_CONFIGURED: 'ИИ-подбор ещё не настроен.',
+  AI_TEMPORARILY_UNAVAILABLE: 'ИИ сейчас не отвечает. Попробуйте ещё раз через минуту.',
   AUTHORIZATION_FAILED: 'Сессия устарела. Закройте и снова откройте приложение в Telegram.',
   IMAGE_PROVIDER_FAILED: 'Сервис создания фото временно недоступен.',
   IMAGE_RESPONSE_INVALID: 'Сервис не смог создать корректное фото блюда.',
   IMAGE_UPLOAD_FAILED: 'Фото создано, но не удалось сохранить его.',
+  INVALID_IMAGE: 'Не удалось обработать фотографию. Выберите другое фото.',
+  ORIGIN_NOT_ALLOWED: 'Откройте приложение из меню Telegram-бота.',
+  PHOTO_IS_PREPARED_DISH: 'На фото похоже готовое блюдо. Для подбора рецептов сфотографируйте отдельные продукты.',
+  PHOTO_PRODUCTS_NOT_RECOGNIZED: 'Не удалось уверенно распознать продукты. Сделайте фото при хорошем освещении, чтобы продукты были видны отдельно.',
+  RECIPE_SUGGEST_FAILED: 'Не удалось подобрать рецепты. Попробуйте ещё раз.',
   SIGNED_URL_FAILED: 'Фото сохранено, но не удалось открыть его.',
   SERVER_NOT_CONFIGURED: 'Сервис изображений ещё не настроен.',
 };
@@ -72,12 +87,15 @@ async function invokeWithSession<T>(functionName: string, body: unknown): Promis
   return result.data;
 }
 
-export async function suggestRecipes(input: RecipeSuggestionRequest): Promise<RecipeSuggestion[]> {
+export async function suggestRecipes(input: RecipeSuggestionRequest): Promise<RecipeSuggestionResult> {
   const data = await invokeWithSession<SuggestionResponse>('recipe-suggest', input);
   if (!data.suggestions || data.suggestions.length !== 3) {
     throw new Error('ИИ вернул неполный список рецептов.');
   }
-  return data.suggestions;
+  return {
+    suggestions: data.suggestions,
+    recognizedProducts: Array.isArray(data.recognizedProducts) ? data.recognizedProducts : [],
+  };
 }
 
 export async function generateRecipeImage(recipe: RecipeSuggestion): Promise<string> {
