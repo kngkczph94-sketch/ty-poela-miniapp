@@ -35,6 +35,68 @@ const outputText = (result: Record<string, unknown>) => {
   return '';
 };
 
+type Nutrition = { calories: number; protein: number; fat: number; carbs: number };
+
+const roundMacro = (value: number) => Math.round(value * 10) / 10;
+const finiteNonNegative = (value: unknown) => typeof value === 'number' && Number.isFinite(value) && value >= 0;
+
+const normalizeNutrition = (value: unknown): Nutrition => {
+  if (!value || typeof value !== 'object') throw new Error('INVALID_AI_RESPONSE');
+  const candidate = value as Record<string, unknown>;
+  if (![candidate.calories, candidate.protein, candidate.fat, candidate.carbs].every(finiteNonNegative)) {
+    throw new Error('INVALID_AI_RESPONSE');
+  }
+  const nutrition = {
+    calories: Math.round(candidate.calories as number),
+    protein: roundMacro(candidate.protein as number),
+    fat: roundMacro(candidate.fat as number),
+    carbs: roundMacro(candidate.carbs as number),
+  };
+  const caloriesFromMacros = Math.round(4 * nutrition.protein + 9 * nutrition.fat + 4 * nutrition.carbs);
+  if (Math.abs(nutrition.calories - caloriesFromMacros) > Math.max(50, nutrition.calories * 0.25)) {
+    nutrition.calories = caloriesFromMacros;
+  }
+  return nutrition;
+};
+
+const normalizeSuggestion = (value: unknown) => {
+  if (!value || typeof value !== 'object') throw new Error('INVALID_AI_RESPONSE');
+  const recipe = value as Record<string, unknown>;
+  if (!Array.isArray(recipe.ingredients) || recipe.ingredients.length === 0) throw new Error('INVALID_AI_RESPONSE');
+  const ingredients = recipe.ingredients.map((ingredient) => {
+    if (!ingredient || typeof ingredient !== 'object') throw new Error('INVALID_AI_RESPONSE');
+    const item = ingredient as Record<string, unknown>;
+    if (typeof item.name !== 'string' || typeof item.amount !== 'number' || !Number.isFinite(item.amount) || item.amount <= 0 || (item.unit !== 'г' && item.unit !== 'мл')) {
+      throw new Error('INVALID_AI_RESPONSE');
+    }
+    return { name: item.name.trim(), amount: roundMacro(item.amount), unit: item.unit };
+  });
+  if (typeof recipe.finishedWeightGrams !== 'number' || !Number.isFinite(recipe.finishedWeightGrams) || recipe.finishedWeightGrams <= 0) {
+    throw new Error('INVALID_AI_RESPONSE');
+  }
+  const finishedWeightGrams = Math.round(recipe.finishedWeightGrams);
+  const nutritionTotal = normalizeNutrition(recipe.nutritionTotal);
+  const factor = 100 / finishedWeightGrams;
+  const nutritionPer100g = {
+    calories: Math.round(nutritionTotal.calories * factor),
+    protein: roundMacro(nutritionTotal.protein * factor),
+    fat: roundMacro(nutritionTotal.fat * factor),
+    carbs: roundMacro(nutritionTotal.carbs * factor),
+  };
+  return {
+    ...recipe,
+    ingredients,
+    finishedWeightGrams,
+    nutritionTotal,
+    nutritionPer100g,
+    // Поля сохранены для совместимости с уже существующим сохранением рецептов.
+    calories: nutritionTotal.calories,
+    protein: nutritionTotal.protein,
+    fat: nutritionTotal.fat,
+    carbs: nutritionTotal.carbs,
+  };
+};
+
 Deno.serve(async (request) => {
   const origin = request.headers.get('Origin') ?? '';
   const allowedOrigin = allowedOrigins.has(origin) ? origin : '';
@@ -93,18 +155,26 @@ Deno.serve(async (request) => {
           items: {
             type: 'object',
             additionalProperties: false,
-            required: ['id', 'title', 'description', 'calories', 'protein', 'fat', 'carbs', 'cookingTime', 'servings', 'ingredients', 'missingIngredients', 'steps'],
+            required: ['id', 'title', 'description', 'finishedWeightGrams', 'nutritionTotal', 'cookingTime', 'servings', 'ingredients', 'missingIngredients', 'steps'],
             properties: {
               id: { type: 'string' },
               title: { type: 'string' },
               description: { type: 'string' },
-              calories: { type: 'number', minimum: 0 },
-              protein: { type: 'number', minimum: 0 },
-              fat: { type: 'number', minimum: 0 },
-              carbs: { type: 'number', minimum: 0 },
+              finishedWeightGrams: { type: 'number', minimum: 0.1 },
+              nutritionTotal: {
+                type: 'object',
+                additionalProperties: false,
+                required: ['calories', 'protein', 'fat', 'carbs'],
+                properties: {
+                  calories: { type: 'number', minimum: 0 },
+                  protein: { type: 'number', minimum: 0 },
+                  fat: { type: 'number', minimum: 0 },
+                  carbs: { type: 'number', minimum: 0 },
+                },
+              },
               cookingTime: { type: 'integer', minimum: 1 },
               servings: { type: 'integer', minimum: 1 },
-              ingredients: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['name', 'amount', 'unit'], properties: { name: { type: 'string' }, amount: { type: 'number', minimum: 0 }, unit: { type: 'string' } } } },
+              ingredients: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['name', 'amount', 'unit'], properties: { name: { type: 'string' }, amount: { type: 'number', minimum: 0.1 }, unit: { type: 'string', enum: ['г', 'мл'] } } } },
               missingIngredients: { type: 'array', items: { type: 'string' } },
               steps: { type: 'array', minItems: 1, items: { type: 'string' } },
             },
@@ -125,7 +195,12 @@ Deno.serve(async (request) => {
           'Верни результат строго по схеме.',
           'Для списка продуктов или фотографии отдельных продуктов верни ровно 3 реалистичных рецепта на русском.',
           'Для фото готового блюда или неясного фото не предлагай рецепты.',
-          'Значения КБЖУ указывай на одну порцию.',
+          'Все количества ингредиентов указывай только в граммах (г) или миллилитрах (мл). Никогда не используй штуки, ложки, стаканы, пачки, щепотки или другие бытовые меры.',
+          'Переводи яйца и штучные продукты в съедобную массу: одно среднее яйцо без скорлупы — примерно 50 г. Масло, сахар, соусы и другие калорийные добавки обязательно включай.',
+          'nutritionTotal — КБЖУ всего готового блюда целиком, а не порции и не 100 г.',
+          'finishedWeightGrams — реалистичная масса всего готового блюда после потери или поглощения воды при приготовлении.',
+          'servings — только рекомендуемое количество порций и не меняет базу nutritionTotal.',
+          'Проверяй энергетическую согласованность: калории должны быть близки к 4 × белки + 9 × жиры + 4 × углеводы.',
           'Приоритет — уверенно распознанные продукты пользователя; недостающие обязательные продукты перечисляй отдельно.',
           'Не давай медицинских обещаний.',
         ].join(' '),
@@ -152,9 +227,10 @@ Deno.serve(async (request) => {
       return json({ error: 'PHOTO_PRODUCTS_NOT_RECOGNIZED', requestId }, 422, allowedOrigin);
     }
     if (!Array.isArray(parsed.suggestions) || parsed.suggestions.length !== 3) throw new Error('INVALID_AI_RESPONSE');
+    const suggestions = parsed.suggestions.map(normalizeSuggestion);
     return json({
       recognizedProducts: body.mode === 'photo' ? parsed.recognizedProducts : [],
-      suggestions: parsed.suggestions,
+      suggestions,
     }, 200, allowedOrigin);
   } catch (error) {
     const code = error instanceof DOMException && error.name === 'TimeoutError'
