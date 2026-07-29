@@ -1,9 +1,16 @@
 import { ensureFreshSession, supabase } from '../lib/supabase';
 
+export type RecipeNutrition = {
+  calories: number;
+  protein: number;
+  fat: number;
+  carbs: number;
+};
+
 export type RecipeSuggestionIngredient = {
   name: string;
   amount: number;
-  unit: string;
+  unit: 'г' | 'мл';
 };
 
 export type RecipeSuggestion = {
@@ -14,6 +21,12 @@ export type RecipeSuggestion = {
   protein: number;
   fat: number;
   carbs: number;
+  /** Примерный вес всего готового блюда после приготовления. */
+  finishedWeightGrams?: number;
+  /** КБЖУ всего готового рецепта. Старые поля выше дублируют эти значения для совместимости. */
+  nutritionTotal?: RecipeNutrition;
+  /** КБЖУ на 100 г готового блюда. */
+  nutritionPer100g?: RecipeNutrition;
   cookingTime: number;
   servings: number;
   ingredients: RecipeSuggestionIngredient[];
