@@ -60,7 +60,14 @@ Deno.serve(async (request) => {
       type: 'input_text',
       text: body.mode === 'products'
         ? `Пользователь перечислил продукты: ${String(body.products ?? '').slice(0, 2000)}`
-        : 'Определи продукты на фотографии и предложи рецепты из них. Не утверждай, что видишь продукт, если не уверен.',
+        : [
+          'Рассмотри фотографию продуктов для приготовления еды.',
+          'Если видишь отдельные продукты, перечисли только те, которые уверенно распознаны.',
+          'Не выдумывай бренд, жирность, вес, скрытые ингредиенты или продукты, которых не видно.',
+          'Названия нормализуй на русском языке.',
+          'Если на фото уже готовое блюдо, установи photoKind=prepared_dish.',
+          'Если продукты нельзя уверенно распознать или на фото не еда, установи photoKind=unclear.',
+        ].join(' '),
     }];
 
     if (body.mode === 'products') {
@@ -75,11 +82,13 @@ Deno.serve(async (request) => {
     const schema = {
       type: 'object',
       additionalProperties: false,
-      required: ['suggestions'],
+      required: ['photoKind', 'recognizedProducts', 'suggestions'],
       properties: {
+        photoKind: { type: 'string', enum: ['products', 'prepared_dish', 'unclear'] },
+        recognizedProducts: { type: 'array', maxItems: 30, items: { type: 'string' } },
         suggestions: {
           type: 'array',
-          minItems: 3,
+          minItems: 0,
           maxItems: 3,
           items: {
             type: 'object',
@@ -107,10 +116,19 @@ Deno.serve(async (request) => {
     const response = await fetch('https://api.openai.com/v1/responses', {
       method: 'POST',
       headers: { Authorization: `Bearer ${openAiKey}`, 'Content-Type': 'application/json' },
+      signal: AbortSignal.timeout(45_000),
       body: JSON.stringify({
         model,
         store: false,
-        instructions: 'Ты помощник по домашней кухне. Верни ровно 3 реалистичных рецепта на русском. Значения КБЖУ указывай на одну порцию. Приоритет — продукты пользователя; недостающие обязательные продукты перечисляй отдельно. Не давай медицинских обещаний.',
+        instructions: [
+          'Ты помощник по домашней кухне.',
+          'Верни результат строго по схеме.',
+          'Для списка продуктов или фотографии отдельных продуктов верни ровно 3 реалистичных рецепта на русском.',
+          'Для фото готового блюда или неясного фото не предлагай рецепты.',
+          'Значения КБЖУ указывай на одну порцию.',
+          'Приоритет — уверенно распознанные продукты пользователя; недостающие обязательные продукты перечисляй отдельно.',
+          'Не давай медицинских обещаний.',
+        ].join(' '),
         input: [{ role: 'user', content }],
         text: { format: { type: 'json_schema', name: 'recipe_suggestions', strict: true, schema } },
       }),
@@ -122,11 +140,28 @@ Deno.serve(async (request) => {
     }
 
     const result = await response.json() as Record<string, unknown>;
-    const parsed = JSON.parse(outputText(result));
+    const parsed = JSON.parse(outputText(result)) as {
+      photoKind?: string;
+      recognizedProducts?: unknown[];
+      suggestions?: unknown[];
+    };
+    if (body.mode === 'photo' && parsed.photoKind === 'prepared_dish') {
+      return json({ error: 'PHOTO_IS_PREPARED_DISH', requestId }, 422, allowedOrigin);
+    }
+    if (body.mode === 'photo' && (parsed.photoKind !== 'products' || !Array.isArray(parsed.recognizedProducts) || parsed.recognizedProducts.length === 0)) {
+      return json({ error: 'PHOTO_PRODUCTS_NOT_RECOGNIZED', requestId }, 422, allowedOrigin);
+    }
     if (!Array.isArray(parsed.suggestions) || parsed.suggestions.length !== 3) throw new Error('INVALID_AI_RESPONSE');
-    return json({ suggestions: parsed.suggestions }, 200, allowedOrigin);
+    return json({
+      recognizedProducts: body.mode === 'photo' ? parsed.recognizedProducts : [],
+      suggestions: parsed.suggestions,
+    }, 200, allowedOrigin);
   } catch (error) {
-    console.error(JSON.stringify({ event: 'recipe-suggest-failed', code: error instanceof Error ? error.message : 'UNKNOWN', requestId }));
+    const code = error instanceof DOMException && error.name === 'TimeoutError'
+      ? 'AI_TIMEOUT'
+      : error instanceof Error ? error.message : 'UNKNOWN';
+    console.error(JSON.stringify({ event: 'recipe-suggest-failed', code, requestId }));
+    if (code === 'AI_TIMEOUT') return json({ error: 'AI_TEMPORARILY_UNAVAILABLE', requestId }, 504, allowedOrigin);
     return json({ error: 'RECIPE_SUGGEST_FAILED', requestId }, 500, allowedOrigin);
   }
 });
