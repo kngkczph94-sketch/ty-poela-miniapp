@@ -43,6 +43,55 @@ const optimizeImage = async (file: File) => {
   }
 };
 
+const roundMacro = (value: number) => Math.round(value * 10) / 10;
+
+const nutritionFor = (recipe: RecipeSuggestion) => {
+  const total = recipe.nutritionTotal ?? {
+    calories: recipe.calories,
+    protein: recipe.protein,
+    fat: recipe.fat,
+    carbs: recipe.carbs,
+  };
+  const per100 = recipe.nutritionPer100g ?? (recipe.finishedWeightGrams && recipe.finishedWeightGrams > 0
+    ? {
+        calories: Math.round(total.calories * 100 / recipe.finishedWeightGrams),
+        protein: roundMacro(total.protein * 100 / recipe.finishedWeightGrams),
+        fat: roundMacro(total.fat * 100 / recipe.finishedWeightGrams),
+        carbs: roundMacro(total.carbs * 100 / recipe.finishedWeightGrams),
+      }
+    : null);
+  return { total, per100 };
+};
+
+function RecipeNutritionSummary({ recipe }: { recipe: RecipeSuggestion }) {
+  const { total, per100 } = nutritionFor(recipe);
+  return (
+    <div className="ai-recipe-nutrition">
+      <p className="ai-recipe-nutrition-title">
+        На весь рецепт{recipe.finishedWeightGrams ? ` · готовый вес ≈ ${recipe.finishedWeightGrams} г` : ''}
+      </p>
+      <div className="ai-recipe-meta">
+        <span className="ai-recipe-chip">{total.calories} ккал</span>
+        <span className="ai-recipe-chip">Б {total.protein} г</span>
+        <span className="ai-recipe-chip">Ж {total.fat} г</span>
+        <span className="ai-recipe-chip">У {total.carbs} г</span>
+      </div>
+      {per100 && (
+        <>
+          <p className="ai-recipe-nutrition-title">На 100 г готового блюда</p>
+          <div className="ai-recipe-meta">
+            <span className="ai-recipe-chip">{per100.calories} ккал</span>
+            <span className="ai-recipe-chip">Б {per100.protein} г</span>
+            <span className="ai-recipe-chip">Ж {per100.fat} г</span>
+            <span className="ai-recipe-chip">У {per100.carbs} г</span>
+          </div>
+        </>
+      )}
+      <p className="ai-recipe-time">⏱ {recipe.cookingTime} мин</p>
+    </div>
+  );
+}
+
 export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'breakfast', onClose, onChoose }: Props) {
   const [mode, setMode] = useState<'products' | 'photo'>('products');
   const [products, setProducts] = useState('');
@@ -144,7 +193,7 @@ export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'br
         <article className="ai-recipe-card ai-recipe-selected-card">
           <h3>{selectedRecipe.title}</h3>
           <p>{selectedRecipe.description}</p>
-          <div className="ai-recipe-meta"><span className="ai-recipe-chip">{selectedRecipe.calories} ккал</span><span className="ai-recipe-chip">Б {selectedRecipe.protein}</span><span className="ai-recipe-chip">Ж {selectedRecipe.fat}</span><span className="ai-recipe-chip">У {selectedRecipe.carbs}</span><span className="ai-recipe-chip">⏱ {selectedRecipe.cookingTime} мин</span></div>
+          <RecipeNutritionSummary recipe={selectedRecipe} />
           <details open><summary>Ингредиенты</summary><ul>{selectedRecipe.ingredients.map((item, index) => <li key={`${item.name}-${index}`}>{item.name} — {item.amount} {item.unit}</li>)}</ul>{selectedRecipe.missingIngredients.length > 0 && <p>Нужно докупить: {selectedRecipe.missingIngredients.join(', ')}</p>}</details>
           <details><summary>Как готовить</summary><ol>{selectedRecipe.steps.map((step, index) => <li key={index}>{step}</li>)}</ol></details>
           <button className="ai-recipe-add" disabled={Boolean(savingId)} onClick={() => choose(selectedRecipe)} type="button">{savingId === selectedRecipe.id ? 'Добавляю…' : 'Добавить в план питания'}</button>
@@ -157,7 +206,7 @@ export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'br
         <button className="ai-recipe-primary" disabled={loading || preparingImage} onClick={generate} type="button">{preparingImage ? 'Обрабатываю фото…' : loading ? 'Подбираю 3 варианта…' : '✨ Подобрать 3 рецепта'}</button>
         {error && <div className="ai-recipe-error">{error}</div>}
         {recognizedProducts.length > 0 && <section className="ai-recipe-recognized"><div className="ai-recipe-recognized-title">ИИ распознал</div><div className="ai-recipe-recognized-list">{recognizedProducts.map((item) => <span className="ai-recipe-recognized-chip" key={item}>{item}</span>)}</div><button className="ai-recipe-recognized-edit" onClick={() => { const recognized = recognizedProducts.join(', '); setMode('products'); resetResults(); setProducts(recognized); }} type="button">Исправить список</button></section>}
-        {suggestions.length > 0 && <><p className="ai-recipe-results-hint">Выберите вариант, затем сохраните его — после сохранения создадим изображение.</p><div className="ai-recipe-results">{suggestions.map((recipe) => <article className="ai-recipe-card" key={recipe.id}><h3>{recipe.title}</h3><p>{recipe.description}</p><div className="ai-recipe-meta"><span className="ai-recipe-chip">{recipe.calories} ккал</span><span className="ai-recipe-chip">Б {recipe.protein}</span><span className="ai-recipe-chip">Ж {recipe.fat}</span><span className="ai-recipe-chip">У {recipe.carbs}</span><span className="ai-recipe-chip">⏱ {recipe.cookingTime} мин</span></div><details><summary>Ингредиенты</summary><ul>{recipe.ingredients.map((item, index) => <li key={`${item.name}-${index}`}>{item.name} — {item.amount} {item.unit}</li>)}</ul>{recipe.missingIngredients.length > 0 && <p>Нужно докупить: {recipe.missingIngredients.join(', ')}</p>}</details><details><summary>Как готовить</summary><ol>{recipe.steps.map((step, index) => <li key={index}>{step}</li>)}</ol></details><button className="ai-recipe-add" onClick={() => selectRecipe(recipe)} type="button">Выбрать этот вариант</button></article>)}</div></>}
+        {suggestions.length > 0 && <><p className="ai-recipe-results-hint">Выберите вариант, затем сохраните его — после сохранения создадим изображение.</p><div className="ai-recipe-results">{suggestions.map((recipe) => <article className="ai-recipe-card" key={recipe.id}><h3>{recipe.title}</h3><p>{recipe.description}</p><RecipeNutritionSummary recipe={recipe} /><details><summary>Ингредиенты</summary><ul>{recipe.ingredients.map((item, index) => <li key={`${item.name}-${index}`}>{item.name} — {item.amount} {item.unit}</li>)}</ul>{recipe.missingIngredients.length > 0 && <p>Нужно докупить: {recipe.missingIngredients.join(', ')}</p>}</details><details><summary>Как готовить</summary><ol>{recipe.steps.map((step, index) => <li key={index}>{step}</li>)}</ol></details><button className="ai-recipe-add" onClick={() => selectRecipe(recipe)} type="button">Выбрать этот вариант</button></article>)}</div></>}
       </>}
     </section>
   </div>;
