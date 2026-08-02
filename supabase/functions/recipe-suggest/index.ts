@@ -69,13 +69,23 @@ const normalizeSuggestion = (value: unknown) => {
     if (typeof item.name !== 'string' || typeof item.amount !== 'number' || !Number.isFinite(item.amount) || item.amount <= 0 || (item.unit !== 'г' && item.unit !== 'мл')) {
       throw new Error('INVALID_AI_RESPONSE');
     }
-    return { name: item.name.trim(), amount: roundMacro(item.amount), unit: item.unit };
+    return { name: item.name.trim(), amount: roundMacro(item.amount), unit: item.unit, nutrition: normalizeNutrition(item.nutrition) };
   });
   if (typeof recipe.finishedWeightGrams !== 'number' || !Number.isFinite(recipe.finishedWeightGrams) || recipe.finishedWeightGrams <= 0) {
     throw new Error('INVALID_AI_RESPONSE');
   }
   const finishedWeightGrams = Math.round(recipe.finishedWeightGrams);
-  const nutritionTotal = normalizeNutrition(recipe.nutritionTotal);
+  normalizeNutrition(recipe.nutritionTotal);
+  const nutritionTotal = ingredients.reduce<Nutrition>((total, ingredient) => ({
+    calories: total.calories + ingredient.nutrition.calories,
+    protein: roundMacro(total.protein + ingredient.nutrition.protein),
+    fat: roundMacro(total.fat + ingredient.nutrition.fat),
+    carbs: roundMacro(total.carbs + ingredient.nutrition.carbs),
+  }), { calories: 0, protein: 0, fat: 0, carbs: 0 });
+  nutritionTotal.calories = Math.round(nutritionTotal.calories);
+  const servings = typeof recipe.servings === 'number' && recipe.servings > 0 ? recipe.servings : 1;
+  const excessiveOil = ingredients.some((ingredient) => /(?:масло растительное|оливковое масло|подсолнечное масло)/i.test(ingredient.name) && ingredient.amount / servings > 10);
+  if (excessiveOil) throw new Error('INVALID_AI_RESPONSE');
   const factor = 100 / finishedWeightGrams;
   const nutritionPer100g = {
     calories: Math.round(nutritionTotal.calories * factor),
@@ -174,7 +184,7 @@ Deno.serve(async (request) => {
               },
               cookingTime: { type: 'integer', minimum: 1 },
               servings: { type: 'integer', minimum: 1 },
-              ingredients: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['name', 'amount', 'unit'], properties: { name: { type: 'string' }, amount: { type: 'number', minimum: 0.1 }, unit: { type: 'string', enum: ['г', 'мл'] } } } },
+              ingredients: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['name', 'amount', 'unit', 'nutrition'], properties: { name: { type: 'string' }, amount: { type: 'number', minimum: 0.1 }, unit: { type: 'string', enum: ['г', 'мл'] }, nutrition: { type: 'object', additionalProperties: false, required: ['calories', 'protein', 'fat', 'carbs'], properties: { calories: { type: 'number', minimum: 0 }, protein: { type: 'number', minimum: 0 }, fat: { type: 'number', minimum: 0 }, carbs: { type: 'number', minimum: 0 } } } } } },
               missingIngredients: { type: 'array', items: { type: 'string' } },
               steps: { type: 'array', minItems: 1, items: { type: 'string' } },
             },
@@ -200,6 +210,12 @@ Deno.serve(async (request) => {
           'nutritionTotal — КБЖУ всего готового блюда целиком, а не порции и не 100 г.',
           'finishedWeightGrams — реалистичная масса всего готового блюда после потери или поглощения воды при приготовлении.',
           'servings — только рекомендуемое количество порций и не меняет базу nutritionTotal.',
+          'Рассчитай КБЖУ детально по каждому ингредиенту с учётом его точного количества и жирности; nutritionTotal должен быть арифметической суммой КБЖУ ингредиентов. КБЖУ одной порции получается только делением nutritionTotal на servings.',
+          'Не оценивай КБЖУ «на глаз» и не округляй грубо: калории округляй максимум до 1 ккал, белки, жиры и углеводы — максимум до 0.1 г.',
+          'Всегда включай значимую для КБЖУ жирность или характеристику прямо в name ингредиента: «творог 2%», молоко/кефир/йогурт с конкретным %, сыр с конкретным % или типом, «говядина нежирная 6–9%», «фарш нежирный 6–9%», курицу и индейку — преимущественно как филе или другую нежирную часть.',
+          'По умолчанию составляй ПП-рецепты из менее жирных продуктов. Не используй без обоснованной кулинарной необходимости творог 9%, жирный фарш, сливки, майонез или большое количество сыра.',
+          'Растительного масла используй не более 10 г на одну порцию, предпочтительно 3–5 г или вовсе без масла. Проверь этот лимит после выбора servings.',
+          'Предпочитай запекание, тушение, варку, приготовление на пару, сухую или антипригарную сковороду с минимальным количеством масла.',
           'Проверяй энергетическую согласованность: калории должны быть близки к 4 × белки + 9 × жиры + 4 × углеводы.',
           'Приоритет — уверенно распознанные продукты пользователя; недостающие обязательные продукты перечисляй отдельно.',
           'Не давай медицинских обещаний.',
