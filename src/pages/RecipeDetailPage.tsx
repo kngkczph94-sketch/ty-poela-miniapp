@@ -187,7 +187,7 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
               </div>
               <div className="mt-3 rounded-2xl bg-white p-3">
                 <label className="text-sm font-black text-[#37410F]" htmlFor="recipe-portion">Порция, г</label>
-                <input id="recipe-portion" aria-label="Вес готового блюда в граммах" className="mt-3 w-full rounded-2xl border border-[#8B725F]/35 px-3 py-3 text-center font-black outline-none" inputMode="decimal" onChange={(event) => { setPortionValue(event.target.value); setPortionError(''); }} placeholder="Например, 145" type="text" value={portionValue} />
+                <input id="recipe-portion" aria-label="Вес готового блюда в граммах" className="mt-3 w-full rounded-2xl border border-[#8B725F]/35 px-3 py-3 text-center font-black outline-none" inputMode="numeric" onBlur={() => setPortionValue((value) => value ? String(Number.parseInt(value, 10)) : value)} onChange={(event) => { setPortionValue(event.target.value.replace(/\D/g, '')); setPortionError(''); }} placeholder="Например, 145" type="text" value={portionValue} />
                 <p className="mt-3 text-xs font-black text-[#8B725F]">КБЖУ для выбранной порции</p>
                 <p className="mt-1 text-sm font-black text-[#37410F]">{selectedNutrition.calories} ккал · Б {selectedNutrition.protein} · Ж {selectedNutrition.fat} · У {selectedNutrition.carbs}</p>
                 {portionError && <p className="mt-2 text-xs font-bold text-[#A45135]">{portionError}</p>}
