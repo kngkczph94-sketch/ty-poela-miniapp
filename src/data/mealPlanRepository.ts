@@ -241,7 +241,7 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
       const entrySource = recipe.entrySource ?? 'recipe';
       const resolvedRecipeId = entrySource === 'recipe' ? recipeIds.get(recipe.id) ?? null : null;
       const isCatalogRecipe = resolvedRecipeId !== null;
-      const storedEntrySource: MealEntrySource = isCatalogRecipe ? 'recipe' : entrySource === 'recipe' ? 'manual' : entrySource;
+      const storedEntrySource: MealEntrySource = isCatalogRecipe ? 'recipe' : 'manual';
       return {
         meal_plan_id: plan.id,
         meal_type: slot,
