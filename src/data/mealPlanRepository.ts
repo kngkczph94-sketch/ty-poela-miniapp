@@ -57,6 +57,11 @@ const portionLabelFromRow = (item: MealPlanItemRow) => item.portion_unit === 'g'
   ? `${Number(item.portion_amount)} г`
   : `${Number(item.portion_amount ?? item.planned_servings) || 1} порц.`;
 
+const nutritionValue = (value: number | string, fallback: number) => {
+  const numericValue = Number(value);
+  return Number.isFinite(numericValue) && numericValue > 0 ? numericValue : fallback;
+};
+
 const manualMealFromRow = (item: MealPlanItemRow): Meal | null => {
   if (item.entry_source === 'recipe' || !item.custom_title) return null;
   const products = Array.isArray(item.custom_products) ? item.custom_products.filter(isPlanProduct) : [];
@@ -153,10 +158,10 @@ export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
           const servings = Number(item.planned_servings) || 1;
           result[day].meals[item.meal_type] = {
             ...recipe,
-            calories: Math.round(recipe.calories * servings),
-            protein: Math.round(recipe.protein * servings * 10) / 10,
-            fat: Math.round(recipe.fat * servings * 10) / 10,
-            carbs: Math.round(recipe.carbs * servings * 10) / 10,
+            calories: nutritionValue(item.custom_calories, Math.round(recipe.calories * servings)),
+            protein: nutritionValue(item.custom_protein_g, Math.round(recipe.protein * servings * 10) / 10),
+            fat: nutritionValue(item.custom_fat_g, Math.round(recipe.fat * servings * 10) / 10),
+            carbs: nutritionValue(item.custom_carbs_g, Math.round(recipe.carbs * servings * 10) / 10),
             plannedServings: servings,
             portionLabel: portionLabelFromRow(item),
           };
@@ -210,10 +215,6 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
     recipeIds.set(resolved.id as string, resolved.id as string);
     recipeIds.set(resolved.legacy_id as string, resolved.id as string);
   });
-  const missingRecipeIds = catalogRecipeIds.filter((recipeId) => !recipeIds.has(recipeId));
-  if (missingRecipeIds.length > 0) {
-    throw new Error(`Блюда рациона недоступны: ${missingRecipeIds.join(', ')}. Проверьте доступ к Premium.`);
-  }
   if (planDay.rationId && !rationResult.data?.id) {
     throw new Error('Рацион недоступен для текущего уровня подписки.');
   }
@@ -238,22 +239,24 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
   const { error: itemsError } = await supabase.from('meal_plan_items').insert(
     meals.map(({ slot, recipe }) => {
       const entrySource = recipe.entrySource ?? 'recipe';
-      const isCatalogRecipe = entrySource === 'recipe';
+      const resolvedRecipeId = entrySource === 'recipe' ? recipeIds.get(recipe.id) ?? null : null;
+      const isCatalogRecipe = resolvedRecipeId !== null;
+      const storedEntrySource: MealEntrySource = isCatalogRecipe ? 'recipe' : entrySource === 'recipe' ? 'manual' : entrySource;
       return {
         meal_plan_id: plan.id,
         meal_type: slot,
         // The FK must always receive recipes.id (UUID), never a local/legacy identifier.
-        planned_recipe_id: isCatalogRecipe ? recipeIds.get(recipe.id) : null,
+        planned_recipe_id: resolvedRecipeId,
         planned_servings: recipe.plannedServings ?? 1,
         portion_amount: Number.parseFloat(recipe.portionLabel ?? '') || recipe.plannedServings || 1,
         portion_unit: recipe.portionLabel?.endsWith(' г') ? 'g' : 'serving',
-        entry_source: entrySource,
+        entry_source: storedEntrySource,
         custom_title: isCatalogRecipe ? null : recipe.title,
         custom_products: isCatalogRecipe ? [] : recipe.planProducts ?? [],
-        custom_calories: isCatalogRecipe ? 0 : recipe.calories,
-        custom_protein_g: isCatalogRecipe ? 0 : recipe.protein,
-        custom_fat_g: isCatalogRecipe ? 0 : recipe.fat,
-        custom_carbs_g: isCatalogRecipe ? 0 : recipe.carbs,
+        custom_calories: recipe.calories,
+        custom_protein_g: recipe.protein,
+        custom_fat_g: recipe.fat,
+        custom_carbs_g: recipe.carbs,
       };
     }),
   );
