@@ -7,7 +7,7 @@ type Props = {
   initialDay?: MenuDay;
   initialSlot?: MenuMealSlot;
   onClose: () => void;
-  onChoose: (recipe: RecipeSuggestion, day: MenuDay, slot: MenuMealSlot, servings: number) => Promise<boolean>;
+  onChoose: (recipe: RecipeSuggestion, day: MenuDay, slot: MenuMealSlot, grams: number) => Promise<void>;
 };
 
 const MAX_SOURCE_IMAGE_BYTES = 12 * 1024 * 1024;
@@ -106,7 +106,7 @@ export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'br
   const [savingId, setSavingId] = useState('');
   const [error, setError] = useState('');
   const [imageError, setImageError] = useState('');
-  const [plannedServings, setPlannedServings] = useState(1);
+  const [plannedGrams, setPlannedGrams] = useState('100');
 
   useEffect(() => {
     const previous = document.body.style.overflow;
@@ -158,17 +158,21 @@ export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'br
 
   const selectRecipe = (recipe: RecipeSuggestion) => {
     setSelectedRecipe(recipe);
-    setPlannedServings(1);
+    setPlannedGrams('100');
     setImageError('');
   };
 
   const choose = async (recipe: RecipeSuggestion) => {
+    const grams = Number(plannedGrams);
+    if (!Number.isFinite(grams) || grams <= 0) {
+      setError('Введите количество готового блюда больше 0 г.');
+      return;
+    }
     setSavingId(recipe.id);
     setError('');
     try {
-      const imageCreated = await onChoose(recipe, day, slot, plannedServings);
-      if (imageCreated) onClose();
-      else setImageError('Рецепт сохранён, но изображение пока не создано.');
+      await onChoose(recipe, day, slot, grams);
+      onClose();
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Не удалось добавить блюдо в план.');
     } finally {
@@ -198,8 +202,17 @@ export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'br
           <RecipeNutritionSummary recipe={selectedRecipe} />
           <details open><summary>Ингредиенты</summary><ul>{selectedRecipe.ingredients.map((item, index) => <li key={`${item.name}-${index}`}>{item.name} — {item.amount} {item.unit}</li>)}</ul>{selectedRecipe.missingIngredients.length > 0 && <p>Нужно докупить: {selectedRecipe.missingIngredients.join(', ')}</p>}</details>
           <details><summary>Как готовить</summary><ol>{selectedRecipe.steps.map((step, index) => <li key={index}>{step}</li>)}</ol></details>
-          <div className="ai-recipe-field"><span>Порция</span><div className="ai-recipe-grid"><button className="ai-recipe-back" onClick={() => setPlannedServings((value) => Math.max(0.5, value - 0.5))} type="button">−</button><input aria-label="Количество порций" min="0.5" onChange={(event) => setPlannedServings(Math.max(0.5, Number(event.target.value) || 0.5))} step="0.5" type="number" value={plannedServings} /><button className="ai-recipe-back" onClick={() => setPlannedServings((value) => value + 0.5)} type="button">+</button></div><small>КБЖУ для выбранной порции: {Math.round((selectedRecipe.nutritionTotal?.calories ?? selectedRecipe.calories) / selectedRecipe.servings * plannedServings)} ккал · Б {roundMacro((selectedRecipe.nutritionTotal?.protein ?? selectedRecipe.protein) / selectedRecipe.servings * plannedServings)} · Ж {roundMacro((selectedRecipe.nutritionTotal?.fat ?? selectedRecipe.fat) / selectedRecipe.servings * plannedServings)} · У {roundMacro((selectedRecipe.nutritionTotal?.carbs ?? selectedRecipe.carbs) / selectedRecipe.servings * plannedServings)}</small></div>
-          <button className="ai-recipe-add" disabled={Boolean(savingId)} onClick={() => choose(selectedRecipe)} type="button">{savingId === selectedRecipe.id ? 'Добавляю…' : 'Добавить в план питания'}</button>
+          {(() => {
+            const per100 = nutritionFor(selectedRecipe).per100;
+            const grams = Number(plannedGrams);
+            const factor = Number.isFinite(grams) && grams > 0 ? grams / 100 : 0;
+            return <div className="ai-recipe-field">
+              <label htmlFor="ai-recipe-grams">Количество, г</label>
+              <input aria-label="Количество готового блюда в граммах" id="ai-recipe-grams" inputMode="numeric" onBlur={() => setPlannedGrams((value) => value ? String(Number.parseInt(value, 10)) : value)} onChange={(event) => { setPlannedGrams(event.target.value.replace(/\D/g, '')); setError(''); }} placeholder="Например, 145" type="text" value={plannedGrams} />
+              {per100 && <small>КБЖУ для выбранного количества: {Math.round(per100.calories * factor)} ккал · Б {roundMacro(per100.protein * factor)} · Ж {roundMacro(per100.fat * factor)} · У {roundMacro(per100.carbs * factor)}</small>}
+            </div>;
+          })()}
+          <button className="ai-recipe-add" disabled={Boolean(savingId) || !plannedGrams || Number(plannedGrams) <= 0 || !nutritionFor(selectedRecipe).per100} onClick={() => choose(selectedRecipe)} type="button">{savingId === selectedRecipe.id ? 'Добавляю…' : 'Добавить в план питания'}</button>
         </article>
         {error && <div className="ai-recipe-error">{error}</div>}
       </div> : <>
