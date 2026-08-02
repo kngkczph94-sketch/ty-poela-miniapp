@@ -185,20 +185,32 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
   }
 
   const catalogMeals = meals.filter(({ recipe }) => !recipe.entrySource || recipe.entrySource === 'recipe');
-  const recipeLegacyIds = catalogMeals.map(({ recipe }) => recipe.id);
-  const [recipesResult, rationResult] = await Promise.all([
+  const catalogRecipeIds = [...new Set(catalogMeals.map(({ recipe }) => recipe.id))];
+  const isUuid = (value: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+  const supabaseRecipeIds = catalogRecipeIds.filter(isUuid);
+  const recipeLegacyIds = catalogRecipeIds.filter((id) => !isUuid(id));
+  const [recipesByLegacyResult, recipesByIdResult, rationResult] = await Promise.all([
     recipeLegacyIds.length
       ? supabase.from('recipes').select('id, legacy_id').in('legacy_id', recipeLegacyIds)
+      : Promise.resolve({ data: [], error: null }),
+    supabaseRecipeIds.length
+      ? supabase.from('recipes').select('id, legacy_id').in('id', supabaseRecipeIds)
       : Promise.resolve({ data: [], error: null }),
     planDay.rationId
       ? supabase.from('rations').select('id').eq('legacy_id', planDay.rationId).maybeSingle()
       : Promise.resolve({ data: null, error: null }),
   ]);
-  if (recipesResult.error) throw recipesResult.error;
+  if (recipesByLegacyResult.error) throw recipesByLegacyResult.error;
+  if (recipesByIdResult.error) throw recipesByIdResult.error;
   if (rationResult.error) throw rationResult.error;
 
-  const recipeIds = new Map((recipesResult.data ?? []).map((recipe) => [recipe.legacy_id as string, recipe.id as string]));
-  const missingRecipeIds = [...new Set(recipeLegacyIds)].filter((legacyId) => !recipeIds.has(legacyId));
+  const resolvedRecipes = [...(recipesByLegacyResult.data ?? []), ...(recipesByIdResult.data ?? [])];
+  const recipeIds = new Map<string, string>();
+  resolvedRecipes.forEach((resolved) => {
+    recipeIds.set(resolved.id as string, resolved.id as string);
+    recipeIds.set(resolved.legacy_id as string, resolved.id as string);
+  });
+  const missingRecipeIds = catalogRecipeIds.filter((recipeId) => !recipeIds.has(recipeId));
   if (missingRecipeIds.length > 0) {
     throw new Error(`Блюда рациона недоступны: ${missingRecipeIds.join(', ')}. Проверьте доступ к Premium.`);
   }
@@ -230,6 +242,7 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
       return {
         meal_plan_id: plan.id,
         meal_type: slot,
+        // The FK must always receive recipes.id (UUID), never a local/legacy identifier.
         planned_recipe_id: isCatalogRecipe ? recipeIds.get(recipe.id) : null,
         planned_servings: recipe.plannedServings ?? 1,
         portion_amount: Number.parseFloat(recipe.portionLabel ?? '') || recipe.plannedServings || 1,

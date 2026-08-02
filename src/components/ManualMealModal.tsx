@@ -42,8 +42,10 @@ const sanitizeNumericInput = (value: string) => {
 
 const numericValue = (value: string) => {
   const parsed = Number(value.replace(',', '.'));
-  return Number.isFinite(parsed) ? parsed : 0;
+  return value.trim() !== '' && Number.isFinite(parsed) ? parsed : null;
 };
+
+const hasInvalidNumericFields = (product: ProductDraft) => numericFields.some(({ key }) => numericValue(product[key]) === null);
 
 const toProductDraft = (product: PlanProduct): ProductDraft => ({
   ...product,
@@ -74,11 +76,11 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
     ...product,
     name: product.name.trim(),
     unit: product.unit.trim() || 'г',
-    amount: numericValue(product.amount),
-    calories: numericValue(product.calories),
-    protein: numericValue(product.protein),
-    fat: numericValue(product.fat),
-    carbs: numericValue(product.carbs),
+    amount: numericValue(product.amount) ?? 0,
+    calories: numericValue(product.calories) ?? 0,
+    protein: numericValue(product.protein) ?? 0,
+    fat: numericValue(product.fat) ?? 0,
+    carbs: numericValue(product.carbs) ?? 0,
   }));
 
   const handleEstimate = async () => {
@@ -103,6 +105,10 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
   };
 
   const handleSave = async () => {
+    if (products.some(hasInvalidNumericFields)) {
+      setError('Заполните количество и все поля КБЖУ корректными числами.');
+      return;
+    }
     const normalized = normalizeProducts();
 
     if (normalized.some((product) => !product.name || product.amount <= 0)) {

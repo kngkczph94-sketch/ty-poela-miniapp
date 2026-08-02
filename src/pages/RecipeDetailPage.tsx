@@ -9,7 +9,7 @@ type RecipeDetailPageProps = {
   hasActiveSubscription: boolean;
   recipe: Recipe;
   onBack: () => void;
-  onAddToMenu: (recipe: Recipe, day: MenuDay, slot: MenuMealSlot, servings: number, portionLabel: string) => void;
+  onAddToMenu: (recipe: Recipe, day: MenuDay, slot: MenuMealSlot, servings: number, portionLabel: string) => Promise<void>;
   onOpenAccess: () => void;
   onOpenMenu: () => void;
 };
@@ -38,10 +38,12 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
   const [selectedSlot, setSelectedSlot] = useState<MenuMealSlot>('breakfast');
   const [isMenuPickerOpen, setIsMenuPickerOpen] = useState(false);
   const [manualShareText, setManualShareText] = useState('');
-  const [portionMode, setPortionMode] = useState<'servings' | 'grams'>('servings');
-  const [portionValue, setPortionValue] = useState(1);
-  const baseServingWeight = recipe.totalWeightGrams ? recipe.totalWeightGrams / recipe.servings : 0;
-  const selectedServings = portionMode === 'grams' && baseServingWeight ? portionValue / baseServingWeight : portionValue;
+  const [portionValue, setPortionValue] = useState('100');
+  const [portionError, setPortionError] = useState('');
+  const parsedPortion = Number(portionValue.replace(',', '.'));
+  const hasValidPortion = Number.isFinite(parsedPortion) && parsedPortion > 0;
+  // Recipe cards expose nutrition per 100 g; plannedServings remains the database multiplier.
+  const selectedServings = hasValidPortion ? parsedPortion / 100 : 0;
   const currentPlannedServings = recipe.plannedServings ?? 1;
   const selectedNutrition = {
     calories: Math.round(recipe.calories / currentPlannedServings * selectedServings),
@@ -61,10 +63,19 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
     setToastMessage('');
   };
 
-  const handleAddToMenu = () => {
-    onAddToMenu(recipe, selectedDay, selectedSlot, selectedServings, portionMode === 'grams' ? `${portionValue} г` : `${portionValue} порц.`);
-    setIsMenuPickerOpen(false);
-    showActionFeedback('menu', `Готово: ${selectedDay}, ${menuSlotLabels[selectedSlot].toLowerCase()}. Белок есть, паники нет.`);
+  const handleAddToMenu = async () => {
+    if (!hasValidPortion) {
+      setPortionError('Введите вес готового блюда больше 0 г.');
+      return;
+    }
+    setPortionError('');
+    try {
+      await onAddToMenu(recipe, selectedDay, selectedSlot, selectedServings, `${parsedPortion} г`);
+      setIsMenuPickerOpen(false);
+      showActionFeedback('menu', `Готово: ${selectedDay}, ${menuSlotLabels[selectedSlot].toLowerCase()}. Белок есть, паники нет.`);
+    } catch {
+      setPortionError('Не удалось добавить блюдо в план. Попробуйте ещё раз.');
+    }
   };
 
   useEffect(() => {
@@ -143,7 +154,7 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
             <div className="mt-5 rounded-3xl bg-[#F3E2BF] p-3">
               <p className="text-xs font-black uppercase tracking-[0.16em] text-[#6E7E1F]">Добавить в план питания</p>
               <p className="mt-1 text-lg font-black text-[#37410F]">{recipe.title}</p>
-              <p className="mt-1 text-xs font-bold text-[#8B725F]">Базовая порция: 1 порция{baseServingWeight ? ` · ${Math.round(baseServingWeight)} г` : ''}</p>
+              <p className="mt-1 text-xs font-bold text-[#8B725F]">КБЖУ указаны на 100 г готового блюда</p>
               <div className="mt-3 grid grid-cols-2 gap-2">
                 <label className="block">
                   <span className="mb-1 block text-xs font-extrabold text-[#8B725F]">День</span>
@@ -175,14 +186,11 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
                 </label>
               </div>
               <div className="mt-3 rounded-2xl bg-white p-3">
-                <div className="flex items-center justify-between gap-2"><span className="text-sm font-black text-[#37410F]">Порция</span>{baseServingWeight > 0 && <div className="flex rounded-full bg-[#F3E2BF] p-1 text-xs font-black"><button className={`rounded-full px-3 py-1 ${portionMode === 'servings' ? 'bg-white' : ''}`} onClick={() => { setPortionMode('servings'); setPortionValue(1); }} type="button">порции</button><button className={`rounded-full px-3 py-1 ${portionMode === 'grams' ? 'bg-white' : ''}`} onClick={() => { setPortionMode('grams'); setPortionValue(Math.round(baseServingWeight)); }} type="button">граммы</button></div>}</div>
-                <div className="mt-3 grid grid-cols-[3rem_1fr_3rem] gap-2">
-                  <button aria-label="Уменьшить порцию" className="rounded-2xl bg-[#F3E2BF] text-xl font-black" onClick={() => setPortionValue((value) => Math.max(portionMode === 'grams' ? 10 : 0.5, Math.round((value - (portionMode === 'grams' ? 10 : 0.5)) * 10) / 10))} type="button">−</button>
-                  <input aria-label={portionMode === 'grams' ? 'Вес порции' : 'Количество порций'} className="min-w-0 rounded-2xl border border-[#8B725F]/35 px-3 py-3 text-center font-black outline-none" min={portionMode === 'grams' ? 10 : 0.1} onChange={(event) => setPortionValue(Math.max(portionMode === 'grams' ? 10 : 0.1, Number(event.target.value) || 0))} step={portionMode === 'grams' ? 10 : 0.5} type="number" value={portionValue} />
-                  <button aria-label="Увеличить порцию" className="rounded-2xl bg-[#F3E2BF] text-xl font-black" onClick={() => setPortionValue((value) => Math.round((value + (portionMode === 'grams' ? 10 : 0.5)) * 10) / 10)} type="button">+</button>
-                </div>
+                <label className="text-sm font-black text-[#37410F]" htmlFor="recipe-portion">Порция, г</label>
+                <input id="recipe-portion" aria-label="Вес готового блюда в граммах" className="mt-3 w-full rounded-2xl border border-[#8B725F]/35 px-3 py-3 text-center font-black outline-none" inputMode="decimal" onChange={(event) => { setPortionValue(event.target.value); setPortionError(''); }} placeholder="Например, 145" type="text" value={portionValue} />
                 <p className="mt-3 text-xs font-black text-[#8B725F]">КБЖУ для выбранной порции</p>
                 <p className="mt-1 text-sm font-black text-[#37410F]">{selectedNutrition.calories} ккал · Б {selectedNutrition.protein} · Ж {selectedNutrition.fat} · У {selectedNutrition.carbs}</p>
+                {portionError && <p className="mt-2 text-xs font-bold text-[#A45135]">{portionError}</p>}
               </div>
               <button
                 className="mt-3 w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]"
