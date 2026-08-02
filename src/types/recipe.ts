@@ -69,9 +69,9 @@ export const recipeToMeal = (recipe: Recipe): Meal => recipe;
 
 const roundMacro = (value: number) => Math.round(value * 10) / 10;
 
-/** Рецепты каталога хранят КБЖУ одной базовой порции. */
+/** plannedServings is a multiplier (for a gram portion it is weight / 100). */
 export const recipeWithPlannedPortion = (recipe: Recipe, plannedServings: number, portionLabel?: string): Recipe => {
-  const factor = Math.max(0.1, plannedServings);
+  const factor = plannedServings > 0 ? plannedServings : 1;
   const currentFactor = recipe.plannedServings ?? 1;
   return {
     ...recipe,
