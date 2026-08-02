@@ -27,6 +27,9 @@ type MealPlanItemRow = {
   custom_protein_g: number | string;
   custom_fat_g: number | string;
   custom_carbs_g: number | string;
+  planned_servings: number | string;
+  portion_amount: number | string | null;
+  portion_unit: 'serving' | 'g' | null;
 };
 
 const localDateAtOffset = (offset: number) => {
@@ -50,6 +53,10 @@ const isPlanProduct = (value: unknown): value is PlanProduct => {
     && ['amount', 'calories', 'protein', 'fat', 'carbs'].every((key) => typeof product[key as keyof PlanProduct] === 'number');
 };
 
+const portionLabelFromRow = (item: MealPlanItemRow) => item.portion_unit === 'g'
+  ? `${Number(item.portion_amount)} г`
+  : `${Number(item.portion_amount ?? item.planned_servings) || 1} порц.`;
+
 const manualMealFromRow = (item: MealPlanItemRow): Meal | null => {
   if (item.entry_source === 'recipe' || !item.custom_title) return null;
   const products = Array.isArray(item.custom_products) ? item.custom_products.filter(isPlanProduct) : [];
@@ -72,6 +79,8 @@ const manualMealFromRow = (item: MealPlanItemRow): Meal | null => {
     planProducts: products,
     cookingTime: 0,
     servings: 1,
+    plannedServings: Number(item.planned_servings) || 1,
+    portionLabel: portionLabelFromRow(item),
   };
 };
 
@@ -106,7 +115,7 @@ export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
   const rationIds = plans.flatMap((plan) => plan.source_ration_id ? [plan.source_ration_id] : []);
   const { data: itemsData, error: itemsError } = await supabase
     .from('meal_plan_items')
-    .select('meal_plan_id, meal_type, planned_recipe_id, entry_source, custom_title, custom_products, custom_calories, custom_protein_g, custom_fat_g, custom_carbs_g')
+    .select('meal_plan_id, meal_type, planned_recipe_id, planned_servings, portion_amount, portion_unit, entry_source, custom_title, custom_products, custom_calories, custom_protein_g, custom_fat_g, custom_carbs_g')
     .in('meal_plan_id', planIds);
   if (itemsError) throw itemsError;
 
@@ -140,7 +149,18 @@ export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
       if (item.planned_recipe_id) {
         const legacyId = recipeLegacyIds.get(item.planned_recipe_id);
         const recipe = legacyId ? findRecipeWithRationImage(legacyId) : undefined;
-        if (recipe) result[day].meals[item.meal_type] = recipe;
+        if (recipe) {
+          const servings = Number(item.planned_servings) || 1;
+          result[day].meals[item.meal_type] = {
+            ...recipe,
+            calories: Math.round(recipe.calories * servings),
+            protein: Math.round(recipe.protein * servings * 10) / 10,
+            fat: Math.round(recipe.fat * servings * 10) / 10,
+            carbs: Math.round(recipe.carbs * servings * 10) / 10,
+            plannedServings: servings,
+            portionLabel: portionLabelFromRow(item),
+          };
+        }
         return;
       }
       result[day].meals[item.meal_type] = manualMealFromRow(item);
@@ -211,7 +231,9 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
         meal_plan_id: plan.id,
         meal_type: slot,
         planned_recipe_id: isCatalogRecipe ? recipeIds.get(recipe.id) : null,
-        planned_servings: 1,
+        planned_servings: recipe.plannedServings ?? 1,
+        portion_amount: Number.parseFloat(recipe.portionLabel ?? '') || recipe.plannedServings || 1,
+        portion_unit: recipe.portionLabel?.endsWith(' г') ? 'g' : 'serving',
         entry_source: entrySource,
         custom_title: isCatalogRecipe ? null : recipe.title,
         custom_products: isCatalogRecipe ? [] : recipe.planProducts ?? [],

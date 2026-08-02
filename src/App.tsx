@@ -20,7 +20,7 @@ import { dailyRations } from './data/rations';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
 import type { DailyRation } from './types/ration';
 import type { HabitEntry, MeasurementEntry, ProgressEntry } from './types/progress';
-import type { PlanProduct, Recipe } from './types/recipe';
+import { recipeWithPlannedPortion, type PlanProduct, type Recipe } from './types/recipe';
 
 const getRecipeIdFromSearch = (search: string) => {
   const params = new URLSearchParams(search);
@@ -436,12 +436,13 @@ function App() {
     };
   }, [session?.user.id]);
 
-  const addRecipeToMenu = async (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => {
+  const addRecipeToMenu = async (recipe: Recipe, day: MenuDay, slot: MenuMealSlot, plannedServings = 1, portionLabel?: string) => {
+    const plannedRecipe = recipeWithPlannedPortion(recipe, plannedServings, portionLabel);
     const nextDay = {
       ...weeklyMenu[day],
       rationId: undefined,
       rationNumber: undefined,
-      meals: { ...weeklyMenu[day].meals, [slot]: recipe },
+      meals: { ...weeklyMenu[day].meals, [slot]: plannedRecipe },
     };
     try {
       await persistPlanDay(day, nextDay);
@@ -476,17 +477,18 @@ function App() {
     };
     await addRecipeToMenu(manualMeal, day, slot);
   };
-  const addAiRecipeToMenu = async (suggestion: RecipeSuggestion, day: MenuDay, slot: MenuMealSlot) => {
+  const addAiRecipeToMenu = async (suggestion: RecipeSuggestion, day: MenuDay, slot: MenuMealSlot, plannedServings = 1) => {
+    const totalNutrition = suggestion.nutritionTotal ?? suggestion;
     const aiMeal: Recipe = {
       id: `ai-${globalThis.crypto?.randomUUID?.() ?? Date.now()}`,
       title: suggestion.title,
       description: suggestion.description,
       imageUrl: suggestion.imageUrl,
       mealType: slot,
-      calories: suggestion.calories,
-      protein: suggestion.protein,
-      fat: suggestion.fat,
-      carbs: suggestion.carbs,
+      calories: Math.round(totalNutrition.calories / suggestion.servings),
+      protein: Math.round(totalNutrition.protein / suggestion.servings * 10) / 10,
+      fat: Math.round(totalNutrition.fat / suggestion.servings * 10) / 10,
+      carbs: Math.round(totalNutrition.carbs / suggestion.servings * 10) / 10,
       ingredients: suggestion.ingredients.map(({ name, amount, unit }) => ({ name, amount, unit, category: 'прочее' })),
       steps: suggestion.steps,
       tags: ['ИИ-подбор'],
@@ -496,8 +498,9 @@ function App() {
       entrySource: 'ai',
       cookingTime: suggestion.cookingTime,
       servings: suggestion.servings,
+      totalWeightGrams: suggestion.finishedWeightGrams,
     };
-    await addRecipeToMenu(aiMeal, day, slot);
+    await addRecipeToMenu(aiMeal, day, slot, plannedServings, `${plannedServings} порц.`);
     try {
       const imageUrl = await generateRecipeImage({ ...suggestion, id: aiMeal.id });
       setWeeklyMenu((currentMenu) => ({
@@ -506,7 +509,7 @@ function App() {
           ...currentMenu[day],
           meals: {
             ...currentMenu[day].meals,
-            [slot]: { ...aiMeal, imageUrl },
+            [slot]: currentMenu[day].meals[slot] ? { ...currentMenu[day].meals[slot]!, imageUrl } : null,
           },
         },
       }));

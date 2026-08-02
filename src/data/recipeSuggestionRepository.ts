@@ -11,6 +11,7 @@ export type RecipeSuggestionIngredient = {
   name: string;
   amount: number;
   unit: 'г' | 'мл';
+  nutrition?: RecipeNutrition;
 };
 
 export type RecipeSuggestion = {

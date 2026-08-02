@@ -7,7 +7,7 @@ type Props = {
   initialDay?: MenuDay;
   initialSlot?: MenuMealSlot;
   onClose: () => void;
-  onChoose: (recipe: RecipeSuggestion, day: MenuDay, slot: MenuMealSlot) => Promise<boolean>;
+  onChoose: (recipe: RecipeSuggestion, day: MenuDay, slot: MenuMealSlot, servings: number) => Promise<boolean>;
 };
 
 const MAX_SOURCE_IMAGE_BYTES = 12 * 1024 * 1024;
@@ -106,6 +106,7 @@ export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'br
   const [savingId, setSavingId] = useState('');
   const [error, setError] = useState('');
   const [imageError, setImageError] = useState('');
+  const [plannedServings, setPlannedServings] = useState(1);
 
   useEffect(() => {
     const previous = document.body.style.overflow;
@@ -157,6 +158,7 @@ export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'br
 
   const selectRecipe = (recipe: RecipeSuggestion) => {
     setSelectedRecipe(recipe);
+    setPlannedServings(1);
     setImageError('');
   };
 
@@ -164,7 +166,7 @@ export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'br
     setSavingId(recipe.id);
     setError('');
     try {
-      const imageCreated = await onChoose(recipe, day, slot);
+      const imageCreated = await onChoose(recipe, day, slot, plannedServings);
       if (imageCreated) onClose();
       else setImageError('Рецепт сохранён, но изображение пока не создано.');
     } catch (cause) {
@@ -196,6 +198,7 @@ export function AiRecipeModal({ initialDay = 'Сегодня', initialSlot = 'br
           <RecipeNutritionSummary recipe={selectedRecipe} />
           <details open><summary>Ингредиенты</summary><ul>{selectedRecipe.ingredients.map((item, index) => <li key={`${item.name}-${index}`}>{item.name} — {item.amount} {item.unit}</li>)}</ul>{selectedRecipe.missingIngredients.length > 0 && <p>Нужно докупить: {selectedRecipe.missingIngredients.join(', ')}</p>}</details>
           <details><summary>Как готовить</summary><ol>{selectedRecipe.steps.map((step, index) => <li key={index}>{step}</li>)}</ol></details>
+          <div className="ai-recipe-field"><span>Порция</span><div className="ai-recipe-grid"><button className="ai-recipe-back" onClick={() => setPlannedServings((value) => Math.max(0.5, value - 0.5))} type="button">−</button><input aria-label="Количество порций" min="0.5" onChange={(event) => setPlannedServings(Math.max(0.5, Number(event.target.value) || 0.5))} step="0.5" type="number" value={plannedServings} /><button className="ai-recipe-back" onClick={() => setPlannedServings((value) => value + 0.5)} type="button">+</button></div><small>КБЖУ для выбранной порции: {Math.round((selectedRecipe.nutritionTotal?.calories ?? selectedRecipe.calories) / selectedRecipe.servings * plannedServings)} ккал · Б {roundMacro((selectedRecipe.nutritionTotal?.protein ?? selectedRecipe.protein) / selectedRecipe.servings * plannedServings)} · Ж {roundMacro((selectedRecipe.nutritionTotal?.fat ?? selectedRecipe.fat) / selectedRecipe.servings * plannedServings)} · У {roundMacro((selectedRecipe.nutritionTotal?.carbs ?? selectedRecipe.carbs) / selectedRecipe.servings * plannedServings)}</small></div>
           <button className="ai-recipe-add" disabled={Boolean(savingId)} onClick={() => choose(selectedRecipe)} type="button">{savingId === selectedRecipe.id ? 'Добавляю…' : 'Добавить в план питания'}</button>
         </article>
         {error && <div className="ai-recipe-error">{error}</div>}
