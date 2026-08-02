@@ -58,8 +58,28 @@ export type Meal = {
   planProducts?: PlanProduct[];
   cookingTime: number;
   servings: number;
+  plannedServings?: number;
+  totalWeightGrams?: number;
+  portionLabel?: string;
 };
 
 export type Recipe = Meal;
 
 export const recipeToMeal = (recipe: Recipe): Meal => recipe;
+
+const roundMacro = (value: number) => Math.round(value * 10) / 10;
+
+/** Рецепты каталога хранят КБЖУ одной базовой порции. */
+export const recipeWithPlannedPortion = (recipe: Recipe, plannedServings: number, portionLabel?: string): Recipe => {
+  const factor = Math.max(0.1, plannedServings);
+  const currentFactor = recipe.plannedServings ?? 1;
+  return {
+    ...recipe,
+    calories: Math.round(recipe.calories / currentFactor * factor),
+    protein: roundMacro(recipe.protein / currentFactor * factor),
+    fat: roundMacro(recipe.fat / currentFactor * factor),
+    carbs: roundMacro(recipe.carbs / currentFactor * factor),
+    plannedServings: factor,
+    portionLabel: portionLabel ?? `${factor} порц.`,
+  };
+};
