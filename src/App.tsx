@@ -20,7 +20,7 @@ import { dailyRations } from './data/rations';
 import { createEmptyWeeklyMenu, type MenuDay, type MenuMealSlot } from './types/menu';
 import type { DailyRation } from './types/ration';
 import type { HabitEntry, MeasurementEntry, ProgressEntry } from './types/progress';
-import { recipeWithPlannedPortion, type PlanProduct, type Recipe } from './types/recipe';
+import { recipeWithSelectedWeight, type PlanProduct, type Recipe } from './types/recipe';
 
 const getRecipeIdFromSearch = (search: string) => {
   const params = new URLSearchParams(search);
@@ -436,8 +436,10 @@ function App() {
     };
   }, [session?.user.id]);
 
-  const addRecipeToMenu = async (recipe: Recipe, day: MenuDay, slot: MenuMealSlot, plannedServings = 1, portionLabel?: string) => {
-    const plannedRecipe = recipeWithPlannedPortion(recipe, plannedServings, portionLabel);
+  const addRecipeToMenu = async (recipe: Recipe, day: MenuDay, slot: MenuMealSlot) => {
+    const plannedRecipe = recipe.entrySource === 'manual' && !recipe.totalWeightGrams
+      ? recipe
+      : recipeWithSelectedWeight(recipe);
     const nextDay = {
       ...weeklyMenu[day],
       rationId: undefined,
@@ -477,25 +479,21 @@ function App() {
     };
     await addRecipeToMenu(manualMeal, day, slot);
   };
-  const addAiRecipeToMenu = async (suggestion: RecipeSuggestion, day: MenuDay, slot: MenuMealSlot, grams = 100) => {
+  const addAiRecipeToMenu = async (suggestion: RecipeSuggestion, day: MenuDay, slot: MenuMealSlot) => {
+    if (!suggestion.finishedWeightGrams || suggestion.finishedWeightGrams <= 0) {
+      throw new Error('ИИ не указал вес готового блюда. Сгенерируйте рецепт ещё раз.');
+    }
     const totalNutrition = suggestion.nutritionTotal ?? suggestion;
-    const per100 = suggestion.nutritionPer100g ?? (suggestion.finishedWeightGrams && suggestion.finishedWeightGrams > 0 ? {
-      calories: totalNutrition.calories * 100 / suggestion.finishedWeightGrams,
-      protein: totalNutrition.protein * 100 / suggestion.finishedWeightGrams,
-      fat: totalNutrition.fat * 100 / suggestion.finishedWeightGrams,
-      carbs: totalNutrition.carbs * 100 / suggestion.finishedWeightGrams,
-    } : totalNutrition);
-    const plannedServings = grams / 100;
     const aiMeal: Recipe = {
       id: `ai-${globalThis.crypto?.randomUUID?.() ?? Date.now()}`,
       title: suggestion.title,
       description: suggestion.description,
       imageUrl: suggestion.imageUrl,
       mealType: slot,
-      calories: Math.round(per100.calories),
-      protein: Math.round(per100.protein * 10) / 10,
-      fat: Math.round(per100.fat * 10) / 10,
-      carbs: Math.round(per100.carbs * 10) / 10,
+      calories: Math.round(totalNutrition.calories),
+      protein: Math.round(totalNutrition.protein * 10) / 10,
+      fat: Math.round(totalNutrition.fat * 10) / 10,
+      carbs: Math.round(totalNutrition.carbs * 10) / 10,
       ingredients: suggestion.ingredients.map(({ name, amount, unit }) => ({ name, amount, unit, category: 'прочее' })),
       steps: suggestion.steps,
       tags: ['ИИ-подбор'],
@@ -507,14 +505,14 @@ function App() {
       servings: suggestion.servings,
       totalWeightGrams: suggestion.finishedWeightGrams,
     };
-    await addRecipeToMenu(aiMeal, day, slot, plannedServings, `${grams} г`);
+    await addRecipeToMenu(aiMeal, day, slot);
     const savedDay = {
       ...weeklyMenu[day],
       rationId: undefined,
       rationNumber: undefined,
       meals: {
         ...weeklyMenu[day].meals,
-        [slot]: recipeWithPlannedPortion(aiMeal, plannedServings, `${grams} г`),
+        [slot]: recipeWithSelectedWeight(aiMeal),
       },
     };
     try {
@@ -566,6 +564,19 @@ function App() {
     } catch (error) {
       console.error('Meal plan save failed', error);
     }
+  };
+  const updateRecipeWeight = async (day: MenuDay, slot: MenuMealSlot, selectedWeightGrams: number) => {
+    const meal = weeklyMenu[day].meals[slot];
+    if (!meal) return;
+    const scaledMeal = recipeWithSelectedWeight(meal, selectedWeightGrams);
+    const nextDay = {
+      ...weeklyMenu[day],
+      rationId: undefined,
+      rationNumber: undefined,
+      meals: { ...weeklyMenu[day].meals, [slot]: scaledMeal },
+    };
+    await persistPlanDay(day, nextDay);
+    setWeeklyMenu((current) => ({ ...current, [day]: nextDay }));
   };
   useEffect(() => {
     window.localStorage.setItem('ty-poela-measurement-entries', JSON.stringify(measurementEntries));
@@ -643,7 +654,7 @@ function App() {
   });
 
   return <main className="min-h-screen bg-gradient-to-b from-[#FBF6EC] via-[#F3E2BF]/45 to-[#FBF6EC] text-[#37410F]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
-    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'photoNutrition' ? <PhotoNutritionPage onBack={goBack} onSave={addManualMealToMenu} /> : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} onAddManualMeal={addManualMealToMenu} onAddAiMeal={(day, slot) => setAiTarget({ day, slot })} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage onOpenRations={openRations} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenPhotoNutrition={() => setActiveTab('photoNutrition')} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} onOpenAi={() => setAiTarget({ day: 'Сегодня', slot: 'breakfast' })} />}
+    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'photoNutrition' ? <PhotoNutritionPage onBack={goBack} onSave={addManualMealToMenu} /> : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} onUpdateRecipeWeight={updateRecipeWeight} onAddManualMeal={addManualMealToMenu} onAddAiMeal={(day, slot) => setAiTarget({ day, slot })} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage onOpenRations={openRations} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenPhotoNutrition={() => setActiveTab('photoNutrition')} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} onOpenAi={() => setAiTarget({ day: 'Сегодня', slot: 'breakfast' })} />}
   </div>{aiTarget && <AiRecipeModal initialDay={aiTarget.day} initialSlot={aiTarget.slot} onChoose={addAiRecipeToMenu} onClose={() => setAiTarget(null)} />}
   <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#D99663]/35 bg-[#FFFDF8]/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#D99663]/25 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id ? 'bg-[#6E7E1F] text-white shadow-md shadow-[#6E7E1F]/20' : 'text-[#8B725F] hover:bg-[#F3E2BF]/70 hover:text-[#37410F]'}`} key={item.id} onClick={()=>{ setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }

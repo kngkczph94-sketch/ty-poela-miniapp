@@ -60,6 +60,10 @@ export type Meal = {
   servings: number;
   plannedServings?: number;
   totalWeightGrams?: number;
+  selectedWeightGrams?: number;
+  fullRecipeNutrition?: Pick<Meal, 'calories' | 'protein' | 'fat' | 'carbs'>;
+  nutritionPer100Grams?: Pick<Meal, 'calories' | 'protein' | 'fat' | 'carbs'>;
+  fullRecipeIngredients?: Ingredient[];
   portionLabel?: string;
 };
 
@@ -69,17 +73,48 @@ export const recipeToMeal = (recipe: Recipe): Meal => recipe;
 
 const roundMacro = (value: number) => Math.round(value * 10) / 10;
 
-/** plannedServings is a multiplier (for a gram portion it is weight / 100). */
-export const recipeWithPlannedPortion = (recipe: Recipe, plannedServings: number, portionLabel?: string): Recipe => {
-  const factor = plannedServings > 0 ? plannedServings : 1;
-  const currentFactor = recipe.plannedServings ?? 1;
+export const recipeWithSelectedWeight = (recipe: Recipe, selectedWeightGrams?: number): Recipe => {
+  const totalWeightGrams = recipe.totalWeightGrams;
+  if (!totalWeightGrams || !Number.isFinite(totalWeightGrams) || totalWeightGrams <= 0) {
+    throw new Error('Для рецепта не указан полный вес готового блюда. Добавление в план невозможно.');
+  }
+  const selectedWeight = selectedWeightGrams ?? totalWeightGrams;
+  if (!Number.isFinite(selectedWeight) || selectedWeight <= 0) {
+    throw new Error('Количество блюда должно быть положительным числом.');
+  }
+  const factor = selectedWeight / totalWeightGrams;
+  const fullNutrition = recipe.fullRecipeNutrition ?? {
+    calories: recipe.calories,
+    protein: recipe.protein,
+    fat: recipe.fat,
+    carbs: recipe.carbs,
+  };
+  const fullIngredients = recipe.fullRecipeIngredients ?? recipe.ingredients;
   return {
     ...recipe,
-    calories: Math.round(recipe.calories / currentFactor * factor),
-    protein: roundMacro(recipe.protein / currentFactor * factor),
-    fat: roundMacro(recipe.fat / currentFactor * factor),
-    carbs: roundMacro(recipe.carbs / currentFactor * factor),
-    plannedServings: factor,
-    portionLabel: portionLabel ?? `${factor} порц.`,
+    calories: Math.round(fullNutrition.calories * factor),
+    protein: roundMacro(fullNutrition.protein * factor),
+    fat: roundMacro(fullNutrition.fat * factor),
+    carbs: roundMacro(fullNutrition.carbs * factor),
+    ingredients: fullIngredients.map((ingredient) => ({ ...ingredient, amount: roundMacro(ingredient.amount * factor) })),
+    planProducts: recipe.planProducts?.map((product) => ({
+      ...product,
+      amount: roundMacro(product.amount * factor),
+      calories: roundMacro(product.calories * factor),
+      protein: roundMacro(product.protein * factor),
+      fat: roundMacro(product.fat * factor),
+      carbs: roundMacro(product.carbs * factor),
+    })),
+    fullRecipeNutrition: fullNutrition,
+    nutritionPer100Grams: {
+      calories: Math.round(fullNutrition.calories * 100 / totalWeightGrams),
+      protein: roundMacro(fullNutrition.protein * 100 / totalWeightGrams),
+      fat: roundMacro(fullNutrition.fat * 100 / totalWeightGrams),
+      carbs: roundMacro(fullNutrition.carbs * 100 / totalWeightGrams),
+    },
+    fullRecipeIngredients: fullIngredients,
+    selectedWeightGrams: selectedWeight,
+    plannedServings: 1,
+    portionLabel: `${selectedWeight} г`,
   };
 };
