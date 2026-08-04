@@ -30,7 +30,14 @@ type MealPlanItemRow = {
   planned_servings: number | string;
   portion_amount: number | string | null;
   portion_unit: 'serving' | 'g' | null;
+  custom_recipe_data: Partial<Meal> | null;
+  custom_image_url: string | null;
 };
+
+type PersistedPlanItem = Omit<MealPlanItemRow, 'meal_plan_id'>;
+
+const supabaseError = (context: string, error: { message: string; code?: string; details?: string; hint?: string }) =>
+  new Error(`${context}: message=${error.message}; code=${error.code ?? 'n/a'}; details=${error.details ?? 'n/a'}; hint=${error.hint ?? 'n/a'}`);
 
 const localDateAtOffset = (offset: number) => {
   const date = new Date();
@@ -66,6 +73,7 @@ const manualMealFromRow = (item: MealPlanItemRow): Meal | null => {
   if (item.entry_source === 'recipe' || !item.custom_title) return null;
   const products = Array.isArray(item.custom_products) ? item.custom_products.filter(isPlanProduct) : [];
   return {
+    ...(item.custom_recipe_data ?? {}),
     id: `${item.entry_source}-${item.meal_plan_id}-${item.meal_type}`,
     title: item.custom_title,
     description: item.entry_source === 'ai' ? 'Блюдо распознано ИИ' : 'Продукты добавлены вручную',
@@ -75,13 +83,14 @@ const manualMealFromRow = (item: MealPlanItemRow): Meal | null => {
     fat: Number(item.custom_fat_g),
     carbs: Number(item.custom_carbs_g),
     ingredients: products.map(({ name, amount, unit }) => ({ name, amount, unit, category: 'прочее' })),
-    steps: [],
+    steps: item.custom_recipe_data?.steps ?? [],
     tags: [item.entry_source === 'ai' ? 'ИИ' : 'вручную'],
     allergens: [],
     isPremium: false,
     source: 'manual',
     entrySource: item.entry_source,
     planProducts: products,
+    imageUrl: item.custom_image_url ?? item.custom_recipe_data?.imageUrl,
     cookingTime: 0,
     servings: 1,
     plannedServings: Number(item.planned_servings) || 1,
@@ -120,7 +129,7 @@ export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
   const rationIds = plans.flatMap((plan) => plan.source_ration_id ? [plan.source_ration_id] : []);
   const { data: itemsData, error: itemsError } = await supabase
     .from('meal_plan_items')
-    .select('meal_plan_id, meal_type, planned_recipe_id, planned_servings, portion_amount, portion_unit, entry_source, custom_title, custom_products, custom_calories, custom_protein_g, custom_fat_g, custom_carbs_g')
+    .select('meal_plan_id, meal_type, planned_recipe_id, planned_servings, portion_amount, portion_unit, entry_source, custom_title, custom_products, custom_calories, custom_protein_g, custom_fat_g, custom_carbs_g, custom_recipe_data, custom_image_url')
     .in('meal_plan_id', planIds);
   if (itemsError) throw itemsError;
 
@@ -176,24 +185,14 @@ export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
 }
 
 export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
-  const userId = await requireProfileId();
+  await requireProfileId();
   const meals = menuMealSlots.flatMap((slot) => planDay.meals[slot] ? [{ slot, recipe: planDay.meals[slot]! }] : []);
-
-  if (meals.length === 0) {
-    const { error } = await supabase
-      .from('meal_plans')
-      .delete()
-      .eq('user_id', userId)
-      .eq('plan_date', dateForMenuDay(day));
-    if (error) throw error;
-    return;
-  }
 
   const catalogMeals = meals.filter(({ recipe }) => !recipe.entrySource || recipe.entrySource === 'recipe');
   const catalogRecipeIds = [...new Set(catalogMeals.map(({ recipe }) => recipe.id))];
   const isUuid = (value: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
   const supabaseRecipeIds = catalogRecipeIds.filter(isUuid);
-  const recipeLegacyIds = catalogRecipeIds.filter((id) => !isUuid(id));
+  const recipeLegacyIds = catalogRecipeIds;
   const [recipesByLegacyResult, recipesByIdResult, rationResult] = await Promise.all([
     recipeLegacyIds.length
       ? supabase.from('recipes').select('id, legacy_id').in('legacy_id', recipeLegacyIds)
@@ -205,60 +204,57 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
       ? supabase.from('rations').select('id').eq('legacy_id', planDay.rationId).maybeSingle()
       : Promise.resolve({ data: null, error: null }),
   ]);
-  if (recipesByLegacyResult.error) throw recipesByLegacyResult.error;
-  if (recipesByIdResult.error) throw recipesByIdResult.error;
-  if (rationResult.error) throw rationResult.error;
+  if (recipesByLegacyResult.error) throw supabaseError('Не удалось найти рецепты по legacy_id', recipesByLegacyResult.error);
+  if (recipesByIdResult.error) throw supabaseError('Не удалось найти рецепты по id', recipesByIdResult.error);
+  if (rationResult.error) throw supabaseError('Не удалось найти готовый рацион', rationResult.error);
 
   const resolvedRecipes = [...(recipesByLegacyResult.data ?? []), ...(recipesByIdResult.data ?? [])];
   const recipeIds = new Map<string, string>();
+  // Legacy matches are registered first; an exact recipes.id match always wins.
   resolvedRecipes.forEach((resolved) => {
-    recipeIds.set(resolved.id as string, resolved.id as string);
     recipeIds.set(resolved.legacy_id as string, resolved.id as string);
   });
+  (recipesByIdResult.data ?? []).forEach((resolved) => recipeIds.set(resolved.id as string, resolved.id as string));
   if (planDay.rationId && !rationResult.data?.id) {
     throw new Error('Рацион недоступен для текущего уровня подписки.');
   }
 
-  const { data: plan, error: planError } = await supabase
-    .from('meal_plans')
-    .upsert({
-      user_id: userId,
-      plan_date: dateForMenuDay(day),
-      source_ration_id: rationResult.data?.id ?? null,
-    }, { onConflict: 'user_id,plan_date' })
-    .select('id')
-    .single();
-  if (planError || !plan?.id) throw planError ?? new Error('Не удалось сохранить день плана.');
+  const missingRecipe = catalogMeals.find(({ recipe }) => !recipeIds.has(recipe.id));
+  if (missingRecipe) {
+    throw new Error(`Каталоговый рецепт не найден: название="${missingRecipe.recipe.title}"; исходный ID="${missingRecipe.recipe.id}"; entrySource="${missingRecipe.recipe.entrySource ?? 'recipe'}".`);
+  }
 
-  const { error: deleteError } = await supabase
-    .from('meal_plan_items')
-    .delete()
-    .eq('meal_plan_id', plan.id);
-  if (deleteError) throw deleteError;
-
-  const { error: itemsError } = await supabase.from('meal_plan_items').insert(
-    meals.map(({ slot, recipe }) => {
+  const items: PersistedPlanItem[] = meals.map(({ slot, recipe }) => {
       const entrySource = recipe.entrySource ?? 'recipe';
       const resolvedRecipeId = entrySource === 'recipe' ? recipeIds.get(recipe.id) ?? null : null;
-      const isCatalogRecipe = resolvedRecipeId !== null;
-      const storedEntrySource: MealEntrySource = isCatalogRecipe ? 'recipe' : entrySource === 'recipe' ? 'manual' : entrySource;
+      const isCatalogRecipe = entrySource === 'recipe';
       return {
-        meal_plan_id: plan.id,
         meal_type: slot,
         // The FK must always receive recipes.id (UUID), never a local/legacy identifier.
         planned_recipe_id: resolvedRecipeId,
         planned_servings: recipe.plannedServings ?? 1,
         portion_amount: Number.parseFloat(recipe.portionLabel ?? '') || recipe.plannedServings || 1,
         portion_unit: recipe.portionLabel?.endsWith(' г') ? 'g' : 'serving',
-        entry_source: storedEntrySource,
+        entry_source: entrySource,
         custom_title: isCatalogRecipe ? null : recipe.title,
-        custom_products: isCatalogRecipe ? [] : recipe.planProducts ?? [],
+        custom_products: isCatalogRecipe ? [] : recipe.planProducts ?? recipe.ingredients.map((ingredient, index) => ({
+          id: `${recipe.id}-ingredient-${index}`,
+          ...ingredient,
+          calories: 0, protein: 0, fat: 0, carbs: 0,
+        })),
         custom_calories: recipe.calories,
         custom_protein_g: recipe.protein,
         custom_fat_g: recipe.fat,
         custom_carbs_g: recipe.carbs,
+        custom_recipe_data: isCatalogRecipe ? null : recipe,
+        custom_image_url: isCatalogRecipe ? null : recipe.imageUrl ?? null,
       };
-    }),
-  );
-  if (itemsError) throw itemsError;
+    });
+
+  const { error } = await supabase.rpc('replace_meal_plan_day', {
+    p_plan_date: dateForMenuDay(day),
+    p_source_ration_id: rationResult.data?.id ?? null,
+    p_items: items,
+  });
+  if (error) throw supabaseError('Не удалось атомарно сохранить план питания', error);
 }

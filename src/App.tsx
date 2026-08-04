@@ -508,16 +508,29 @@ function App() {
       totalWeightGrams: suggestion.finishedWeightGrams,
     };
     await addRecipeToMenu(aiMeal, day, slot, plannedServings, `${grams} г`);
+    const savedDay = {
+      ...weeklyMenu[day],
+      rationId: undefined,
+      rationNumber: undefined,
+      meals: {
+        ...weeklyMenu[day].meals,
+        [slot]: recipeWithPlannedPortion(aiMeal, plannedServings, `${grams} г`),
+      },
+    };
     try {
       const imageUrl = await generateRecipeImage({ ...suggestion, id: aiMeal.id });
+      const dayWithImage = {
+        ...savedDay,
+        meals: {
+          ...savedDay.meals,
+          [slot]: savedDay.meals[slot] ? { ...savedDay.meals[slot]!, imageUrl } : null,
+        },
+      };
+      await persistPlanDay(day, dayWithImage);
       setWeeklyMenu((currentMenu) => ({
         ...currentMenu,
         [day]: {
-          ...currentMenu[day],
-          meals: {
-            ...currentMenu[day].meals,
-            [slot]: currentMenu[day].meals[slot] ? { ...currentMenu[day].meals[slot]!, imageUrl } : null,
-          },
+          ...dayWithImage,
         },
       }));
     } catch (error) {
