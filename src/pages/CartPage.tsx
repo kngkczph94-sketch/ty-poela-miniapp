@@ -28,7 +28,7 @@ type CartPageProps = {
 
 const formatAmount = (amount: number) => Number.isInteger(amount) ? String(amount) : amount.toFixed(1).replace(/\.0$/, '');
 
-const buildCartIngredients = (weeklyMenu: WeeklyMenu): CartIngredient[] => {
+export const buildCartIngredients = (weeklyMenu: WeeklyMenu): CartIngredient[] => {
   const ingredientMap = new Map<string, CartIngredient>();
 
   menuDays.forEach((day) => {

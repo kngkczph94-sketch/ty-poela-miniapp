@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
+    "test": "node --test --experimental-strip-types src/types/recipe.test.ts",
     "preview": "vite preview",
     "migration:manifest": "node scripts/supabase/build-image-manifest.mjs",
     "migration:dry-run": "node scripts/supabase/import-content.mjs && node scripts/supabase/upload-images.mjs",

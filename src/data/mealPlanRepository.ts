@@ -30,6 +30,8 @@ type MealPlanItemRow = {
   planned_servings: number | string;
   portion_amount: number | string | null;
   portion_unit: 'serving' | 'g' | null;
+  total_recipe_weight_g: number | string | null;
+  selected_weight_g: number | string | null;
   custom_recipe_data: Partial<Meal> | null;
   custom_image_url: string | null;
 };
@@ -94,6 +96,8 @@ const manualMealFromRow = (item: MealPlanItemRow): Meal | null => {
     cookingTime: 0,
     servings: 1,
     plannedServings: Number(item.planned_servings) || 1,
+    totalWeightGrams: Number(item.total_recipe_weight_g) || item.custom_recipe_data?.totalWeightGrams,
+    selectedWeightGrams: Number(item.selected_weight_g) || item.custom_recipe_data?.selectedWeightGrams,
     portionLabel: portionLabelFromRow(item),
   };
 };
@@ -129,7 +133,7 @@ export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
   const rationIds = plans.flatMap((plan) => plan.source_ration_id ? [plan.source_ration_id] : []);
   const { data: itemsData, error: itemsError } = await supabase
     .from('meal_plan_items')
-    .select('meal_plan_id, meal_type, planned_recipe_id, planned_servings, portion_amount, portion_unit, entry_source, custom_title, custom_products, custom_calories, custom_protein_g, custom_fat_g, custom_carbs_g, custom_recipe_data, custom_image_url')
+    .select('meal_plan_id, meal_type, planned_recipe_id, planned_servings, portion_amount, portion_unit, total_recipe_weight_g, selected_weight_g, entry_source, custom_title, custom_products, custom_calories, custom_protein_g, custom_fat_g, custom_carbs_g, custom_recipe_data, custom_image_url')
     .in('meal_plan_id', planIds);
   if (itemsError) throw itemsError;
 
@@ -167,11 +171,14 @@ export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
           const servings = Number(item.planned_servings) || 1;
           result[day].meals[item.meal_type] = {
             ...recipe,
+            ...(item.custom_recipe_data ?? {}),
             calories: nutritionValue(item.custom_calories, Math.round(recipe.calories * servings)),
             protein: nutritionValue(item.custom_protein_g, Math.round(recipe.protein * servings * 10) / 10),
             fat: nutritionValue(item.custom_fat_g, Math.round(recipe.fat * servings * 10) / 10),
             carbs: nutritionValue(item.custom_carbs_g, Math.round(recipe.carbs * servings * 10) / 10),
             plannedServings: servings,
+            totalWeightGrams: Number(item.total_recipe_weight_g) || item.custom_recipe_data?.totalWeightGrams,
+            selectedWeightGrams: Number(item.selected_weight_g) || item.custom_recipe_data?.selectedWeightGrams,
             portionLabel: portionLabelFromRow(item),
           };
         }
@@ -233,8 +240,10 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
         // The FK must always receive recipes.id (UUID), never a local/legacy identifier.
         planned_recipe_id: resolvedRecipeId,
         planned_servings: recipe.plannedServings ?? 1,
-        portion_amount: Number.parseFloat(recipe.portionLabel ?? '') || recipe.plannedServings || 1,
-        portion_unit: recipe.portionLabel?.endsWith(' г') ? 'g' : 'serving',
+        portion_amount: recipe.selectedWeightGrams ?? recipe.totalWeightGrams ?? recipe.plannedServings ?? 1,
+        portion_unit: recipe.totalWeightGrams ? 'g' : 'serving',
+        total_recipe_weight_g: recipe.totalWeightGrams ?? null,
+        selected_weight_g: recipe.selectedWeightGrams ?? null,
         entry_source: entrySource,
         custom_title: isCatalogRecipe ? null : recipe.title,
         custom_products: isCatalogRecipe ? [] : recipe.planProducts ?? recipe.ingredients.map((ingredient, index) => ({
@@ -246,7 +255,7 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
         custom_protein_g: recipe.protein,
         custom_fat_g: recipe.fat,
         custom_carbs_g: recipe.carbs,
-        custom_recipe_data: isCatalogRecipe ? null : recipe,
+        custom_recipe_data: recipe,
         custom_image_url: isCatalogRecipe ? null : recipe.imageUrl ?? null,
       };
     });
