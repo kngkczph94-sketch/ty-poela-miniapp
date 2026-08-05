@@ -63,8 +63,8 @@ const isPlanProduct = (value: unknown): value is PlanProduct => {
 };
 
 const portionLabelFromRow = (item: MealPlanItemRow) => item.portion_unit === 'g'
-  ? `${Number(item.portion_amount)} г`
-  : `${Number(item.portion_amount ?? item.planned_servings) || 1} порц.`;
+  ? `${Number(item.portion_amount)} г из ${Number(item.total_recipe_weight_g) || item.custom_recipe_data?.totalWeightGrams} г`
+  : `${Number(item.portion_amount ?? item.planned_servings) || 1} из ${item.custom_recipe_data?.servings ?? 1} порций`;
 
 const nutritionValue = (value: number | string, fallback: number) => {
   const numericValue = Number(value);
@@ -98,6 +98,7 @@ const manualMealFromRow = (item: MealPlanItemRow): Meal | null => {
     plannedServings: Number(item.planned_servings) || 1,
     totalWeightGrams: Number(item.total_recipe_weight_g) || item.custom_recipe_data?.totalWeightGrams,
     selectedWeightGrams: Number(item.selected_weight_g) || item.custom_recipe_data?.selectedWeightGrams,
+    selectedServings: Number(item.planned_servings) || item.custom_recipe_data?.selectedServings,
     portionLabel: portionLabelFromRow(item),
   };
 };
@@ -179,6 +180,7 @@ export async function loadWeeklyMenu(): Promise<WeeklyMenu> {
             plannedServings: servings,
             totalWeightGrams: Number(item.total_recipe_weight_g) || item.custom_recipe_data?.totalWeightGrams,
             selectedWeightGrams: Number(item.selected_weight_g) || item.custom_recipe_data?.selectedWeightGrams,
+            selectedServings: Number(item.planned_servings) || item.custom_recipe_data?.selectedServings,
             portionLabel: portionLabelFromRow(item),
           };
         }
@@ -239,8 +241,8 @@ export async function persistPlanDay(day: MenuDay, planDay: PlanDay) {
         meal_type: slot,
         // The FK must always receive recipes.id (UUID), never a local/legacy identifier.
         planned_recipe_id: resolvedRecipeId,
-        planned_servings: recipe.plannedServings ?? 1,
-        portion_amount: recipe.selectedWeightGrams ?? recipe.totalWeightGrams ?? recipe.plannedServings ?? 1,
+        planned_servings: recipe.selectedServings ?? recipe.plannedServings ?? 1,
+        portion_amount: recipe.selectedWeightGrams ?? recipe.totalWeightGrams ?? recipe.selectedServings ?? recipe.plannedServings ?? 1,
         portion_unit: recipe.totalWeightGrams ? 'g' : 'serving',
         total_recipe_weight_g: recipe.totalWeightGrams ?? null,
         selected_weight_g: recipe.selectedWeightGrams ?? null,

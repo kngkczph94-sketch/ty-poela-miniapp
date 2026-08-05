@@ -61,6 +61,7 @@ export type Meal = {
   plannedServings?: number;
   totalWeightGrams?: number;
   selectedWeightGrams?: number;
+  selectedServings?: number;
   fullRecipeNutrition?: Pick<Meal, 'calories' | 'protein' | 'fat' | 'carbs'>;
   nutritionPer100Grams?: Pick<Meal, 'calories' | 'protein' | 'fat' | 'carbs'>;
   fullRecipeIngredients?: Ingredient[];
@@ -76,7 +77,7 @@ const roundMacro = (value: number) => Math.round(value * 10) / 10;
 export const recipeWithSelectedWeight = (recipe: Recipe, selectedWeightGrams?: number): Recipe => {
   const totalWeightGrams = recipe.totalWeightGrams;
   if (!totalWeightGrams || !Number.isFinite(totalWeightGrams) || totalWeightGrams <= 0) {
-    return recipe;
+    return recipeWithSelectedServings(recipe, recipe.selectedServings ?? recipe.plannedServings ?? recipe.servings);
   }
   const selectedWeight = selectedWeightGrams ?? totalWeightGrams;
   if (!Number.isFinite(selectedWeight) || selectedWeight <= 0) {
@@ -114,7 +115,49 @@ export const recipeWithSelectedWeight = (recipe: Recipe, selectedWeightGrams?: n
     },
     fullRecipeIngredients: fullIngredients,
     selectedWeightGrams: selectedWeight,
+    selectedServings: undefined,
     plannedServings: 1,
-    portionLabel: `${selectedWeight} г`,
+    portionLabel: `${selectedWeight} г из ${totalWeightGrams} г`,
+  };
+};
+
+export const recipeWithSelectedServings = (recipe: Recipe, selectedServings?: number): Recipe => {
+  const baseServings = recipe.servings;
+  if (!Number.isFinite(baseServings) || baseServings <= 0) {
+    return recipe;
+  }
+  const plannedServings = selectedServings ?? recipe.selectedServings ?? recipe.plannedServings ?? baseServings;
+  if (!Number.isFinite(plannedServings) || plannedServings <= 0) {
+    throw new Error('Количество порций должно быть положительным числом.');
+  }
+  const factor = plannedServings / baseServings;
+  const fullNutrition = recipe.fullRecipeNutrition ?? {
+    calories: recipe.calories,
+    protein: recipe.protein,
+    fat: recipe.fat,
+    carbs: recipe.carbs,
+  };
+  const fullIngredients = recipe.fullRecipeIngredients ?? recipe.ingredients;
+  return {
+    ...recipe,
+    calories: Math.round(fullNutrition.calories * factor),
+    protein: roundMacro(fullNutrition.protein * factor),
+    fat: roundMacro(fullNutrition.fat * factor),
+    carbs: roundMacro(fullNutrition.carbs * factor),
+    ingredients: fullIngredients.map((ingredient) => ({ ...ingredient, amount: roundMacro(ingredient.amount * factor) })),
+    planProducts: recipe.planProducts?.map((product) => ({
+      ...product,
+      amount: roundMacro(product.amount * factor),
+      calories: roundMacro(product.calories * factor),
+      protein: roundMacro(product.protein * factor),
+      fat: roundMacro(product.fat * factor),
+      carbs: roundMacro(product.carbs * factor),
+    })),
+    fullRecipeNutrition: fullNutrition,
+    fullRecipeIngredients: fullIngredients,
+    selectedWeightGrams: undefined,
+    selectedServings: plannedServings,
+    plannedServings,
+    portionLabel: `${plannedServings} из ${baseServings} порций`,
   };
 };

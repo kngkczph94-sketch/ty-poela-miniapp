@@ -49,32 +49,43 @@ type MenuPageProps = {
   onOpenRations: () => void;
   onOpenRecipe: (recipe: Meal) => void;
   onRemoveRecipe: (day: MenuDay, slot: MenuMealSlot) => void;
-  onUpdateRecipeWeight: (day: MenuDay, slot: MenuMealSlot, grams: number) => Promise<void>;
+  onUpdateRecipeQuantity: (day: MenuDay, slot: MenuMealSlot, amount: number) => Promise<void>;
   onAddManualMeal: (day: MenuDay, slot: MenuMealSlot, products: PlanProduct[]) => Promise<void>;
   onAddAiMeal: (day: MenuDay, slot: MenuMealSlot) => void;
 };
 
-function WeightEditor({ meal, onSave }: { meal: Meal; onSave: (grams: number) => Promise<void> }) {
+function formatAmount(value: number) {
+  return Number.isInteger(value) ? String(value) : String(Math.round(value * 10) / 10);
+}
+
+function QuantityEditor({ meal, onSave }: { meal: Meal; onSave: (amount: number) => Promise<void> }) {
+  const isWeighted = Boolean(meal.totalWeightGrams);
+  const totalAmount = isWeighted ? meal.totalWeightGrams! : meal.servings;
+  const selectedAmount = isWeighted ? meal.selectedWeightGrams ?? totalAmount : meal.selectedServings ?? meal.plannedServings ?? totalAmount;
+  const unitLabel = isWeighted ? 'г' : 'порций';
+  const currentLabel = isWeighted
+    ? `${formatAmount(selectedAmount)} г из ${formatAmount(totalAmount)} г`
+    : `${formatAmount(selectedAmount)} из ${formatAmount(totalAmount)} порций`;
   const [editing, setEditing] = useState(false);
-  const [value, setValue] = useState(String(meal.selectedWeightGrams ?? meal.totalWeightGrams ?? ''));
+  const [value, setValue] = useState(formatAmount(selectedAmount));
   const [error, setError] = useState('');
   const save = async () => {
-    const grams = Number(value.replace(',', '.'));
-    if (!Number.isFinite(grams) || grams <= 0) return setError('Введите положительное количество в граммах.');
-    const normalized = Math.round(grams * 10) / 10;
-    setValue(String(normalized));
+    if (!value.trim()) return setError(isWeighted ? 'Введите положительное количество в граммах.' : 'Введите положительное количество порций.');
+    const amount = Number(value.replace(',', '.'));
+    if (!Number.isFinite(amount) || amount <= 0) return setError(isWeighted ? 'Введите положительное количество в граммах.' : 'Введите положительное количество порций.');
+    const normalized = Math.round(amount * 10) / 10;
+    setValue(formatAmount(normalized));
     await onSave(normalized);
     setEditing(false);
   };
-  if (!meal.totalWeightGrams) return null;
   return editing ? <div className="mt-3 rounded-2xl bg-white p-3">
-    <label className="text-xs font-black text-[#37410F]">Количество, г<input aria-label="Количество блюда в граммах" className="mt-2 w-full rounded-xl border border-[#8B725F]/35 px-3 py-2" inputMode="decimal" onBlur={() => { if (value) setValue(String(Number(value.replace(',', '.')))); }} onChange={(event) => { setValue(event.target.value.replace(/[^\d.,]/g, '')); setError(''); }} type="text" value={value} /></label>
+    <label className="text-xs font-black text-[#37410F]">{isWeighted ? 'Количество, г' : 'Количество порций'}<input aria-label={isWeighted ? 'Количество блюда в граммах' : 'Количество порций блюда'} className="mt-2 w-full rounded-xl border border-[#8B725F]/35 px-3 py-2" inputMode="decimal" onChange={(event) => { setValue(event.target.value.replace(/[^\d.,]/g, '')); setError(''); }} placeholder={unitLabel} type="text" value={value} /></label>
     {error && <p className="mt-1 text-xs font-bold text-[#A45135]">{error}</p>}
-    <div className="mt-2 flex gap-2"><button className="rounded-full bg-[#6E7E1F] px-3 py-2 text-xs font-black text-white" onClick={() => void save()} type="button">Сохранить</button><button className="rounded-full px-3 py-2 text-xs font-black" onClick={() => setEditing(false)} type="button">Отмена</button></div>
-  </div> : <button className="mt-3 rounded-full bg-white px-3 py-2 text-xs font-black text-[#37410F] shadow-sm" onClick={() => setEditing(true)} type="button">Изменить количество · {meal.selectedWeightGrams ?? meal.totalWeightGrams} г</button>;
+    <div className="mt-2 flex gap-2"><button className="rounded-full bg-[#6E7E1F] px-3 py-2 text-xs font-black text-white" onClick={() => void save()} type="button">Сохранить</button><button className="rounded-full px-3 py-2 text-xs font-black" onClick={() => { setValue(formatAmount(selectedAmount)); setEditing(false); setError(''); }} type="button">Отмена</button></div>
+  </div> : <button className="mt-3 rounded-full bg-white px-3 py-2 text-xs font-black text-[#37410F] shadow-sm" onClick={() => setEditing(true)} type="button">Изменить количество · {currentLabel}</button>;
 }
 
-export function MenuPage({ weeklyMenu, onBack, onOpenCart, onOpenRations, onOpenRecipe, onRemoveRecipe, onUpdateRecipeWeight, onAddManualMeal, onAddAiMeal }: MenuPageProps) {
+export function MenuPage({ weeklyMenu, onBack, onOpenCart, onOpenRations, onOpenRecipe, onRemoveRecipe, onUpdateRecipeQuantity, onAddManualMeal, onAddAiMeal }: MenuPageProps) {
   const [manualTarget, setManualTarget] = useState<{ day: MenuDay; slot: MenuMealSlot } | null>(null);
   const hasMealsInPlan = menuDays.some((day) => menuMealSlots.some((slot) => Boolean(weeklyMenu[day].meals[slot])));
 
@@ -92,7 +103,7 @@ export function MenuPage({ weeklyMenu, onBack, onOpenCart, onOpenRations, onOpen
       const isEmpty = menuMealSlots.every((slot) => !planDay.meals[slot]);
       return <article className="rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70" key={day}><div><h2 className="text-xl font-black text-[#37410F]">{day}</h2><p className="mt-1 text-xs font-bold text-[#8B725F]">{planDay.rationNumber ? `Добавлен Рацион №${planDay.rationNumber}` : 'Завтрак · Обед · Ужин · Перекус'}</p></div>
       <DaySummary meals={planDay.meals} />
-      {isEmpty ? <div className="mt-3 rounded-3xl bg-[#F3E2BF]/65 p-4 text-center"><p className="text-sm font-semibold text-[#8B725F]">Пока пусто. Добавь рацион дня — и план соберётся сам.</p><div className="mt-3 flex flex-col gap-2"><button className="rounded-2xl bg-[#6E7E1F] px-4 py-3 text-sm font-black text-white" onClick={onOpenRations} type="button">Выбрать рацион</button><div className="grid grid-cols-2 gap-2">{menuMealSlots.map((slot) => <button className="rounded-2xl border border-[#6E7E1F] bg-white px-3 py-3 text-xs font-black text-[#6E7E1F]" key={slot} onClick={() => setManualTarget({ day, slot })} type="button">+ {menuSlotLabels[slot]}</button>)}</div><button className="rounded-2xl bg-[#37410F] px-4 py-3 text-sm font-black text-white" onClick={() => onAddAiMeal(day, 'breakfast')} type="button">✨ Подобрать блюдо с ИИ</button></div></div> : <div className="mt-3 space-y-2">{menuMealSlots.map((slot) => { const meal = planDay.meals[slot]; return <div className="rounded-3xl border border-[#D99663]/30 bg-[#F3E2BF]/60 p-3" key={slot}><p className="text-xs font-black uppercase tracking-wide text-[#6E7E1F]">{menuSlotLabels[slot]}</p>{meal ? (meal.entrySource === 'manual' && meal.planProducts?.length ? <div className="mt-2"><div className="space-y-2">{meal.planProducts.map((product) => <div className="rounded-2xl bg-white p-3" key={product.id}><div className="flex items-start justify-between gap-3"><p className="font-black text-[#37410F]">{product.name}</p><p className="shrink-0 text-xs font-black text-[#6E7E1F]">{product.amount} {product.unit}</p></div><p className="mt-1 text-[11px] font-bold text-[#8B725F]">{product.calories} ккал · Б {product.protein} · Ж {product.fat} · У {product.carbs}</p></div>)}</div><button className="mt-3 rounded-full bg-white px-3 py-2 text-xs font-black text-[#37410F] shadow-sm" onClick={() => onRemoveRecipe(day, slot)} type="button">Удалить приём пищи</button></div> : <div className="mt-2 grid gap-3 sm:grid-cols-[5.5rem_1fr] sm:items-start"><FoodPhotoPlaceholder alt={meal.title} className="min-h-[5.5rem]" imageUrl={meal.imageUrl} /><div><button className="text-left text-base font-black text-[#37410F]" onClick={() => onOpenRecipe(meal)} type="button">{meal.title}</button><div className="mt-2 flex flex-wrap gap-2 text-[11px] font-extrabold text-[#8B725F]"><span className="rounded-full bg-white px-2 py-1">{meal.calories} ккал</span><span className="rounded-full bg-white px-2 py-1">Б {meal.protein} г</span><span className="rounded-full bg-white px-2 py-1">Ж {meal.fat} г</span><span className="rounded-full bg-white px-2 py-1">У {meal.carbs} г</span></div><WeightEditor meal={meal} onSave={(grams) => onUpdateRecipeWeight(day, slot, grams)} /><button className="mt-3 rounded-full bg-white px-3 py-2 text-xs font-black text-[#37410F] shadow-sm" onClick={() => onRemoveRecipe(day, slot)} type="button">Удалить из слота</button></div></div>) : <div className="mt-2 flex flex-wrap gap-2"><button className="rounded-full bg-white px-3 py-2 text-xs font-black text-[#6E7E1F]" onClick={onOpenRations} type="button">Выбрать рецепт</button><button className="rounded-full border border-[#6E7E1F] bg-white px-3 py-2 text-xs font-black text-[#6E7E1F]" onClick={() => setManualTarget({ day, slot })} type="button">+ Внести продукты</button><button className="rounded-full bg-[#37410F] px-3 py-2 text-xs font-black text-white" onClick={() => onAddAiMeal(day, slot)} type="button">✨ Подобрать блюдо с ИИ</button></div>}</div>})}</div>}
+      {isEmpty ? <div className="mt-3 rounded-3xl bg-[#F3E2BF]/65 p-4 text-center"><p className="text-sm font-semibold text-[#8B725F]">Пока пусто. Добавь рацион дня — и план соберётся сам.</p><div className="mt-3 flex flex-col gap-2"><button className="rounded-2xl bg-[#6E7E1F] px-4 py-3 text-sm font-black text-white" onClick={onOpenRations} type="button">Выбрать рацион</button><div className="grid grid-cols-2 gap-2">{menuMealSlots.map((slot) => <button className="rounded-2xl border border-[#6E7E1F] bg-white px-3 py-3 text-xs font-black text-[#6E7E1F]" key={slot} onClick={() => setManualTarget({ day, slot })} type="button">+ {menuSlotLabels[slot]}</button>)}</div><button className="rounded-2xl bg-[#37410F] px-4 py-3 text-sm font-black text-white" onClick={() => onAddAiMeal(day, 'breakfast')} type="button">✨ Подобрать блюдо с ИИ</button></div></div> : <div className="mt-3 space-y-2">{menuMealSlots.map((slot) => { const meal = planDay.meals[slot]; return <div className="rounded-3xl border border-[#D99663]/30 bg-[#F3E2BF]/60 p-3" key={slot}><p className="text-xs font-black uppercase tracking-wide text-[#6E7E1F]">{menuSlotLabels[slot]}</p>{meal ? (meal.entrySource === 'manual' && meal.planProducts?.length ? <div className="mt-2"><div className="space-y-2">{meal.planProducts.map((product) => <div className="rounded-2xl bg-white p-3" key={product.id}><div className="flex items-start justify-between gap-3"><p className="font-black text-[#37410F]">{product.name}</p><p className="shrink-0 text-xs font-black text-[#6E7E1F]">{product.amount} {product.unit}</p></div><p className="mt-1 text-[11px] font-bold text-[#8B725F]">{product.calories} ккал · Б {product.protein} · Ж {product.fat} · У {product.carbs}</p></div>)}</div><button className="mt-3 rounded-full bg-white px-3 py-2 text-xs font-black text-[#37410F] shadow-sm" onClick={() => onRemoveRecipe(day, slot)} type="button">Удалить приём пищи</button></div> : <div className="mt-2 grid gap-3 sm:grid-cols-[5.5rem_1fr] sm:items-start"><FoodPhotoPlaceholder alt={meal.title} className="min-h-[5.5rem]" imageUrl={meal.imageUrl} /><div><button className="text-left text-base font-black text-[#37410F]" onClick={() => onOpenRecipe(meal)} type="button">{meal.title}</button><div className="mt-2 flex flex-wrap gap-2 text-[11px] font-extrabold text-[#8B725F]"><span className="rounded-full bg-white px-2 py-1">{meal.calories} ккал</span><span className="rounded-full bg-white px-2 py-1">Б {meal.protein} г</span><span className="rounded-full bg-white px-2 py-1">Ж {meal.fat} г</span><span className="rounded-full bg-white px-2 py-1">У {meal.carbs} г</span></div><QuantityEditor meal={meal} onSave={(amount) => onUpdateRecipeQuantity(day, slot, amount)} /><button className="mt-3 rounded-full bg-white px-3 py-2 text-xs font-black text-[#37410F] shadow-sm" onClick={() => onRemoveRecipe(day, slot)} type="button">Удалить из слота</button></div></div>) : <div className="mt-2 flex flex-wrap gap-2"><button className="rounded-full bg-white px-3 py-2 text-xs font-black text-[#6E7E1F]" onClick={onOpenRations} type="button">Выбрать рецепт</button><button className="rounded-full border border-[#6E7E1F] bg-white px-3 py-2 text-xs font-black text-[#6E7E1F]" onClick={() => setManualTarget({ day, slot })} type="button">+ Внести продукты</button><button className="rounded-full bg-[#37410F] px-3 py-2 text-xs font-black text-white" onClick={() => onAddAiMeal(day, slot)} type="button">✨ Подобрать блюдо с ИИ</button></div>}</div>})}</div>}
       </article>})}</div>
     {manualTarget && <ManualMealModal
       mealLabel={`${manualTarget.day} · ${menuSlotLabels[manualTarget.slot]}`}
