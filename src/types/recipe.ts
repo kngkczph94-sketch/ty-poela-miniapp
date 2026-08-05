@@ -76,7 +76,7 @@ const roundMacro = (value: number) => Math.round(value * 10) / 10;
 export const recipeWithSelectedWeight = (recipe: Recipe, selectedWeightGrams?: number): Recipe => {
   const totalWeightGrams = recipe.totalWeightGrams;
   if (!totalWeightGrams || !Number.isFinite(totalWeightGrams) || totalWeightGrams <= 0) {
-    throw new Error('Для рецепта не указан полный вес готового блюда. Добавление в план невозможно.');
+    return recipe;
   }
   const selectedWeight = selectedWeightGrams ?? totalWeightGrams;
   if (!Number.isFinite(selectedWeight) || selectedWeight <= 0) {
