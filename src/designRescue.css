@@ -1,0 +1,280 @@
+body {
+  background:
+    radial-gradient(circle at 12% 4%, rgba(255, 255, 255, 0.72), transparent 13rem),
+    radial-gradient(circle at 92% 8%, rgba(230, 211, 189, 0.5), transparent 14rem),
+    linear-gradient(145deg, #e3e9d8 0%, #f5efe4 42%, #dbc9b5 100%);
+}
+
+main {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 4%, rgba(255, 255, 255, 0.72), transparent 10rem),
+    linear-gradient(160deg, rgba(219, 229, 204, 0.92), rgba(248, 241, 229, 0.92) 46%, rgba(221, 199, 180, 0.9)) !important;
+}
+
+main::before,
+main::after {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  content: '';
+}
+
+main::before {
+  left: -3.6rem;
+  top: 2.4rem;
+  width: 16rem;
+  height: 28rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 44% 18%, rgba(105, 126, 73, 0.34), transparent 2.8rem),
+    radial-gradient(ellipse at 62% 42%, rgba(105, 126, 73, 0.24), transparent 4rem),
+    radial-gradient(ellipse at 42% 68%, rgba(105, 126, 73, 0.18), transparent 4.4rem);
+  filter: blur(0.4px);
+  opacity: 0.72;
+  transform: rotate(-18deg);
+  animation: botanical-drift 8s ease-in-out infinite;
+}
+
+main::after {
+  right: -4.2rem;
+  top: 9rem;
+  width: 18rem;
+  height: 24rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 42% 20%, rgba(141, 125, 177, 0.28), transparent 3rem),
+    radial-gradient(ellipse at 58% 54%, rgba(141, 125, 177, 0.2), transparent 4.6rem),
+    radial-gradient(ellipse at 34% 78%, rgba(214, 176, 142, 0.24), transparent 4rem);
+  opacity: 0.7;
+  transform: rotate(16deg);
+  animation: botanical-drift 9s ease-in-out 900ms infinite reverse;
+}
+
+.daily-dashboard {
+  gap: 0.82rem;
+}
+
+.daily-dashboard::before {
+  inset: -1.4rem -1rem auto;
+  height: 34rem;
+  border-radius: 0 0 2.6rem 2.6rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0)),
+    radial-gradient(circle at 20% 14%, rgba(255, 255, 255, 0.66), transparent 10rem),
+    radial-gradient(circle at 78% 28%, rgba(151, 139, 187, 0.22), transparent 11rem),
+    linear-gradient(145deg, rgba(217, 227, 202, 0.88), rgba(247, 240, 229, 0.88) 48%, rgba(222, 199, 179, 0.7));
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.46);
+}
+
+.day-header {
+  padding-top: 0.7rem;
+}
+
+.day-header__date {
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 0.45rem 1.2rem rgba(54, 64, 37, 0.18);
+}
+
+.day-header__title {
+  color: #ffffff;
+  font-size: clamp(2.45rem, 13vw, 4rem);
+  text-shadow: 0 0.8rem 2.2rem rgba(54, 64, 37, 0.28);
+}
+
+.streak-pill,
+.macro-ring-card,
+.quick-action,
+.dashboard-section,
+.activity-card,
+.meal-row,
+.habit-chip,
+.recipe-tile {
+  border-color: rgba(255, 255, 255, 0.58);
+  background: rgba(255, 255, 255, 0.32);
+  box-shadow: 0 1.2rem 3.4rem rgba(70, 65, 52, 0.11);
+  backdrop-filter: blur(24px) saturate(1.14);
+}
+
+.streak-pill {
+  min-width: 5.7rem;
+  background: rgba(255, 255, 255, 0.44);
+}
+
+.streak-pill__mark {
+  background: rgba(48, 52, 33, 0.84);
+}
+
+.calorie-hero {
+  min-height: 20.4rem;
+  border-radius: 2.15rem;
+  background:
+    radial-gradient(circle at 22% 20%, rgba(255, 255, 255, 0.68), transparent 6.8rem),
+    radial-gradient(circle at 76% 26%, rgba(255, 179, 127, 0.24), transparent 8rem),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.18));
+  box-shadow: 0 1.3rem 3.5rem rgba(75, 66, 50, 0.13);
+  backdrop-filter: blur(24px) saturate(1.12);
+}
+
+.calorie-hero::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(248, 242, 232, 0.32));
+}
+
+.calorie-aura span:nth-child(1) {
+  background: rgba(105, 126, 73, 0.22);
+}
+
+.calorie-aura span:nth-child(2) {
+  background: rgba(255, 173, 119, 0.28);
+}
+
+.calorie-aura span:nth-child(3) {
+  background: rgba(151, 139, 187, 0.23);
+}
+
+.calorie-ring {
+  width: min(69vw, 15.2rem);
+  background: conic-gradient(from -116deg, #ffae78 calc(var(--calorie-progress, 0) * 0.74%), rgba(255, 255, 255, 0.34) 0 74%, transparent 0);
+  box-shadow: 0 1.4rem 3.2rem rgba(80, 70, 50, 0.12);
+}
+
+.calorie-ring::before {
+  inset: 1.12rem;
+  background: rgba(255, 252, 246, 0.58);
+}
+
+.calorie-segments {
+  opacity: 0.28;
+}
+
+.calorie-ring__value {
+  color: #2f321f;
+  font-size: 3.35rem;
+}
+
+.quick-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.quick-action {
+  min-height: 3.9rem;
+  border-radius: 1.45rem;
+  padding: 0.72rem;
+  font-size: 0.8rem;
+}
+
+.quick-action--primary {
+  background: rgba(48, 52, 33, 0.86);
+}
+
+.dashboard-section,
+.activity-card {
+  border-radius: 1.65rem;
+}
+
+.meal-row {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.habit-chip {
+  min-height: 6.4rem;
+}
+
+.recipe-tile {
+  min-height: 8.2rem;
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.recipe-mark {
+  width: 3.35rem;
+  height: 3.35rem;
+  border-radius: 1.05rem;
+}
+
+.recipe-mark::before {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-width: 0.34rem;
+}
+
+.mt-6.grid.gap-4 {
+  margin-top: 1rem !important;
+  gap: 0.68rem !important;
+}
+
+.mt-6.grid.gap-4 > article {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  border-radius: 1.35rem !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.36) !important;
+  box-shadow: 0 0.8rem 2.2rem rgba(70, 65, 52, 0.08) !important;
+  backdrop-filter: blur(22px) saturate(1.12) !important;
+}
+
+.mt-6.grid.gap-4 > article > div:has(.home-feature-photo) {
+  display: none !important;
+}
+
+.mt-6.grid.gap-4 > article > div:first-child {
+  order: 0 !important;
+  padding: 0.86rem 0.92rem !important;
+}
+
+.mt-6.grid.gap-4 > article h2 {
+  font-size: 0.98rem !important;
+  line-height: 1.15 !important;
+}
+
+.mt-6.grid.gap-4 > article p {
+  display: -webkit-box !important;
+  margin-top: 0.24rem !important;
+  overflow: hidden !important;
+  color: rgba(48, 52, 33, 0.58) !important;
+  font-size: 0.76rem !important;
+  line-height: 1.35 !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+}
+
+.mt-6.grid.gap-4 > article .mt-4 {
+  margin-top: 0.58rem !important;
+}
+
+.mt-6.grid.gap-4 > article button,
+.mt-6.grid.gap-4 > article span.rounded-full:not([aria-hidden='true']) {
+  padding: 0.42rem 0.72rem !important;
+  background: rgba(48, 52, 33, 0.88) !important;
+  color: #fff8ef !important;
+  font-size: 0.76rem !important;
+  box-shadow: none !important;
+}
+
+.home-feature-photo {
+  display: none !important;
+}
+
+nav.fixed {
+  border-color: rgba(255, 255, 255, 0.52) !important;
+  background: rgba(255, 255, 255, 0.48) !important;
+  box-shadow: 0 -1rem 3rem rgba(70, 65, 52, 0.12) !important;
+  backdrop-filter: blur(24px) saturate(1.16) !important;
+}
+
+nav.fixed button {
+  border-radius: 1.15rem !important;
+}
+
+@keyframes botanical-drift {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -0.9rem;
+  }
+}
