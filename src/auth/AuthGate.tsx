@@ -17,7 +17,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
   if (preview) return <>{children}</>;
   if (loading) return <Screen title="Выполняем вход…" text="Проверяем данные Telegram и готовим приложение." />;
   if (outsideTelegram) return <Screen title="Откройте приложение через Telegram" text="Запустите «Ты поела?» из меню бота, чтобы безопасно войти." action={retry} />;
-  if (error) return <Screen title="Не удалось войти" text="Проверьте соединение и попробуйте ещё раз." action={retry} />;
+  if (error) return <Screen title="Не удалось войти" text={error} action={retry} />;
   if (!session) return <Screen title="Не удалось войти" text="Сессия не была создана. Попробуйте ещё раз." action={retry} />;
   return <>{children}</>;
 }
