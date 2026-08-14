@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { recipesWithRationImages } from '../data/recipesWithRationImages';
 import { menuMealSlots, menuSlotLabels, type WeeklyMenu } from '../types/menu';
 import type { Meal } from '../types/recipe';
@@ -13,6 +14,8 @@ type DashboardProps = {
 };
 
 type NutritionKey = 'calories' | 'protein' | 'fat' | 'carbs';
+
+type MotionStyle = CSSProperties & Record<'--calorie-progress' | '--macro-progress' | '--macro-tone' | '--habit-tone', string | number>;
 
 const goals: Record<NutritionKey, number> = {
   calories: 1600,
@@ -34,7 +37,7 @@ const formatDate = () =>
 const MacroRing = ({ label, value, goal, tone }: { label: string; value: number; goal: number; tone: string }) => {
   const progress = getProgress(value, goal);
   return (
-    <div className="macro-ring-card" style={{ '--macro-progress': progress, '--macro-tone': tone } as React.CSSProperties}>
+    <div className="macro-ring-card" style={{ '--macro-progress': progress, '--macro-tone': tone } as Partial<MotionStyle>}>
       <div className="macro-ring" aria-hidden="true" />
       <div>
         <p className="macro-ring-card__label">{label}</p>
@@ -62,11 +65,11 @@ export function DailyDashboard({
 }: DashboardProps) {
   const todayMeals = weeklyMenu['Сегодня']?.meals ?? { breakfast: null, lunch: null, dinner: null, snack: null };
   const meals = menuMealSlots.map((slot) => ({ slot, meal: todayMeals[slot] }));
-  const filledMeals = meals.filter(({ meal }) => meal);
-  const calories = getMealTotal(filledMeals.map(({ meal }) => meal), 'calories');
-  const protein = getMealTotal(filledMeals.map(({ meal }) => meal), 'protein');
-  const fat = getMealTotal(filledMeals.map(({ meal }) => meal), 'fat');
-  const carbs = getMealTotal(filledMeals.map(({ meal }) => meal), 'carbs');
+  const filledMeals = meals.filter(({ meal }) => meal).map(({ meal }) => meal);
+  const calories = getMealTotal(filledMeals, 'calories');
+  const protein = getMealTotal(filledMeals, 'protein');
+  const fat = getMealTotal(filledMeals, 'fat');
+  const carbs = getMealTotal(filledMeals, 'carbs');
   const calorieProgress = getProgress(calories, goals.calories);
   const caloriesLeft = goals.calories - calories;
   const recommendedRecipes = recipesWithRationImages.slice(0, 6);
@@ -84,7 +87,7 @@ export function DailyDashboard({
         </button>
       </header>
 
-      <section className={`calorie-hero reveal-card ${calories > goals.calories ? 'calorie-hero--over' : ''}`} style={{ '--calorie-progress': calorieProgress } as React.CSSProperties}>
+      <section className={`calorie-hero reveal-card ${calories > goals.calories ? 'calorie-hero--over' : ''}`} style={{ '--calorie-progress': calorieProgress } as Partial<MotionStyle>}>
         <div className="calorie-orbit" aria-hidden="true">
           <span />
           <span />
@@ -103,9 +106,9 @@ export function DailyDashboard({
       </section>
 
       <section className="macro-grid reveal-card" aria-label="Макросы">
-        <MacroRing label="Белки" value={protein} goal={goals.protein} tone="#6E7E1F" />
-        <MacroRing label="Жиры" value={fat} goal={goals.fat} tone="#C98B5B" />
-        <MacroRing label="Угли" value={carbs} goal={goals.carbs} tone="#3E7C78" />
+        <MacroRing label="Белки" value={protein} goal={goals.protein} tone="#7C8A51" />
+        <MacroRing label="Жиры" value={fat} goal={goals.fat} tone="#FFA36C" />
+        <MacroRing label="Угли" value={carbs} goal={goals.carbs} tone="#8E8CC8" />
       </section>
 
       <section className="quick-actions reveal-card" aria-label="Быстрые действия">
@@ -162,11 +165,11 @@ export function DailyDashboard({
         </div>
         <div className="habit-strip">
           {[
-            { title: 'Вода', value: '5/7', tone: '#3E7C78' },
-            { title: 'Сон', value: '7ч', tone: '#6E7E1F' },
-            { title: 'Шаги', value: '6.4k', tone: '#C98B5B' },
+            { title: 'Вода', value: '5/7', tone: '#7BA7A0' },
+            { title: 'Сон', value: '7ч', tone: '#9A8FC4' },
+            { title: 'Шаги', value: '6.4k', tone: '#FFA36C' },
           ].map((habit) => (
-            <button className="habit-chip" key={habit.title} onClick={onOpenProgress} style={{ '--habit-tone': habit.tone } as React.CSSProperties} type="button">
+            <button className="habit-chip" key={habit.title} onClick={onOpenProgress} style={{ '--habit-tone': habit.tone } as Partial<MotionStyle>} type="button">
               <span className="habit-chip__growth" aria-hidden="true"><span /></span>
               <strong>{habit.title}</strong>
               <small>{habit.value}</small>
