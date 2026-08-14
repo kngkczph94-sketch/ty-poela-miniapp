@@ -11,6 +11,29 @@ type AuthState = {
   retry: () => void;
 };
 
+type TelegramAuthErrorResponse = { error?: string };
+
+const authErrorMessages: Record<string, string> = {
+  'Authentication failed': 'Сервер авторизации не смог выполнить вход. Проверьте Edge Function telegram-auth и секреты Supabase/Telegram.',
+  'Invalid or expired Telegram authorization': 'Данные Telegram устарели. Закройте приложение и откройте его заново из меню бота.',
+  'Origin is not allowed': 'Этот адрес приложения не разрешён на сервере авторизации. Проверьте ALLOWED_ORIGINS у Edge Function telegram-auth.',
+  'Server authentication is not configured': 'На сервере авторизации не настроены TELEGRAM_BOT_TOKEN, SUPABASE_URL или SUPABASE_SERVICE_ROLE_KEY.',
+  'initData is required': 'Telegram не передал данные входа. Откройте приложение из меню бота внутри Telegram.',
+};
+
+async function readableAuthError(error: unknown) {
+  if (!error || typeof error !== 'object' || !('context' in error)) return null;
+  const context = (error as { context?: unknown }).context;
+  if (!(context instanceof Response)) return null;
+  try {
+    const body = await context.clone().json() as TelegramAuthErrorResponse;
+    if (!body.error) return null;
+    return new Error(authErrorMessages[body.error] ?? body.error);
+  } catch {
+    return null;
+  }
+}
+
 const AuthContext = createContext<AuthState | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -65,7 +88,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { data: authData, error: invokeError } = await supabase.functions.invoke('telegram-auth', {
           body: { initData },
         });
-        if (invokeError) throw invokeError;
+        if (invokeError) throw (await readableAuthError(invokeError)) ?? invokeError;
         if (!authData?.token_hash || authData.type !== 'email') throw new Error('Некорректный ответ сервера авторизации.');
 
         const { data: otpData, error: otpError } = await supabase.auth.verifyOtp({
