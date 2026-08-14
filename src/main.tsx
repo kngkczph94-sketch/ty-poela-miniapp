@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
+import './designRescue.css';
 import App from './App.tsx';
 import { AuthGate } from './auth/AuthGate';
 import { AuthProvider } from './auth/AuthProvider';
