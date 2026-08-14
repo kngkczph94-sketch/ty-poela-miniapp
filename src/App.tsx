@@ -484,8 +484,20 @@ function App() {
       throw new Error('ИИ не указал вес готового блюда. Сгенерируйте рецепт ещё раз.');
     }
     const totalNutrition = suggestion.nutritionTotal ?? suggestion;
+    const aiMealId = `ai-${globalThis.crypto?.randomUUID?.() ?? Date.now()}`;
+    const ingredientFactor = 1;
+    const aiPlanProducts: PlanProduct[] = suggestion.ingredients.map((ingredient, index) => ({
+      id: `${aiMealId}-ingredient-${index}`,
+      name: ingredient.name,
+      amount: Math.round(ingredient.amount * ingredientFactor * 10) / 10,
+      unit: ingredient.unit,
+      calories: Math.round(ingredient.nutrition.calories * ingredientFactor),
+      protein: Math.round(ingredient.nutrition.protein * ingredientFactor * 10) / 10,
+      fat: Math.round(ingredient.nutrition.fat * ingredientFactor * 10) / 10,
+      carbs: Math.round(ingredient.nutrition.carbs * ingredientFactor * 10) / 10,
+    }));
     const aiMeal: Recipe = {
-      id: `ai-${globalThis.crypto?.randomUUID?.() ?? Date.now()}`,
+      id: aiMealId,
       title: suggestion.title,
       description: suggestion.description,
       imageUrl: suggestion.imageUrl,
@@ -501,6 +513,7 @@ function App() {
       isPremium: false,
       source: 'manual',
       entrySource: 'ai',
+      planProducts: aiPlanProducts,
       cookingTime: suggestion.cookingTime,
       servings: suggestion.servings,
       totalWeightGrams: suggestion.finishedWeightGrams,
