@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react';
-import { recipesWithRationImages } from '../data/recipesWithRationImages';
 import { menuMealSlots, menuSlotLabels, type WeeklyMenu } from '../types/menu';
 import type { Meal } from '../types/recipe';
 
@@ -14,8 +13,7 @@ type DashboardProps = {
 };
 
 type NutritionKey = 'calories' | 'protein' | 'fat' | 'carbs';
-
-type MotionStyle = CSSProperties & Record<'--calorie-progress' | '--macro-progress' | '--macro-tone' | '--habit-tone', string | number>;
+type MotionStyle = CSSProperties & Record<string, string | number>;
 
 const goals: Record<NutritionKey, number> = {
   calories: 1600,
@@ -34,10 +32,19 @@ const getProgress = (value: number, goal: number) => Math.min(Math.round((value 
 const formatDate = () =>
   new Intl.DateTimeFormat('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date());
 
+const calorieSegments = Array.from({ length: 18 }, (_, index) => index);
+
+const suggestedRecipes = [
+  { title: 'Зелёный боул', meta: '420 ккал · свежий', tone: '#7C8A51' },
+  { title: 'Тёплый завтрак', meta: '360 ккал · мягкий старт', tone: '#FFA36C' },
+  { title: 'Лёгкий ужин', meta: '390 ккал · без тяжести', tone: '#9A8FC4' },
+  { title: 'Белковый перекус', meta: '210 ккал · быстро', tone: '#7BA7A0' },
+];
+
 const MacroRing = ({ label, value, goal, tone }: { label: string; value: number; goal: number; tone: string }) => {
   const progress = getProgress(value, goal);
   return (
-    <div className="macro-ring-card" style={{ '--macro-progress': progress, '--macro-tone': tone } as Partial<MotionStyle>}>
+    <div className="macro-ring-card" style={{ '--macro-progress': progress, '--macro-tone': tone } as MotionStyle}>
       <div className="macro-ring" aria-hidden="true" />
       <div>
         <p className="macro-ring-card__label">{label}</p>
@@ -72,7 +79,6 @@ export function DailyDashboard({
   const carbs = getMealTotal(filledMeals, 'carbs');
   const calorieProgress = getProgress(calories, goals.calories);
   const caloriesLeft = goals.calories - calories;
-  const recommendedRecipes = recipesWithRationImages.slice(0, 6);
 
   return (
     <div className="daily-dashboard">
@@ -81,19 +87,32 @@ export function DailyDashboard({
           <p className="day-header__date">{formatDate()}</p>
           <h1 className="day-header__title">Ты поела?</h1>
         </div>
-        <button className="streak-pill" onClick={onOpenProgress} type="button" aria-label="Открыть прогресс">
+        <button className="streak-pill" onClick={onOpenProgress} type="button" aria-label="Открыть прогресс: серия 7 дней">
           <span className="streak-pill__mark">7</span>
-          <span>streak</span>
+          <span className="streak-pill__copy">
+            <strong>дней</strong>
+            <small>серия</small>
+          </span>
         </button>
       </header>
 
-      <section className={`calorie-hero reveal-card ${calories > goals.calories ? 'calorie-hero--over' : ''}`} style={{ '--calorie-progress': calorieProgress } as Partial<MotionStyle>}>
+      <section className={`calorie-hero reveal-card ${calories > goals.calories ? 'calorie-hero--over' : ''}`} style={{ '--calorie-progress': calorieProgress } as MotionStyle}>
+        <div className="calorie-aura" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
         <div className="calorie-orbit" aria-hidden="true">
           <span />
           <span />
           <span />
         </div>
         <div className="calorie-ring" aria-label={`Калории: ${Math.round(calories)} из ${goals.calories}`}>
+          <div className="calorie-segments" aria-hidden="true">
+            {calorieSegments.map((segment) => (
+              <span key={segment} style={{ '--segment-index': segment } as MotionStyle} />
+            ))}
+          </div>
           <div className="calorie-ring__inner">
             <p className="calorie-ring__eyebrow">сегодня</p>
             <p className="calorie-ring__value">{Math.round(calories)}</p>
@@ -108,7 +127,7 @@ export function DailyDashboard({
       <section className="macro-grid reveal-card" aria-label="Макросы">
         <MacroRing label="Белки" value={protein} goal={goals.protein} tone="#7C8A51" />
         <MacroRing label="Жиры" value={fat} goal={goals.fat} tone="#FFA36C" />
-        <MacroRing label="Угли" value={carbs} goal={goals.carbs} tone="#8E8CC8" />
+        <MacroRing label="Угли" value={carbs} goal={goals.carbs} tone="#9A8FC4" />
       </section>
 
       <section className="quick-actions reveal-card" aria-label="Быстрые действия">
@@ -122,7 +141,7 @@ export function DailyDashboard({
         </button>
         <button className="quick-action" onClick={onOpenAi} type="button">
           <span className="quick-action__icon">✦</span>
-          <span>ИИ-рецепт</span>
+          <span>Подобрать рецепт</span>
         </button>
         <button className="quick-action" onClick={onOpenMacros} type="button">
           <span className="quick-action__icon">◌</span>
@@ -141,7 +160,7 @@ export function DailyDashboard({
               <span className="meal-row__time">{menuSlotLabels[slot]}</span>
               <span className="meal-row__body">
                 <strong>{meal?.title ?? mealEmptyCopy[slot]}</strong>
-                <small>{meal ? `${Math.round(meal.calories)} ккал · Б ${round(meal.protein)} · Ж ${round(meal.fat)} · У ${round(meal.carbs)}` : 'Мягкое место для следующего блюда'}</small>
+                <small>{meal ? `${Math.round(meal.calories)} ккал · Б ${round(meal.protein)} · Ж ${round(meal.fat)} · У ${round(meal.carbs)}` : 'Место для следующего блюда'}</small>
               </span>
               <span className="meal-row__dot" aria-hidden="true" />
             </button>
@@ -169,7 +188,7 @@ export function DailyDashboard({
             { title: 'Сон', value: '7ч', tone: '#9A8FC4' },
             { title: 'Шаги', value: '6.4k', tone: '#FFA36C' },
           ].map((habit) => (
-            <button className="habit-chip" key={habit.title} onClick={onOpenProgress} style={{ '--habit-tone': habit.tone } as Partial<MotionStyle>} type="button">
+            <button className="habit-chip" key={habit.title} onClick={onOpenProgress} style={{ '--habit-tone': habit.tone } as MotionStyle} type="button">
               <span className="habit-chip__growth" aria-hidden="true"><span /></span>
               <strong>{habit.title}</strong>
               <small>{habit.value}</small>
@@ -184,11 +203,11 @@ export function DailyDashboard({
           <button onClick={onOpenRecipes} type="button">Каталог</button>
         </div>
         <div className="recipe-carousel">
-          {recommendedRecipes.map((recipe) => (
-            <button className="recipe-tile" key={recipe.id} onClick={onOpenRecipes} type="button">
-              {recipe.imageUrl && <img alt="" src={recipe.imageUrl} loading="lazy" />}
+          {suggestedRecipes.map((recipe) => (
+            <button className="recipe-tile" key={recipe.title} onClick={onOpenRecipes} style={{ '--recipe-tone': recipe.tone } as MotionStyle} type="button">
+              <span className="recipe-mark" aria-hidden="true"><span /></span>
               <span>{recipe.title}</span>
-              <small>{Math.round(recipe.calories)} ккал</small>
+              <small>{recipe.meta}</small>
             </button>
           ))}
         </div>
