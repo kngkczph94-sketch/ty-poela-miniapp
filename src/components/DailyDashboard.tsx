@@ -90,8 +90,8 @@ export function DailyDashboard({
         <button className="streak-pill" onClick={onOpenProgress} type="button" aria-label="Открыть прогресс: серия 7 дней">
           <span className="streak-pill__mark">7</span>
           <span className="streak-pill__copy">
-            <strong>дней</strong>
-            <small>серия</small>
+            <strong>серия</strong>
+            <small>дней подряд</small>
           </span>
         </button>
       </header>
