@@ -2,8 +2,23 @@ type BackButtonProps = {
   onClick: () => void;
 };
 
-/** Shared in-app back control. Keep its appearance aligned across every screen. */
+type TelegramWindow = Window & {
+  Telegram?: {
+    WebApp?: {
+      BackButton?: unknown;
+    };
+  };
+};
+
+const hasTelegramNativeBackButton = () =>
+  typeof window !== 'undefined' && Boolean((window as TelegramWindow).Telegram?.WebApp?.BackButton);
+
+/** Shared in-app back control. Telegram gets its own native top-bar back button. */
 export function BackButton({ onClick }: BackButtonProps) {
+  if (hasTelegramNativeBackButton()) {
+    return null;
+  }
+
   return (
     <button
       aria-label="Вернуться назад"
