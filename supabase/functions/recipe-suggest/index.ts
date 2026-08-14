@@ -40,6 +40,21 @@ type Nutrition = { calories: number; protein: number; fat: number; carbs: number
 const roundMacro = (value: number) => Math.round(value * 10) / 10;
 const finiteNonNegative = (value: unknown) => typeof value === 'number' && Number.isFinite(value) && value >= 0;
 
+const percentQualifierAllowed = /(?:творог|кефир|молоко|сметан|сливк|йогурт|сыр|ряженк|простокваш|масло сливоч)/i;
+
+const cleanIngredientName = (value: string) => {
+  const normalized = value.replace(/\s+/g, ' ').trim();
+
+  if (percentQualifierAllowed.test(normalized)) {
+    return normalized;
+  }
+
+  return normalized
+    .replace(/\s+\d+(?:[.,]\d+)?\s*%(?=\s|$)/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+};
+
 const normalizeNutrition = (value: unknown): Nutrition => {
   if (!value || typeof value !== 'object') throw new Error('INVALID_AI_RESPONSE');
   const candidate = value as Record<string, unknown>;
@@ -69,7 +84,12 @@ const normalizeSuggestion = (value: unknown) => {
     if (typeof item.name !== 'string' || typeof item.amount !== 'number' || !Number.isFinite(item.amount) || item.amount <= 0 || (item.unit !== 'г' && item.unit !== 'мл')) {
       throw new Error('INVALID_AI_RESPONSE');
     }
-    return { name: item.name.trim(), amount: roundMacro(item.amount), unit: item.unit, nutrition: normalizeNutrition(item.nutrition) };
+    const name = cleanIngredientName(item.name);
+    if (!name) {
+      throw new Error('INVALID_AI_RESPONSE');
+    }
+
+    return { name, amount: roundMacro(item.amount), unit: item.unit, nutrition: normalizeNutrition(item.nutrition) };
   });
   if (typeof recipe.finishedWeightGrams !== 'number' || !Number.isFinite(recipe.finishedWeightGrams) || recipe.finishedWeightGrams <= 0) {
     throw new Error('INVALID_AI_RESPONSE');
@@ -131,11 +151,16 @@ Deno.serve(async (request) => {
     const content: Array<Record<string, string>> = [{
       type: 'input_text',
       text: body.mode === 'products'
-        ? `Пользователь перечислил продукты: ${String(body.products ?? '').slice(0, 2000)}`
+        ? [
+          `Пользователь перечислил продукты: ${String(body.products ?? '').slice(0, 2000)}`,
+          'Не добавляй проценты к продуктам, если пользователь не указал жирность сам.',
+          'Проценты допустимы только для молочных и жиросодержащих продуктов вроде творога, кефира, сметаны, молока, сливок, йогурта, сыра или сливочного масла.',
+        ].join(' ')
         : [
           'Рассмотри фотографию продуктов для приготовления еды.',
           'Если видишь отдельные продукты, перечисли только те, которые уверенно распознаны.',
           'Не выдумывай бренд, жирность, вес, скрытые ингредиенты или продукты, которых не видно.',
+          'Не добавляй проценты к продуктам, если на упаковке не видна жирность; проценты допустимы только для молочных и жиросодержащих продуктов.',
           'Названия нормализуй на русском языке.',
           'Если на фото уже готовое блюдо, установи photoKind=prepared_dish.',
           'Если продукты нельзя уверенно распознать или на фото не еда, установи photoKind=unclear.',
