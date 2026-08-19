@@ -180,6 +180,12 @@ export function RecipesPage({ hasActiveSubscription, onBack, onOpenAccess, onOpe
         </p>
       </div>
 
+      {toastMessage && (
+        <div className="mt-3 rounded-2xl border border-[#8FD14C]/30 bg-[#14170F] px-4 py-3 text-center text-sm font-bold text-[#F4F7EE]" role="status">
+          {toastMessage}
+        </div>
+      )}
+
       <div className="sticky top-0 z-10 -mx-4 mt-5 bg-[#14170F] px-4 pb-3 pt-1">
         <label className="block">
           <span className="sr-only">Поиск по названию</span>
@@ -247,11 +253,6 @@ export function RecipesPage({ hasActiveSubscription, onBack, onOpenAccess, onOpe
         </div>
       )}
 
-      {toastMessage && (
-        <div className="fixed inset-x-4 bottom-28 z-30 mx-auto max-w-sm rounded-2xl bg-[#37410F] px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">
-          {toastMessage}
-        </div>
-      )}
     </section>
   );
 }

@@ -139,6 +139,7 @@ export function CartPage({ weeklyMenu, onBack, onOpenRecipes }: CartPageProps) {
         <button className="mt-5 rounded-2xl bg-[#5C8A1E] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#14170F]/70 transition hover:bg-[#37410F]" onClick={handleCopyList} type="button">
           Скопировать список
         </button>
+        {copyMessage && <div className="mt-3 rounded-2xl border border-[#8FD14C]/30 bg-[#0A0C08]/40 px-4 py-3 text-center text-sm font-bold text-[#F4F7EE]" role="status">{copyMessage}</div>}
       </div>
 
       <div className="mt-5 space-y-4">
@@ -169,8 +170,6 @@ export function CartPage({ weeklyMenu, onBack, onOpenRecipes }: CartPageProps) {
           );
         })}
       </div>
-
-      {copyMessage && <div className="fixed inset-x-4 bottom-28 z-30 mx-auto max-w-sm rounded-2xl bg-[#37410F] px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">{copyMessage}</div>}
     </section>
   );
 }

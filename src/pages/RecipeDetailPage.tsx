@@ -207,6 +207,11 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
             </button>
           )}
           </div>
+          {toastMessage && (
+            <div className="mt-3 rounded-2xl border border-[#8FD14C]/30 bg-[#14170F] px-4 py-3 text-center text-sm font-bold text-[#F4F7EE]" role="status">
+              {toastMessage}
+            </div>
+          )}
             </>
         </div>
       </article>
@@ -252,12 +257,6 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
             </div>
             <pre className="whitespace-pre-wrap rounded-2xl border border-[#A9B39C]/30 bg-[#14170F] p-4 text-sm font-semibold leading-6 text-[#F4F7EE]">{manualShareText}</pre>
           </div>
-        </div>
-      )}
-
-      {toastMessage && (
-        <div className="fixed inset-x-4 bottom-28 z-30 mx-auto max-w-sm rounded-2xl bg-[#37410F] px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">
-          {toastMessage}
         </div>
       )}
     </section>
