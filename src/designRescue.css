@@ -116,12 +116,15 @@ main::after {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.8rem;
   background:
-    radial-gradient(circle at 18% 18%, rgba(143, 209, 76, 0.16), transparent 8rem),
-    radial-gradient(circle at 82% 30%, rgba(94, 138, 30, 0.22), transparent 7.5rem),
-    linear-gradient(145deg, #12160d 0%, #10130c 54%, #0c0e09 100%);
+    linear-gradient(180deg, rgba(6, 7, 4, 0.12) 0%, rgba(6, 7, 4, 0.5) 58%, rgba(6, 7, 4, 0.88) 100%),
+    radial-gradient(circle at 18% 12%, rgba(143, 209, 76, 0.14), transparent 8rem),
+    url('https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/recipes/ration-001-dark.jpeg');
+  background-repeat: no-repeat;
+  background-position: center, center, center 38%;
+  background-size: cover, cover, 114%;
   padding: 1.05rem 1rem 0.95rem;
   box-shadow: 0 1.4rem 3rem rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(20px) saturate(1.2);
+  animation: hero-ken-burns 24s ease-in-out infinite alternate;
 }
 
 .calorie-hero::before {
@@ -562,5 +565,22 @@ nav.fixed button.bg-\[\#5C8A1E\] {
   }
   50% {
     translate: 0 -0.75rem;
+  }
+}
+
+@keyframes hero-ken-burns {
+  from {
+    background-size: cover, cover, 114%;
+    background-position: center, center, center 38%;
+  }
+  to {
+    background-size: cover, cover, 128%;
+    background-position: center, center, center 46%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calorie-hero {
+    animation: none;
   }
 }
