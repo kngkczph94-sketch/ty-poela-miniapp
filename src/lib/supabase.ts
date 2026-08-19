@@ -14,6 +14,21 @@ export const supabase = createClient(url, publishableKey, {
 let refreshPromise: ReturnType<typeof supabase.auth.refreshSession> | null = null;
 let loginPromise: Promise<Session> | null = null;
 
+// A stalled request in an embedded WebView (Telegram Desktop in particular)
+// must not leave the caller's "saving…" state stuck forever: every exported
+// auth call below is bounded, so callers always get a resolution to react to.
+function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(message)), ms);
+    promise.then(
+      (value) => { clearTimeout(timer); resolve(value); },
+      (reason) => { clearTimeout(timer); reject(reason); },
+    );
+  });
+}
+
+const NETWORK_TIMEOUT_MESSAGE = 'Не удалось подключиться к серверу авторизации. Проверьте интернет-соединение и попробуйте ещё раз.';
+
 async function sessionIsAccepted(session: Session) {
   const { data, error } = await supabase.auth.getUser(session.access_token);
   return !error && Boolean(data.user);
@@ -54,7 +69,7 @@ async function readableAuthError(error: unknown) {
  * without asking the user to close and reopen the app.
  */
 export async function loginWithTelegram(): Promise<Session> {
-  loginPromise ??= (async () => {
+  loginPromise ??= withTimeout((async () => {
     const webApp = window.Telegram?.WebApp;
     const initData = webApp?.initData?.trim();
     if (!webApp || !initData) {
@@ -74,7 +89,7 @@ export async function loginWithTelegram(): Promise<Session> {
     if (otpError) throw otpError;
     if (!otpData.session) throw new Error('Не удалось создать сессию.');
     return otpData.session;
-  })();
+  })(), 15_000, NETWORK_TIMEOUT_MESSAGE);
   try {
     return await loginPromise;
   } finally {
@@ -83,6 +98,10 @@ export async function loginWithTelegram(): Promise<Session> {
 }
 
 export async function ensureFreshSession(force = false) {
+  return withTimeout(ensureFreshSessionUnbounded(force), 15_000, NETWORK_TIMEOUT_MESSAGE);
+}
+
+async function ensureFreshSessionUnbounded(force: boolean) {
   const { data, error } = await supabase.auth.getSession();
   if (error || !data.session) {
     return loginWithTelegram();
