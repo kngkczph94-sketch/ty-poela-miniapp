@@ -116,47 +116,13 @@ function HomeFeatureCard({ card }: { card: HomeCard }) {
   );
 }
 
-function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, onOpenPhotoNutrition, onOpenAwards, onOpenShare, onOpenAi, onOpenMenu, weeklyMenu }: { onOpenRations: () => void; onOpenRecipes: () => void; onOpenProgress: () => void; onOpenMacros: () => void; onOpenPhotoNutrition: () => void; onOpenAwards: () => void; onOpenShare: () => void; onOpenAi: () => void; onOpenMenu: () => void; weeklyMenu: WeeklyMenu }) {
+function HomePage({ onOpenProgress, onOpenMacros, onOpenPhotoNutrition, onOpenAwards, onOpenShare, onOpenAi, onOpenMenu, weeklyMenu }: { onOpenProgress: () => void; onOpenMacros: () => void; onOpenPhotoNutrition: () => void; onOpenAwards: () => void; onOpenShare: () => void; onOpenAi: () => void; onOpenMenu: () => void; weeklyMenu: WeeklyMenu }) {
   const homeCards: HomeCard[] = [
-    {
-      title: 'Расчёт БЖУ',
-      description: 'Рассчитай свою норму калорий, белков, жиров и углеводов под цель.',
-      visual: 'macros',
-      imageSrc: 'https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/home/home-macros.jpg',
-      action: { label: 'БЖУ', onClick: onOpenMacros },
-    },
-    {
-      title: 'Рационы',
-      description: 'Выбери готовый день питания с уже собранными приёмами пищи и КБЖУ.',
-      visual: 'rations',
-      imageSrc: 'https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/home/home-rations.jpg',
-      action: { label: 'Рационы', onClick: onOpenRations },
-    },
-    {
-      title: 'Рецепты',
-      description: 'Открой отдельные рецепты с ингредиентами, шагами приготовления и КБЖУ.',
-      visual: 'recipes',
-      imageSrc: 'https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/home/home-recipes.jpg',
-      action: { label: 'Рецепты', onClick: onOpenRecipes },
-    },
-    {
-      title: 'ИИ-подбор',
-      description: 'Подбери рецепт или рацион по списку продуктов или фотографии.',
-      visual: 'ai',
-      imageSrc: 'https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/home/home-ai-selection.jpg',
-      action: { label: 'Подобрать', onClick: onOpenAi },
-    },
-    {
-      title: 'КБЖУ по фото',
-      description: 'Сфотографируй готовое блюдо — ИИ оценит порцию и КБЖУ. Результат можно исправить перед сохранением.',
-      visual: 'photo',
-      imageSrc: 'https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/home/home-macros.jpg',
-      action: { label: 'Распознать', onClick: onOpenPhotoNutrition },
-    },
     {
       title: 'База знаний',
       description: 'Материалы о питании, коррекции веса, БЖУ, продуктах и пищевых привычках.',
       visual: 'knowledge',
+      imageSrc: 'https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/recipes/home-knowledge.jpg',
       action: { label: 'База знаний' },
     },
     {
@@ -166,19 +132,25 @@ function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, 
       imageSrc: 'https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/home/home-progress.jpg',
       action: { label: 'Прогресс', onClick: onOpenProgress },
     },
+    {
+      title: 'Награды',
+      description: 'Открывай звания за регулярность — за каждый день с отмеченным приёмом пищи.',
+      visual: 'awards',
+      imageSrc: 'https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/home/home-rewards.jpg',
+      action: { label: 'Награды', onClick: onOpenAwards },
+    },
+    {
+      title: 'Поделиться',
+      description: 'Отправь ссылку на приложение тому, кому тоже нужен понятный план питания.',
+      visual: 'share',
+      imageSrc: 'https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/home/home-share.jpg',
+      action: { label: 'Поделиться', onClick: onOpenShare },
+    },
   ];
 
   return <>
-    <DailyDashboard weeklyMenu={weeklyMenu} onOpenMenu={onOpenMenu} onOpenRecipes={onOpenRecipes} onOpenProgress={onOpenProgress} onOpenMacros={onOpenMacros} onOpenPhotoNutrition={onOpenPhotoNutrition} onOpenAi={onOpenAi} />
+    <DailyDashboard weeklyMenu={weeklyMenu} onOpenMenu={onOpenMenu} onOpenProgress={onOpenProgress} onOpenMacros={onOpenMacros} onOpenPhotoNutrition={onOpenPhotoNutrition} onOpenAi={onOpenAi} />
     <section className="mt-6 grid gap-4">{homeCards.map((card) => <HomeFeatureCard card={card} key={card.title} />)}</section>
-    <section className="mt-4 grid grid-cols-2 gap-3" aria-label="Дополнительные возможности">
-      <button className="flex items-center justify-center gap-2 rounded-2xl border border-[#8FD14C]/25 bg-[#14170F] px-3 py-3 text-sm font-black text-[#F4F7EE] shadow-sm" onClick={onOpenAwards} type="button">
-        <span aria-hidden="true">🏆</span><span>Награды</span>
-      </button>
-      <button className="flex items-center justify-center gap-2 rounded-2xl border border-[#8FD14C]/25 bg-[#14170F] px-3 py-3 text-sm font-black text-[#F4F7EE] shadow-sm" onClick={onOpenShare} type="button">
-        <span aria-hidden="true">💌</span><span>Поделиться</span>
-      </button>
-    </section>
   </>;
 }
 
@@ -661,7 +633,7 @@ function App() {
   });
 
   return <main className="min-h-screen bg-gradient-to-b from-[#0A0C08] via-[#14170F]/45 to-[#0A0C08] text-[#F4F7EE]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
-    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'photoNutrition' ? <PhotoNutritionPage onBack={goBack} onSave={addManualMealToMenu} /> : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} onUpdateRecipeQuantity={updateRecipeQuantity} onAddManualMeal={addManualMealToMenu} onAddAiMeal={(day, slot) => setAiTarget({ day, slot })} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage weeklyMenu={weeklyMenu} onOpenMenu={() => setActiveTab('menu')} onOpenRations={openRations} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenPhotoNutrition={() => setActiveTab('photoNutrition')} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} onOpenAi={() => setAiTarget({ day: 'Сегодня', slot: 'breakfast' })} />}
+    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'photoNutrition' ? <PhotoNutritionPage onBack={goBack} onSave={addManualMealToMenu} /> : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} onUpdateRecipeQuantity={updateRecipeQuantity} onAddManualMeal={addManualMealToMenu} onAddAiMeal={(day, slot) => setAiTarget({ day, slot })} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage weeklyMenu={weeklyMenu} onOpenMenu={() => setActiveTab('menu')} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenPhotoNutrition={() => setActiveTab('photoNutrition')} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} onOpenAi={() => setAiTarget({ day: 'Сегодня', slot: 'breakfast' })} />}
   </div>{aiTarget && <AiRecipeModal initialDay={aiTarget.day} initialSlot={aiTarget.slot} onChoose={addAiRecipeToMenu} onClose={() => setAiTarget(null)} />}
   <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#8FD14C]/35 bg-[#14170F]/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#8FD14C]/25 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id ? 'bg-[#5C8A1E] text-white shadow-md shadow-[#5C8A1E]/20' : 'text-[#A9B39C] hover:bg-[#14170F]/70 hover:text-[#F4F7EE]'}`} key={item.id} onClick={()=>{ setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }

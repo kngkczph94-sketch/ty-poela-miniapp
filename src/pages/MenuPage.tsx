@@ -92,7 +92,7 @@ export function MenuPage({ weeklyMenu, onBack, onOpenCart, onOpenRations, onOpen
   return <section className="flex flex-1 flex-col">
     <BackButton onClick={onBack} />
     <div className="rounded-[2rem] border border-[#8FD14C]/35 bg-gradient-to-br from-[#14170F] via-[#8FD14C]/35 to-[#0A0C08] p-6 text-[#F4F7EE] shadow-xl shadow-[#8FD14C]/20">
-      <p className="text-sm font-bold uppercase tracking-wide text-[#A9B39C]">План питания</p>
+      <p className="text-sm font-bold uppercase tracking-wide text-[#A9B39C]">Неделя</p>
       <h1 className="mt-2 text-3xl font-black tracking-tight">План питания</h1>
       <p className="mt-3 text-sm font-medium leading-6 text-[#A9B39C]">Добавь рацион дня на 1–3 дня или выбранные дни недели — корзина соберётся сама.</p>
       <button className="mt-5 rounded-2xl bg-[#5C8A1E] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#14170F]/70 transition hover:bg-[#37410F]" onClick={onOpenCart} type="button">Смотреть корзину</button>

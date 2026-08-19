@@ -5,7 +5,6 @@ import type { Meal } from '../types/recipe';
 type DashboardProps = {
   weeklyMenu: WeeklyMenu;
   onOpenMenu: () => void;
-  onOpenRecipes: () => void;
   onOpenProgress: () => void;
   onOpenMacros: () => void;
   onOpenPhotoNutrition: () => void;
@@ -34,13 +33,6 @@ const formatDate = () =>
 
 const calorieSegments = Array.from({ length: 18 }, (_, index) => index);
 
-const suggestedRecipes = [
-  { title: 'Зелёный боул', meta: '420 ккал · свежий', tone: '#8FD14C' },
-  { title: 'Тёплый завтрак', meta: '360 ккал · мягкий старт', tone: '#FFA36C' },
-  { title: 'Лёгкий ужин', meta: '390 ккал · без тяжести', tone: '#9A8FC4' },
-  { title: 'Белковый перекус', meta: '210 ккал · быстро', tone: '#7BA7A0' },
-];
-
 const MacroRing = ({ label, value, goal, tone }: { label: string; value: number; goal: number; tone: string }) => {
   const progress = getProgress(value, goal);
   return (
@@ -64,7 +56,6 @@ const mealEmptyCopy: Record<string, string> = {
 export function DailyDashboard({
   weeklyMenu,
   onOpenMenu,
-  onOpenRecipes,
   onOpenProgress,
   onOpenMacros,
   onOpenPhotoNutrition,
@@ -184,30 +175,14 @@ export function DailyDashboard({
         </div>
         <div className="habit-strip">
           {[
-            { title: 'Вода', value: '5/7', tone: '#7BA7A0' },
-            { title: 'Сон', value: '7ч', tone: '#9A8FC4' },
-            { title: 'Шаги', value: '6.4k', tone: '#FFA36C' },
+            { title: 'Вода', value: '5/7', tone: '#7BA7A0', icon: '💧' },
+            { title: 'Сон', value: '7ч', tone: '#9A8FC4', icon: '🌙' },
+            { title: 'Шаги', value: '6.4k', tone: '#FFA36C', icon: '👣' },
           ].map((habit) => (
             <button className="habit-chip" key={habit.title} onClick={onOpenProgress} style={{ '--habit-tone': habit.tone } as MotionStyle} type="button">
-              <span className="habit-chip__growth" aria-hidden="true"><span /></span>
+              <span className="habit-chip__icon" aria-hidden="true">{habit.icon}</span>
               <strong>{habit.title}</strong>
               <small>{habit.value}</small>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="dashboard-section reveal-card">
-        <div className="section-heading">
-          <h2>Рецепты</h2>
-          <button onClick={onOpenRecipes} type="button">Каталог</button>
-        </div>
-        <div className="recipe-carousel">
-          {suggestedRecipes.map((recipe) => (
-            <button className="recipe-tile" key={recipe.title} onClick={onOpenRecipes} style={{ '--recipe-tone': recipe.tone } as MotionStyle} type="button">
-              <span className="recipe-mark" aria-hidden="true"><span /></span>
-              <span>{recipe.title}</span>
-              <small>{recipe.meta}</small>
             </button>
           ))}
         </div>
