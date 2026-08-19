@@ -1,9 +1,34 @@
+import { createClient } from "npm:@supabase/supabase-js@2";
+
 type ProductInput = { id: string; name: string; amount: number; unit: string };
 type FailureDetails = Record<
   string,
   string | number | boolean | null | undefined
 >;
 type JwtPayload = { sub?: unknown; role?: unknown };
+
+const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
+const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+const DAILY_LIMIT = Number(
+  Deno.env.get("AI_DAILY_LIMIT_NUTRITION_ESTIMATE") ?? "40",
+);
+const admin = supabaseUrl && serviceRoleKey
+  ? createClient(supabaseUrl, serviceRoleKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  })
+  : null;
+
+async function checkDailyLimit(userId: string, endpoint: string, limit: number) {
+  if (!admin) return { allowed: true as const };
+  const { data, error } = await admin.rpc("increment_ai_usage", {
+    p_user_id: userId,
+    p_endpoint: endpoint,
+  });
+  if (error) return { allowed: false as const, code: "RATE_LIMIT_UNAVAILABLE" as const };
+  return (data ?? 0) > limit
+    ? { allowed: false as const, code: "DAILY_LIMIT_EXCEEDED" as const }
+    : { allowed: true as const };
+}
 
 const decodeJwtPayload = (token: string): JwtPayload | null => {
   const parts = token.split(".");
@@ -169,6 +194,20 @@ Deno.serve(async (request) => {
         401,
         "AUTHORIZATION_FAILED",
         "Authentication is required",
+        requestId,
+      );
+    }
+
+    const usage = await checkDailyLimit(claims.sub, "nutrition-estimate", DAILY_LIMIT);
+    if (!usage.allowed) {
+      logFailure(usage.code, requestId);
+      return errorJson(
+        origin,
+        usage.code === "DAILY_LIMIT_EXCEEDED" ? 429 : 503,
+        usage.code,
+        usage.code === "DAILY_LIMIT_EXCEEDED"
+          ? "Daily AI usage limit reached"
+          : "Rate limiting is temporarily unavailable",
         requestId,
       );
     }

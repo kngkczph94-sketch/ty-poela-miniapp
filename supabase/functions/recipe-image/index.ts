@@ -11,6 +11,17 @@ const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 const bucket = Deno.env.get('RECIPE_IMAGE_BUCKET') ?? 'content-images';
 const signedUrlSeconds = 60 * 60 * 24 * 365;
 const imageStyleVersion = 'ty-poela-food-v2';
+const DAILY_LIMIT = Number(Deno.env.get('AI_DAILY_LIMIT_RECIPE_IMAGE') ?? '10');
+const admin = supabaseUrl && serviceRoleKey
+  ? createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } })
+  : null;
+
+async function checkDailyLimit(userId: string, endpoint: string, limit: number) {
+  if (!admin) return { allowed: true as const };
+  const { data, error } = await admin.rpc('increment_ai_usage', { p_user_id: userId, p_endpoint: endpoint });
+  if (error) return { allowed: false as const, code: 'RATE_LIMIT_UNAVAILABLE' as const };
+  return (data ?? 0) > limit ? { allowed: false as const, code: 'DAILY_LIMIT_EXCEEDED' as const } : { allowed: true as const };
+}
 
 type Ingredient = { name?: unknown; amount?: unknown; unit?: unknown };
 type RecipeInput = { id?: unknown; title?: unknown; description?: unknown; ingredients?: unknown };
@@ -41,7 +52,7 @@ function json(origin: string | null, body: unknown, status = 200) {
   });
 }
 
-function validateJwt(authorization: string | null) {
+function validateJwt(authorization: string | null): string {
   if (!authorization?.startsWith('Bearer ')) throw new Error('AUTHORIZATION_FAILED');
   const token = authorization.slice(7);
   const parts = token.split('.');
@@ -50,6 +61,7 @@ function validateJwt(authorization: string | null) {
   if (!payload.sub || payload.role !== 'authenticated' || Number(payload.exp) * 1000 <= Date.now()) {
     throw new Error('AUTHORIZATION_FAILED');
   }
+  return payload.sub as string;
 }
 
 function normalizeRecipe(recipe: RecipeInput) {
@@ -114,7 +126,7 @@ Deno.serve(async (request) => {
   }
 
   try {
-    validateJwt(request.headers.get('Authorization'));
+    const userId = validateJwt(request.headers.get('Authorization'));
     console.log(JSON.stringify({ event: 'recipe-image-invoked', requestId }));
     if (!openAiKey || !supabaseUrl || !serviceRoleKey) throw new Error('SERVER_NOT_CONFIGURED');
 
@@ -135,6 +147,11 @@ Deno.serve(async (request) => {
         style: imageStyleVersion,
       }));
       return json(origin, { imageUrl: cached.data.signedUrl, cached: true, requestId });
+    }
+
+    const usage = await checkDailyLimit(userId, 'recipe-image', DAILY_LIMIT);
+    if (!usage.allowed) {
+      throw new RecipeImageError(usage.code, { requestId });
     }
 
     const openAiResponse = await fetch('https://api.openai.com/v1/images/generations', {
@@ -186,7 +203,15 @@ Deno.serve(async (request) => {
     return json(origin, { imageUrl: signed.data.signedUrl, cached: false, requestId });
   } catch (cause) {
     const code = cause instanceof Error ? cause.message : 'UNKNOWN_ERROR';
-    const status = code === 'AUTHORIZATION_FAILED' ? 401 : code === 'INVALID_RECIPE' ? 400 : 502;
+    const status = code === 'AUTHORIZATION_FAILED'
+      ? 401
+      : code === 'INVALID_RECIPE'
+      ? 400
+      : code === 'DAILY_LIMIT_EXCEEDED'
+      ? 429
+      : code === 'RATE_LIMIT_UNAVAILABLE'
+      ? 503
+      : 502;
     const diagnostics = cause instanceof RecipeImageError ? cause.diagnostics : {};
     console.error(JSON.stringify({
       event: 'recipe-image-failed',

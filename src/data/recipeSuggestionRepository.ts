@@ -56,6 +56,8 @@ const functionErrorMessages: Record<string, string> = {
   AI_NOT_CONFIGURED: 'ИИ-подбор ещё не настроен.',
   AI_TEMPORARILY_UNAVAILABLE: 'ИИ сейчас не отвечает. Попробуйте ещё раз через минуту.',
   AUTHORIZATION_FAILED: 'Сессия устарела. Закройте и снова откройте приложение в Telegram.',
+  DAILY_LIMIT_EXCEEDED: 'Дневной лимит запросов к ИИ исчерпан. Попробуйте завтра.',
+  RATE_LIMIT_UNAVAILABLE: 'Сервис временно недоступен. Попробуйте ещё раз через минуту.',
   IMAGE_PROVIDER_FAILED: 'Сервис создания фото временно недоступен.',
   IMAGE_RESPONSE_INVALID: 'Сервис не смог создать корректное фото блюда.',
   IMAGE_UPLOAD_FAILED: 'Фото создано, но не удалось сохранить его.',

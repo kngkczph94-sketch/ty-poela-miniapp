@@ -1,7 +1,22 @@
+import { createClient } from 'npm:@supabase/supabase-js@2';
+
 const allowedOrigins = new Set((Deno.env.get('ALLOWED_ORIGINS') ?? '').split(',').map((value) => value.trim()).filter(Boolean));
 const openAiKey = Deno.env.get('OPENAI_API_KEY') ?? '';
 const model = Deno.env.get('OPENAI_RECIPE_MODEL') ?? Deno.env.get('OPENAI_NUTRITION_MODEL') ?? 'gpt-4o-mini';
 const MAX_IMAGE_LENGTH = 7_000_000;
+const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
+const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+const DAILY_LIMIT = Number(Deno.env.get('AI_DAILY_LIMIT_RECIPE_SUGGEST') ?? '20');
+const admin = supabaseUrl && serviceRoleKey
+  ? createClient(supabaseUrl, serviceRoleKey, { auth: { autoRefreshToken: false, persistSession: false } })
+  : null;
+
+async function checkDailyLimit(userId: string, endpoint: string, limit: number) {
+  if (!admin) return { allowed: true as const };
+  const { data, error } = await admin.rpc('increment_ai_usage', { p_user_id: userId, p_endpoint: endpoint });
+  if (error) return { allowed: false as const, code: 'RATE_LIMIT_UNAVAILABLE' as const };
+  return (data ?? 0) > limit ? { allowed: false as const, code: 'DAILY_LIMIT_EXCEEDED' as const } : { allowed: true as const };
+}
 
 const corsHeaders = (origin: string) => ({
   'Access-Control-Allow-Origin': origin,
@@ -144,6 +159,12 @@ Deno.serve(async (request) => {
       return json({ error: 'AUTHORIZATION_FAILED', requestId }, 401, allowedOrigin);
     }
     if (!openAiKey) return json({ error: 'AI_NOT_CONFIGURED', requestId }, 503, allowedOrigin);
+
+    const usage = await checkDailyLimit(payload.sub as string, 'recipe-suggest', DAILY_LIMIT);
+    if (!usage.allowed) {
+      const status = usage.code === 'DAILY_LIMIT_EXCEEDED' ? 429 : 503;
+      return json({ error: usage.code, requestId }, status, allowedOrigin);
+    }
 
     const body = await request.json() as { mode?: unknown; products?: unknown; imageDataUrl?: unknown };
     if (body.mode !== 'products' && body.mode !== 'photo') return json({ error: 'INVALID_MODE', requestId }, 400, allowedOrigin);
