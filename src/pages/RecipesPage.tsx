@@ -172,19 +172,19 @@ export function RecipesPage({ hasActiveSubscription, onBack, onOpenAccess, onOpe
   return (
     <section className="flex flex-1 flex-col">
     <BackButton onClick={onBack} />
-      <div className="rounded-[2rem] bg-[#F3E2BF] p-6 text-[#37410F] shadow-xl shadow-[#F3E2BF]/70">
-        <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Каталог</p>
+      <div className="rounded-[2rem] bg-[#14170F] p-6 text-[#F4F7EE] shadow-xl shadow-[#14170F]/70">
+        <p className="text-sm font-bold uppercase tracking-wide text-[#A9B39C]">Каталог</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Рецепты</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">
+        <p className="mt-3 text-sm font-medium leading-6 text-[#A9B39C]">
           {visibleRecipes.length} рецепта с КБЖУ: блюда можно добавлять в План и использовать для замен в рационах.
         </p>
       </div>
 
-      <div className="sticky top-0 z-10 -mx-4 mt-5 bg-[#FFFDF8] px-4 pb-3 pt-1">
+      <div className="sticky top-0 z-10 -mx-4 mt-5 bg-[#14170F] px-4 pb-3 pt-1">
         <label className="block">
           <span className="sr-only">Поиск по названию</span>
           <input
-            className="w-full rounded-2xl border border-[#F3E2BF] bg-[#FFFDF8] px-4 py-3 text-base font-semibold text-[#37410F] shadow-sm outline-none transition placeholder:text-[#8B725F] focus:border-[#6E7E1F] focus:ring-4 focus:ring-[#F3E2BF]"
+            className="w-full rounded-2xl border border-[#FFFFFF]/10 bg-[#14170F] px-4 py-3 text-base font-semibold text-[#F4F7EE] shadow-sm outline-none transition placeholder:text-[#A9B39C] focus:border-[#5C8A1E] focus:ring-4 focus:ring-[#8FD14C]/25"
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Найти рецепт"
             type="search"
@@ -197,8 +197,8 @@ export function RecipesPage({ hasActiveSubscription, onBack, onOpenAccess, onOpe
             <button
               className={`shrink-0 rounded-full px-4 py-2 text-sm font-extrabold transition ${
                 activeMealType === mealType
-                  ? 'bg-[#6E7E1F] text-white shadow-lg shadow-[#F3E2BF]/70'
-                  : 'bg-white text-[#8B725F] shadow-sm shadow-[#F3E2BF]/70 hover:text-[#37410F]'
+                  ? 'bg-[#5C8A1E] text-white shadow-lg shadow-[#14170F]/70'
+                  : 'bg-[#14170F] text-[#A9B39C] shadow-sm shadow-[#14170F]/70 hover:text-[#F4F7EE]'
               }`}
               key={mealType === 'все' ? 'все' : mealTypeLabels[mealType]}
               onClick={() => setActiveMealType(mealType)}
@@ -211,8 +211,8 @@ export function RecipesPage({ hasActiveSubscription, onBack, onOpenAccess, onOpe
       </div>
 
       <div className="mt-2 flex items-center justify-between">
-        <h2 className="text-xl font-black text-[#37410F]">Найдено: {filteredRecipes.length}</h2>
-        <button className="text-sm font-bold text-[#37410F]" onClick={onOpenAccess} type="button">Доступ</button>
+        <h2 className="text-xl font-black text-[#F4F7EE]">Найдено: {filteredRecipes.length}</h2>
+        <button className="text-sm font-bold text-[#F4F7EE]" onClick={onOpenAccess} type="button">Доступ</button>
       </div>
 
       <div className="mt-3 space-y-3">
@@ -222,11 +222,11 @@ export function RecipesPage({ hasActiveSubscription, onBack, onOpenAccess, onOpe
       </div>
 
       {filteredRecipes.length === 0 && (
-        <div className="mt-8 rounded-3xl bg-[#FFFDF8] p-6 text-center shadow-sm shadow-[#F3E2BF]/70">
+        <div className="mt-8 rounded-3xl bg-[#14170F] p-6 text-center shadow-sm shadow-[#14170F]/70">
           <p className="text-4xl">🔎</p>
-          <h3 className="mt-3 text-lg font-black text-[#37410F]">По такому фильтру рецептов пока нет</h3>
-          <p className="mt-1 text-sm font-semibold leading-5 text-[#8B725F]">Сбросим фильтры и найдём что-то спокойное. Меню без Excel — это сюда.</p>
-          <button className="mt-5 rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]" onClick={resetFilters} type="button">
+          <h3 className="mt-3 text-lg font-black text-[#F4F7EE]">По такому фильтру рецептов пока нет</h3>
+          <p className="mt-1 text-sm font-semibold leading-5 text-[#A9B39C]">Сбросим фильтры и найдём что-то спокойное. Меню без Excel — это сюда.</p>
+          <button className="mt-5 rounded-2xl bg-[#5C8A1E] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#14170F]/70 transition hover:bg-[#37410F]" onClick={resetFilters} type="button">
             Сбросить фильтры
           </button>
         </div>
@@ -234,15 +234,15 @@ export function RecipesPage({ hasActiveSubscription, onBack, onOpenAccess, onOpe
 
       {manualShareText && (
         <div className="fixed inset-0 z-40 flex items-end justify-center bg-[#37410F]/50 px-4 pb-4 pt-10 backdrop-blur-sm sm:items-center">
-          <div className="w-full max-w-md rounded-[2rem] bg-[#FFFDF8] p-4 shadow-2xl">
+          <div className="w-full max-w-md rounded-[2rem] bg-[#14170F] p-4 shadow-2xl">
             <div className="mb-3 flex items-start justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#6E7E1F]">Поделиться</p>
-                <h2 className="text-xl font-black text-[#37410F]">Скопируй рецепт вручную</h2>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#5C8A1E]">Поделиться</p>
+                <h2 className="text-xl font-black text-[#F4F7EE]">Скопируй рецепт вручную</h2>
               </div>
-              <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FBF6EC] text-lg font-black text-[#8B725F] transition hover:bg-[#F3E2BF]" onClick={() => setManualShareText('')} type="button">×</button>
+              <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0A0C08] text-lg font-black text-[#A9B39C] transition hover:bg-[#14170F]" onClick={() => setManualShareText('')} type="button">×</button>
             </div>
-            <pre className="whitespace-pre-wrap rounded-2xl border border-[#8B725F]/30 bg-white p-4 text-sm font-semibold leading-6 text-[#37410F]">{manualShareText}</pre>
+            <pre className="whitespace-pre-wrap rounded-2xl border border-[#A9B39C]/30 bg-[#14170F] p-4 text-sm font-semibold leading-6 text-[#F4F7EE]">{manualShareText}</pre>
           </div>
         </div>
       )}

@@ -91,43 +91,43 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
     <section className="flex flex-1 flex-col">
       <BackButton onClick={onBack} />
 
-      <article className="overflow-hidden rounded-[2rem] bg-[#FFFDF8] shadow-xl shadow-[#F3E2BF]/70">
-        <div className="bg-[#F3E2BF] p-6 text-[#37410F]">
+      <article className="overflow-hidden rounded-[2rem] bg-[#14170F] shadow-xl shadow-[#14170F]/70">
+        <div className="bg-[#14170F] p-6 text-[#F4F7EE]">
           <FoodPhotoPlaceholder alt={recipe.title} className="mb-5 min-h-[15rem]" imageUrl={recipe.imageUrl} variant={getRecipeFoodVariant(recipe.id)} />
           <div className="mb-3 flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-[#FBF6EC]/70 px-3 py-1 text-xs font-extrabold uppercase tracking-wide backdrop-blur">
+            <span className="rounded-full bg-[#0A0C08]/70 px-3 py-1 text-xs font-extrabold uppercase tracking-wide backdrop-blur">
               {mealTypeLabels[recipe.mealType]}
             </span>
             {recipe.isPremium && (
-              <span className="rounded-full bg-[#D99663]/15 px-3 py-1 text-xs font-extrabold text-[#D99663]">Premium</span>
+              <span className="rounded-full bg-[#8FD14C]/15 px-3 py-1 text-xs font-extrabold text-[#8FD14C]">Premium</span>
             )}
           </div>
           <h1 className="text-3xl font-black leading-tight tracking-tight">{recipe.title}</h1>
-          <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">{recipe.description}</p>
+          <p className="mt-3 text-sm font-medium leading-6 text-[#A9B39C]">{recipe.description}</p>
         </div>
 
         <div className="p-5">
-          <div className="grid grid-cols-4 gap-2 rounded-3xl bg-[#F3E2BF] p-3 text-center">
+          <div className="grid grid-cols-4 gap-2 rounded-3xl bg-[#14170F] p-3 text-center">
             {nutritionItems.map((item) => (
               <div key={item.key}>
-                <p className="text-sm font-black text-[#37410F]">
+                <p className="text-sm font-black text-[#F4F7EE]">
                   {recipe[item.key]}
                   {'suffix' in item ? item.suffix : ''}
                 </p>
-                <p className="text-[11px] font-bold text-[#8B725F]">{item.label}</p>
+                <p className="text-[11px] font-bold text-[#A9B39C]">{item.label}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm font-bold text-[#8B725F]">
-            <div className="rounded-2xl bg-[#FFFDF8] p-3">⏱️<br />{recipe.cookingTime} мин</div>
-            <div className="rounded-2xl bg-[#FFFDF8] p-3">🍽️<br />{recipe.servings} порц.</div>
-            <div className="rounded-2xl bg-[#FFFDF8] p-3">🥗<br />{mealTypeLabels[recipe.mealType]}</div>
+          <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm font-bold text-[#A9B39C]">
+            <div className="rounded-2xl bg-[#14170F] p-3">⏱️<br />{recipe.cookingTime} мин</div>
+            <div className="rounded-2xl bg-[#14170F] p-3">🍽️<br />{recipe.servings} порц.</div>
+            <div className="rounded-2xl bg-[#14170F] p-3">🥗<br />{mealTypeLabels[recipe.mealType]}</div>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2">
             {recipe.tags.map((tag) => (
-              <span className="rounded-full bg-[#F3E2BF] px-3 py-1 text-xs font-extrabold text-[#37410F]" key={tag}>
+              <span className="rounded-full bg-[#14170F] px-3 py-1 text-xs font-extrabold text-[#F4F7EE]" key={tag}>
                 #{tag}
               </span>
             ))}
@@ -135,15 +135,15 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
 
             <>
           {isMenuPickerOpen && (
-            <div className="mt-5 rounded-3xl bg-[#F3E2BF] p-3">
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-[#6E7E1F]">Добавить в план питания</p>
-              <p className="mt-1 text-lg font-black text-[#37410F]">{recipe.title}</p>
-              <p className="mt-1 text-xs font-bold text-[#8B725F]">В план будет добавлен весь рецепт{recipe.totalWeightGrams ? ` · ${recipe.totalWeightGrams} г` : ''}. Количество можно изменить в Плане.</p>
+            <div className="mt-5 rounded-3xl bg-[#14170F] p-3">
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-[#5C8A1E]">Добавить в план питания</p>
+              <p className="mt-1 text-lg font-black text-[#F4F7EE]">{recipe.title}</p>
+              <p className="mt-1 text-xs font-bold text-[#A9B39C]">В план будет добавлен весь рецепт{recipe.totalWeightGrams ? ` · ${recipe.totalWeightGrams} г` : ''}. Количество можно изменить в Плане.</p>
               <div className="mt-3 grid grid-cols-2 gap-2">
                 <label className="block">
-                  <span className="mb-1 block text-xs font-extrabold text-[#8B725F]">День</span>
+                  <span className="mb-1 block text-xs font-extrabold text-[#A9B39C]">День</span>
                   <select
-                    className="w-full rounded-2xl border border-[#8B725F]/35 bg-white px-3 py-3 text-sm font-bold text-[#37410F] outline-none focus:border-[#8B725F]/35 focus:ring-4 focus:ring-[#F3E2BF]"
+                    className="w-full rounded-2xl border border-[#A9B39C]/35 bg-[#14170F] px-3 py-3 text-sm font-bold text-[#F4F7EE] outline-none focus:border-[#A9B39C]/35 focus:ring-4 focus:ring-[#14170F]"
                     onChange={(event) => setSelectedDay(event.target.value as MenuDay)}
                     value={selectedDay}
                   >
@@ -155,9 +155,9 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
                   </select>
                 </label>
                 <label className="block">
-                  <span className="mb-1 block text-xs font-extrabold text-[#8B725F]">Прием пищи</span>
+                  <span className="mb-1 block text-xs font-extrabold text-[#A9B39C]">Прием пищи</span>
                   <select
-                    className="w-full rounded-2xl border border-[#8B725F]/35 bg-white px-3 py-3 text-sm font-bold text-[#37410F] outline-none focus:border-[#8B725F]/35 focus:ring-4 focus:ring-[#F3E2BF]"
+                    className="w-full rounded-2xl border border-[#A9B39C]/35 bg-[#14170F] px-3 py-3 text-sm font-bold text-[#F4F7EE] outline-none focus:border-[#A9B39C]/35 focus:ring-4 focus:ring-[#14170F]"
                     onChange={(event) => setSelectedSlot(event.target.value as MenuMealSlot)}
                     value={selectedSlot}
                   >
@@ -169,9 +169,9 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
                   </select>
                 </label>
               </div>
-              {portionError && <p className="mt-2 text-xs font-bold text-[#A45135]">{portionError}</p>}
+              {portionError && <p className="mt-2 text-xs font-bold text-[#E7B24A]">{portionError}</p>}
               <button
-                className="mt-3 w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]"
+                className="mt-3 w-full rounded-2xl bg-[#5C8A1E] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#14170F]/70 transition hover:bg-[#37410F]"
                 onClick={handleAddToMenu}
                 type="button"
               >
@@ -183,7 +183,7 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
           <div className="mt-3 grid gap-2">
             <button
               className={`rounded-2xl px-4 py-3 text-base font-black text-white shadow-lg transition ${
-                actionState.menu ? 'bg-[#37410F] shadow-[#F3E2BF]/70' : 'bg-[#6E7E1F] shadow-[#F3E2BF]/70 hover:bg-[#37410F]'
+                actionState.menu ? 'bg-[#37410F] shadow-[#14170F]/70' : 'bg-[#5C8A1E] shadow-[#14170F]/70 hover:bg-[#37410F]'
               }`}
               onClick={handleOpenMenuPicker}
               type="button"
@@ -191,7 +191,7 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
               {actionState.menu ? 'Добавлено в План' : isMenuPickerOpen ? 'Выбери день и прием пищи' : 'Добавить в План'}
             </button>
             <button
-              className="rounded-2xl border border-[#8B725F]/35 bg-white px-4 py-3 text-base font-black text-[#37410F] transition hover:bg-[#FBF6EC]"
+              className="rounded-2xl border border-[#A9B39C]/35 bg-[#14170F] px-4 py-3 text-base font-black text-[#F4F7EE] transition hover:bg-[#0A0C08]"
               onClick={handleShareRecipe}
               type="button"
             >
@@ -199,7 +199,7 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
             </button>
           {actionState.menu && (
             <button
-              className="mt-2 rounded-2xl border border-[#8B725F]/35 bg-[#F3E2BF] px-4 py-3 text-base font-black text-[#37410F] transition hover:bg-[#F3E2BF]"
+              className="mt-2 rounded-2xl border border-[#A9B39C]/35 bg-[#14170F] px-4 py-3 text-base font-black text-[#F4F7EE] transition hover:bg-[#14170F]"
               onClick={onOpenMenu}
               type="button"
             >
@@ -212,24 +212,24 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
       </article>
 
       <>
-      <section className="mt-5 rounded-3xl bg-[#FFFDF8] p-5 shadow-sm shadow-[#F3E2BF]/70">
-        <h2 className="text-xl font-black text-[#37410F]">Ингредиенты</h2>
-        <ul className="mt-3 space-y-2 text-sm font-semibold text-[#8B725F]">
+      <section className="mt-5 rounded-3xl bg-[#14170F] p-5 shadow-sm shadow-[#14170F]/70">
+        <h2 className="text-xl font-black text-[#F4F7EE]">Ингредиенты</h2>
+        <ul className="mt-3 space-y-2 text-sm font-semibold text-[#A9B39C]">
           {recipe.ingredients.map((ingredient) => (
             <li className="flex items-center justify-between gap-2" key={`${ingredient.name}-${ingredient.unit}`}>
               <span><span className="mr-2">•</span>{ingredient.name}</span>
-              <span className="rounded-full bg-[#F3E2BF] px-3 py-1 text-xs font-black text-[#37410F]">{ingredient.amount} {ingredient.unit}</span>
+              <span className="rounded-full bg-[#14170F] px-3 py-1 text-xs font-black text-[#F4F7EE]">{ingredient.amount} {ingredient.unit}</span>
             </li>
           ))}
         </ul>
       </section>
 
-      <section className="mt-4 rounded-3xl bg-[#FFFDF8] p-5 shadow-sm shadow-[#F3E2BF]/70">
-        <h2 className="text-xl font-black text-[#37410F]">Шаги приготовления</h2>
+      <section className="mt-4 rounded-3xl bg-[#14170F] p-5 shadow-sm shadow-[#14170F]/70">
+        <h2 className="text-xl font-black text-[#F4F7EE]">Шаги приготовления</h2>
         <ol className="mt-3 space-y-3">
           {recipe.steps.map((step, index) => (
-            <li className="flex gap-3 text-sm font-semibold leading-5 text-[#8B725F]" key={step}>
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F3E2BF] text-xs font-black text-[#37410F]">
+            <li className="flex gap-3 text-sm font-semibold leading-5 text-[#A9B39C]" key={step}>
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#14170F] text-xs font-black text-[#F4F7EE]">
                 {index + 1}
               </span>
               {step}
@@ -242,15 +242,15 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
 
       {manualShareText && (
         <div className="fixed inset-0 z-40 flex items-end justify-center bg-[#37410F]/50 px-4 pb-4 pt-10 backdrop-blur-sm sm:items-center">
-          <div className="w-full max-w-md rounded-[2rem] bg-[#FFFDF8] p-4 shadow-2xl">
+          <div className="w-full max-w-md rounded-[2rem] bg-[#14170F] p-4 shadow-2xl">
             <div className="mb-3 flex items-start justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#6E7E1F]">Поделиться</p>
-                <h2 className="text-xl font-black text-[#37410F]">Скопируй рецепт вручную</h2>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#5C8A1E]">Поделиться</p>
+                <h2 className="text-xl font-black text-[#F4F7EE]">Скопируй рецепт вручную</h2>
               </div>
-              <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FBF6EC] text-lg font-black text-[#8B725F] transition hover:bg-[#F3E2BF]" onClick={() => setManualShareText('')} type="button">×</button>
+              <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0A0C08] text-lg font-black text-[#A9B39C] transition hover:bg-[#14170F]" onClick={() => setManualShareText('')} type="button">×</button>
             </div>
-            <pre className="whitespace-pre-wrap rounded-2xl border border-[#8B725F]/30 bg-white p-4 text-sm font-semibold leading-6 text-[#37410F]">{manualShareText}</pre>
+            <pre className="whitespace-pre-wrap rounded-2xl border border-[#A9B39C]/30 bg-[#14170F] p-4 text-sm font-semibold leading-6 text-[#F4F7EE]">{manualShareText}</pre>
           </div>
         </div>
       )}

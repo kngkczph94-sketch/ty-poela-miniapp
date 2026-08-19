@@ -4,8 +4,8 @@
 
 :root {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  color: #303421;
-  background: #f5f0e7;
+  color: #f4f7ee;
+  background: #0a0c08;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -21,9 +21,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 14% 8%, rgba(154, 143, 196, 0.18), transparent 18rem),
-    radial-gradient(circle at 88% 4%, rgba(255, 163, 108, 0.18), transparent 17rem),
-    linear-gradient(145deg, #f8f3ea 0%, #eef0e4 48%, #f4e5d8 100%);
+    radial-gradient(circle at 14% 8%, rgba(154, 143, 196, 0.12), transparent 18rem),
+    radial-gradient(circle at 88% 4%, rgba(143, 209, 76, 0.14), transparent 17rem),
+    linear-gradient(145deg, #0a0c08 0%, #0c0e09 48%, #090b07 100%);
 }
 
 button {
@@ -32,8 +32,8 @@ button {
 }
 
 ::selection {
-  background: #ead9c5;
-  color: #303421;
+  background: rgba(143, 209, 76, 0.35);
+  color: #f4f7ee;
 }
 
 .home-hero-image {
@@ -47,74 +47,16 @@ button {
   position: relative;
   min-height: 8.5rem;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.45rem;
-  background:
-    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.78), transparent 4.2rem),
-    radial-gradient(circle at 76% 32%, rgba(255, 163, 108, 0.28), transparent 4.8rem),
-    linear-gradient(145deg, #f5eadc, #e6ebdc);
-}
-
-.home-feature-photo::before,
-.home-feature-photo::after {
-  position: absolute;
-  content: '';
-}
-
-.home-feature-photo::before {
-  inset: 1rem auto auto 1rem;
-  width: 4.8rem;
-  height: 4.8rem;
-  border: 0.72rem solid rgba(48, 52, 33, 0.12);
-  border-radius: 999px;
-  border-right-color: rgba(255, 163, 108, 0.56);
-  transform: rotate(-24deg);
-}
-
-.home-feature-photo::after {
-  right: 1rem;
-  bottom: 1rem;
-  width: 6.2rem;
-  height: 3.2rem;
-  border-radius: 999px 999px 1.2rem 1.2rem;
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow:
-    -1.8rem -1.4rem 0 rgba(124, 138, 81, 0.18),
-    1rem -2.3rem 0 rgba(154, 143, 196, 0.18);
+  background: linear-gradient(145deg, #14170f, #0e100b);
 }
 
 .home-feature-photo__image {
-  display: none;
-}
-
-.home-feature-photo--macros {
-  background: linear-gradient(135deg, #ebe9d9, #f8eadc);
-}
-
-.home-feature-photo--rations {
-  background: linear-gradient(135deg, #ecefe1, #f7eee4);
-}
-
-.home-feature-photo--recipes,
-.home-feature-photo--knowledge {
-  background-image:
-    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.78), transparent 4.2rem),
-    radial-gradient(circle at 74% 26%, rgba(154, 143, 196, 0.2), transparent 5.5rem),
-    linear-gradient(145deg, #f3ecdf, #e7ecdd);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.home-feature-photo--ai {
-  background: linear-gradient(135deg, #f3e7df, #e9e4f4);
-}
-
-.home-feature-photo--photo {
-  background: linear-gradient(135deg, #f6e7d8, #eef0df);
-}
-
-.home-feature-photo--progress {
-  background: linear-gradient(135deg, #e8ecdd, #f6e3d4);
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .daily-dashboard {
@@ -147,7 +89,7 @@ button {
 
 .day-header__date {
   margin: 0;
-  color: rgba(48, 52, 33, 0.56);
+  color: rgba(244, 247, 238, 0.56);
   font-size: 0.78rem;
   font-weight: 800;
   text-transform: capitalize;
@@ -155,7 +97,7 @@ button {
 
 .day-header__title {
   margin: 0.12rem 0 0;
-  color: #303421;
+  color: #F4F7EE;
   font-size: clamp(2rem, 12vw, 3.7rem);
   font-weight: 900;
   letter-spacing: 0;
@@ -171,7 +113,7 @@ button {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.6);
   padding: 0.38rem 0.62rem;
-  color: rgba(48, 52, 33, 0.72);
+  color: rgba(244, 247, 238, 0.72);
   box-shadow: 0 1.2rem 3rem rgba(70, 76, 49, 0.11);
   backdrop-filter: blur(18px);
   transition: transform 140ms ease-in-out, background 140ms ease-in-out;
@@ -187,7 +129,7 @@ button {
   height: 2.08rem;
   place-items: center;
   border-radius: 999px;
-  background: #303421;
+  background: #F4F7EE;
   color: #fff8ef;
   font-size: 0.92rem;
   font-weight: 950;
@@ -211,7 +153,7 @@ button {
 }
 
 .streak-pill__copy small {
-  color: rgba(48, 52, 33, 0.48);
+  color: rgba(244, 247, 238, 0.48);
   font-size: 0.62rem;
   font-weight: 850;
 }
@@ -236,7 +178,7 @@ button {
   inset: 0;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(245, 240, 231, 0.58)),
-    repeating-linear-gradient(90deg, rgba(48, 52, 33, 0.025) 0 1px, transparent 1px 4.8rem);
+    repeating-linear-gradient(90deg, rgba(244, 247, 238, 0.025) 0 1px, transparent 1px 4.8rem);
   content: '';
 }
 
@@ -318,7 +260,7 @@ button {
   aspect-ratio: 1;
   place-items: center;
   border-radius: 999px;
-  background: conic-gradient(var(--ring-color) calc(var(--calorie-progress, 0) * 1%), rgba(48, 52, 33, 0.07) 0);
+  background: conic-gradient(var(--ring-color) calc(var(--calorie-progress, 0) * 1%), rgba(244, 247, 238, 0.07) 0);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.56), 0 1.25rem 3.3rem rgba(77, 63, 42, 0.14);
   animation: ring-bloom 920ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -351,7 +293,7 @@ button {
   width: 0.24rem;
   height: 0.86rem;
   border-radius: 999px;
-  background: rgba(48, 52, 33, 0.16);
+  background: rgba(244, 247, 238, 0.16);
   transform: translateX(-50%) rotate(var(--angle));
   transform-origin: 50% 7.75rem;
 }
@@ -366,7 +308,7 @@ button {
 .calorie-ring__goal,
 .calorie-hero__status {
   margin: 0;
-  color: rgba(48, 52, 33, 0.58);
+  color: rgba(244, 247, 238, 0.58);
   font-size: 0.72rem;
   font-weight: 900;
 }
@@ -377,7 +319,7 @@ button {
 
 .calorie-ring__value {
   margin: 0.1rem 0;
-  color: #303421;
+  color: #F4F7EE;
   font-size: 3.1rem;
   font-weight: 950;
   letter-spacing: 0;
@@ -395,7 +337,7 @@ button {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.7);
   padding: 0.6rem 1rem;
-  color: rgba(48, 52, 33, 0.72);
+  color: rgba(244, 247, 238, 0.72);
   backdrop-filter: blur(16px);
 }
 
@@ -435,7 +377,7 @@ button {
   width: 3.1rem;
   aspect-ratio: 1;
   border-radius: 999px;
-  background: conic-gradient(var(--macro-tone) calc(var(--macro-progress, 0) * 1%), rgba(48, 52, 33, 0.08) 0);
+  background: conic-gradient(var(--macro-tone) calc(var(--macro-progress, 0) * 1%), rgba(244, 247, 238, 0.08) 0);
   mask: radial-gradient(circle, transparent 52%, #000 54%);
   animation: ring-bloom 580ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -446,13 +388,13 @@ button {
 }
 
 .macro-ring-card__label {
-  color: rgba(48, 52, 33, 0.56);
+  color: rgba(244, 247, 238, 0.56);
   font-size: 0.68rem;
   font-weight: 900;
 }
 
 .macro-ring-card__value {
-  color: #303421;
+  color: #F4F7EE;
   font-size: 0.9rem;
   font-weight: 950;
 }
@@ -470,7 +412,7 @@ button {
   gap: 0.65rem;
   border-radius: 1.35rem;
   padding: 0.82rem;
-  color: #303421;
+  color: #F4F7EE;
   font-size: 0.86rem;
   font-weight: 950;
   text-align: left;
@@ -485,7 +427,7 @@ button {
 }
 
 .quick-action--primary {
-  background: rgba(48, 52, 33, 0.93);
+  background: rgba(244, 247, 238, 0.93);
   color: #fff8ef;
 }
 
@@ -497,14 +439,14 @@ button {
   place-items: center;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.72);
-  color: #303421;
+  color: #F4F7EE;
   font-size: 1.2rem;
   line-height: 1;
 }
 
 .quick-action--primary .quick-action__icon {
   background: #ffa36c;
-  color: #303421;
+  color: #F4F7EE;
 }
 
 .dashboard-section {
@@ -523,7 +465,7 @@ button {
 
 .section-heading h2 {
   margin: 0;
-  color: #303421;
+  color: #F4F7EE;
   font-size: 1.05rem;
   font-weight: 950;
 }
@@ -531,9 +473,9 @@ button {
 .section-heading button {
   border: 0;
   border-radius: 999px;
-  background: rgba(48, 52, 33, 0.08);
+  background: rgba(244, 247, 238, 0.08);
   padding: 0.4rem 0.72rem;
-  color: rgba(48, 52, 33, 0.66);
+  color: rgba(244, 247, 238, 0.66);
   font-size: 0.75rem;
   font-weight: 900;
 }
@@ -551,12 +493,12 @@ button {
   width: 100%;
   border-radius: 1.25rem;
   padding: 0.75rem;
-  color: #303421;
+  color: #F4F7EE;
   text-align: left;
 }
 
 .meal-row__time {
-  color: rgba(48, 52, 33, 0.52);
+  color: rgba(244, 247, 238, 0.52);
   font-size: 0.72rem;
   font-weight: 900;
 }
@@ -580,7 +522,7 @@ button {
 }
 
 .meal-row__body small {
-  color: rgba(48, 52, 33, 0.56);
+  color: rgba(244, 247, 238, 0.56);
   font-size: 0.72rem;
   font-weight: 800;
 }
@@ -594,7 +536,7 @@ button {
 }
 
 .meal-row--empty .meal-row__dot {
-  background: rgba(48, 52, 33, 0.16);
+  background: rgba(244, 247, 238, 0.16);
 }
 
 .activity-card {
@@ -613,21 +555,21 @@ button {
 }
 
 .activity-card__label {
-  color: rgba(48, 52, 33, 0.56);
+  color: rgba(244, 247, 238, 0.56);
   font-size: 0.72rem;
   font-weight: 900;
 }
 
 .activity-card h2 {
   margin-top: 0.15rem;
-  color: #303421;
+  color: #F4F7EE;
   font-size: 1.35rem;
   font-weight: 950;
 }
 
 .activity-card p:not(.activity-card__label) {
   margin-top: 0.15rem;
-  color: rgba(48, 52, 33, 0.58);
+  color: rgba(244, 247, 238, 0.58);
   font-size: 0.8rem;
   font-weight: 800;
 }
@@ -636,7 +578,7 @@ button {
   height: 0.7rem;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(48, 52, 33, 0.1);
+  background: rgba(244, 247, 238, 0.1);
 }
 
 .activity-progress span {
@@ -672,7 +614,7 @@ button {
   scroll-snap-align: start;
   border-radius: 1.35rem;
   padding: 0.8rem;
-  color: #303421;
+  color: #F4F7EE;
   text-align: left;
 }
 
@@ -683,7 +625,7 @@ button {
   height: 3rem;
   overflow: hidden;
   border-radius: 999px 999px 0.7rem 0.7rem;
-  background: rgba(48, 52, 33, 0.08);
+  background: rgba(244, 247, 238, 0.08);
 }
 
 .habit-chip__growth::before {
@@ -719,7 +661,7 @@ button {
 }
 
 .habit-chip small {
-  color: rgba(48, 52, 33, 0.54);
+  color: rgba(244, 247, 238, 0.54);
   font-size: 0.75rem;
   font-weight: 900;
 }
@@ -738,7 +680,7 @@ button {
   scroll-snap-align: start;
   border-radius: 1.45rem;
   padding: 0.82rem;
-  color: #303421;
+  color: #F4F7EE;
   text-align: left;
 }
 
@@ -775,7 +717,7 @@ button {
 .recipe-mark::before {
   width: 3.1rem;
   height: 3.1rem;
-  border: 0.48rem solid rgba(48, 52, 33, 0.12);
+  border: 0.48rem solid rgba(244, 247, 238, 0.12);
   border-top-color: var(--recipe-tone);
   transform: rotate(-30deg);
 }
@@ -793,7 +735,7 @@ button {
   bottom: 0.9rem;
   width: 1.7rem;
   height: 0.52rem;
-  background: rgba(48, 52, 33, 0.13);
+  background: rgba(244, 247, 238, 0.13);
 }
 
 .recipe-tile span:not(.recipe-mark),
@@ -809,7 +751,7 @@ button {
 }
 
 .recipe-tile small {
-  color: rgba(48, 52, 33, 0.58);
+  color: rgba(244, 247, 238, 0.58);
   font-size: 0.72rem;
   font-weight: 900;
 }

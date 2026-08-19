@@ -93,19 +93,19 @@ export function PhotoNutritionPage({ onBack, onSave }: PhotoNutritionPageProps) 
 
   return <div>
     <BackButton onClick={onBack} />
-    <section className="rounded-[2rem] border border-[#D99663]/30 bg-[#FFFDF8] p-5 shadow-lg shadow-[#D99663]/10">
-      <p className="text-xs font-black uppercase tracking-[0.24em] text-[#6E7E1F]">ИИ-анализ блюда</p>
-      <h1 className="mt-2 text-4xl font-black leading-tight text-[#37410F]">КБЖУ по фото</h1>
-      <p className="mt-3 text-base font-semibold leading-6 text-[#8B725F]">Сфотографируйте готовое блюдо. ИИ оценит продукты, порцию и КБЖУ, а вы сможете всё проверить перед сохранением.</p>
+    <section className="rounded-[2rem] border border-[#8FD14C]/30 bg-[#14170F] p-5 shadow-lg shadow-[#8FD14C]/10">
+      <p className="text-xs font-black uppercase tracking-[0.24em] text-[#5C8A1E]">ИИ-анализ блюда</p>
+      <h1 className="mt-2 text-4xl font-black leading-tight text-[#F4F7EE]">КБЖУ по фото</h1>
+      <p className="mt-3 text-base font-semibold leading-6 text-[#A9B39C]">Сфотографируйте готовое блюдо. ИИ оценит продукты, порцию и КБЖУ, а вы сможете всё проверить перед сохранением.</p>
 
       <div className="mt-5 grid grid-cols-2 gap-3">
-        <label className="text-sm font-black text-[#8B725F]">День
-          <select className="mt-2 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" value={day} onChange={(event) => setDay(event.target.value as MenuDay)}>
+        <label className="text-sm font-black text-[#A9B39C]">День
+          <select className="mt-2 w-full rounded-2xl border border-[#8FD14C]/35 bg-[#14170F] px-3 py-3 font-bold text-[#F4F7EE]" value={day} onChange={(event) => setDay(event.target.value as MenuDay)}>
             {menuDays.map((item) => <option key={item} value={item}>{item}</option>)}
           </select>
         </label>
-        <label className="text-sm font-black text-[#8B725F]">Приём пищи
-          <select className="mt-2 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" value={slot} onChange={(event) => setSlot(event.target.value as MenuMealSlot)}>
+        <label className="text-sm font-black text-[#A9B39C]">Приём пищи
+          <select className="mt-2 w-full rounded-2xl border border-[#8FD14C]/35 bg-[#14170F] px-3 py-3 font-bold text-[#F4F7EE]" value={slot} onChange={(event) => setSlot(event.target.value as MenuMealSlot)}>
             {menuMealSlots.map((item) => <option key={item} value={item}>{menuSlotLabels[item]}</option>)}
           </select>
         </label>
@@ -119,21 +119,21 @@ export function PhotoNutritionPage({ onBack, onSave }: PhotoNutritionPageProps) 
     }} />
 
     {products.length > 0 && <section className="mt-5 space-y-4">
-      {notice && <p className="rounded-2xl bg-[#F3E2BF]/55 px-4 py-3 text-sm font-bold leading-5 text-[#8B725F]">{notice}</p>}
-      {products.map((product, index) => <article className="rounded-3xl border border-[#D99663]/30 bg-[#FFFDF8] p-4" key={product.id}>
+      {notice && <p className="rounded-2xl bg-[#14170F]/55 px-4 py-3 text-sm font-bold leading-5 text-[#A9B39C]">{notice}</p>}
+      {products.map((product, index) => <article className="rounded-3xl border border-[#8FD14C]/30 bg-[#14170F] p-4" key={product.id}>
         <div className="flex items-center justify-between gap-3">
-          <p className="font-black text-[#37410F]">Продукт {index + 1}</p>
-          {products.length > 1 && <button className="text-sm font-black text-[#A45135]" onClick={() => setProducts((current) => current.filter((_, productIndex) => productIndex !== index))} type="button">Удалить</button>}
+          <p className="font-black text-[#F4F7EE]">Продукт {index + 1}</p>
+          {products.length > 1 && <button className="text-sm font-black text-[#E7B24A]" onClick={() => setProducts((current) => current.filter((_, productIndex) => productIndex !== index))} type="button">Удалить</button>}
         </div>
-        <label className="mt-3 block text-sm font-black text-[#8B725F]">Название
-          <input className="mt-2 w-full rounded-2xl border border-[#D99663]/35 bg-white px-4 py-3 font-bold text-[#37410F]" value={product.name} onChange={(event) => updateText(index, 'name', event.target.value)} />
+        <label className="mt-3 block text-sm font-black text-[#A9B39C]">Название
+          <input className="mt-2 w-full rounded-2xl border border-[#8FD14C]/35 bg-[#14170F] px-4 py-3 font-bold text-[#F4F7EE]" value={product.name} onChange={(event) => updateText(index, 'name', event.target.value)} />
         </label>
         <div className="mt-3 grid grid-cols-[1fr_5.5rem] gap-3">
-          <label className="text-sm font-black text-[#8B725F]">Количество
-            <input inputMode="decimal" className="mt-2 w-full rounded-2xl border border-[#D99663]/35 bg-white px-4 py-3 font-bold text-[#37410F]" value={product.amount} onChange={(event) => updateNumber(index, 'amount', event.target.value)} />
+          <label className="text-sm font-black text-[#A9B39C]">Количество
+            <input inputMode="decimal" className="mt-2 w-full rounded-2xl border border-[#8FD14C]/35 bg-[#14170F] px-4 py-3 font-bold text-[#F4F7EE]" value={product.amount} onChange={(event) => updateNumber(index, 'amount', event.target.value)} />
           </label>
-          <label className="text-sm font-black text-[#8B725F]">Единица
-            <input className="mt-2 w-full rounded-2xl border border-[#D99663]/35 bg-white px-4 py-3 font-bold text-[#37410F]" value={product.unit} onChange={(event) => updateText(index, 'unit', event.target.value)} />
+          <label className="text-sm font-black text-[#A9B39C]">Единица
+            <input className="mt-2 w-full rounded-2xl border border-[#8FD14C]/35 bg-[#14170F] px-4 py-3 font-bold text-[#F4F7EE]" value={product.unit} onChange={(event) => updateText(index, 'unit', event.target.value)} />
           </label>
         </div>
         <div className="mt-3 grid grid-cols-2 gap-3">
@@ -142,20 +142,20 @@ export function PhotoNutritionPage({ onBack, onSave }: PhotoNutritionPageProps) 
             ['protein', 'Белки'],
             ['fat', 'Жиры'],
             ['carbs', 'Углеводы'],
-          ] as const).map(([field, label]) => <label className="text-sm font-black text-[#8B725F]" key={field}>{label}
-            <input inputMode="decimal" className="mt-2 w-full rounded-2xl border border-[#D99663]/35 bg-white px-4 py-3 font-bold text-[#37410F]" value={product[field]} onChange={(event) => updateNumber(index, field, event.target.value)} />
+          ] as const).map(([field, label]) => <label className="text-sm font-black text-[#A9B39C]" key={field}>{label}
+            <input inputMode="decimal" className="mt-2 w-full rounded-2xl border border-[#8FD14C]/35 bg-[#14170F] px-4 py-3 font-bold text-[#F4F7EE]" value={product[field]} onChange={(event) => updateNumber(index, field, event.target.value)} />
           </label>)}
         </div>
       </article>)}
 
       <article className="rounded-3xl bg-[#37410F] p-4 text-white">
-        <p className="text-sm font-black uppercase tracking-wider text-[#F3E2BF]">Итого</p>
+        <p className="text-sm font-black uppercase tracking-wider text-[#F4F7EE]/65">Итого</p>
         <p className="mt-2 text-2xl font-black">{Math.round(totals.calories)} ккал</p>
         <p className="mt-1 font-bold">Б {totals.protein.toFixed(1)} · Ж {totals.fat.toFixed(1)} · У {totals.carbs.toFixed(1)}</p>
       </article>
 
-      <button className="w-full rounded-3xl bg-[#6E7E1F] px-5 py-4 text-lg font-black text-white disabled:opacity-60" disabled={isSaving} onClick={() => void save()} type="button">{isSaving ? 'Сохраняем…' : 'Сохранить в план питания'}</button>
-      {status && <p className="rounded-2xl bg-[#F3E2BF]/55 px-4 py-3 text-center text-sm font-black text-[#8B725F]">{status}</p>}
+      <button className="w-full rounded-3xl bg-[#5C8A1E] px-5 py-4 text-lg font-black text-white disabled:opacity-60" disabled={isSaving} onClick={() => void save()} type="button">{isSaving ? 'Сохраняем…' : 'Сохранить в план питания'}</button>
+      {status && <p className="rounded-2xl bg-[#14170F]/55 px-4 py-3 text-center text-sm font-black text-[#A9B39C]">{status}</p>}
     </section>}
   </div>;
 }

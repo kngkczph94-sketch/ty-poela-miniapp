@@ -138,14 +138,14 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
   };
 
   return <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#37410F]/35 p-3 sm:items-center" role="dialog" aria-modal="true" aria-label={`Добавить продукты: ${mealLabel}`}>
-    <div className="max-h-[92vh] w-full max-w-md overflow-y-auto rounded-[2rem] bg-[#FFFDF8] p-5 shadow-2xl">
+    <div className="max-h-[92vh] w-full max-w-md overflow-y-auto rounded-[2rem] bg-[#14170F] p-5 shadow-2xl">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-[#6E7E1F]">{mealLabel}</p>
-          <h2 className="mt-1 text-2xl font-black text-[#37410F]">Добавить продукты</h2>
-          <p className="mt-2 text-sm font-semibold text-[#8B725F]">Каждый продукт сохранится отдельно — именно так он останется в истории.</p>
+          <p className="text-xs font-black uppercase tracking-[0.16em] text-[#5C8A1E]">{mealLabel}</p>
+          <h2 className="mt-1 text-2xl font-black text-[#F4F7EE]">Добавить продукты</h2>
+          <p className="mt-2 text-sm font-semibold text-[#A9B39C]">Каждый продукт сохранится отдельно — именно так он останется в истории.</p>
         </div>
-        <button className="rounded-full bg-[#F3E2BF] px-3 py-2 font-black text-[#37410F]" onClick={onClose} type="button" aria-label="Закрыть">×</button>
+        <button className="rounded-full bg-[#14170F] px-3 py-2 font-black text-[#F4F7EE]" onClick={onClose} type="button" aria-label="Закрыть">×</button>
       </div>
 
       <PhotoMealCapture
@@ -157,39 +157,39 @@ export function ManualMealModal({ mealLabel, onClose, onSave }: ManualMealModalP
           setError('');
         }}
       />
-      {photoNotice && <p className="mt-3 rounded-2xl bg-[#F3E2BF]/65 px-4 py-3 text-xs font-bold leading-5 text-[#8B725F]">{photoNotice}</p>}
+      {photoNotice && <p className="mt-3 rounded-2xl bg-[#14170F]/65 px-4 py-3 text-xs font-bold leading-5 text-[#A9B39C]">{photoNotice}</p>}
 
       <div className="mt-5 space-y-4">
-        {products.map((product, index) => <div className="rounded-3xl border border-[#D99663]/30 bg-[#F3E2BF]/55 p-4" key={product.id}>
+        {products.map((product, index) => <div className="rounded-3xl border border-[#8FD14C]/30 bg-[#14170F]/55 p-4" key={product.id}>
           <div className="flex items-center justify-between gap-3">
-            <p className="text-sm font-black text-[#37410F]">Продукт {index + 1}</p>
-            {products.length > 1 && <button className="text-xs font-black text-[#A45135]" onClick={() => { setProducts((current) => current.filter((item) => item.id !== product.id)); setHasEstimate(false); setPhotoNotice(''); }} type="button">Удалить</button>}
+            <p className="text-sm font-black text-[#F4F7EE]">Продукт {index + 1}</p>
+            {products.length > 1 && <button className="text-xs font-black text-[#E7B24A]" onClick={() => { setProducts((current) => current.filter((item) => item.id !== product.id)); setHasEstimate(false); setPhotoNotice(''); }} type="button">Удалить</button>}
           </div>
-          <label className="mt-3 block text-xs font-black text-[#8B725F]">Название
-            <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 text-base font-bold text-[#37410F] outline-none focus:border-[#6E7E1F]" placeholder="Например, макароны" value={product.name} onChange={(event) => updateProduct(product.id, 'name', event.target.value)} />
+          <label className="mt-3 block text-xs font-black text-[#A9B39C]">Название
+            <input className="mt-1 w-full rounded-2xl border border-[#8FD14C]/35 bg-[#14170F] px-3 py-3 text-base font-bold text-[#F4F7EE] outline-none focus:border-[#5C8A1E]" placeholder="Например, макароны" value={product.name} onChange={(event) => updateProduct(product.id, 'name', event.target.value)} />
           </label>
           <div className="mt-3 grid grid-cols-[1fr_6rem] gap-2">
-            <label className="text-xs font-black text-[#8B725F]">Количество
-              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" inputMode="decimal" placeholder="0" type="text" value={product.amount} onChange={(event) => updateProduct(product.id, 'amount', sanitizeNumericInput(event.target.value))} />
+            <label className="text-xs font-black text-[#A9B39C]">Количество
+              <input className="mt-1 w-full rounded-2xl border border-[#8FD14C]/35 bg-[#14170F] px-3 py-3 font-bold text-[#F4F7EE]" inputMode="decimal" placeholder="0" type="text" value={product.amount} onChange={(event) => updateProduct(product.id, 'amount', sanitizeNumericInput(event.target.value))} />
             </label>
-            <label className="text-xs font-black text-[#8B725F]">Единица
-              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" value={product.unit} onChange={(event) => updateProduct(product.id, 'unit', event.target.value)} />
+            <label className="text-xs font-black text-[#A9B39C]">Единица
+              <input className="mt-1 w-full rounded-2xl border border-[#8FD14C]/35 bg-[#14170F] px-3 py-3 font-bold text-[#F4F7EE]" value={product.unit} onChange={(event) => updateProduct(product.id, 'unit', event.target.value)} />
             </label>
           </div>
           {hasEstimate && <div className="mt-3 grid grid-cols-2 gap-2">
-            {numericFields.slice(1).map(({ key, label }) => <label className="text-xs font-black text-[#8B725F]" key={key}>{label}
-              <input className="mt-1 w-full rounded-2xl border border-[#D99663]/35 bg-white px-3 py-3 font-bold text-[#37410F]" inputMode="decimal" placeholder="0" type="text" value={product[key]} onChange={(event) => updateProduct(product.id, key, sanitizeNumericInput(event.target.value))} />
+            {numericFields.slice(1).map(({ key, label }) => <label className="text-xs font-black text-[#A9B39C]" key={key}>{label}
+              <input className="mt-1 w-full rounded-2xl border border-[#8FD14C]/35 bg-[#14170F] px-3 py-3 font-bold text-[#F4F7EE]" inputMode="decimal" placeholder="0" type="text" value={product[key]} onChange={(event) => updateProduct(product.id, key, sanitizeNumericInput(event.target.value))} />
             </label>)}
           </div>}
         </div>)}
       </div>
 
-      <button className="mt-4 w-full rounded-2xl border border-[#6E7E1F] px-4 py-3 text-sm font-black text-[#6E7E1F]" onClick={() => { setProducts((current) => [...current, createProduct()]); setHasEstimate(false); setPhotoNotice(''); }} type="button">+ Добавить ещё продукт</button>
+      <button className="mt-4 w-full rounded-2xl border border-[#5C8A1E] px-4 py-3 text-sm font-black text-[#5C8A1E]" onClick={() => { setProducts((current) => [...current, createProduct()]); setHasEstimate(false); setPhotoNotice(''); }} type="button">+ Добавить ещё продукт</button>
       <button className="mt-3 w-full rounded-2xl bg-[#37410F] px-4 py-4 text-base font-black text-white disabled:opacity-60" disabled={isEstimating || isSaving} onClick={handleEstimate} type="button">{isEstimating ? 'Рассчитываем…' : hasEstimate ? 'Рассчитать заново' : '✨ Рассчитать КБЖУ'}</button>
-      {hasEstimate && <p className="mt-3 rounded-2xl bg-[#F3E2BF]/65 px-4 py-3 text-xs font-bold leading-5 text-[#8B725F]">Расчёт ориентировочный. Для продукта в упаковке сверьте значения с этикеткой — их можно исправить перед сохранением.</p>}
-      {error && <p className="mt-3 rounded-2xl bg-[#D99663]/15 px-4 py-3 text-sm font-bold text-[#A45135]">{error}</p>}
-      <button className="mt-4 w-full rounded-2xl bg-[#6E7E1F] px-4 py-4 text-base font-black text-white disabled:opacity-60" disabled={isSaving || isEstimating || !hasEstimate} onClick={handleSave} type="button">{isSaving ? 'Сохраняем…' : 'Сохранить приём пищи'}</button>
-      <button className="mt-2 w-full px-4 py-3 text-sm font-black text-[#8B725F]" disabled={isSaving} onClick={onClose} type="button">Отмена</button>
+      {hasEstimate && <p className="mt-3 rounded-2xl bg-[#14170F]/65 px-4 py-3 text-xs font-bold leading-5 text-[#A9B39C]">Расчёт ориентировочный. Для продукта в упаковке сверьте значения с этикеткой — их можно исправить перед сохранением.</p>}
+      {error && <p className="mt-3 rounded-2xl bg-[#8FD14C]/15 px-4 py-3 text-sm font-bold text-[#E7B24A]">{error}</p>}
+      <button className="mt-4 w-full rounded-2xl bg-[#5C8A1E] px-4 py-4 text-base font-black text-white disabled:opacity-60" disabled={isSaving || isEstimating || !hasEstimate} onClick={handleSave} type="button">{isSaving ? 'Сохраняем…' : 'Сохранить приём пищи'}</button>
+      <button className="mt-2 w-full px-4 py-3 text-sm font-black text-[#A9B39C]" disabled={isSaving} onClick={onClose} type="button">Отмена</button>
     </div>
   </div>;
 }

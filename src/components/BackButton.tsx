@@ -22,7 +22,7 @@ export function BackButton({ onClick }: BackButtonProps) {
   return (
     <button
       aria-label="Вернуться назад"
-      className="mb-4 self-start rounded-2xl bg-[#FFFDF8] px-4 py-3 text-sm font-black text-[#37410F] shadow-sm shadow-[#F3E2BF]/70 transition hover:bg-[#F3E2BF]"
+      className="mb-4 self-start rounded-2xl bg-[#14170F] px-4 py-3 text-sm font-black text-[#F4F7EE] shadow-sm shadow-[#14170F]/70 transition hover:bg-[#14170F]"
       onClick={onClick}
       type="button"
     >

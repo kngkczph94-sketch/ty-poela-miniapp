@@ -103,47 +103,47 @@ export function MacroCalculatorPage({ onBack, onOpenRation }: MacroCalculatorPag
   return (
     <section className="flex flex-1 flex-col">
       <BackButton onClick={onBack} />
-      <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
-        <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Калькулятор</p>
+      <div className="rounded-[2rem] border border-[#8FD14C]/35 bg-gradient-to-br from-[#14170F] via-[#8FD14C]/35 to-[#0A0C08] p-6 text-[#F4F7EE] shadow-xl shadow-[#8FD14C]/20">
+        <p className="text-sm font-bold uppercase tracking-wide text-[#A9B39C]">Калькулятор</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Расчёт БЖУ</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Рассчитай ориентир и подгони ближайший рацион под свою норму.</p>
+        <p className="mt-3 text-sm font-medium leading-6 text-[#A9B39C]">Рассчитай ориентир и подгони ближайший рацион под свою норму.</p>
       </div>
 
-      <article className="mt-5 rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-5 shadow-sm shadow-[#F3E2BF]/70">
+      <article className="mt-5 rounded-[2rem] border border-[#8FD14C]/25 bg-[#14170F] p-5 shadow-sm shadow-[#14170F]/70">
         <div className="grid gap-4">
           <div>
-            <p className="mb-2 text-sm font-black text-[#37410F]">Пол</p>
+            <p className="mb-2 text-sm font-black text-[#F4F7EE]">Пол</p>
             <div className="grid grid-cols-2 gap-2">
-              {(['female', 'male'] as Gender[]).map((value) => <button className={`rounded-2xl px-4 py-3 text-sm font-black ${gender === value ? 'bg-[#6E7E1F] text-white' : 'bg-[#F3E2BF]/80 text-[#37410F]'}`} key={value} onClick={() => setGender(value)} type="button">{value === 'female' ? 'Женский' : 'Мужской'}</button>)}
+              {(['female', 'male'] as Gender[]).map((value) => <button className={`rounded-2xl px-4 py-3 text-sm font-black ${gender === value ? 'bg-[#5C8A1E] text-white' : 'bg-[#14170F]/80 text-[#F4F7EE]'}`} key={value} onClick={() => setGender(value)} type="button">{value === 'female' ? 'Женский' : 'Мужской'}</button>)}
             </div>
           </div>
           <div className="grid grid-cols-3 gap-3">
-            <label className="text-sm font-black text-[#37410F]">Возраст<input className="mt-2 w-full rounded-2xl border border-[#F3E2BF] bg-[#FFFDF8] px-3 py-3 text-base font-bold outline-none focus:border-[#6E7E1F]" min="1" onChange={(event) => setAge(event.target.value)} type="number" value={age} /></label>
-            <label className="text-sm font-black text-[#37410F]">Рост, см<input className="mt-2 w-full rounded-2xl border border-[#F3E2BF] bg-[#FFFDF8] px-3 py-3 text-base font-bold outline-none focus:border-[#6E7E1F]" min="1" onChange={(event) => setHeight(event.target.value)} type="number" value={height} /></label>
-            <label className="text-sm font-black text-[#37410F]">Вес, кг<input className="mt-2 w-full rounded-2xl border border-[#F3E2BF] bg-[#FFFDF8] px-3 py-3 text-base font-bold outline-none focus:border-[#6E7E1F]" min="1" onChange={(event) => setWeight(event.target.value)} type="number" value={weight} /></label>
+            <label className="text-sm font-black text-[#F4F7EE]">Возраст<input className="mt-2 w-full rounded-2xl border border-[#FFFFFF]/10 bg-[#14170F] px-3 py-3 text-base font-bold outline-none focus:border-[#5C8A1E]" min="1" onChange={(event) => setAge(event.target.value)} type="number" value={age} /></label>
+            <label className="text-sm font-black text-[#F4F7EE]">Рост, см<input className="mt-2 w-full rounded-2xl border border-[#FFFFFF]/10 bg-[#14170F] px-3 py-3 text-base font-bold outline-none focus:border-[#5C8A1E]" min="1" onChange={(event) => setHeight(event.target.value)} type="number" value={height} /></label>
+            <label className="text-sm font-black text-[#F4F7EE]">Вес, кг<input className="mt-2 w-full rounded-2xl border border-[#FFFFFF]/10 bg-[#14170F] px-3 py-3 text-base font-bold outline-none focus:border-[#5C8A1E]" min="1" onChange={(event) => setWeight(event.target.value)} type="number" value={weight} /></label>
           </div>
           <div>
-            <p className="mb-2 text-sm font-black text-[#37410F]">Активность</p>
-            <div className="grid grid-cols-3 gap-2">{(['low', 'moderate', 'high'] as Activity[]).map((value) => <button className={`rounded-2xl px-2 py-3 text-xs font-black ${activity === value ? 'bg-[#6E7E1F] text-white' : 'bg-[#F3E2BF]/80 text-[#37410F]'}`} key={value} onClick={() => setActivity(value)} type="button">{value === 'low' ? 'Низкая' : value === 'moderate' ? 'Умеренная' : 'Высокая'}</button>)}</div>
+            <p className="mb-2 text-sm font-black text-[#F4F7EE]">Активность</p>
+            <div className="grid grid-cols-3 gap-2">{(['low', 'moderate', 'high'] as Activity[]).map((value) => <button className={`rounded-2xl px-2 py-3 text-xs font-black ${activity === value ? 'bg-[#5C8A1E] text-white' : 'bg-[#14170F]/80 text-[#F4F7EE]'}`} key={value} onClick={() => setActivity(value)} type="button">{value === 'low' ? 'Низкая' : value === 'moderate' ? 'Умеренная' : 'Высокая'}</button>)}</div>
           </div>
           <div>
-            <p className="mb-2 text-sm font-black text-[#37410F]">Цель</p>
-            <div className="grid grid-cols-3 gap-2">{(['loss', 'maintain', 'gain'] as Goal[]).map((value) => <button className={`rounded-2xl px-2 py-3 text-xs font-black ${goal === value ? 'bg-[#6E7E1F] text-white' : 'bg-[#F3E2BF]/80 text-[#37410F]'}`} key={value} onClick={() => setGoal(value)} type="button">{value === 'loss' ? 'Снижение' : value === 'maintain' ? 'Поддержание' : 'Набор'}</button>)}</div>
+            <p className="mb-2 text-sm font-black text-[#F4F7EE]">Цель</p>
+            <div className="grid grid-cols-3 gap-2">{(['loss', 'maintain', 'gain'] as Goal[]).map((value) => <button className={`rounded-2xl px-2 py-3 text-xs font-black ${goal === value ? 'bg-[#5C8A1E] text-white' : 'bg-[#14170F]/80 text-[#F4F7EE]'}`} key={value} onClick={() => setGoal(value)} type="button">{value === 'loss' ? 'Снижение' : value === 'maintain' ? 'Поддержание' : 'Набор'}</button>)}</div>
           </div>
         </div>
-        <button className="mt-5 w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]" onClick={handleCalculate} type="button">Рассчитать</button>
+        <button className="mt-5 w-full rounded-2xl bg-[#5C8A1E] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#14170F]/70 transition hover:bg-[#37410F]" onClick={handleCalculate} type="button">Рассчитать</button>
       </article>
 
       {result && <>
-        <article className="mt-5 rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-5 shadow-sm shadow-[#F3E2BF]/70">
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Ваша ориентировочная норма</p>
-          <div className="mt-3 grid grid-cols-4 gap-2 rounded-3xl bg-[#F3E2BF]/65 p-3 text-center"><div><p className="text-sm font-black">{result.calories}</p><p className="text-[11px] font-bold text-[#8B725F]">ккал</p></div><div><p className="text-sm font-black">{result.protein} г</p><p className="text-[11px] font-bold text-[#8B725F]">белки</p></div><div><p className="text-sm font-black">{result.fat} г</p><p className="text-[11px] font-bold text-[#8B725F]">жиры</p></div><div><p className="text-sm font-black">{result.carbs} г</p><p className="text-[11px] font-bold text-[#8B725F]">углеводы</p></div></div>
-          <p className="mt-3 text-xs font-semibold leading-5 text-[#8B725F]">Белок рассчитан ориентировочно: {PROTEIN_GRAMS_PER_KG} г на кг веса.</p>
+        <article className="mt-5 rounded-[2rem] border border-[#8FD14C]/25 bg-[#14170F] p-5 shadow-sm shadow-[#14170F]/70">
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#5C8A1E]">Ваша ориентировочная норма</p>
+          <div className="mt-3 grid grid-cols-4 gap-2 rounded-3xl bg-[#14170F]/65 p-3 text-center"><div><p className="text-sm font-black">{result.calories}</p><p className="text-[11px] font-bold text-[#A9B39C]">ккал</p></div><div><p className="text-sm font-black">{result.protein} г</p><p className="text-[11px] font-bold text-[#A9B39C]">белки</p></div><div><p className="text-sm font-black">{result.fat} г</p><p className="text-[11px] font-bold text-[#A9B39C]">жиры</p></div><div><p className="text-sm font-black">{result.carbs} г</p><p className="text-[11px] font-bold text-[#A9B39C]">углеводы</p></div></div>
+          <p className="mt-3 text-xs font-semibold leading-5 text-[#A9B39C]">Белок рассчитан ориентировочно: {PROTEIN_GRAMS_PER_KG} г на кг веса.</p>
         </article>
 
         <section className="mt-5">
-          <h2 className="text-xl font-black text-[#37410F]">Подходящие рационы</h2>
-          {suitableRations.length === 0 ? <div className="mt-3 rounded-[2rem] bg-[#FFFDF8] p-6 text-center text-sm font-bold text-[#8B725F] shadow-sm shadow-[#F3E2BF]/70">Пока нет подходящих рационов. Добавим их позже.</div> : <div className="mt-3 space-y-3">{suitableRations.map(({ ration, totals }) => <article className="rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70" key={ration.id}><div className="flex items-start justify-between gap-3"><div><h3 className="text-lg font-black text-[#37410F]">Рацион №{ration.rationNumber}</h3><p className="mt-1 text-sm font-bold text-[#8B725F]">{formatDifference(result.calories, totals.calories)}</p></div><span className="rounded-2xl bg-[#F3E2BF] px-3 py-2 text-sm font-black text-[#37410F]">{totals.calories} ккал</span></div><div className="mt-3 flex flex-wrap gap-2 text-[11px] font-extrabold text-[#8B725F]"><span className="rounded-full bg-[#6E7E1F]/15 px-2 py-1 text-[#6E7E1F]">Б {totals.protein} г</span><span className="rounded-full bg-[#D99663]/15 px-2 py-1 text-[#D99663]">Ж {totals.fat} г</span><span className="rounded-full bg-[#F3E2BF] px-2 py-1 text-[#37410F]">У {totals.carbs} г</span></div>{warningRationId === ration.id && <div className="mt-3 rounded-3xl border border-[#8B725F]/35 bg-[#F3E2BF] p-3"><p className="text-sm font-bold text-[#37410F]">Этот рацион сильно отличается от вашей нормы. Лучше выбрать рацион ближе по калорийности.</p><button className="mt-2 rounded-2xl bg-[#6E7E1F] px-4 py-2 text-sm font-black text-white hover:bg-[#37410F]" onClick={() => handleAdapt(ration, true)} type="button">Всё равно подогнать</button></div>}<div className="mt-4 grid grid-cols-2 gap-2"><button className="rounded-2xl bg-[#F3E2BF] px-4 py-3 text-sm font-black text-[#37410F]" onClick={() => onOpenRation(ration)} type="button">Открыть</button><button className="rounded-2xl bg-[#6E7E1F] px-4 py-3 text-sm font-black text-white" onClick={() => handleAdapt(ration)} type="button">Подогнать под меня</button></div></article>)}</div>}
+          <h2 className="text-xl font-black text-[#F4F7EE]">Подходящие рационы</h2>
+          {suitableRations.length === 0 ? <div className="mt-3 rounded-[2rem] bg-[#14170F] p-6 text-center text-sm font-bold text-[#A9B39C] shadow-sm shadow-[#14170F]/70">Пока нет подходящих рационов. Добавим их позже.</div> : <div className="mt-3 space-y-3">{suitableRations.map(({ ration, totals }) => <article className="rounded-[2rem] border border-[#8FD14C]/25 bg-[#14170F] p-4 shadow-sm shadow-[#14170F]/70" key={ration.id}><div className="flex items-start justify-between gap-3"><div><h3 className="text-lg font-black text-[#F4F7EE]">Рацион №{ration.rationNumber}</h3><p className="mt-1 text-sm font-bold text-[#A9B39C]">{formatDifference(result.calories, totals.calories)}</p></div><span className="rounded-2xl bg-[#14170F] px-3 py-2 text-sm font-black text-[#F4F7EE]">{totals.calories} ккал</span></div><div className="mt-3 flex flex-wrap gap-2 text-[11px] font-extrabold text-[#A9B39C]"><span className="rounded-full bg-[#5C8A1E]/15 px-2 py-1 text-[#5C8A1E]">Б {totals.protein} г</span><span className="rounded-full bg-[#8FD14C]/15 px-2 py-1 text-[#8FD14C]">Ж {totals.fat} г</span><span className="rounded-full bg-[#14170F] px-2 py-1 text-[#F4F7EE]">У {totals.carbs} г</span></div>{warningRationId === ration.id && <div className="mt-3 rounded-3xl border border-[#A9B39C]/35 bg-[#14170F] p-3"><p className="text-sm font-bold text-[#F4F7EE]">Этот рацион сильно отличается от вашей нормы. Лучше выбрать рацион ближе по калорийности.</p><button className="mt-2 rounded-2xl bg-[#5C8A1E] px-4 py-2 text-sm font-black text-white hover:bg-[#37410F]" onClick={() => handleAdapt(ration, true)} type="button">Всё равно подогнать</button></div>}<div className="mt-4 grid grid-cols-2 gap-2"><button className="rounded-2xl bg-[#14170F] px-4 py-3 text-sm font-black text-[#F4F7EE]" onClick={() => onOpenRation(ration)} type="button">Открыть</button><button className="rounded-2xl bg-[#5C8A1E] px-4 py-3 text-sm font-black text-white" onClick={() => handleAdapt(ration)} type="button">Подогнать под меня</button></div></article>)}</div>}
         </section>
       </>}
     </section>

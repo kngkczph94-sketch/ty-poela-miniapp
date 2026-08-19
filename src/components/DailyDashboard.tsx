@@ -35,7 +35,7 @@ const formatDate = () =>
 const calorieSegments = Array.from({ length: 18 }, (_, index) => index);
 
 const suggestedRecipes = [
-  { title: 'Зелёный боул', meta: '420 ккал · свежий', tone: '#7C8A51' },
+  { title: 'Зелёный боул', meta: '420 ккал · свежий', tone: '#8FD14C' },
   { title: 'Тёплый завтрак', meta: '360 ккал · мягкий старт', tone: '#FFA36C' },
   { title: 'Лёгкий ужин', meta: '390 ккал · без тяжести', tone: '#9A8FC4' },
   { title: 'Белковый перекус', meta: '210 ккал · быстро', tone: '#7BA7A0' },
@@ -125,7 +125,7 @@ export function DailyDashboard({
       </section>
 
       <section className="macro-grid reveal-card" aria-label="Макросы">
-        <MacroRing label="Белки" value={protein} goal={goals.protein} tone="#7C8A51" />
+        <MacroRing label="Белки" value={protein} goal={goals.protein} tone="#8FD14C" />
         <MacroRing label="Жиры" value={fat} goal={goals.fat} tone="#FFA36C" />
         <MacroRing label="Угли" value={carbs} goal={goals.carbs} tone="#9A8FC4" />
       </section>

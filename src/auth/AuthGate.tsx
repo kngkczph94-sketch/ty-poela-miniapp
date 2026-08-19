@@ -3,11 +3,11 @@ import { useAuth } from './AuthProvider';
 
 const Screen = ({ title, text, action }: { title: string; text: string; action?: () => void }) => (
   <main className="mx-auto flex min-h-screen max-w-md items-center px-5 py-10">
-    <section className="w-full rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-6 text-center shadow-xl shadow-[#F3E2BF]/70">
-      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F3E2BF] text-2xl">🥗</div>
-      <h1 className="mt-4 text-2xl font-black text-[#37410F]">{title}</h1>
-      <p className="mt-2 text-sm font-semibold leading-6 text-[#8B725F]">{text}</p>
-      {action && <button className="mt-5 w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 font-black text-white" onClick={action} type="button">Попробовать снова</button>}
+    <section className="w-full rounded-[2rem] border border-[#8FD14C]/25 bg-[#14170F] p-6 text-center shadow-xl shadow-[#14170F]/70">
+      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#14170F] text-2xl">🥗</div>
+      <h1 className="mt-4 text-2xl font-black text-[#F4F7EE]">{title}</h1>
+      <p className="mt-2 text-sm font-semibold leading-6 text-[#A9B39C]">{text}</p>
+      {action && <button className="mt-5 w-full rounded-2xl bg-[#5C8A1E] px-4 py-3 font-black text-white" onClick={action} type="button">Попробовать снова</button>}
     </section>
   </main>
 );

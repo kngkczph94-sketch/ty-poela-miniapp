@@ -98,15 +98,15 @@ const HomeFeaturePhoto = ({ alt, imageSrc, visual }: { alt: string; imageSrc?: s
 
 function HomeFeatureCard({ card }: { card: HomeCard }) {
   return (
-    <article className="group grid overflow-hidden rounded-[1.8rem] border border-[#D99663]/20 bg-[#FFFDF8] text-left shadow-sm shadow-[#F3E2BF]/70 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#D99663]/15 sm:grid-cols-[1fr_9.5rem]">
+    <article className="group grid overflow-hidden rounded-[1.8rem] border border-[#8FD14C]/20 bg-[#14170F] text-left shadow-sm shadow-[#14170F]/70 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8FD14C]/15 sm:grid-cols-[1fr_9.5rem]">
       <div className="order-2 flex min-w-0 flex-col p-4 pt-1 sm:order-1 sm:pt-4">
         <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-lg font-extrabold text-[#37410F]">{card.title}</h2>
-          {card.soon && <span className="rounded-full bg-[#D99663]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#D99663]">скоро</span>}
+          <h2 className="text-lg font-extrabold text-[#F4F7EE]">{card.title}</h2>
+          {card.soon && <span className="rounded-full bg-[#8FD14C]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-[#8FD14C]">скоро</span>}
         </div>
-        <p className="mt-1 text-sm leading-5 text-[#8B725F]">{card.description}</p>
+        <p className="mt-1 text-sm leading-5 text-[#A9B39C]">{card.description}</p>
         <div className="mt-4 flex flex-wrap gap-2">
-          {card.action.onClick ? <button className="rounded-full bg-[#6E7E1F] px-4 py-2 text-sm font-black text-white shadow-sm shadow-[#6E7E1F]/20 transition hover:bg-[#37410F]" onClick={card.action.onClick} type="button">{card.action.label}</button> : <span className="rounded-full bg-[#F3E2BF] px-4 py-2 text-sm font-black text-[#8B725F]">{card.action.label}{card.action.soon ? ' скоро' : ''}</span>}
+          {card.action.onClick ? <button className="rounded-full bg-[#5C8A1E] px-4 py-2 text-sm font-black text-white shadow-sm shadow-[#5C8A1E]/20 transition hover:bg-[#37410F]" onClick={card.action.onClick} type="button">{card.action.label}</button> : <span className="rounded-full bg-[#14170F] px-4 py-2 text-sm font-black text-[#A9B39C]">{card.action.label}{card.action.soon ? ' скоро' : ''}</span>}
         </div>
       </div>
       <div className="order-1 p-3 pb-2 sm:order-2 sm:pl-0">
@@ -172,10 +172,10 @@ function HomePage({ onOpenRations, onOpenRecipes, onOpenProgress, onOpenMacros, 
     <DailyDashboard weeklyMenu={weeklyMenu} onOpenMenu={onOpenMenu} onOpenRecipes={onOpenRecipes} onOpenProgress={onOpenProgress} onOpenMacros={onOpenMacros} onOpenPhotoNutrition={onOpenPhotoNutrition} onOpenAi={onOpenAi} />
     <section className="mt-6 grid gap-4">{homeCards.map((card) => <HomeFeatureCard card={card} key={card.title} />)}</section>
     <section className="mt-4 grid grid-cols-2 gap-3" aria-label="Дополнительные возможности">
-      <button className="flex items-center justify-center gap-2 rounded-2xl border border-[#D99663]/25 bg-[#FFFDF8] px-3 py-3 text-sm font-black text-[#37410F] shadow-sm" onClick={onOpenAwards} type="button">
+      <button className="flex items-center justify-center gap-2 rounded-2xl border border-[#8FD14C]/25 bg-[#14170F] px-3 py-3 text-sm font-black text-[#F4F7EE] shadow-sm" onClick={onOpenAwards} type="button">
         <span aria-hidden="true">🏆</span><span>Награды</span>
       </button>
-      <button className="flex items-center justify-center gap-2 rounded-2xl border border-[#D99663]/25 bg-[#FFFDF8] px-3 py-3 text-sm font-black text-[#37410F] shadow-sm" onClick={onOpenShare} type="button">
+      <button className="flex items-center justify-center gap-2 rounded-2xl border border-[#8FD14C]/25 bg-[#14170F] px-3 py-3 text-sm font-black text-[#F4F7EE] shadow-sm" onClick={onOpenShare} type="button">
         <span aria-hidden="true">💌</span><span>Поделиться</span>
       </button>
     </section>
@@ -202,27 +202,27 @@ function AccessPage({
   return (
     <section className="flex flex-1 flex-col">
       <BackButton onClick={onBack} />
-      <div className="overflow-hidden rounded-[2rem] bg-[#F3E2BF] p-6 text-[#37410F] shadow-xl shadow-[#F3E2BF]/70">
-        <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Подписка</p>
+      <div className="overflow-hidden rounded-[2rem] bg-[#14170F] p-6 text-[#F4F7EE] shadow-xl shadow-[#14170F]/70">
+        <p className="text-sm font-bold uppercase tracking-wide text-[#A9B39C]">Подписка</p>
         <h1 className="mt-2 text-3xl font-black leading-tight tracking-tight">Открой рецепты, меню и корзину</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Готовые решения по питанию внутри Telegram</p>
+        <p className="mt-3 text-sm font-medium leading-6 text-[#A9B39C]">Готовые решения по питанию внутри Telegram</p>
       </div>
 
       {subscriptionStatus === 'active' && (
-        <div className="mt-5 rounded-3xl border border-[#8B725F]/35 bg-[#F3E2BF] p-5 text-[#37410F] shadow-sm shadow-[#F3E2BF]/70">
+        <div className="mt-5 rounded-3xl border border-[#A9B39C]/35 bg-[#14170F] p-5 text-[#F4F7EE] shadow-sm shadow-[#14170F]/70">
           <p className="text-3xl">✅</p>
           <h2 className="mt-2 text-xl font-black">Доступ открыт</h2>
           <p className="mt-1 text-sm font-bold">Premium-рецепты, меню и корзина доступны{formattedUntil ? ` до ${formattedUntil}` : ''}.</p>
         </div>
       )}
 
-      <article className="mt-5 rounded-[2rem] bg-[#FFFDF8] p-5 shadow-xl shadow-[#F3E2BF]/70">
+      <article className="mt-5 rounded-[2rem] bg-[#14170F] p-5 shadow-xl shadow-[#14170F]/70">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Тариф</p>
-            <h2 className="mt-1 text-2xl font-black text-[#37410F]">Неделя доступа</h2>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#5C8A1E]">Тариф</p>
+            <h2 className="mt-1 text-2xl font-black text-[#F4F7EE]">Неделя доступа</h2>
           </div>
-          <span className="rounded-full bg-[#D99663]/15 px-3 py-1 text-xs font-extrabold text-[#D99663]">Premium</span>
+          <span className="rounded-full bg-[#8FD14C]/15 px-3 py-1 text-xs font-extrabold text-[#8FD14C]">Premium</span>
         </div>
 
         <div className="mt-5 space-y-3">
@@ -234,25 +234,25 @@ function AccessPage({
             'шер-карточки',
             'трекер прогресса',
           ].map((item) => (
-            <p className="flex items-center gap-3 text-sm font-bold text-[#37410F]" key={item}>
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#F3E2BF] text-[#37410F]">✓</span>
+            <p className="flex items-center gap-3 text-sm font-bold text-[#F4F7EE]" key={item}>
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#14170F] text-[#F4F7EE]">✓</span>
               {item}
             </p>
           ))}
         </div>
 
         <button
-          className="mt-6 w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]"
+          className="mt-6 w-full rounded-2xl bg-[#5C8A1E] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#14170F]/70 transition hover:bg-[#37410F]"
           onClick={onActivate}
           type="button"
         >
           {subscriptionStatus === 'active' ? 'Продлить mock-доступ' : 'Открыть полный доступ'}
         </button>
-        <p className="mt-3 text-center text-xs font-bold text-[#8B725F]">Mock-режим: настоящие Telegram Stars пока не подключены.</p>
+        <p className="mt-3 text-center text-xs font-bold text-[#A9B39C]">Mock-режим: настоящие Telegram Stars пока не подключены.</p>
       </article>
 
       <button
-        className="mt-4 rounded-2xl bg-white px-4 py-3 text-base font-black text-[#37410F] shadow-sm shadow-[#F3E2BF]/70 transition hover:bg-[#F3E2BF]"
+        className="mt-4 rounded-2xl bg-[#14170F] px-4 py-3 text-base font-black text-[#F4F7EE] shadow-sm shadow-[#14170F]/70 transition hover:bg-[#14170F]"
         onClick={onOpenRecipes}
         type="button"
       >
@@ -305,23 +305,23 @@ function ShareAppPage({ onBack }: { onBack: () => void }) {
   return (
     <section className="flex flex-1 flex-col">
       <BackButton onClick={onBack} />
-      <div className="rounded-[2rem] border border-[#D99663]/35 bg-gradient-to-br from-[#F3E2BF] via-[#D99663]/35 to-[#FBF6EC] p-6 text-[#37410F] shadow-xl shadow-[#D99663]/20">
-        <p className="text-sm font-bold uppercase tracking-wide text-[#8B725F]">Поделиться</p>
+      <div className="rounded-[2rem] border border-[#8FD14C]/35 bg-gradient-to-br from-[#14170F] via-[#8FD14C]/35 to-[#0A0C08] p-6 text-[#F4F7EE] shadow-xl shadow-[#8FD14C]/20">
+        <p className="text-sm font-bold uppercase tracking-wide text-[#A9B39C]">Поделиться</p>
         <h1 className="mt-2 text-3xl font-black tracking-tight">Поделиться приложением</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Отправь ссылку тому, кому тоже нужен рацион, план и понятная корзина.</p>
+        <p className="mt-3 text-sm font-medium leading-6 text-[#A9B39C]">Отправь ссылку тому, кому тоже нужен рацион, план и понятная корзина.</p>
       </div>
 
-      <article className="mt-5 rounded-[2rem] border border-[#D99663]/25 bg-[#FFFDF8] p-5 shadow-xl shadow-[#F3E2BF]/70">
+      <article className="mt-5 rounded-[2rem] border border-[#8FD14C]/25 bg-[#14170F] p-5 shadow-xl shadow-[#14170F]/70">
         <div className="flex items-start gap-4">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F3E2BF] text-2xl text-[#6E7E1F]">💌</span>
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#14170F] text-2xl text-[#5C8A1E]">💌</span>
           <div>
-            <h2 className="text-xl font-black text-[#37410F]">Ссылка на «Ты поела»</h2>
-            <p className="mt-2 text-sm font-semibold leading-6 text-[#8B725F]">Можно отправить в чат или скопировать ссылку вручную.</p>
+            <h2 className="text-xl font-black text-[#F4F7EE]">Ссылка на «Ты поела»</h2>
+            <p className="mt-2 text-sm font-semibold leading-6 text-[#A9B39C]">Можно отправить в чат или скопировать ссылку вручную.</p>
           </div>
         </div>
 
         <button
-          className="mt-6 w-full rounded-2xl bg-[#6E7E1F] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F]"
+          className="mt-6 w-full rounded-2xl bg-[#5C8A1E] px-5 py-3 text-base font-black text-white shadow-lg shadow-[#14170F]/70 transition hover:bg-[#37410F]"
           aria-label="Поделиться приложением"
           onClick={handleShare}
           type="button"
@@ -329,10 +329,10 @@ function ShareAppPage({ onBack }: { onBack: () => void }) {
           Поделиться
         </button>
 
-        {copiedMessage && <p className="mt-4 rounded-2xl bg-[#F3E2BF]/70 px-4 py-3 text-sm font-black text-[#37410F]">{copiedMessage}</p>}
-        {manualShareText && <div className="mt-4 rounded-2xl border border-[#D99663]/30 bg-[#FBF6EC] p-4"><p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Скопируй текст вручную</p><pre className="mt-3 whitespace-pre-wrap break-words text-sm font-semibold leading-6 text-[#37410F]">{manualShareText}</pre></div>}
+        {copiedMessage && <p className="mt-4 rounded-2xl bg-[#14170F]/70 px-4 py-3 text-sm font-black text-[#F4F7EE]">{copiedMessage}</p>}
+        {manualShareText && <div className="mt-4 rounded-2xl border border-[#8FD14C]/30 bg-[#0A0C08] p-4"><p className="text-xs font-black uppercase tracking-[0.18em] text-[#5C8A1E]">Скопируй текст вручную</p><pre className="mt-3 whitespace-pre-wrap break-words text-sm font-semibold leading-6 text-[#F4F7EE]">{manualShareText}</pre></div>}
 
-        <p className="mt-4 text-center text-xs font-bold text-[#8B725F]">Скоро здесь появятся бонусы за приглашения.</p>
+        <p className="mt-4 text-center text-xs font-bold text-[#A9B39C]">Скоро здесь появятся бонусы за приглашения.</p>
       </article>
     </section>
   );
@@ -660,10 +660,10 @@ function App() {
     return () => telegramBackButton?.offClick(goBack);
   });
 
-  return <main className="min-h-screen bg-gradient-to-b from-[#FBF6EC] via-[#F3E2BF]/45 to-[#FBF6EC] text-[#37410F]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
+  return <main className="min-h-screen bg-gradient-to-b from-[#0A0C08] via-[#14170F]/45 to-[#0A0C08] text-[#F4F7EE]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
     {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'photoNutrition' ? <PhotoNutritionPage onBack={goBack} onSave={addManualMealToMenu} /> : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} onUpdateRecipeQuantity={updateRecipeQuantity} onAddManualMeal={addManualMealToMenu} onAddAiMeal={(day, slot) => setAiTarget({ day, slot })} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage weeklyMenu={weeklyMenu} onOpenMenu={() => setActiveTab('menu')} onOpenRations={openRations} onOpenRecipes={openRecipes} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenPhotoNutrition={() => setActiveTab('photoNutrition')} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} onOpenAi={() => setAiTarget({ day: 'Сегодня', slot: 'breakfast' })} />}
   </div>{aiTarget && <AiRecipeModal initialDay={aiTarget.day} initialSlot={aiTarget.slot} onChoose={addAiRecipeToMenu} onClose={() => setAiTarget(null)} />}
-  <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#D99663]/35 bg-[#FFFDF8]/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#D99663]/25 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id ? 'bg-[#6E7E1F] text-white shadow-md shadow-[#6E7E1F]/20' : 'text-[#8B725F] hover:bg-[#F3E2BF]/70 hover:text-[#37410F]'}`} key={item.id} onClick={()=>{ setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
+  <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#8FD14C]/35 bg-[#14170F]/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#8FD14C]/25 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id ? 'bg-[#5C8A1E] text-white shadow-md shadow-[#5C8A1E]/20' : 'text-[#A9B39C] hover:bg-[#14170F]/70 hover:text-[#F4F7EE]'}`} key={item.id} onClick={()=>{ setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }
 
 export default App;

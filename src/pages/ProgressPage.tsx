@@ -88,11 +88,11 @@ function TrackerInput({
   value: string;
 }) {
   return (
-    <label className="block rounded-[1.75rem] border border-[#D99663]/20 bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70">
-      <span className="text-xs font-black uppercase tracking-[0.16em] text-[#6E7E1F]">{label}</span>
-      {description && <span className="mt-1 block text-sm font-semibold leading-5 text-[#8B725F]">{description}</span>}
+    <label className="block rounded-[1.75rem] border border-[#8FD14C]/20 bg-[#14170F] p-4 shadow-sm shadow-[#14170F]/70">
+      <span className="text-xs font-black uppercase tracking-[0.16em] text-[#5C8A1E]">{label}</span>
+      {description && <span className="mt-1 block text-sm font-semibold leading-5 text-[#A9B39C]">{description}</span>}
       <input
-        className="mt-3 w-full rounded-2xl border border-[#D99663]/30 bg-[#F3E2BF]/35 px-4 py-3 text-base font-black text-[#37410F] outline-none transition placeholder:text-[#8B725F]/70 focus:border-[#6E7E1F] focus:bg-white"
+        className="mt-3 w-full rounded-2xl border border-[#8FD14C]/30 bg-[#14170F]/35 px-4 py-3 text-base font-black text-[#F4F7EE] outline-none transition placeholder:text-[#A9B39C]/70 focus:border-[#5C8A1E] focus:bg-[#14170F]"
         inputMode="decimal"
         min={min}
         onChange={(event) => onChange(event.target.value)}
@@ -103,8 +103,8 @@ function TrackerInput({
       />
       {progressLabel && progressValue !== undefined && (
         <span className="mt-3 block">
-          <span className="flex items-center justify-between text-xs font-black text-[#8B725F]"><span>{progressLabel}</span></span>
-          <span className="mt-2 block h-2 overflow-hidden rounded-full bg-[#F3E2BF]"><span className="block h-full rounded-full bg-[#6E7E1F]" style={{ width: `${progressValue}%` }} /></span>
+          <span className="flex items-center justify-between text-xs font-black text-[#A9B39C]"><span>{progressLabel}</span></span>
+          <span className="mt-2 block h-2 overflow-hidden rounded-full bg-[#14170F]"><span className="block h-full rounded-full bg-[#5C8A1E]" style={{ width: `${progressValue}%` }} /></span>
         </span>
       )}
     </label>
@@ -128,17 +128,17 @@ function LineChart({ entries, selectedMetric }: { entries: MeasurementEntry[]; s
   }).join(' ');
 
   return (
-    <div className="rounded-[2rem] border border-[#D99663]/20 bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70">
+    <div className="rounded-[2rem] border border-[#8FD14C]/20 bg-[#14170F] p-4 shadow-sm shadow-[#14170F]/70">
       <svg className="h-44 w-full" preserveAspectRatio="none" viewBox="0 0 300 160" role="img" aria-label="График прогресса">
-        <line x1="20" x2="280" y1="130" y2="130" stroke="#F3E2BF" strokeWidth="3" />
-        <line x1="20" x2="20" y1="20" y2="130" stroke="#F3E2BF" strokeWidth="3" />
-        <polyline fill="none" points={svgPoints} stroke="#6E7E1F" strokeLinecap="round" strokeLinejoin="round" strokeWidth="5" />
+        <line x1="20" x2="280" y1="130" y2="130" stroke="#14170F" strokeWidth="3" />
+        <line x1="20" x2="20" y1="20" y2="130" stroke="#14170F" strokeWidth="3" />
+        <polyline fill="none" points={svgPoints} stroke="#5C8A1E" strokeLinecap="round" strokeLinejoin="round" strokeWidth="5" />
         {svgPoints.split(' ').map((point) => {
           const [x, y] = point.split(',');
-          return <circle cx={x} cy={y} fill="#D99663" key={point} r="5" />;
+          return <circle cx={x} cy={y} fill="#8FD14C" key={point} r="5" />;
         })}
       </svg>
-      <div className="mt-2 flex justify-between text-xs font-black text-[#8B725F]">
+      <div className="mt-2 flex justify-between text-xs font-black text-[#A9B39C]">
         <span>{formatDate(points[0].date)}</span>
         <span>{formatDate(points[points.length - 1].date)}</span>
       </div>
@@ -209,51 +209,51 @@ export function ProgressPage({ measurements, habits, onBack, onSaveMeasurement, 
   return (
     <section className="flex flex-1 flex-col">
       <BackButton onClick={onBack} />
-      <div className="overflow-hidden rounded-[2rem] bg-[#F3E2BF] p-6 text-[#37410F] shadow-xl shadow-[#F3E2BF]/70">
+      <div className="overflow-hidden rounded-[2rem] bg-[#14170F] p-6 text-[#F4F7EE] shadow-xl shadow-[#14170F]/70">
         <h1 className="text-3xl font-black tracking-tight">Прогресс</h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-[#8B725F]">Вес, шаги, сон и вода помогают видеть общую картину и оценивать прогресс.</p>
+        <p className="mt-3 text-sm font-medium leading-6 text-[#A9B39C]">Вес, шаги, сон и вода помогают видеть общую картину и оценивать прогресс.</p>
       </div>
 
-      <div className="mt-5 grid grid-cols-3 gap-2 rounded-[2rem] bg-[#FFFDF8] p-2 shadow-sm shadow-[#F3E2BF]/70">
+      <div className="mt-5 grid grid-cols-3 gap-2 rounded-[2rem] bg-[#14170F] p-2 shadow-sm shadow-[#14170F]/70">
         {[
           ['measurements', 'Замеры'],
           ['charts', 'Графики'],
           ['habits', 'Привычки'],
         ].map(([id, label]) => (
-          <button className={`rounded-2xl px-2 py-3 text-sm font-black transition ${activeTab === id ? 'bg-[#6E7E1F] text-white' : 'text-[#8B725F] hover:bg-[#F3E2BF]/70'}`} key={id} onClick={() => setActiveTab(id as ProgressTab)} type="button">{label}</button>
+          <button className={`rounded-2xl px-2 py-3 text-sm font-black transition ${activeTab === id ? 'bg-[#5C8A1E] text-white' : 'text-[#A9B39C] hover:bg-[#14170F]/70'}`} key={id} onClick={() => setActiveTab(id as ProgressTab)} type="button">{label}</button>
         ))}
       </div>
-      {notice && <p className="mt-3 rounded-2xl bg-[#F3E2BF] px-4 py-3 text-center text-sm font-black text-[#37410F]">{notice}</p>}
+      {notice && <p className="mt-3 rounded-2xl bg-[#14170F] px-4 py-3 text-center text-sm font-black text-[#F4F7EE]">{notice}</p>}
 
       {activeTab === 'measurements' && <section className="mt-5">
-        <article className="rounded-[2rem] border border-[#D99663]/20 bg-[#FFFDF8] p-5 shadow-sm shadow-[#F3E2BF]/70">
-          <div className="flex items-start justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Сегодня</p><h2 className="mt-1 text-xl font-black text-[#37410F]">Замеры тела</h2></div><span className="rounded-full bg-[#F3E2BF] px-3 py-1 text-xs font-black text-[#8B725F]">{formatDate(today)}</span></div>
+        <article className="rounded-[2rem] border border-[#8FD14C]/20 bg-[#14170F] p-5 shadow-sm shadow-[#14170F]/70">
+          <div className="flex items-start justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-[#5C8A1E]">Сегодня</p><h2 className="mt-1 text-xl font-black text-[#F4F7EE]">Замеры тела</h2></div><span className="rounded-full bg-[#14170F] px-3 py-1 text-xs font-black text-[#A9B39C]">{formatDate(today)}</span></div>
           <form className="mt-4 space-y-3" onSubmit={handleMeasurementSubmit}>
             {measurementFields.map((field) => <TrackerInput key={field.key} label={field.label} onChange={(value) => setMeasurementForm((state) => ({ ...state, [field.key]: value }))} placeholder={field.placeholder} value={measurementForm[field.key]} />)}
-            <button className="w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F] disabled:cursor-wait disabled:opacity-60" disabled={saving} type="submit">{saving ? 'Сохраняем…' : 'Сохранить замеры'}</button>
+            <button className="w-full rounded-2xl bg-[#5C8A1E] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#14170F]/70 transition hover:bg-[#37410F] disabled:cursor-wait disabled:opacity-60" disabled={saving} type="submit">{saving ? 'Сохраняем…' : 'Сохранить замеры'}</button>
           </form>
         </article>
-        <h2 className="mt-5 text-xl font-black text-[#37410F]">История замеров</h2>
-        {sortedMeasurements.length === 0 ? <div className="mt-3 rounded-[2rem] bg-[#FFFDF8] p-6 text-center shadow-sm shadow-[#F3E2BF]/70"><p className="text-5xl">🌷</p><p className="mt-3 text-sm font-semibold leading-5 text-[#8B725F]">Пока нет замеров. Добавь первую запись — и динамика появится здесь.</p></div> : <div className="mt-3 space-y-3">{sortedMeasurements.map((entry) => <article className="rounded-[2rem] border border-[#D99663]/15 bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70" key={entry.id}><h3 className="text-base font-black text-[#37410F]">{formatDate(entry.date)}</h3><div className="mt-3 grid grid-cols-2 gap-2 text-xs font-black text-[#8B725F]">{measurementFields.map((field) => <span className="rounded-2xl bg-[#F3E2BF]/70 px-3 py-2" key={field.key}>{field.label.replace(', кг', '').replace(', см', '')} {formatValue(entry[field.key], field.suffix)}</span>)}</div></article>)}</div>}
+        <h2 className="mt-5 text-xl font-black text-[#F4F7EE]">История замеров</h2>
+        {sortedMeasurements.length === 0 ? <div className="mt-3 rounded-[2rem] bg-[#14170F] p-6 text-center shadow-sm shadow-[#14170F]/70"><p className="text-5xl">🌷</p><p className="mt-3 text-sm font-semibold leading-5 text-[#A9B39C]">Пока нет замеров. Добавь первую запись — и динамика появится здесь.</p></div> : <div className="mt-3 space-y-3">{sortedMeasurements.map((entry) => <article className="rounded-[2rem] border border-[#8FD14C]/15 bg-[#14170F] p-4 shadow-sm shadow-[#14170F]/70" key={entry.id}><h3 className="text-base font-black text-[#F4F7EE]">{formatDate(entry.date)}</h3><div className="mt-3 grid grid-cols-2 gap-2 text-xs font-black text-[#A9B39C]">{measurementFields.map((field) => <span className="rounded-2xl bg-[#14170F]/70 px-3 py-2" key={field.key}>{field.label.replace(', кг', '').replace(', см', '')} {formatValue(entry[field.key], field.suffix)}</span>)}</div></article>)}</div>}
       </section>}
 
       {activeTab === 'charts' && <section className="mt-5 space-y-4">
-        <label className="block rounded-[1.75rem] border border-[#D99663]/20 bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70"><span className="text-xs font-black uppercase tracking-[0.16em] text-[#6E7E1F]">Показатель</span><select className="mt-3 w-full rounded-2xl border border-[#D99663]/30 bg-[#F3E2BF]/35 px-4 py-3 text-base font-black text-[#37410F] outline-none focus:border-[#6E7E1F] focus:bg-white" onChange={(event) => setSelectedMetric(event.target.value as MeasurementKey)} value={selectedMetric}>{measurementFields.map((field) => <option key={field.key} value={field.key}>{field.label}</option>)}</select></label>
-        {chartEntries.length < 2 ? <div className="rounded-[2rem] bg-[#FFFDF8] p-6 text-center shadow-sm shadow-[#F3E2BF]/70"><p className="text-5xl">📈</p><p className="mt-3 text-sm font-semibold leading-5 text-[#8B725F]">Добавь хотя бы две записи замеров, чтобы увидеть график прогресса.</p></div> : <><LineChart entries={chartEntries} selectedMetric={selectedMetric} /><div className="grid grid-cols-3 gap-2 text-center text-xs font-black text-[#8B725F]"><span className="rounded-2xl bg-[#FFFDF8] p-3 shadow-sm shadow-[#F3E2BF]/70">Первое<br />{formatValue(firstChartEntry?.[selectedMetric], selectedField.suffix)}</span><span className="rounded-2xl bg-[#FFFDF8] p-3 shadow-sm shadow-[#F3E2BF]/70">Последнее<br />{formatValue(lastChartEntry?.[selectedMetric], selectedField.suffix)}</span><span className="rounded-2xl bg-[#FFFDF8] p-3 shadow-sm shadow-[#F3E2BF]/70">Изменение<br />{chartDelta > 0 ? '+' : ''}{chartDelta}{selectedField.suffix}</span></div></>}
+        <label className="block rounded-[1.75rem] border border-[#8FD14C]/20 bg-[#14170F] p-4 shadow-sm shadow-[#14170F]/70"><span className="text-xs font-black uppercase tracking-[0.16em] text-[#5C8A1E]">Показатель</span><select className="mt-3 w-full rounded-2xl border border-[#8FD14C]/30 bg-[#14170F]/35 px-4 py-3 text-base font-black text-[#F4F7EE] outline-none focus:border-[#5C8A1E] focus:bg-[#14170F]" onChange={(event) => setSelectedMetric(event.target.value as MeasurementKey)} value={selectedMetric}>{measurementFields.map((field) => <option key={field.key} value={field.key}>{field.label}</option>)}</select></label>
+        {chartEntries.length < 2 ? <div className="rounded-[2rem] bg-[#14170F] p-6 text-center shadow-sm shadow-[#14170F]/70"><p className="text-5xl">📈</p><p className="mt-3 text-sm font-semibold leading-5 text-[#A9B39C]">Добавь хотя бы две записи замеров, чтобы увидеть график прогресса.</p></div> : <><LineChart entries={chartEntries} selectedMetric={selectedMetric} /><div className="grid grid-cols-3 gap-2 text-center text-xs font-black text-[#A9B39C]"><span className="rounded-2xl bg-[#14170F] p-3 shadow-sm shadow-[#14170F]/70">Первое<br />{formatValue(firstChartEntry?.[selectedMetric], selectedField.suffix)}</span><span className="rounded-2xl bg-[#14170F] p-3 shadow-sm shadow-[#14170F]/70">Последнее<br />{formatValue(lastChartEntry?.[selectedMetric], selectedField.suffix)}</span><span className="rounded-2xl bg-[#14170F] p-3 shadow-sm shadow-[#14170F]/70">Изменение<br />{chartDelta > 0 ? '+' : ''}{chartDelta}{selectedField.suffix}</span></div></>}
       </section>}
 
       {activeTab === 'habits' && <section className="mt-5">
-        <article className="rounded-[2rem] border border-[#D99663]/20 bg-[#FFFDF8] p-5 shadow-sm shadow-[#F3E2BF]/70">
-          <div className="flex items-start justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-[#6E7E1F]">Сегодня</p><h2 className="mt-1 text-xl font-black text-[#37410F]">Ежедневные привычки</h2></div><span className="rounded-full bg-[#F3E2BF] px-3 py-1 text-xs font-black text-[#8B725F]">{formatDate(today)}</span></div>
+        <article className="rounded-[2rem] border border-[#8FD14C]/20 bg-[#14170F] p-5 shadow-sm shadow-[#14170F]/70">
+          <div className="flex items-start justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-[#5C8A1E]">Сегодня</p><h2 className="mt-1 text-xl font-black text-[#F4F7EE]">Ежедневные привычки</h2></div><span className="rounded-full bg-[#14170F] px-3 py-1 text-xs font-black text-[#A9B39C]">{formatDate(today)}</span></div>
           <form className="mt-4 space-y-3" onSubmit={handleHabitSubmit}>
             <TrackerInput description="Цель по умолчанию — 10000 шагов" label="Шаги" onChange={(value) => setHabitForm((state) => ({ ...state, steps: value }))} placeholder="8700" progressLabel={`${currentSteps ?? 0} / ${STEPS_GOAL}`} progressValue={clampProgress(currentSteps, STEPS_GOAL)} step="1" value={habitForm.steps} />
             <TrackerInput description="Цель по умолчанию — 7.5 часов" label="Сон" onChange={(value) => setHabitForm((state) => ({ ...state, sleep: value }))} placeholder="7.5" progressLabel={`${currentSleep ?? 0} / ${SLEEP_GOAL} ч`} progressValue={clampProgress(currentSleep, SLEEP_GOAL)} value={habitForm.sleep} />
             <TrackerInput description="Цель по умолчанию — 2.5 л" label="Вода" onChange={(value) => setHabitForm((state) => ({ ...state, water: value }))} placeholder="2.1" progressLabel={`${currentWater ?? 0} / ${WATER_GOAL} л`} progressValue={clampProgress(currentWater, WATER_GOAL)} value={habitForm.water} />
-            <button className="w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#F3E2BF]/70 transition hover:bg-[#37410F] disabled:cursor-wait disabled:opacity-60" disabled={saving} type="submit">{saving ? 'Сохраняем…' : 'Сохранить день'}</button>
+            <button className="w-full rounded-2xl bg-[#5C8A1E] px-4 py-3 text-base font-black text-white shadow-lg shadow-[#14170F]/70 transition hover:bg-[#37410F] disabled:cursor-wait disabled:opacity-60" disabled={saving} type="submit">{saving ? 'Сохраняем…' : 'Сохранить день'}</button>
           </form>
         </article>
-        <h2 className="mt-5 text-xl font-black text-[#37410F]">История привычек</h2>
-        {sortedHabits.length === 0 ? <div className="mt-3 rounded-[2rem] bg-[#FFFDF8] p-6 text-center shadow-sm shadow-[#F3E2BF]/70"><p className="text-5xl">🌿</p><p className="mt-3 text-sm font-semibold leading-5 text-[#8B725F]">Пока нет записей. Заполни сегодняшний день — и история появится здесь.</p></div> : <div className="mt-3 space-y-3">{sortedHabits.map((entry) => <article className="rounded-[2rem] border border-[#D99663]/15 bg-[#FFFDF8] p-4 shadow-sm shadow-[#F3E2BF]/70" key={entry.id}><h3 className="text-base font-black text-[#37410F]">{formatDate(entry.date)}</h3><div className="mt-3 grid grid-cols-3 gap-2 text-xs font-black text-[#8B725F]"><span className="rounded-2xl bg-[#F3E2BF]/70 px-3 py-2">Шаги {formatValue(entry.steps)}</span><span className="rounded-2xl bg-[#F3E2BF]/70 px-3 py-2">Сон {formatValue(entry.sleep, ' ч')}</span><span className="rounded-2xl bg-[#F3E2BF]/70 px-3 py-2">Вода {formatValue(entry.water, ' л')}</span></div></article>)}</div>}
+        <h2 className="mt-5 text-xl font-black text-[#F4F7EE]">История привычек</h2>
+        {sortedHabits.length === 0 ? <div className="mt-3 rounded-[2rem] bg-[#14170F] p-6 text-center shadow-sm shadow-[#14170F]/70"><p className="text-5xl">🌿</p><p className="mt-3 text-sm font-semibold leading-5 text-[#A9B39C]">Пока нет записей. Заполни сегодняшний день — и история появится здесь.</p></div> : <div className="mt-3 space-y-3">{sortedHabits.map((entry) => <article className="rounded-[2rem] border border-[#8FD14C]/15 bg-[#14170F] p-4 shadow-sm shadow-[#14170F]/70" key={entry.id}><h3 className="text-base font-black text-[#F4F7EE]">{formatDate(entry.date)}</h3><div className="mt-3 grid grid-cols-3 gap-2 text-xs font-black text-[#A9B39C]"><span className="rounded-2xl bg-[#14170F]/70 px-3 py-2">Шаги {formatValue(entry.steps)}</span><span className="rounded-2xl bg-[#14170F]/70 px-3 py-2">Сон {formatValue(entry.sleep, ' ч')}</span><span className="rounded-2xl bg-[#14170F]/70 px-3 py-2">Вода {formatValue(entry.water, ' л')}</span></div></article>)}</div>}
       </section>}
     </section>
   );

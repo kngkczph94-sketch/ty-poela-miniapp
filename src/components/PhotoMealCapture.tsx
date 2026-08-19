@@ -71,7 +71,7 @@ export function PhotoMealCapture({ disabled, onRecognized }: PhotoMealCapturePro
     }
   };
 
-  return <section className="mt-5 rounded-3xl border border-[#6E7E1F]/30 bg-[#F3E2BF]/35 p-4">
+  return <section className="mt-5 rounded-3xl border border-[#5C8A1E]/30 bg-[#14170F]/35 p-4">
     <input
       ref={inputRef}
       className="hidden"
@@ -80,18 +80,18 @@ export function PhotoMealCapture({ disabled, onRecognized }: PhotoMealCapturePro
       capture="environment"
       onChange={(event) => void handleFile(event.target.files?.[0])}
     />
-    <p className="text-sm font-black text-[#37410F]">Добавить по фотографии</p>
-    <p className="mt-1 text-xs font-semibold leading-5 text-[#8B725F]">Сфотографируйте тарелку или выберите снимок. ИИ предложит состав, вес и КБЖУ — всё можно исправить до сохранения.</p>
+    <p className="text-sm font-black text-[#F4F7EE]">Добавить по фотографии</p>
+    <p className="mt-1 text-xs font-semibold leading-5 text-[#A9B39C]">Сфотографируйте тарелку или выберите снимок. ИИ предложит состав, вес и КБЖУ — всё можно исправить до сохранения.</p>
     {preview && <img className="mt-3 h-36 w-full rounded-2xl object-cover" src={preview} alt="Фото для распознавания" />}
     <button
-      className="mt-3 w-full rounded-2xl bg-[#6E7E1F] px-4 py-3 text-sm font-black text-white disabled:opacity-60"
+      className="mt-3 w-full rounded-2xl bg-[#5C8A1E] px-4 py-3 text-sm font-black text-white disabled:opacity-60"
       disabled={disabled || isAnalyzing}
       onClick={() => inputRef.current?.click()}
       type="button"
     >
       {isAnalyzing ? 'Распознаём…' : preview ? '📷 Выбрать другое фото' : '📷 Распознать по фото'}
     </button>
-    <p className="mt-2 text-[11px] font-semibold leading-4 text-[#8B725F]">Снимок используется только для текущего распознавания и не сохраняется в приложении.</p>
-    {error && <p className="mt-3 rounded-2xl bg-[#D99663]/15 px-3 py-2 text-xs font-bold text-[#A45135]">{error}</p>}
+    <p className="mt-2 text-[11px] font-semibold leading-4 text-[#A9B39C]">Снимок используется только для текущего распознавания и не сохраняется в приложении.</p>
+    {error && <p className="mt-3 rounded-2xl bg-[#8FD14C]/15 px-3 py-2 text-xs font-bold text-[#E7B24A]">{error}</p>}
   </section>;
 }
