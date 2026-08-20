@@ -118,10 +118,10 @@ main::after {
   background:
     linear-gradient(180deg, rgba(6, 7, 4, 0.12) 0%, rgba(6, 7, 4, 0.5) 58%, rgba(6, 7, 4, 0.88) 100%),
     radial-gradient(circle at 18% 12%, rgba(143, 209, 76, 0.14), transparent 8rem),
-    url('https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/recipes/ration-001-dark.jpeg');
+    url('https://bosjuelpvkqpdgazxteu.supabase.co/storage/v1/object/public/content-images/legacy-assets/recipes/ration-002-dark.jpeg');
   background-repeat: no-repeat;
-  background-position: center, center, center 38%;
-  background-size: cover, cover, 114%;
+  background-position: center, center, 14% 86%;
+  background-size: cover, cover, 225%;
   padding: 1.05rem 1rem 0.95rem;
   box-shadow: 0 1.4rem 3rem rgba(0, 0, 0, 0.45);
   animation: hero-ken-burns 24s ease-in-out infinite alternate;
@@ -570,12 +570,12 @@ nav.fixed button.bg-\[\#5C8A1E\] {
 
 @keyframes hero-ken-burns {
   from {
-    background-size: cover, cover, 114%;
-    background-position: center, center, center 38%;
+    background-size: cover, cover, 225%;
+    background-position: center, center, 14% 86%;
   }
   to {
-    background-size: cover, cover, 128%;
-    background-position: center, center, center 46%;
+    background-size: cover, cover, 250%;
+    background-position: center, center, 10% 92%;
   }
 }
 
