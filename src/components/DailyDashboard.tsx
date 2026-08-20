@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { menuMealSlots, menuSlotLabels, type WeeklyMenu } from '../types/menu';
 import type { Meal } from '../types/recipe';
 import type { HabitEntry } from '../types/progress';
@@ -68,9 +68,11 @@ export function DailyDashboard({
   onOpenPhotoNutrition,
   onOpenAi,
 }: DashboardProps) {
+  const [isMealFeedOpen, setIsMealFeedOpen] = useState(false);
   const todayMeals = weeklyMenu['Сегодня']?.meals ?? { breakfast: null, lunch: null, dinner: null, snack: null };
   const meals = menuMealSlots.map((slot) => ({ slot, meal: todayMeals[slot] }));
   const filledMeals = meals.filter(({ meal }) => meal).map(({ meal }) => meal);
+  const filledMealsCount = filledMeals.length;
   const calories = getMealTotal(filledMeals, 'calories');
   const protein = getMealTotal(filledMeals, 'protein');
   const fat = getMealTotal(filledMeals, 'fat');
@@ -152,18 +154,32 @@ export function DailyDashboard({
           <h2>Рацион дня</h2>
           <button onClick={onOpenMenu} type="button">План</button>
         </div>
-        <div className="meal-feed">
-          {meals.map(({ slot, meal }) => (
-            <button className={`meal-row ${meal ? '' : 'meal-row--empty'}`} key={slot} onClick={onOpenMenu} type="button">
-              <span className="meal-row__time">{menuSlotLabels[slot]}</span>
-              <span className="meal-row__body">
-                <strong>{meal?.title ?? mealEmptyCopy[slot]}</strong>
-                <small>{meal ? `${Math.round(meal.calories)} ккал · Б ${round(meal.protein)} · Ж ${round(meal.fat)} · У ${round(meal.carbs)}` : 'Место для следующего блюда'}</small>
-              </span>
-              <span className="meal-row__dot" aria-hidden="true" />
-            </button>
-          ))}
-        </div>
+        <button
+          className="meal-feed-toggle"
+          onClick={() => setIsMealFeedOpen((open) => !open)}
+          type="button"
+          aria-expanded={isMealFeedOpen}
+        >
+          <span className="meal-row__body">
+            <strong>{filledMealsCount} из 4 приёмов пищи</strong>
+            <small>{isMealFeedOpen ? 'Свернуть' : 'Нажми, чтобы посмотреть все приёмы'}</small>
+          </span>
+          <span className="meal-feed-toggle__chevron" aria-hidden="true">{isMealFeedOpen ? '▲' : '▼'}</span>
+        </button>
+        {isMealFeedOpen && (
+          <div className="meal-feed mt-2">
+            {meals.map(({ slot, meal }) => (
+              <button className={`meal-row ${meal ? '' : 'meal-row--empty'}`} key={slot} onClick={onOpenMenu} type="button">
+                <span className="meal-row__time">{menuSlotLabels[slot]}</span>
+                <span className="meal-row__body">
+                  <strong>{meal?.title ?? mealEmptyCopy[slot]}</strong>
+                  <small>{meal ? `${Math.round(meal.calories)} ккал · Б ${round(meal.protein)} · Ж ${round(meal.fat)} · У ${round(meal.carbs)}` : 'Место для следующего блюда'}</small>
+                </span>
+                <span className="meal-row__dot" aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="activity-card reveal-card" onClick={onOpenProgress} role="button" tabIndex={0} onKeyDown={(event) => { if (event.key === 'Enter') onOpenProgress(); }}>

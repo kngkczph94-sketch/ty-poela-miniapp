@@ -330,6 +330,23 @@ main::after {
   background: rgba(255, 255, 255, 0.035);
 }
 
+.meal-feed-toggle {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 0.94rem;
+  background: rgba(255, 255, 255, 0.045);
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+}
+
+.meal-feed-toggle__chevron {
+  color: #8fd14c;
+  font-size: 0.7rem;
+}
+
 .meal-row__body strong {
   color: #f4f7ee;
   font-size: 0.86rem;

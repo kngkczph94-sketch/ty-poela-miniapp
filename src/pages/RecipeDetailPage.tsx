@@ -139,35 +139,35 @@ export function RecipeDetailPage({ hasActiveSubscription: _hasActiveSubscription
               <p className="text-xs font-black uppercase tracking-[0.16em] text-[#5C8A1E]">Добавить в план питания</p>
               <p className="mt-1 text-lg font-black text-[#F4F7EE]">{recipe.title}</p>
               <p className="mt-1 text-xs font-bold text-[#A9B39C]">В план будет добавлен весь рецепт{recipe.totalWeightGrams ? ` · ${recipe.totalWeightGrams} г` : ''}. Количество можно изменить в Плане.</p>
-              <div className="mt-3 grid grid-cols-2 gap-2">
-                <label className="block">
-                  <span className="mb-1 block text-xs font-extrabold text-[#A9B39C]">День</span>
-                  <select
-                    className="w-full rounded-2xl border border-[#A9B39C]/35 bg-[#14170F] px-3 py-3 text-sm font-bold text-[#F4F7EE] outline-none focus:border-[#A9B39C]/35 focus:ring-4 focus:ring-[#14170F]"
-                    onChange={(event) => setSelectedDay(event.target.value as MenuDay)}
-                    value={selectedDay}
-                  >
-                    {menuDays.map((day) => (
-                      <option key={day} value={day}>
-                        {day}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="block">
-                  <span className="mb-1 block text-xs font-extrabold text-[#A9B39C]">Прием пищи</span>
-                  <select
-                    className="w-full rounded-2xl border border-[#A9B39C]/35 bg-[#14170F] px-3 py-3 text-sm font-bold text-[#F4F7EE] outline-none focus:border-[#A9B39C]/35 focus:ring-4 focus:ring-[#14170F]"
-                    onChange={(event) => setSelectedSlot(event.target.value as MenuMealSlot)}
-                    value={selectedSlot}
-                  >
-                    {menuMealSlots.map((slot) => (
-                      <option key={slot} value={slot}>
-                        {menuSlotLabels[slot]}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+              <div className="mt-3">
+                <span className="mb-2 block text-xs font-extrabold text-[#A9B39C]">День</span>
+                <div className="flex flex-wrap gap-2">
+                  {menuDays.map((day) => (
+                    <button
+                      className={`rounded-full px-3 py-2 text-xs font-black transition ${selectedDay === day ? 'bg-[#5C8A1E] text-white' : 'bg-[#14170F] text-[#A9B39C]'}`}
+                      key={day}
+                      onClick={() => setSelectedDay(day)}
+                      type="button"
+                    >
+                      {day}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-3">
+                <span className="mb-2 block text-xs font-extrabold text-[#A9B39C]">Приём пищи</span>
+                <div className="grid grid-cols-4 gap-2">
+                  {menuMealSlots.map((slot) => (
+                    <button
+                      className={`rounded-2xl px-2 py-3 text-xs font-black transition ${selectedSlot === slot ? 'bg-[#5C8A1E] text-white' : 'bg-[#14170F] text-[#A9B39C]'}`}
+                      key={slot}
+                      onClick={() => setSelectedSlot(slot)}
+                      type="button"
+                    >
+                      {menuSlotLabels[slot]}
+                    </button>
+                  ))}
+                </div>
               </div>
               {portionError && <p className="mt-2 text-xs font-bold text-[#E7B24A]">{portionError}</p>}
               <button
