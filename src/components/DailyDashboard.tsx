@@ -1,15 +1,20 @@
 import type { CSSProperties } from 'react';
 import { menuMealSlots, menuSlotLabels, type WeeklyMenu } from '../types/menu';
 import type { Meal } from '../types/recipe';
+import type { HabitEntry } from '../types/progress';
 
 type DashboardProps = {
   weeklyMenu: WeeklyMenu;
+  streakDays: number;
+  todayHabit?: HabitEntry;
   onOpenMenu: () => void;
   onOpenProgress: () => void;
   onOpenMacros: () => void;
   onOpenPhotoNutrition: () => void;
   onOpenAi: () => void;
 };
+
+const STEPS_GOAL = 10000;
 
 type NutritionKey = 'calories' | 'protein' | 'fat' | 'carbs';
 type MotionStyle = CSSProperties & Record<string, string | number>;
@@ -55,6 +60,8 @@ const mealEmptyCopy: Record<string, string> = {
 
 export function DailyDashboard({
   weeklyMenu,
+  streakDays,
+  todayHabit,
   onOpenMenu,
   onOpenProgress,
   onOpenMacros,
@@ -78,8 +85,8 @@ export function DailyDashboard({
           <p className="day-header__date">{formatDate()}</p>
           <h1 className="day-header__title">Ты поела?</h1>
         </div>
-        <button className="streak-pill" onClick={onOpenProgress} type="button" aria-label="Открыть прогресс: серия 7 дней">
-          <span className="streak-pill__mark">7</span>
+        <button className="streak-pill" onClick={onOpenProgress} type="button" aria-label={`Открыть прогресс: серия ${streakDays} ${streakDays === 1 ? 'день' : 'дней'}`}>
+          <span className="streak-pill__mark">{streakDays}</span>
           <span className="streak-pill__copy">
             <strong>серия</strong>
             <small>дней подряд</small>
@@ -159,13 +166,13 @@ export function DailyDashboard({
         </div>
       </section>
 
-      <section className="activity-card reveal-card">
+      <section className="activity-card reveal-card" onClick={onOpenProgress} role="button" tabIndex={0} onKeyDown={(event) => { if (event.key === 'Enter') onOpenProgress(); }}>
         <div>
           <p className="activity-card__label">Активность</p>
-          <h2>6 420 шагов</h2>
-          <p>Спокойный темп, цель близко</p>
+          <h2>{todayHabit?.steps ? `${todayHabit.steps.toLocaleString('ru-RU')} шагов` : 'Шаги не внесены'}</h2>
+          <p>{todayHabit?.steps ? (todayHabit.steps >= STEPS_GOAL ? 'Дневная цель выполнена' : 'Внести ещё раз можно в Прогрессе') : 'Нажми, чтобы внести шаги за сегодня'}</p>
         </div>
-        <div className="activity-progress" aria-hidden="true"><span /></div>
+        <div className="activity-progress" aria-hidden="true"><span style={{ width: `${Math.min(((todayHabit?.steps ?? 0) / STEPS_GOAL) * 100, 100)}%` }} /></div>
       </section>
 
       <section className="dashboard-section reveal-card">
@@ -175,9 +182,9 @@ export function DailyDashboard({
         </div>
         <div className="habit-strip">
           {[
-            { title: 'Вода', value: '5/7', tone: '#7BA7A0', icon: '💧' },
-            { title: 'Сон', value: '7ч', tone: '#9A8FC4', icon: '🌙' },
-            { title: 'Шаги', value: '6.4k', tone: '#FFA36C', icon: '👣' },
+            { title: 'Вода', value: todayHabit?.water ? `${todayHabit.water} л` : '—', tone: '#7BA7A0', icon: '💧' },
+            { title: 'Сон', value: todayHabit?.sleep ? `${todayHabit.sleep} ч` : '—', tone: '#9A8FC4', icon: '🌙' },
+            { title: 'Шаги', value: todayHabit?.steps ? `${Math.round(todayHabit.steps / 100) / 10}k` : '—', tone: '#FFA36C', icon: '👣' },
           ].map((habit) => (
             <button className="habit-chip" key={habit.title} onClick={onOpenProgress} style={{ '--habit-tone': habit.tone } as MotionStyle} type="button">
               <span className="habit-chip__icon" aria-hidden="true">{habit.icon}</span>

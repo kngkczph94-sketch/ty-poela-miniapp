@@ -116,7 +116,7 @@ function HomeFeatureCard({ card }: { card: HomeCard }) {
   );
 }
 
-function HomePage({ onOpenProgress, onOpenMacros, onOpenPhotoNutrition, onOpenAwards, onOpenShare, onOpenAi, onOpenMenu, weeklyMenu }: { onOpenProgress: () => void; onOpenMacros: () => void; onOpenPhotoNutrition: () => void; onOpenAwards: () => void; onOpenShare: () => void; onOpenAi: () => void; onOpenMenu: () => void; weeklyMenu: WeeklyMenu }) {
+function HomePage({ onOpenProgress, onOpenMacros, onOpenPhotoNutrition, onOpenAwards, onOpenShare, onOpenAi, onOpenMenu, weeklyMenu, streakDays, todayHabit }: { onOpenProgress: () => void; onOpenMacros: () => void; onOpenPhotoNutrition: () => void; onOpenAwards: () => void; onOpenShare: () => void; onOpenAi: () => void; onOpenMenu: () => void; weeklyMenu: WeeklyMenu; streakDays: number; todayHabit?: HabitEntry }) {
   const homeCards: HomeCard[] = [
     {
       title: 'База знаний',
@@ -149,7 +149,7 @@ function HomePage({ onOpenProgress, onOpenMacros, onOpenPhotoNutrition, onOpenAw
   ];
 
   return <>
-    <DailyDashboard weeklyMenu={weeklyMenu} onOpenMenu={onOpenMenu} onOpenProgress={onOpenProgress} onOpenMacros={onOpenMacros} onOpenPhotoNutrition={onOpenPhotoNutrition} onOpenAi={onOpenAi} />
+    <DailyDashboard weeklyMenu={weeklyMenu} streakDays={streakDays} todayHabit={todayHabit} onOpenMenu={onOpenMenu} onOpenProgress={onOpenProgress} onOpenMacros={onOpenMacros} onOpenPhotoNutrition={onOpenPhotoNutrition} onOpenAi={onOpenAi} />
     <section className="mt-6 grid gap-4">{homeCards.map((card) => <HomeFeatureCard card={card} key={card.title} />)}</section>
   </>;
 }
@@ -337,6 +337,22 @@ const saveTodayUsageDate = () => {
   return uniqueDates;
 };
 
+const computeCurrentStreak = (usageDates: string[]) => {
+  const dates = new Set(usageDates);
+  let streak = 0;
+  const cursor = new Date();
+  cursor.setHours(12, 0, 0, 0);
+  for (;;) {
+    const year = cursor.getFullYear();
+    const month = String(cursor.getMonth() + 1).padStart(2, '0');
+    const day = String(cursor.getDate()).padStart(2, '0');
+    if (!dates.has(`${year}-${month}-${day}`)) break;
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+};
+
 function App() {
   const { session } = useAuth();
   const initialRecipeId = getRecipeIdFromSearch(window.location.search);
@@ -378,6 +394,8 @@ function App() {
   const [userProfile, setUserProfile] = useState<UserProfile>({ subscriptionStatus: 'free' });
   const [usageDates] = useState<string[]>(saveTodayUsageDate);
   const hasActiveSubscription = userProfile.subscriptionStatus === 'active';
+  const streakDays = computeCurrentStreak(usageDates);
+  const todayHabit = habitEntries.find((entry) => entry.date === getLocalDate());
 
   const openRecipes = () => { setSelectedRecipe(null); setSelectedRation(null); setActiveTab('recipes'); };
   const openRecipe = (recipe: Recipe) => { setRecipeReturnTarget({ tab: activeTab, ration: selectedRation ?? undefined }); setSelectedRecipe(recipe); setSelectedRation(null); setActiveTab('recipes'); };
@@ -633,7 +651,7 @@ function App() {
   });
 
   return <main className="min-h-screen bg-gradient-to-b from-[#0A0C08] via-[#14170F]/45 to-[#0A0C08] text-[#F4F7EE]"><div className="mx-auto flex min-h-screen w-full max-w-md flex-col px-4 pb-28 pt-5">
-    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'photoNutrition' ? <PhotoNutritionPage onBack={goBack} onSave={addManualMealToMenu} /> : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} onUpdateRecipeQuantity={updateRecipeQuantity} onAddManualMeal={addManualMealToMenu} onAddAiMeal={(day, slot) => setAiTarget({ day, slot })} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage weeklyMenu={weeklyMenu} onOpenMenu={() => setActiveTab('menu')} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenPhotoNutrition={() => setActiveTab('photoNutrition')} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} onOpenAi={() => setAiTarget({ day: 'Сегодня', slot: 'breakfast' })} />}
+    {activeTab === 'awards' ? <AwardsPage onBack={goBack} uniqueDaysCount={usageDates.length} /> : activeTab === 'share' ? <ShareAppPage onBack={goBack} /> : activeTab === 'progress' ? <ProgressPage onBack={goBack} habits={habitEntries} measurements={measurementEntries} onSaveHabit={saveHabitEntry} onSaveMeasurement={saveMeasurementEntry} /> : activeTab === 'recipes' ? (selectedRecipe ? <RecipeDetailPage hasActiveSubscription={hasActiveSubscription} recipe={selectedRecipe} onAddToMenu={addRecipeToMenu} onBack={goBack} onOpenAccess={() => openAccess(selectedRecipe)} onOpenMenu={() => setActiveTab('menu')} /> : <RecipesPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} />) : activeTab === 'rations' ? (selectedRation ? <RationDetailPage ration={selectedRation} hasActiveSubscription={hasActiveSubscription} onBack={goBack} onOpenAccess={() => openAccess()} onOpenRecipe={openRecipe} onAddRationToPlan={addRationToPlan} /> : <RationsPage onBack={goBack} hasActiveSubscription={hasActiveSubscription} onOpenAccess={() => openAccess()} onOpenRation={openRation} />) : activeTab === 'photoNutrition' ? <PhotoNutritionPage onBack={goBack} onSave={addManualMealToMenu} /> : activeTab === 'macros' ? <MacroCalculatorPage onBack={goBack} onOpenRation={openRation} /> : activeTab === 'menu' ? <MenuPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenCart={() => setActiveTab('cart')} onOpenRations={openRations} onOpenRecipe={openRecipe} onRemoveRecipe={removeRecipeFromMenu} onUpdateRecipeQuantity={updateRecipeQuantity} onAddManualMeal={addManualMealToMenu} onAddAiMeal={(day, slot) => setAiTarget({ day, slot })} /> : activeTab === 'cart' ? <CartPage onBack={goBack} weeklyMenu={weeklyMenu} onOpenRecipes={openRations} /> : activeTab === 'access' ? <AccessPage onBack={goBack} subscriptionUntil={userProfile.subscriptionUntil} subscriptionStatus={userProfile.subscriptionStatus} onActivate={activateSubscription} onOpenRecipes={openRecipes} /> : <HomePage weeklyMenu={weeklyMenu} streakDays={streakDays} todayHabit={todayHabit} onOpenMenu={() => setActiveTab('menu')} onOpenProgress={() => setActiveTab('progress')} onOpenMacros={openMacros} onOpenPhotoNutrition={() => setActiveTab('photoNutrition')} onOpenAwards={() => setActiveTab('awards')} onOpenShare={() => setActiveTab('share')} onOpenAi={() => setAiTarget({ day: 'Сегодня', slot: 'breakfast' })} />}
   </div>{aiTarget && <AiRecipeModal initialDay={aiTarget.day} initialSlot={aiTarget.slot} onChoose={addAiRecipeToMenu} onClose={() => setAiTarget(null)} />}
   <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[#8FD14C]/35 bg-[#14170F]/95 px-4 pb-5 pt-3 shadow-2xl shadow-[#8FD14C]/25 backdrop-blur"><div className="grid grid-cols-5 gap-1">{navigationItems.map((item)=><button className={`flex flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[11px] font-bold transition ${activeTab === item.id ? 'bg-[#5C8A1E] text-white shadow-md shadow-[#5C8A1E]/20' : 'text-[#A9B39C] hover:bg-[#14170F]/70 hover:text-[#F4F7EE]'}`} key={item.id} onClick={()=>{ setActiveTab(item.id); setSelectedRecipe(null); setSelectedRation(null); }} type="button"><span className="text-lg">{item.icon}</span>{item.label}</button>)}</div></nav></main>;
 }
